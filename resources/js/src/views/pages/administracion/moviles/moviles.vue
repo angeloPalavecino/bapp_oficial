@@ -56,7 +56,7 @@
           ref="modal"
           :title="(modoEditar == false ? 'AGREGAR CONDUCTOR' : 'ACTUALIZAR CONDUCTOR')"
           :active.sync="popupActive"
-          @hidden="$cancelarPopUp()"
+          @close="$close($event)"
         >
           <div class="mt-5">
             <form-wizard
@@ -71,14 +71,17 @@
 			  <tab-content
                 title="Datos Conductor"
                 class="mb-5"
-                icon="feather icon-home"
+                icon="feather icon-user"
                 :before-change="validateStep1"
               >
                 <form data-vv-scope="step-1">
+                  <div>
+                <vs-divider color="primary"><h5>Datos Conductor</h5></vs-divider>
+              </div>
                   <div class="vx-row">
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Nombres"
+                        label-placeholder="Nombres"
                         v-model="user.name"
                         class="w-full"
                         name="name"
@@ -90,7 +93,7 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Apellidos"
+                        label-placeholder="Apellidos"
                         v-model="user.lastname"
                         class="w-full"
                         name="lastname"
@@ -103,7 +106,7 @@
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         type="Email"
-                        label="Email"
+                        label-placeholder="Email"
                         v-model="user.email"
                         class="w-full"
                         name="email"
@@ -116,7 +119,7 @@
 					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         type="Telefono"
-                        label="Telefono"
+                        label-placeholder="Telefono"
                         v-model="user.telefono"
                         class="w-full"
                         name="telefono"
@@ -128,7 +131,7 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Rut"
+                        label-placeholder="Rut"
                         v-model="user.rut"
                         class="w-full"
                         name="rut"
@@ -140,7 +143,7 @@
                     </div>
 					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Ciudad"
+                        label-placeholder="Ciudad"
                         v-model="driver.ciudad"
                         class="w-full"
                         name="ciudad"  
@@ -152,7 +155,7 @@
                     </div>
 					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Comuna"
+                        label-placeholder="Comuna"
                         v-model="driver.comuna"
                         class="w-full"
                         name="comuna"  
@@ -164,7 +167,7 @@
                     </div>
 					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Dirección"
+                        label-placeholder="Dirección"
                         v-model="driver.direccion"
                         class="w-full"
                         name="direccion"  
@@ -176,7 +179,7 @@
                     </div>
 					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Numeración"
+                        label-placeholder="Numeración"
                         v-model="driver.numeracion"
                         class="w-full"
                         name="numeracion"  
@@ -196,10 +199,13 @@
               <tab-content
                 title="Datos Movil"
                 class="mb-5"
-                icon="feather icon-home"
+                icon="feather icon-truck"
                 :before-change="validateStep2"
               >
                 <form data-vv-scope="step-2">
+                   <div>
+                <vs-divider color="primary"><h5>Datos Movil</h5></vs-divider>
+              </div>
                   <div class="vx-row">
 					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -227,7 +233,7 @@
                     </div>    
                     <!-- <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Tipo Vehículo"
+                        label-placeholder="Tipo Vehículo"
                         v-model="car.tipo"
                         class="w-full"
                         name="tipo"
@@ -356,12 +362,6 @@
             </vs-td>
             <vs-td>
               <p class="items-email">{{ tr.email }}</p>
-            </vs-td>
-            <vs-td>
-              <vs-chip
-                :color="getStatusColor(tr.habilitado)"
-                class="items-status"
-              >{{ tr.habilitado == 1 ? 'Activo' : 'Inactivo' }}</vs-chip>
             </vs-td>
             <!--  <vs-td>
                 <p class="users-created_at">{{ tr.created_at }}</p>
@@ -551,7 +551,7 @@ export default {
         });
       //Carga Empresa
       this.$http
-        .get("empresa/empresa")
+        .get("empresas/empresas")
         .then(function(response) {
           thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })

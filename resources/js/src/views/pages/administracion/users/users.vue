@@ -61,22 +61,22 @@
               </div>
           <div class="vx-row">
             <div class="vx-col md:w-1/2 w-full mt-2">
-              <vs-input label="Nombre" v-model="item.name" class="w-full" name="name" v-validate="'required|alpha_spaces'" 
+              <vs-input label-placeholder="Nombre" v-model="item.name" class="w-full" name="name" v-validate="'required|alpha_spaces'" 
              :danger="(errors.first('step-1.name') ? true : false)" val-icon-danger="clear" />
               <span class="text-danger text-sm">{{ errors.first('step-1.name') }}</span>
             </div>
             <div class="vx-col md:w-1/2 w-full mt-2">
-              <vs-input label="Apellido"  v-model="item.lastname" class="w-full" name="lastname" v-validate="'required|alpha_spaces'" 
+              <vs-input label-placeholder="Apellido"  v-model="item.lastname" class="w-full" name="lastname" v-validate="'required|alpha_spaces'" 
               :danger="(errors.first('step-1.lastname') ? true : false)" val-icon-danger="clear" />
               <span class="text-danger text-sm">{{ errors.first('step-1.lastname') }}</span>
             </div>
             <div class="vx-col md:w-1/2 w-full mt-2">
-              <vs-input type="Email" label="Email"  v-model="item.email" class="w-full" name="email" v-validate="'required|email'" 
+              <vs-input type="Email" label-placeholder="Email"  v-model="item.email" class="w-full" name="email" v-validate="'required|email'" 
               :danger="(errors.first('step-1.email') ? true : false)" val-icon-danger="clear" />
               <span class="text-danger text-sm">{{ errors.first('step-1.email') }}</span>
             </div>
             <div class="vx-col md:w-1/2 w-full mt-2">
-                <vs-input  label="Rut"  v-model="item.rut" class="w-full" name="rut" v-validate="'required|alpha_dash'" 
+                <vs-input  label-placeholder="Rut"  v-model="item.rut" class="w-full" name="rut" v-validate="'required|alpha_dash'" 
                 :danger="(errors.first('step-1.rut') ? true : false)" val-icon-danger="clear" />
               <span class="text-danger text-sm">{{ errors.first('step-1.rut') }}</span>
             </div>
@@ -105,20 +105,20 @@
           
              </div>
             <div class="vx-col md:w-1/2 w-full mt-2">
-                    <vs-input label="Telefono" v-model="item.telefono" class="w-full" name="telefono" v-validate="'required|numeric'" 
+                    <vs-input label-placeholder="Telefono" v-model="item.telefono" class="w-full" name="telefono" v-validate="'required|numeric'" 
               :danger="(errors.first('step-2.telefono') ? true : false)" val-icon-danger="clear"/>
               <span class="text-danger text-sm">{{ errors.first('step-2.telefono') }}</span>
              </div>
             <div class="vx-col md:w-1/2 w-full mt-2">
             </div>
             <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input type="password" v-validate="(modoEditar == false ? 'required|min:8' : 'min:8')" ref="password" label="Password" name="password" 
+                  <vs-input type="password" v-validate="(modoEditar == false ? 'required|min:8' : 'min:8')" ref="password" label-placeholder="Password" name="password" 
                   v-model="item.password"  class="w-full" 
                   :danger="(errors.first('step-2.password') ? true : false)" val-icon-danger="clear"/>
                   <span class="text-danger text-sm" v-show="errors.has('step-2.password')" >{{ errors.first('step-2.password') }}</span>
                 </div>
               <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input type="password" v-validate="(modoEditar == false ? 'required|min:8|confirmed:password' : 'min:8|confirmed:password')" data-vv-as="password" label="Confirmar Password" 
+                  <vs-input type="password" v-validate="(modoEditar == false ? 'required|min:8|confirmed:password' : 'min:8|confirmed:password')" data-vv-as="password" label-placeholder="Confirmar Password" 
                   name="password_confirmation"  class="w-full" v-model="item.password_confirmation"
                   :danger="(errors.first('step-2.password_confirmation') ? true : false)" val-icon-danger="clear"/>
                   <span class="text-danger text-sm" v-show="errors.has('step-2.password_confirmation')">{{ errors.first('step-2.password_confirmation') }}</span>

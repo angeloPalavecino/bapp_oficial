@@ -5885,7 +5885,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize("en", dict);
         });
       }); //Carga Empresa
 
-      this.$http.get("empresa/empresa").then(function (response) {
+      this.$http.get("empresas/empresas").then(function (response) {
         thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$vs.notify({
@@ -42842,29 +42842,6 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _c(
-                                "vs-chip",
-                                {
-                                  staticClass: "items-status",
-                                  attrs: {
-                                    color: _vm.getStatusColor(tr.habilitado)
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      tr.habilitado == 1 ? "Activo" : "Inactivo"
-                                    )
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
                           _c("vs-td", [
                             _c(
                               "div",
@@ -43082,8 +43059,8 @@ var render = function() {
                     "update:active": function($event) {
                       _vm.popupActive = $event
                     },
-                    hidden: function($event) {
-                      return _vm.$cancelarPopUp()
+                    close: function($event) {
+                      return _vm.$close($event)
                     }
                   }
                 },
@@ -43118,7 +43095,7 @@ var render = function() {
                               staticClass: "mb-5",
                               attrs: {
                                 title: "Datos Conductor",
-                                icon: "feather icon-home",
+                                icon: "feather icon-user",
                                 "before-change": _vm.validateStep1
                               }
                             },
@@ -43127,6 +43104,18 @@ var render = function() {
                                 "form",
                                 { attrs: { "data-vv-scope": "step-1" } },
                                 [
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "vs-divider",
+                                        { attrs: { color: "primary" } },
+                                        [_c("h5", [_vm._v("Datos Conductor")])]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
                                   _c("div", { staticClass: "vx-row" }, [
                                     _c(
                                       "div",
@@ -43146,7 +43135,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Nombres",
+                                            "label-placeholder": "Nombres",
                                             name: "name",
                                             danger: _vm.errors.first(
                                               "step-1.name"
@@ -43197,7 +43186,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Apellidos",
+                                            "label-placeholder": "Apellidos",
                                             name: "lastname",
                                             danger: _vm.errors.first(
                                               "step-1.lastname"
@@ -43255,7 +43244,7 @@ var render = function() {
                                           staticClass: "w-full",
                                           attrs: {
                                             type: "Email",
-                                            label: "Email",
+                                            "label-placeholder": "Email",
                                             name: "email",
                                             danger: _vm.errors.first(
                                               "step-1.email"
@@ -43307,7 +43296,7 @@ var render = function() {
                                           staticClass: "w-full",
                                           attrs: {
                                             type: "Telefono",
-                                            label: "Telefono",
+                                            "label-placeholder": "Telefono",
                                             name: "telefono",
                                             danger: _vm.errors.first(
                                               "step-1.telefono"
@@ -43365,7 +43354,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Rut",
+                                            "label-placeholder": "Rut",
                                             name: "rut",
                                             danger: _vm.errors.first(
                                               "step-1.rut"
@@ -43416,7 +43405,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Ciudad",
+                                            "label-placeholder": "Ciudad",
                                             name: "ciudad",
                                             danger: _vm.errors.first(
                                               "step-1.ciudad"
@@ -43473,7 +43462,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Comuna",
+                                            "label-placeholder": "Comuna",
                                             name: "comuna",
                                             danger: _vm.errors.first(
                                               "step-1.comuna"
@@ -43530,7 +43519,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Dirección",
+                                            "label-placeholder": "Dirección",
                                             name: "direccion",
                                             danger: _vm.errors.first(
                                               "step-1.direccion"
@@ -43587,7 +43576,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Numeración",
+                                            "label-placeholder": "Numeración",
                                             name: "numeracion",
                                             danger: _vm.errors.first(
                                               "step-1.numeracion"
@@ -43637,7 +43626,7 @@ var render = function() {
                               staticClass: "mb-5",
                               attrs: {
                                 title: "Datos Movil",
-                                icon: "feather icon-directions",
+                                icon: "feather icon-truck",
                                 "before-change": _vm.validateStep2
                               }
                             },
@@ -43646,6 +43635,18 @@ var render = function() {
                                 "form",
                                 { attrs: { "data-vv-scope": "step-2" } },
                                 [
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "vs-divider",
+                                        { attrs: { color: "primary" } },
+                                        [_c("h5", [_vm._v("Datos Movil")])]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
                                   _c("div", { staticClass: "vx-row" }, [
                                     _c(
                                       "div",
@@ -43665,7 +43666,8 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Tipo Vehículo",
+                                            "label-placeholder":
+                                              "Tipo Vehículo",
                                             name: "tipo",
                                             danger: _vm.errors.first(
                                               "step-2.tipo"
@@ -45933,7 +45935,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Nombre",
+                                            "label-placeholder": "Nombre",
                                             name: "name",
                                             danger: _vm.errors.first(
                                               "step-1.name"
@@ -45987,7 +45989,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Apellido",
+                                            "label-placeholder": "Apellido",
                                             name: "lastname",
                                             danger: _vm.errors.first(
                                               "step-1.lastname"
@@ -46047,7 +46049,7 @@ var render = function() {
                                           staticClass: "w-full",
                                           attrs: {
                                             type: "Email",
-                                            label: "Email",
+                                            "label-placeholder": "Email",
                                             name: "email",
                                             danger: _vm.errors.first(
                                               "step-1.email"
@@ -46101,7 +46103,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Rut",
+                                            "label-placeholder": "Rut",
                                             name: "rut",
                                             danger: _vm.errors.first(
                                               "step-1.rut"
@@ -46343,7 +46345,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Telefono",
+                                            "label-placeholder": "Telefono",
                                             name: "telefono",
                                             danger: _vm.errors.first(
                                               "step-2.telefono"
@@ -46412,7 +46414,7 @@ var render = function() {
                                           staticClass: "w-full",
                                           attrs: {
                                             type: "password",
-                                            label: "Password",
+                                            "label-placeholder": "Password",
                                             name: "password",
                                             danger: _vm.errors.first(
                                               "step-2.password"
@@ -46488,7 +46490,8 @@ var render = function() {
                                           attrs: {
                                             type: "password",
                                             "data-vv-as": "password",
-                                            label: "Confirmar Password",
+                                            "label-placeholder":
+                                              "Confirmar Password",
                                             name: "password_confirmation",
                                             danger: _vm.errors.first(
                                               "step-2.password_confirmation"
