@@ -23,6 +23,7 @@ import Home from './views/Home'
 import Login from './views/Login'
 import Roles from './views/pages/administracion/roles/Roles'
 import Users from './views/pages/administracion/users/Users'
+import Perfil from './views/pages/administracion/users/Perfil'
 import Empresas from './views/pages/administracion/empresas/Empresas'
 import FueraZona from './views/pages/administracion/fuerazona/FueraZona'
 import Excepciones from './views/pages/administracion/excepciones/Excepciones'
@@ -55,6 +56,20 @@ const router = new Router({
           component: Home,
           meta: {
             auth: true  
+          }
+        },
+        {
+          path: '/pages/administracion/users/perfil',
+          name: 'perfil',
+          component: Perfil,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Perfil'},
+              { title: 'Perfil de usuario', active: true },
+              ],
+              pageTitle: 'Perfil de usuario',
           }
         },
         {

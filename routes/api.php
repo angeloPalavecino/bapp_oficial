@@ -54,7 +54,7 @@ Route::prefix('v1')->group(function () {
             Route::put('users/{id}', 'UserController@update');
             Route::post('users/store', 'UserController@store');
             Route::get('users/{id}/edit', 'UserController@edit');
-
+            Route::get('users/perfil/{id}', 'UserController@perfil');
 
         });
     });

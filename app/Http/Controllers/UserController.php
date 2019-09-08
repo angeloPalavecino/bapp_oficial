@@ -272,6 +272,22 @@ class UserController extends Controller
         
     }
 
+    public function perfil(Request $request, $id)
+    {
+
+        $user = User::with('roles')->where('id',$id)->get(); 
+      
+        //$user = User::findOrFail('1');
+        //$user->syncRoles('1');
+        //$user = User::find($id);
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'item' => $user->toArray(),
+            ], 200);
+    }
+
     
 }
 

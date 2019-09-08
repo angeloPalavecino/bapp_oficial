@@ -217,6 +217,10 @@ export default {
         },
     },
     methods: {
+        cargarDatos(){
+            console.log("aca");
+
+        },
         showSidebar() {
             this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', true);
         },

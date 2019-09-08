@@ -183,7 +183,7 @@
                         v-model="driver.numeracion"
                         class="w-full"
                         name="numeracion"  
-						v-validate="'required'"
+						v-validate="'required|numeric'"
                         :danger="(errors.first('step-1.numeracion') ? true : false)"
                         val-icon-danger="clear"                      
                       />
@@ -355,7 +355,7 @@ const dict = {
 	},
     numeracion: {
       required: "La numeración es requerida",
-      email: "Ingrese una numeración valida"
+      numeric: "Ingrese una numeración valida"
 	},
     email: {
       required: "El email es requerido",

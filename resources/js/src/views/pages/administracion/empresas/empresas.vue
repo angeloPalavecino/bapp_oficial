@@ -674,7 +674,6 @@ export default {
      submitActualizaRegistros(url) {
 
       const thisIns = this;
-      console.log(this.sucursales);
       this.datos = [];
       this.datos.push(this.item);
       this.datos.push(this.tiposervicio);

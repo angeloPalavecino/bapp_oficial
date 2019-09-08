@@ -507,6 +507,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    cargarDatos: function cargarDatos() {
+      console.log("aca");
+    },
     showSidebar: function showSidebar() {
       this.$store.commit('TOGGLE_IS_SIDEBAR_ACTIVE', true);
     },
