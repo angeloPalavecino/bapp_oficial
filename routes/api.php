@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
+//Tigger Trolo
 Route::prefix('v1')->group(function () {
 
     
