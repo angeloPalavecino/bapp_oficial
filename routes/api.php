@@ -257,8 +257,8 @@ Route::prefix('v1')->group(function () {
 
     //MOVILES
     Route::prefix('driver')->group(function () {
-        //    Route::middleware('auth:api')->group(function () {
-        // Excepciones
+          Route::middleware('auth:api')->group(function () {
+        // MOVILES
             Route::get('driver', 'DriverController@index');
             Route::get('driver/create', 'DriverController@create');
             Route::get('driver/{id}', 'DriverController@show');
@@ -268,6 +268,6 @@ Route::prefix('v1')->group(function () {
             Route::post('driver/store', 'DriverController@store');
             Route::get('driver/{id}/edit', 'DriverController@edit');
        
-        //   });
+           });
     });
 });
