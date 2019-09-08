@@ -20,7 +20,6 @@ class CreateDriversTable extends Migration
             $table->string('lastname');
             $table->integer('rut');
             $table->string('direccion');
-            $table->string('pais');
             $table->string('ciudad');
             $table->string('comuna');
             $table->integer('numeracion');

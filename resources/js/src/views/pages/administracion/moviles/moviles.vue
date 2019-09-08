@@ -116,7 +116,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.email') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         type="Telefono"
                         label-placeholder="Telefono"
@@ -141,43 +141,43 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.rut') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label-placeholder="Ciudad"
                         v-model="driver.ciudad"
                         class="w-full"
                         name="ciudad"  
-						v-validate="'required'"
+						            v-validate="'required'"
                         :danger="(errors.first('step-1.ciudad') ? true : false)"
                         val-icon-danger="clear"                      
                       />
                       <span class="text-danger">{{ errors.first('step-1.ciudad') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label-placeholder="Comuna"
                         v-model="driver.comuna"
                         class="w-full"
                         name="comuna"  
-						v-validate="'required'"
+						            v-validate="'required'"
                         :danger="(errors.first('step-1.comuna') ? true : false)"
                         val-icon-danger="clear"                      
                       />
                       <span class="text-danger">{{ errors.first('step-1.comuna') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label-placeholder="Dirección"
                         v-model="driver.direccion"
                         class="w-full"
                         name="direccion"  
-						v-validate="'required'"
+						            v-validate="'required'"
                         :danger="(errors.first('step-1.direccion') ? true : false)"
                         val-icon-danger="clear"                      
                       />
                       <span class="text-danger">{{ errors.first('step-1.direccion') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label-placeholder="Numeración"
                         v-model="driver.numeracion"
@@ -207,9 +207,9 @@
                 <vs-divider color="primary"><h5>Datos Movil</h5></vs-divider>
               </div>
                   <div class="vx-row">
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label-placeholder="Tipo Vehículo"
+                        label="Tipo Vehículo"
                         v-model="car.tipo"
                         class="w-full"
                         name="tipo"
@@ -219,6 +219,90 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
                     </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Marca"
+                        v-model="car.marca"
+                        class="w-full"
+                        name="marca"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.marca') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.marca') }}</span>
+                    </div>    
+                    <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label-placeholder="Modelo"
+                        v-model="car.modelo"
+                        class="w-full"
+                        name="modelo"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.modelo') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.modelo') }}</span>
+                    </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Año"
+                        v-model="car.ano"
+                        class="w-full"
+                        name="ano"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.ano') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.ano') }}</span>
+                    </div>  
+                    <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="N° Motor"
+                        v-model="car.motor"
+                        class="w-full"
+                        name="motor"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.motor') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.motor') }}</span>
+                    </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="N° Patente"
+                        v-model="car.patente"
+                        class="w-full"
+                        name="patente"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.patente') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.patente') }}</span>
+                    </div>  
+                    <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Color"
+                        v-model="car.color"
+                        class="w-full"
+                        name="color"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.color') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.color') }}</span>
+                    </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="N° Asientos"
+                        v-model="car.asientos"
+                        class="w-full"
+                        name="asientos"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.asientos') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.asientos') }}</span>
+                    </div>         
                   </div>
                 </form>
               </tab-content>
@@ -340,19 +424,19 @@ const dict = {
     rut: {
       required: "El rut es requerido",
       alpha_dash: "Ingrese un rut valido"
-	},
+	  },
     ciudad: {
       required: "La ciudad es requerida",
       email: "Ingrese una ciudad valida"
-	}, 
-	comuna: {
-      required: "La comuna es requerida",
-      email: "Ingrese una comuna valida"
-	}, 
-	direccion: {
-      required: "La dirección es requerida",
-      email: "Ingrese una dirección valida"
-	},
+  	}, 
+    comuna: {
+        required: "La comuna es requerida",
+        email: "Ingrese una comuna valida"
+    }, 
+    direccion: {
+        required: "La dirección es requerida",
+        email: "Ingrese una dirección valida"
+    },
     numeracion: {
       required: "La numeración es requerida",
       numeric: "Ingrese una numeración valida"
@@ -364,10 +448,12 @@ const dict = {
     telefono: {
       required: "El telefono es requerido",
       numeric: "El numero de telefono debe ser valido"
-	},
-	tipo: {
-      required: "El tipo es requerido",
-      numeric: "El numero de telefono debe ser valido"
+	  },
+    tipo: {
+        required: "El tipo es requerido",
+    },
+    marca: {
+      required: "La marca es requerida",
     },
     
   }
@@ -498,9 +584,9 @@ export default {
 
     initValues() {
       //this.$refs.wizard.navigateToTab(0);
-	  this.item = {};
-	  this.car = {};
-	  this.user = {};
+	    this.item = {};
+	    this.car = {};
+	    this.user = {};
       this.errors.clear();
       this.$refs.wizard.reset();
       //this.modoEditar = false;

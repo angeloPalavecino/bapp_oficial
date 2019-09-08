@@ -38,4 +38,4 @@
   </body>
  
 </html>
-<?php /**PATH C:\xampp\htdocs\vuesax\resources\views/application.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\laravel\resources\views/application.blade.php ENDPATH**/ ?>
