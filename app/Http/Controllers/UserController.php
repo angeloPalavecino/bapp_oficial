@@ -54,6 +54,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        //dd(Auth::user()->getAllPermissions());
 
         $validation = $this->validator($request->all());
 

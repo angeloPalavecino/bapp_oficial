@@ -66,8 +66,34 @@ class ExcepcionesController extends Controller
         $input = $request->all();
         $rut = $input['rut'];
         $direccion = $input['direccion'];
-        $lat = 0;
-        $lng = 0;
+        
+        try {
+
+            $geocode = app('geocoder')->geocode($direccion)->get()->first();
+            if($geocode){
+
+                $lat = $geocode->getCoordinates()->getLatitude();
+                $lng = $geocode->getCoordinates()->getLongitude();
+
+            }else{
+
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'Error al determinar las coordenadas de la direccion.',
+                ], 300);
+
+            }
+            
+  
+          } catch (Exception $e) {
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Error al determinar las coordenadas de la direccion.',
+            ], 300);
+         }
 
         $excepcion = Excepciones::create(
          array(
@@ -142,8 +168,34 @@ class ExcepcionesController extends Controller
             $input = $request->all();
             $rut = $input['rut'];
             $direccion = $input['direccion'];
-            $lat = 0;
-            $lng = 0;
+            
+            try {
+
+                $geocode = app('geocoder')->geocode($direccion)->get()->first();
+                if($geocode){
+    
+                    $lat = $geocode->getCoordinates()->getLatitude();
+                    $lng = $geocode->getCoordinates()->getLongitude();
+    
+                }else{
+    
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Error al determinar las coordenadas de la direccion.',
+                    ], 300);
+    
+                }
+                
+      
+              } catch (Exception $e) {
+                
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'Error al determinar las coordenadas de la direccion.',
+                ], 300);
+             }         
 
         $excepcion = Excepciones::where('id', $id)->update(
          array(

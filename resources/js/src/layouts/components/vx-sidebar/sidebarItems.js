@@ -36,6 +36,13 @@ export default [
       slug: "roles",
       icon: "",
       submenu: ""
+    },
+    {
+      url: "/pages/administracion/empresas/empresas",
+      name: "Empresas",
+      slug: "empresas",
+      icon: "",
+      submenu: ""
     },{
       url: "/pages/administracion/observaciones/observaciones",
       name: "Observaciones",
@@ -60,13 +67,7 @@ export default [
       slug: "fuerazona",
       icon: "",
       submenu: ""
-    },{
-      url: "/pages/administracion/moviles/moviles",
-      name: "Moviles",
-      slug: "moviles",
-      icon: "",
-      submenu: ""
-    }]
+    },]
   },
   
   

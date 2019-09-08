@@ -31,19 +31,19 @@ Route::prefix('v1')->group(function () {
         Route::get('refresh', 'AuthController@refresh');
         
         // Below mention routes are available only for the authenticated users.
-        //Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Get user info
             Route::get('user', 'AuthController@user');
              // Logout user from application
             Route::post('logout', 'AuthController@logout');
 
-        //});
+        });
 
       
     });
     //USUARIOS
     Route::prefix('users')->group(function () {
-       // Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Usuarios
             Route::get('users', 'UserController@index');
             Route::get('users/create', 'UserController@create');
@@ -55,11 +55,11 @@ Route::prefix('v1')->group(function () {
             Route::get('users/{id}/edit', 'UserController@edit');
 
 
-     //   });
+        });
     });
     //ROLES
     Route::prefix('roles')->group(function () {
-      //  Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Roles
             Route::get('roles', 'RoleController@index');
             Route::get('roles/create', 'RoleController@create');
@@ -71,20 +71,20 @@ Route::prefix('v1')->group(function () {
             Route::get('roles/{id}/edit', 'RoleController@edit');
 
 
-      // });
+       });
     });
     //PERMISOS
     Route::prefix('permisos')->group(function () {
-     //    Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Permisos
             Route::get('permisos', 'PermisosController@index');
-     //    });
+        });
     });
 
 
      //CICLO FACTURACION
      Route::prefix('ciclofacturacion')->group(function () {
-      //   Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Ciclo facturacion
             Route::get('ciclofacturacion', 'CiclofacturacionController@index');
             Route::get('ciclofacturacion/create', 'CiclofacturacionController@create');
@@ -96,12 +96,12 @@ Route::prefix('v1')->group(function () {
             Route::get('ciclofacturacion/{id}/edit', 'CiclofacturacionController@edit');
 
 
-      //  });
+       });
     });
 
      //CICLO PRODUCCION
      Route::prefix('cicloproduccion')->group(function () {
-      //   Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Ciclo produccion
             Route::get('cicloproduccion', 'CicloproduccionController@index');
             Route::get('cicloproduccion/create', 'CicloproduccionController@create');
@@ -113,29 +113,30 @@ Route::prefix('v1')->group(function () {
             Route::get('cicloproduccion/{id}/edit', 'CicloproduccionController@edit');
 
 
-     //   });
+       });
     });
 
     //EMPRESA
-    Route::prefix('empresa')->group(function () {
-     //    Route::middleware('auth:api')->group(function () {
+    Route::prefix('empresas')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Empresa
-            Route::get('empresa', 'EmpresaController@index');
-            Route::get('empresa/create', 'EmpresaController@create');
-            Route::get('empresa/{id}', 'EmpresaController@show');
-            Route::delete('empresa/{id}', 'EmpresaController@destroy');
-            Route::post('empresa/borrar', 'EmpresaController@borrar');
-            Route::put('empresa/{id}', 'EmpresaController@update');
-            Route::post('empresa/store', 'EmpresaController@store');
-            Route::get('empresa/{id}/edit', 'EmpresaController@edit');
+            Route::get('empresas', 'EmpresaController@index');
+            Route::get('empresas/create', 'EmpresaController@create');
+            Route::get('empresas/{id}', 'EmpresaController@show');
+            Route::delete('empresas/{id}', 'EmpresaController@destroy');
+            Route::post('empresas/borrar', 'EmpresaController@borrar');
+            Route::put('empresas/{id}', 'EmpresaController@update');
+            Route::post('empresas/store', 'EmpresaController@store');
+            Route::get('empresas/{id}/edit', 'EmpresaController@edit');
+            Route::get('empresas/otros/{id}', 'EmpresaController@otros');
 
 
-     //   });
+       });
     });
 
     //EXCEPCIONES
     Route::prefix('excepciones')->group(function () {
-     //    Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Excepciones
             Route::get('excepciones', 'ExcepcionesController@index');
             Route::get('excepciones/create', 'ExcepcionesController@create');
@@ -147,12 +148,12 @@ Route::prefix('v1')->group(function () {
             Route::get('excepciones/{id}/edit', 'ExcepcionesController@edit');
 
 
-     //   });
+       });
     });
 
      //FUERA ZONA
      Route::prefix('fuerazonas')->group(function () {
-      //   Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Fuera Zona
             Route::get('fuerazonas', 'FuerazonaController@index');
             Route::get('fuerazonas/create', 'FuerazonaController@create');
@@ -164,12 +165,12 @@ Route::prefix('v1')->group(function () {
             Route::get('fuerazonas/{id}/edit', 'FuerazonaController@edit');
 
 
-       // });
+       });
     });
 
      //OBSERVACIONES
      Route::prefix('observaciones')->group(function () {
-      //   Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Observaciones
             Route::get('observaciones', 'ObservacionesController@index');
             Route::get('observaciones/create', 'ObservacionesController@create');
@@ -181,13 +182,13 @@ Route::prefix('v1')->group(function () {
             Route::get('observaciones/{id}/edit', 'ObservacionesController@edit');
 
 
-      //  });
+       });
     });
 
 
     //OBSERVACIONES INTERNAS
     Route::prefix('observacionesinternas')->group(function () {
-     //    Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Observaciones Internas
             Route::get('observacionesinternas', 'ObservacionesinternasController@index');
             Route::get('observacionesinternas/create', 'ObservacionesinternasController@create');
@@ -199,12 +200,12 @@ Route::prefix('v1')->group(function () {
             Route::get('observacionesinternas/{id}/edit', 'ObservacionesinternasController@edit');
 
 
-     //   });
+       });
     });
 
     //RESPONSABLE
     Route::prefix('responsable')->group(function () {
-     //    Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Responsable
             Route::get('responsable', 'ResponsableController@index');
             Route::get('responsable/create', 'ResponsableController@create');
@@ -216,12 +217,12 @@ Route::prefix('v1')->group(function () {
             Route::get('responsable/{id}/edit', 'ResponsableController@edit');
 
 
-     //   });
+       });
     });
 
     //SUCURSAL
     Route::prefix('sucursal')->group(function () {
-      //   Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Sucursal
             Route::get('sucursal', 'SucursalController@index');
             Route::get('sucursal/create', 'SucursalController@create');
@@ -233,12 +234,12 @@ Route::prefix('v1')->group(function () {
             Route::get('sucursal/{id}/edit', 'SucursalController@edit');
 
 
-      //  });
+       });
     });
 
     //TIPO SERVICIO
     Route::prefix('tiposervicio')->group(function () {
-     //    Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
             // Tipo Servicio
             Route::get('tiposervicio', 'TiposervicioController@index');
             Route::get('tiposervicio/create', 'TiposervicioController@create');
@@ -250,22 +251,6 @@ Route::prefix('v1')->group(function () {
             Route::get('tiposervicio/{id}/edit', 'TiposervicioController@edit');
 
 
-      //  });
+       });
     });
-
-    //MOVILES
-    Route::prefix('driver')->group(function () {
-       //    Route::middleware('auth:api')->group(function () {
-              // Excepciones
-              Route::get('driver', 'DriverController@index');
-              Route::get('driver/create', 'DriverController@create');
-              Route::get('driver/{id}', 'DriverController@show');
-              Route::delete('driver/{id}', 'DriverController@destroy');
-              Route::post('driver/borrar', 'DriverController@borrar');
-              Route::put('driver/{id}', 'DriverController@update');
-              Route::post('driver/store', 'DriverController@store');
-              Route::get('driver/{id}/edit', 'DriverController@edit');
-  
-       //   });
-      });    
 });

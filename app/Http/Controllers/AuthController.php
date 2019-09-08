@@ -35,7 +35,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-      
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
             return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
@@ -58,11 +57,7 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        //dd(Auth::user());
-        $user = User::findOrFail('1');
-        $user->syncRoles('1');
-
-        //$user = User::find(Auth::user()->id);//Auth::user()->id
+        $user = User::find(Auth::user()->id);
         return response()->json([
             'status' => 'success',
             'data' => $user

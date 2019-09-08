@@ -46,12 +46,15 @@
 
          <!-- POP UP -->
         <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR OBS. INTERNA' : 'ACTUALIZAR OBS. INTERNA')"  
-        :active.sync="popupActive"  @hidden="$cancelarPopUp()">
+        :active.sync="popupActive"   @close="$close($event)">
             <div class="p-5">
+              <div>
+                <vs-divider color="primary"><h5>Obs. Internas</h5></vs-divider>
+              </div>
               <!-- DESCRIPCION -->
               <vs-input v-validate="'required'" label-placeholder="Descripcion" name="descripcion" v-model="item.descripcion" 
-              :danger="(errors.first('descripcion') ? true : false)" val-icon-danger="clear" class="mt-5 w-full" />
-              <span class="text-danger text-sm" v-show="errors.has('descripcion')">{{ errors.first('descripcion') }}</span>
+              :danger="(errors.first('descripcion') ? true : false)" val-icon-danger="clear" class="mt-2 w-full" />
+              <span class="text-danger text-sm" v-show="errors.has('descripcion')" >{{ errors.first('descripcion') }}</span>
      
             <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
               <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR OBS. INTERNA</vs-button>
@@ -158,6 +161,7 @@ export default {
       this.modoEditar = true; 
       this.item.id = item.id;
       this.item.descripcion = item.descripcion;
+      this.selected = [];
       this.popupActive=true;
     },
     initValues() {

@@ -12,6 +12,6 @@ class Tiposervicio extends Model
      * @var array
      */
     protected $fillable = [
-        'outsourcing', 'tipo' ,'valor',
+        'empresa_id','outsourcing', 'tipo' ,'valor',
     ];
 }

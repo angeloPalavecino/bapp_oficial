@@ -13,9 +13,8 @@ class CreateCiclofacturacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('ciclofacturaciones', function (Blueprint $table) {
+        Schema::create('ciclofacturacions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
             $table->integer('dias');
             $table->dateTime('inicio')->nullable();
             $table->dateTime('fin')->nullable();
@@ -30,6 +29,6 @@ class CreateCiclofacturacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ciclofacturaciones');
+        Schema::dropIfExists('ciclofacturacions');
     }
 }

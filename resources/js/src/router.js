@@ -23,11 +23,11 @@ import Home from './views/Home'
 import Login from './views/Login'
 import Roles from './views/pages/administracion/roles/Roles'
 import Users from './views/pages/administracion/users/Users'
+import Empresas from './views/pages/administracion/empresas/Empresas'
 import FueraZona from './views/pages/administracion/fuerazona/FueraZona'
 import Excepciones from './views/pages/administracion/excepciones/Excepciones'
 import Observaciones from './views/pages/administracion/observaciones/Observaciones'
 import ObsInternas from './views/pages/administracion/obsinternas/ObsInternas'
-import Moviles from './views/pages/administracion/moviles/Moviles'
 
 
 Vue.use(Router)
@@ -82,6 +82,21 @@ const router = new Router({
               { title: 'Lista de roles', active: true },
               ],
               pageTitle: 'Lista de roles',
+            
+          }
+        },
+        {
+          path: '/pages/administracion/empresas/empresas',
+          name: 'empresas',
+          component: Empresas,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Empresas'},
+              { title: 'Lista de empresas', active: true },
+              ],
+              pageTitle: 'Lista de empresas',
             
           }
         },
@@ -142,21 +157,6 @@ const router = new Router({
               { title: 'Lista de fuera de zona', active: true },
               ],
               pageTitle: 'Lista de fuera de zona',
-            
-          }
-        },
-        {
-          path: '/pages/administracion/moviles/moviles',
-          name: 'moviles',
-          component: Moviles,
-          meta: {
-            auth: true,
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Moviles'},
-              { title: 'Lista de moviles', active: true },
-              ],
-              pageTitle: 'Lista de moviles',
             
           }
         }

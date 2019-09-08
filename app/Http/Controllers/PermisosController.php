@@ -68,18 +68,25 @@ class PermisosController extends Controller
                 return "Roles";
                 break;
             case "index":
-                return "Ver";
+                return "Inicio";
                 break;
             case "edit":
                 return "Editar";
                 break;
             case "show":
-                return "Detalle";
+                return "Ver";
+                break;
             case "destroy":
                 return "Eliminar";
                 break;
             case "create":
                 return "Crear";
+                break;
+            case "store":
+                return "Agregar";
+                break;
+            case "update":
+                return "Actualizar";
                 break;
         }
 

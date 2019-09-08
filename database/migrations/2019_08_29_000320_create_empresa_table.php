@@ -17,28 +17,28 @@ class CreateEmpresaTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('produccion_id');
             $table->unsignedBigInteger('facturacion_id');
-            $table->unsignedBigInteger('tipo_servicio_id');
+            //$table->unsignedBigInteger('tipo_servicio_id');
             $table->string('rut');
             $table->string('dv', 1);
             $table->string('razon_social');
-            $table->string('giro');         
+            $table->string('giro')->nullable();         
             $table->timestamps();
 
 
             $table->foreign('produccion_id')
             ->references('id')
-            ->on('cicloproducciones')
+            ->on('cicloproduccions')
             ->onDelete('cascade');
 
             $table->foreign('facturacion_id')
             ->references('id')
-            ->on('ciclofacturaciones')
+            ->on('ciclofacturacions')
             ->onDelete('cascade');
 
-            $table->foreign('tipo_servicio_id')
-            ->references('id')
-            ->on('tiposervicios')
-            ->onDelete('cascade');
+            //$table->foreign('tipo_servicio_id')
+            //->references('id')
+            //->on('tiposervicios')
+            //->onDelete('cascade');
 
 
         });

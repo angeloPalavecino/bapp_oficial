@@ -46,11 +46,14 @@
 
         <!-- POP UP -->
         <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR ROL' : 'ACTUALIZAR ROL')"  :active.sync="popupActive"  
-        @hidden="$cancelarPopUp()">
+         @close="$close($event)">
             <div class="p-5">
+              <div>
+                <vs-divider color="primary"><h5>Roles</h5></vs-divider>
+              </div>
               <!-- NAME -->
               <vs-input v-validate="'required|alpha_dash'" label-placeholder="Nombre" name="name" v-model="item.name" 
-              :danger="(errors.first('name') ? true : false)" val-icon-danger="clear" class="mt-5 w-full" />
+              :danger="(errors.first('name') ? true : false)" val-icon-danger="clear" class="mt-2 w-full" />
               <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
               <!-- PERMISOS
@@ -260,12 +263,14 @@ export default {
           });
       },
     editar(item){      
+      
       this.initValues();
       this.modoEditar = true; 
       //console.log(item.roles[0].id);
       this.item.name = item.name;
       this.item.id = item.id;
       this.item.permisos = item.permisos;
+      this.selected = [];
       this.popupActive=true;
     },
     initValues() {
@@ -284,6 +289,7 @@ export default {
 }
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 
 <style lang="scss">
 .selectExample {
@@ -309,29 +315,31 @@ export default {
 }
 .multiselect__tags{
       border: 1px solid rgba(0, 0, 0, 0.2) !important;
-      background: #10163a !important;
       font-size: 12px;
+       z-index: 999999 !important;
 }
 
 .multiselect__single {
-     background: #10163a !important;
-     color: #c2c6dc !important;
+     color: #adadad !important;
      font-size: 12px !important;
+      z-index: 999999 !important;
 }
 
 .multiselect__placeholder {
-     color: #c2c6dc !important;
+     color: #adadad !important;
+      z-index: 999999 !important;
     font-size: 12px !important;
 }
 
 
 .multiselect--active {
-  z-index: 50;
+   z-index: 999999 !important;
   
 }
 .multiselect__option {  
     cursor: pointer !important;
     overflow: hidden !important;
+    z-index: 999999 !important;
     text-overflow: ellipsis !important;
     transition: all .2s ease;
         font-size: 12px;

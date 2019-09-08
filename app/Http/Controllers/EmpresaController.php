@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\Empresa;
+use App\Models\Tiposervicio;
+use App\Models\Responsable;
+use App\Models\Sucursal;
+use App\Models\Ciclofacturacion;
+use App\Models\Cicloproduccion;
+
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -15,8 +21,7 @@ class EmpresaController extends Controller
         return Validator::make($data, [
              'rut' => 'required',
              'dv' => 'required',
-             'razon_social' => 'required',
-             'giro' => 'required'                 
+             'razon_social' => 'required',               
          ]);
     }
     /**
@@ -53,7 +58,17 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = $this->validator($request->all());
+        //dd($request->all());
+        $datos = $request->all();
+        $empresa = $datos[0];
+        $servicio= $datos[1];
+        $responsables = $datos[2];
+        $sucursales = $datos[3];
+        $cicfac = $datos[4];
+        $cicprod = $datos[5];
+        
+        //Valida datos empresa
+        $validation = $this->validator( $empresa);
 
         if ($validation->fails()) {
 
@@ -65,32 +80,70 @@ class EmpresaController extends Controller
            
         }
 
-        $input = $request->all();
-        $rut = $input['rut'];
-        $dv = $input['dv'];
-        $razon_social = $input['razon_social'];
-        $giro = $input['giro'];
-        $produccion_id = 1;
-        $facturacion_id = 1;
-        $tipo_servicio_id = 1;
+        //Agrega Ciclo Produccion
+        $cicpro = Cicloproduccion::create($cicprod);
+        //Agrega Ciclo Facturacion
+        $cicfac = Ciclofacturacion::create($cicfac);
+      
+        //Agrega Empresa
+        $rut = $empresa['rut'];
+        $dv = $empresa['dv'];
+        $razon_social = $empresa['razon_social'];
+        $giro = $empresa['giro'];
+        $produccion_id = $cicpro->id;
+        $facturacion_id = $cicfac->id;
      
-
-        $empresa = Empresa::create(
+        $emp = Empresa::create(
          array(
-                 'rut'                  => $name,
-                 'dv'                   => $lastname,
-                 'razon_social'         => $rut,
-                 'giro'                 => $telefono,
+                 'rut'                  => $rut,
+                 'dv'                   => $dv,
+                 'razon_social'         => $razon_social,
+                 'giro'                 => $giro,
                  'produccion_id'        => $produccion_id,
                  'facturacion_id'       => $facturacion_id,    
-                 'tipo_servicio_id'     => $tipo_servicio_id,
               )
          );
+
+
+        //Agrega Tipo Servicio
+        $servicio["empresa_id"] =  $emp->id;
+        $tservicio = Tiposervicio::create($servicio);
+
+        //Agrega Sucursales
+         $auxSuc = array();
+         
+         foreach ($sucursales as $key => $itemsuc) {
+            try {
+                $direccion = $itemsuc['direccion'].','.$itemsuc['comuna'].','.$itemsuc['ciudad'].','.$itemsuc['pais'];  
+                //$geocode = Geocoder::geocode($direccion)->get()->first();
+                $geocode = app('geocoder')->geocode($direccion)->get()->first();
+                $itemsuc['lat'] = $geocode->getCoordinates()->getLatitude();
+                $itemsuc['lng'] = $geocode->getCoordinates()->getLongitude();
+              } catch (Exception $e) {
+                $itemsuc['lat'] = null;
+                $itemsuc['lng'] = null;
+            }         
+            $itemsuc["empresa_id"] = $emp->id;
+            $sucur = Sucursal::create($itemsuc);
+            array_push($auxSuc,$sucur); 
+         }
+         
+
+         //Agrega Responsables
+         $auxRes = array();
+
+         foreach ($responsables as $key => $itemres) {
+            $itemres["empresa_id"] = $emp->id;
+            $respon = Responsable::create($itemres);
+            array_push($auxRes,$respon); 
+         }
+
+        
         
          return response()->json(
             [
                 'status' => 'success',
-                'item' => $empresa->toArray()
+                'item' => $emp->toArray()
             ], 200);
     }
 
@@ -130,7 +183,16 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validation = $this->validator($request->all());
+
+        $datos = $request->all();
+        $empresa = $datos[0];
+        $servicio = $datos[1];
+        $responsables = $datos[2];
+        $sucursales = $datos[3];
+        $cicfac = $datos[4];
+        $cicprod = $datos[5];
+
+        $validation = $this->validator($empresa);
 
         if ($validation->fails()) {
 
@@ -141,29 +203,61 @@ class EmpresaController extends Controller
                 ], 300);
            
         }
-        $empresa = Empresa::where('id',$id)->first(); 
+        $emp = Empresa::where('id',$id)->first(); 
 
-        if(!is_null($empresa)){
-    
-            $input = $request->all();
-            $rut = $input['rut'];
-            $dv = $input['dv'];
-            $razon_social = $input['razon_social'];
-            $giro = $input['giro'];
-            $produccion_id = 1;
-            $facturacion_id = 1;
-            $tipo_servicio_id = 1;
-     
+        if(!is_null($emp)){
 
-        $empresa = Empresa::where('id', $id)->update(
+        //Actualizar Ciclo Produccion
+        Cicloproduccion::where('id', $cicprod['id'])->update($cicprod);
+      
+        //Actualizar Ciclo Facturacion
+        Ciclofacturacion::where('id', $cicfac['id'])->update($cicfac);
+
+        //Actualizar Tipo Servicio
+        Tiposervicio::where('id', $servicio['id'])->update($servicio);
+        
+        //Actualiza Sucursal   
+        $auxsuc = array_column($sucursales, 'id');
+        Sucursal::whereNotIn('id', $auxsuc)->delete();
+        foreach ($sucursales as $keysuc => $itemsuc) {    
+           try {
+              $direccion = $itemsuc['direccion'].','.$itemsuc['comuna'].','.$itemsuc['ciudad'].','.$itemsuc['pais'];  
+              //$geocode = Geocoder::geocode($direccion)->get()->first();
+              $geocode = app('geocoder')->geocode($direccion)->get()->first();
+              $itemsuc['lat'] = $geocode->getCoordinates()->getLatitude();
+              $itemsuc['lng'] = $geocode->getCoordinates()->getLongitude();
+            } catch (Exception $e) {
+              $itemsuc['lat'] = null;
+              $itemsuc['lng'] = null;
+           }
+           if (isset($itemsuc['id'])) {
+                Sucursal::where('id', $itemsuc['id'])->update($itemsuc);
+            }else{
+                $itemsuc['empresa_id'] = $id;
+                Sucursal::create($itemsuc);
+            }
+        }
+
+        //Actualiza Responsable   
+        $auxres = array_column($responsables, 'id');
+        Responsable::whereNotIn('id', $auxres)->delete();
+        foreach ($responsables as $keyres => $itemres) {
+            if (isset($itemres['id'])) {
+                Responsable::where('id', $itemres['id'])->update($itemres);
+            }else{
+                $itemres['empresa_id'] = $id;
+                Responsable::create($itemres);
+            }
+            
+        }
+
+        //Actualizar Empresa   
+        Empresa::where('id', $id)->update(
          array(
-                 'rut'                  => $name,
-                 'dv'                   => $lastname,
-                 'razon_social'         => $rut,
-                 'giro'                 => $telefono,
-                 'produccion_id'        => $produccion_id,
-                 'facturacion_id'       => $facturacion_id,    
-                 'tipo_servicio_id'     => $tipo_servicio_id,
+                'rut'                  => $empresa['rut'],
+                'dv'                   => $empresa['dv'],
+                'razon_social'         => $empresa['razon_social'],
+                'giro'                 => $empresa['giro'],
               )
          );
             
@@ -271,5 +365,26 @@ class EmpresaController extends Controller
         }
 
         
+    }
+
+    public function otros($id)
+    {
+
+        $empresa = Empresa::findOrFail($id);
+        $tiposervicio = Tiposervicio::where('empresa_id', $id)->get();
+        $responsables = Responsable::where('empresa_id', $id)->get();
+        $sucursales = Sucursal::where('empresa_id', $id)->get();
+        $cicfac = Ciclofacturacion::findOrFail($empresa->facturacion_id);
+        $cicpro = Cicloproduccion::findOrFail($empresa->produccion_id);
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'tiposervicio' => $tiposervicio->toArray(),
+                'responsables' => $responsables->toArray(),
+                'sucursales' => $sucursales->toArray(),
+                'cicfac' => $cicfac->toArray(),
+                'cicpro' => $cicpro->toArray(),
+            ], 200);
     }
 }

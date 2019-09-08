@@ -12,7 +12,7 @@ class Ciclofacturacion extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'dias' ,'inicio', 'fin',
+        'dias' ,'inicio', 'fin',
     ];
 
 }

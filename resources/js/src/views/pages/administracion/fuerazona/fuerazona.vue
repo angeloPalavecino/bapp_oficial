@@ -46,27 +46,30 @@
 
          <!-- POP UP -->
         <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR FUERA DE ZONA' : 'ACTUALIZAR FUERA DE ZONA')" 
-         :active.sync="popupActive"  @hidden="$cancelarPopUp()">
+         :active.sync="popupActive"   @close="$close($event)">
             <div class="p-5">
+               <div>
+                <vs-divider color="primary"><h5>Fuera de zona</h5></vs-divider>
+              </div>
               <!-- EMPRESA -->
-                <vs-select v-model="item.empresa_id" label="Empresa" name="empresa" class="mt-5 w-full" v-validate="'required'" >
+                <vs-select v-model="item.empresa_id" label="Empresa" name="empresa" class="mt-2 w-full" v-validate="'required'" >
                 <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
               </vs-select>
-              <span class="text-danger text-sm" v-show="errors.has('empresa')">{{ errors.first('empresa') }}</span>
+              <span class="text-danger text-sm" v-show="errors.has('empresa')" >{{ errors.first('empresa') }}</span>
               <!-- TIPO -->
-              <vs-select v-model="item.tipo" label="Tipo" name="tipo" class="mt-5 w-full" v-validate="'required'" >
+              <vs-select v-model="item.tipo" label="Tipo" name="tipo" class="mt-2 w-full" v-validate="'required'" >
                 <vs-select-item :key="item.id" :value="item.id" :text="item.descripcion" v-for="item in tipo_choices"  />
               </vs-select>
-              <span class="text-danger text-sm" v-show="errors.has('tipo')">{{ errors.first('tipo') }}</span>  
+              <span class="text-danger text-sm" v-show="errors.has('tipo')" >{{ errors.first('tipo') }}</span>  
               <!-- COMUNA -->
               <vs-input v-validate="'required'" label-placeholder="Comuna" name="comuna" v-model="item.comuna" 
-              :danger="(errors.first('rut') ? true : false)" val-icon-danger="clear" class="mt-5 w-full" />
-              <span class="text-danger text-sm" v-show="errors.has('comuna')">{{ errors.first('comuna') }}</span>
+              :danger="(errors.first('rut') ? true : false)" val-icon-danger="clear" class="mt-2 w-full" />
+              <span class="text-danger text-sm" v-show="errors.has('comuna')" >{{ errors.first('comuna') }}</span>
               <!-- DISTANCIA -->
                 <vs-input v-validate="'required|numeric'" label-placeholder="Distancia" name="distancia" v-model="item.distancia" 
-              :danger="(errors.first('distancia') ? true : false)" val-icon-danger="clear" class="mt-5 w-full" />   
+              :danger="(errors.first('distancia') ? true : false)" val-icon-danger="clear" class="mt-2 w-full" />   
              
-              <span class="text-danger text-sm" v-show="errors.has('distancia')">{{ errors.first('distancia') }}</span>
+              <span class="text-danger text-sm" v-show="errors.has('distancia')" >{{ errors.first('distancia') }}</span>
            
 
             <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
@@ -193,7 +196,7 @@ export default {
     refrescaOtrosDatos() {
         //Carga Empresa
         const thisIns = this;
-          this.$http.get('empresa/empresa')
+          this.$http.get('empresas/empresas')
           .then(function (response) {
             thisIns.empresa_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })
@@ -214,6 +217,7 @@ export default {
       this.item.comuna = item.comuna;
       this.item.distancia = item.distancia;
       this.item.tipo = item.tipo;
+      this.selected = [];
       this.popupActive = true;
     },
     initValues() {

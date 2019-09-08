@@ -70,7 +70,7 @@
       this.$validator.validateAll().then(result =>{
         if (result) {
 
-         this.$http.post(url, this.item) 
+         this.$http.post(url, this.item) //this.item
             .then((res) =>{
 
               this.$vs.loading({ type: 'radius' , scale: 0.6 });
@@ -109,7 +109,7 @@
      $submitEliminar(x, index) {
         this.ite = x;
         this.ind = index;
-    
+        this.selected = [];
         this.$vs.dialog({
                 type: 'confirm',
                 color: 'danger',
@@ -161,6 +161,7 @@
     $cancelarBorrado() {
           delete this.ite;
           delete this.ind;
+          this.selected = [];
     },
     //Acepta el borrado masivo
     $aceptaBorradoMasivo() {
@@ -197,6 +198,10 @@
 
    
      },
+    //Cancela el borrado masivo
+     $cancelarBorradoMasivo() {
+          this.selected = [];
+    },
     //Exporta CSV
     $csvExport(arrData) {
       let csvContent = "data:text/csv;charset=utf-8,";
@@ -215,8 +220,9 @@
     },
     //Cierra PopUP
     $cancelarPopUp(){
-
+      
       this.initValues();
+      this.selected = [];
       this.popupActive=false;
       
     },
@@ -225,6 +231,7 @@
   
       this.initValues();
       this.modoEditar = false; 
+      this.selected = [];
       this.popupActive=true;
       
     },
@@ -243,6 +250,7 @@
                   title: `Borrado masivo`,
                   text: `Esta seguro que desea eliminar todos lo registros seleccionados?`,
                   accept: this.$aceptaBorradoMasivo,
+                  cancel: this.$cancelarBorradoMasivo,
               
                 })
               
@@ -266,6 +274,10 @@
         default:
            return;
     }
+    },
+    //Cierra Pop-Up Evento
+    $close(event,con){
+      this.selected = [];
     }
       
     },

@@ -46,17 +46,38 @@
 
          <!-- POP UP -->
         <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR EXCEPCION' : 'ACTUALIZAR EXCEPCION')"  
-        :active.sync="popupActive" @hidden="$cancelarPopUp()">
+        :active.sync="popupActive"  @close="$close($event)">
             <div class="p-5">
+               <div>
+                <vs-divider color="primary"><h5>Excepciones</h5></vs-divider>
+              </div>
               <!-- RUT -->
               <vs-input v-validate="'required'" label-placeholder="Rut" name="rut" v-model="item.rut" 
               :danger="(errors.first('rut') ? true : false)" val-icon-danger="clear" class="mt-5 w-full" />
-              <span class="text-danger text-sm" v-show="errors.has('rut')">{{ errors.first('rut') }}</span>
+              <span class="text-danger text-sm" v-show="errors.has('rut')" >{{ errors.first('rut') }}</span>
               <!-- DIRECCION -->
-              <vs-input v-validate="'required'" label-placeholder="Direccion" name="direccion" v-model="item.direccion" 
-              :danger="(errors.first('direccion') ? true : false)" val-icon-danger="clear" class="mt-5 w-full" />
-              <span class="text-danger text-sm" v-show="errors.has('direccion')">{{ errors.first('direccion') }}</span>
-           
+              <vs-input v-validate="'required'" type="hidden" name="direccion" v-model="item.direccion"/>
+              
+
+                <div class="vs-component vs-con-input-label vs-input mt-5 w-full vs-input-primary is-label-placeholder">
+                <div class="vs-con-input">
+                <input type="text" required ref="autocomplete"  name="direccion" v-model="item.direccion" 
+                  :class="(item.direccion ? 'vs-inputx vs-input--input normal hasValue' : 'vs-inputx vs-input--input normal')" 
+                 
+                  :style="(errors.first('direccion') ? 'border: 1px solid rgba(var(--vs-danger),1)!important;' : 'border: 1px solid rgba(0, 0, 0, 0.2);')" 
+                 placeholder="" @input="myChangeFunction(item)" >
+                   <span class="input-span-placeholder vs-input--placeholder normal normal vs-placeholder-label">
+        Direccion
+      </span>
+                  <span v-show="errors.has('direccion')" class="input-icon-validate vs-input--icon-validate" style="background: rgba(var(--vs-danger),.2);">
+                    <i class="vs-icon notranslate icon-scale material-icons null" valiconpack="material-icons" style="color: rgba(var(--vs-danger),1);">clear</i></span>
+                
+               
+                
+                </div>
+                <span class="text-danger text-sm" v-show="errors.has('direccion')" >{{ errors.first('direccion') }}</span>
+                </div>
+
 
             <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
               <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR EXCEPCION</vs-button>
@@ -162,6 +183,14 @@ export default {
     },
   },
   methods: {
+
+    myChangeFunction(i){
+     // console.log(i);
+    },
+   asignaDireccion() {
+     //console.log(this.autocomplete.getPlace().formatted_address);
+     this.item.direccion = this.autocomplete.getPlace().formatted_address;
+    },
      editar(item){      
       this.initValues();
       this.modoEditar = true; 
@@ -170,6 +199,7 @@ export default {
       this.item.direccion = item.direccion;
       this.item.lat = item.lat;
       this.item.lng = item.lng;
+      this.selected = [];
       this.popupActive=true;
     },
     initValues() {
@@ -184,6 +214,11 @@ export default {
   },
   mounted() {
     this.isMounted = true;
+    this.autocomplete = new google.maps.places.Autocomplete((this.$refs.autocomplete),{
+      types: ['geocode']
+      
+      });
+    this.autocomplete.addListener('place_changed', this.asignaDireccion);
   }
 }
 </script>
@@ -267,5 +302,13 @@ export default {
       justify-content: center;
     }
   }
+}
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 999999;
+    position: fixed;
+    display: inline-block;
+    float: left;
 }
 </style>

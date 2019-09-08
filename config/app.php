@@ -162,7 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-
+        //Toin0u\Geocoder\GeocoderServiceProvider::class,
+        Geocoder\Laravel\Providers\GeocoderService::class,
         /*
          * Package Service Providers...
          */

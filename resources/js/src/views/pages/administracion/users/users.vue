@@ -46,36 +46,39 @@
 
         <!-- POP UP -->
         <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR USUARIO' : 'ACTUALIZAR USUARIO')" 
-         :active.sync="popupActive"  @hidden="$cancelarPopUp()">
+         :active.sync="popupActive"   @close="$close($event)">
         <div class="mt-5">
       <form-wizard color="rgba(var(--vs-primary), 1)" errorColor="rgba(var(--vs-danger), 1)" 
       :title="(modoEditar == false ? 'AGREGAR USUARIO' : 'ACTUALIZAR USUARIO')" 
       :subtitle="(modoEditar == false ? 'Ingrese todos los campos para ingresar el usuario' : 'Modifique los campos que desee actualizar')" 
       :finishButtonText="(modoEditar == false ? 'Agregar' : 'Actualizar')" ref="wizard">
-        <tab-content title="Paso 1" class="mb-5" icon="feather icon-home" :before-change="validateStep1">
+        <tab-content title="Paso 1" class="mb-5" icon="feather icon-user" :before-change="validateStep1">
 
           <!-- tab 1 content -->
           <form data-vv-scope="step-1">
+            <div>
+                <vs-divider color="primary"><h5>Datos Usuarios</h5></vs-divider>
+              </div>
           <div class="vx-row">
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-input label="Nombre" v-model="item.name" class="w-full" name="name" v-validate="'required|alpha'" 
+            <div class="vx-col md:w-1/2 w-full mt-2">
+              <vs-input label="Nombre" v-model="item.name" class="w-full" name="name" v-validate="'required|alpha_spaces'" 
              :danger="(errors.first('step-1.name') ? true : false)" val-icon-danger="clear" />
-              <span class="text-danger">{{ errors.first('step-1.name') }}</span>
+              <span class="text-danger text-sm">{{ errors.first('step-1.name') }}</span>
             </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-input label="Apellido"  v-model="item.lastname" class="w-full" name="lastname" v-validate="'required|alpha'" 
+            <div class="vx-col md:w-1/2 w-full mt-2">
+              <vs-input label="Apellido"  v-model="item.lastname" class="w-full" name="lastname" v-validate="'required|alpha_spaces'" 
               :danger="(errors.first('step-1.lastname') ? true : false)" val-icon-danger="clear" />
-              <span class="text-danger">{{ errors.first('step-1.lastname') }}</span>
+              <span class="text-danger text-sm">{{ errors.first('step-1.lastname') }}</span>
             </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
+            <div class="vx-col md:w-1/2 w-full mt-2">
               <vs-input type="Email" label="Email"  v-model="item.email" class="w-full" name="email" v-validate="'required|email'" 
               :danger="(errors.first('step-1.email') ? true : false)" val-icon-danger="clear" />
-              <span class="text-danger">{{ errors.first('step-1.email') }}</span>
+              <span class="text-danger text-sm">{{ errors.first('step-1.email') }}</span>
             </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
+            <div class="vx-col md:w-1/2 w-full mt-2">
                 <vs-input  label="Rut"  v-model="item.rut" class="w-full" name="rut" v-validate="'required|alpha_dash'" 
                 :danger="(errors.first('step-1.rut') ? true : false)" val-icon-danger="clear" />
-              <span class="text-danger">{{ errors.first('step-1.rut') }}</span>
+              <span class="text-danger text-sm">{{ errors.first('step-1.rut') }}</span>
             </div>
           </div>
           </form>
@@ -84,36 +87,39 @@
         <!-- tab 2 content -->
         <tab-content title="Paso 2" class="mb-5" icon="feather icon-briefcase" :before-change="validateStep2">
           <form data-vv-scope="step-2">
+            <div>
+                <vs-divider color="primary"><h5>Informacion adicional</h5></vs-divider>
+            </div>
           <div class="vx-row">
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-select v-model="item.roles" label="Roles" name="roles" class="mt-5 w-full" v-validate="'required'" >
+            <div class="vx-col md:w-1/2 w-full mt-2">
+              <vs-select v-model="item.roles" label="Roles" name="roles" class="w-full" v-validate="'required'" >
                 <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in roles_choices"  />
               </vs-select>
               <span class="text-danger text-sm" v-show="errors.has('step-2.roles')">{{ errors.first('step-2.roles') }}</span>
             </div>
-             <div class="vx-col md:w-1/2 w-full mt-5">
-                     <vs-select v-model="item.empresa_id" label="Empresa" name="empresa" class="mt-5 w-full" v-validate="'required'" >
+             <div class="vx-col md:w-1/2 w-full mt-2">
+                     <vs-select v-model="item.empresa_id" label="Empresa" name="empresa" class="w-full" v-validate="'required'" >
                 <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
               </vs-select>
               <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span>
           
              </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
-                    <vs-input label="Telefono" v-model="item.telefono" class="mt-5 w-full" name="telefono" v-validate="'required|numeric'" 
+            <div class="vx-col md:w-1/2 w-full mt-2">
+                    <vs-input label="Telefono" v-model="item.telefono" class="w-full" name="telefono" v-validate="'required|numeric'" 
               :danger="(errors.first('step-2.telefono') ? true : false)" val-icon-danger="clear"/>
-              <span class="text-danger">{{ errors.first('step-2.telefono') }}</span>
+              <span class="text-danger text-sm">{{ errors.first('step-2.telefono') }}</span>
              </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
+            <div class="vx-col md:w-1/2 w-full mt-2">
             </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
+            <div class="vx-col md:w-1/2 w-full mt-2">
                   <vs-input type="password" v-validate="(modoEditar == false ? 'required|min:8' : 'min:8')" ref="password" label="Password" name="password" 
-                  v-model="item.password"  class="mt-5 w-full" 
+                  v-model="item.password"  class="w-full" 
                   :danger="(errors.first('step-2.password') ? true : false)" val-icon-danger="clear"/>
                   <span class="text-danger text-sm" v-show="errors.has('step-2.password')" >{{ errors.first('step-2.password') }}</span>
                 </div>
-              <div class="vx-col md:w-1/2 w-full mt-5">
+              <div class="vx-col md:w-1/2 w-full mt-2">
                   <vs-input type="password" v-validate="(modoEditar == false ? 'required|min:8|confirmed:password' : 'min:8|confirmed:password')" data-vv-as="password" label="Confirmar Password" 
-                  name="password_confirmation"  class="mt-5 w-full" v-model="item.password_confirmation"
+                  name="password_confirmation"  class="w-full" v-model="item.password_confirmation"
                   :danger="(errors.first('step-2.password_confirmation') ? true : false)" val-icon-danger="clear"/>
                   <span class="text-danger text-sm" v-show="errors.has('step-2.password_confirmation')">{{ errors.first('step-2.password_confirmation') }}</span>
            
@@ -242,11 +248,11 @@ const dict = {
     custom: {
         name: {
             required: 'El nombre es requerido',
-            alpha: "El nombre solo puede contener letras"
+            alpha_spaces: "El nombre solo puede contener letras"
         },
         lastname: {
             required: 'El apellido es requerido',
-            alpha: "El apellido solo puede contener letras"
+            alpha_spaces: "El apellido solo puede contener letras"
         },
         rut: {
             required: 'El rut es requerido',
@@ -254,7 +260,7 @@ const dict = {
         },
         email: {
             required: 'El email es requerido',
-            email: "Ingrese un emil valido"
+            email: "Ingrese un email valido"
         },
         roles: {
             required: 'El rol es requerido',
@@ -363,7 +369,7 @@ export default {
               icon:'icon-alert-circle'})
           });
         //Carga Empresa
-          this.$http.get('empresa/empresa')
+          this.$http.get('empresas/empresas')
           .then(function (response) {
             thisIns.empresa_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })
@@ -390,6 +396,7 @@ export default {
       this.item.roles = item.roles[0].id;
       this.item.id = item.id;
       //this.usuario = item;
+      this.selected = [];
       this.popupActive=true;
     },
 

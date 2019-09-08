@@ -12,6 +12,6 @@ class Empresa extends Model
      * @var array
      */
     protected $fillable = [
-       'produccion_id','facturacion_id','tipo_servicio_id', 'rut', 'dv' ,'razon_social', 'giro',
+       'produccion_id','facturacion_id','rut', 'dv' ,'razon_social', 'giro',
     ];
 }
