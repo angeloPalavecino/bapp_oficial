@@ -81,6 +81,7 @@ class DriverController extends Controller
     public function store(Request $request)
     {
        
+        //User
         $dataUser = $request->all()['user'];
         $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
 
@@ -114,6 +115,7 @@ class DriverController extends Controller
 
         $returnUser->assignRole(1);
 
+        //Driver
         $dataDriver['habilitado'] = 1;
         $dataDriver['user_id'] = $idUser;
         $validationDriver = $this->validatorDriver($dataDriver);
@@ -127,13 +129,11 @@ class DriverController extends Controller
                 ], 300);
            
         }
-
+        
         $returnDriver = Driver::create($dataDriver);
-        dd($returnDriver);
 
         $idDriver = $returnDriver->id;
 
-        dd($idDriver);
         if ($idDriver < 1) {
             return response()->json(
                 [
@@ -141,8 +141,11 @@ class DriverController extends Controller
                     'message' => 'Problemas al ingresar el Conductor',
                 ], 300);
         }
+        //Documento Driver
 
+        //Car
         
+        //Dcoumento Car
        
     }
 

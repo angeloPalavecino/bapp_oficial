@@ -113,7 +113,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.email') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         type="Telefono"
                         label="Telefono"
@@ -138,49 +138,49 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.rut') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label="Ciudad"
                         v-model="driver.ciudad"
                         class="w-full"
                         name="ciudad"  
-						v-validate="'required'"
+						            v-validate="'required'"
                         :danger="(errors.first('step-1.ciudad') ? true : false)"
                         val-icon-danger="clear"                      
                       />
                       <span class="text-danger">{{ errors.first('step-1.ciudad') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label="Comuna"
                         v-model="driver.comuna"
                         class="w-full"
                         name="comuna"  
-						v-validate="'required'"
+						            v-validate="'required'"
                         :danger="(errors.first('step-1.comuna') ? true : false)"
                         val-icon-danger="clear"                      
                       />
                       <span class="text-danger">{{ errors.first('step-1.comuna') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label="Dirección"
                         v-model="driver.direccion"
                         class="w-full"
                         name="direccion"  
-						v-validate="'required'"
+						            v-validate="'required'"
                         :danger="(errors.first('step-1.direccion') ? true : false)"
                         val-icon-danger="clear"                      
                       />
                       <span class="text-danger">{{ errors.first('step-1.direccion') }}</span>
                     </div>
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label="Numeración"
                         v-model="driver.numeracion"
                         class="w-full"
                         name="numeracion"  
-						v-validate="'required'"
+						            v-validate="'required'"
                         :danger="(errors.first('step-1.numeracion') ? true : false)"
                         val-icon-danger="clear"                      
                       />
@@ -196,12 +196,12 @@
               <tab-content
                 title="Datos Movil"
                 class="mb-5"
-                icon="feather icon-directions"
+                icon="feather icon-home"
                 :before-change="validateStep2"
               >
                 <form data-vv-scope="step-2">
                   <div class="vx-row">
-					<div class="vx-col md:w-1/2 w-full mt-5">
+					          <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
                         label="Tipo Vehículo"
                         v-model="car.tipo"
@@ -213,6 +213,90 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
                     </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Marca"
+                        v-model="car.marca"
+                        class="w-full"
+                        name="marca"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.marca') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.marca') }}</span>
+                    </div>    
+                    <!-- <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Tipo Vehículo"
+                        v-model="car.tipo"
+                        class="w-full"
+                        name="tipo"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                    </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Tipo Vehículo"
+                        v-model="car.tipo"
+                        class="w-full"
+                        name="tipo"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                    </div>  
+                    <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Tipo Vehículo"
+                        v-model="car.tipo"
+                        class="w-full"
+                        name="tipo"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                    </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Tipo Vehículo"
+                        v-model="car.tipo"
+                        class="w-full"
+                        name="tipo"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                    </div>  
+                    <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Tipo Vehículo"
+                        v-model="car.tipo"
+                        class="w-full"
+                        name="tipo"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                    </div>
+         					  <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label="Tipo Vehículo"
+                        v-model="car.tipo"
+                        class="w-full"
+                        name="tipo"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                    </div>          -->
                   </div>
                 </form>
               </tab-content>
