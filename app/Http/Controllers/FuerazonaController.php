@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ 
 use Validator;
 use App\Models\Fuerazona;
 use Illuminate\Http\Request;

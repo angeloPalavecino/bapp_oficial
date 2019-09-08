@@ -67,7 +67,13 @@ export default [
       slug: "fuerazona",
       icon: "",
       submenu: ""
-    },]
+    },{
+      url: "/pages/administracion/moviles/moviles",
+      name: "Moviles",
+      slug: "moviles",
+      icon: "",
+      submenu: ""
+    }]
   },
   
   

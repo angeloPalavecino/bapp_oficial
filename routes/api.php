@@ -254,4 +254,20 @@ Route::prefix('v1')->group(function () {
 
        });
     });
+
+    //MOVILES
+    Route::prefix('driver')->group(function () {
+        //    Route::middleware('auth:api')->group(function () {
+        // Excepciones
+            Route::get('driver', 'DriverController@index');
+            Route::get('driver/create', 'DriverController@create');
+            Route::get('driver/{id}', 'DriverController@show');
+            Route::delete('driver/{id}', 'DriverController@destroy');
+            Route::post('driver/borrar', 'DriverController@borrar');
+            Route::put('driver/{id}', 'DriverController@update');
+            Route::post('driver/store', 'DriverController@store');
+            Route::get('driver/{id}/edit', 'DriverController@edit');
+       
+        //   });
+    });
 });
