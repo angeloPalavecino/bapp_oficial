@@ -3480,7 +3480,7 @@ __webpack_require__.r(__webpack_exports__);
     submenu: ""
   }, {
     url: "/pages/administracion/fuerazona/fuerazona",
-    name: "Fuera de zona",
+    name: "Fuera de zona2",
     slug: "fuerazona",
     icon: "",
     submenu: ""
