@@ -278,7 +278,28 @@
     //Cierra Pop-Up Evento
     $close(event,con){
       this.selected = [];
+    },
+
+     //Carga datos perfil
+    $cargarDatosNavegacion(){
+      
+       const thisIns = this;
+        const url = thisIns.ruta
+        this.$http.get(url)
+          .then(function (response) {
+              thisIns.item = response.data.items 
+          })
+          .catch(function (error) {
+            thisIns.$vs.notify({
+              title:'Error',
+              text: error,
+              color:'danger',
+              iconPack: 'feather',
+              icon:'icon-alert-circle'})
+          });
     }
+
+    
       
     },
   };
