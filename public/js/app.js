@@ -5737,6 +5737,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
  // For custom error message
 
@@ -43089,7 +43095,7 @@ var render = function() {
                               staticClass: "mb-5",
                               attrs: {
                                 title: "Datos Conductor",
-                                icon: "feather icon-home",
+                                icon: "feather icon-user",
                                 "before-change": _vm.validateStep1
                               }
                             },
@@ -43098,6 +43104,18 @@ var render = function() {
                                 "form",
                                 { attrs: { "data-vv-scope": "step-1" } },
                                 [
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "vs-divider",
+                                        { attrs: { color: "primary" } },
+                                        [_c("h5", [_vm._v("Datos Conductor")])]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
                                   _c("div", { staticClass: "vx-row" }, [
                                     _c(
                                       "div",
@@ -43608,7 +43626,7 @@ var render = function() {
                               staticClass: "mb-5",
                               attrs: {
                                 title: "Datos Movil",
-                                icon: "feather icon-directions",
+                                icon: "feather icon-truck",
                                 "before-change": _vm.validateStep2
                               }
                             },
@@ -43617,6 +43635,18 @@ var render = function() {
                                 "form",
                                 { attrs: { "data-vv-scope": "step-2" } },
                                 [
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "vs-divider",
+                                        { attrs: { color: "primary" } },
+                                        [_c("h5", [_vm._v("Datos Movil")])]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
                                   _c("div", { staticClass: "vx-row" }, [
                                     _c(
                                       "div",

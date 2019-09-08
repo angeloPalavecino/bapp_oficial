@@ -71,10 +71,13 @@
 			  <tab-content
                 title="Datos Conductor"
                 class="mb-5"
-                icon="feather icon-home"
+                icon="feather icon-user"
                 :before-change="validateStep1"
               >
                 <form data-vv-scope="step-1">
+                  <div>
+                <vs-divider color="primary"><h5>Datos Conductor</h5></vs-divider>
+              </div>
                   <div class="vx-row">
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -196,10 +199,13 @@
               <tab-content
                 title="Datos Movil"
                 class="mb-5"
-                icon="feather icon-directions"
+                icon="feather icon-truck"
                 :before-change="validateStep2"
               >
                 <form data-vv-scope="step-2">
+                   <div>
+                <vs-divider color="primary"><h5>Datos Movil</h5></vs-divider>
+              </div>
                   <div class="vx-row">
 					<div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
