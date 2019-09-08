@@ -231,78 +231,78 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.marca') }}</span>
                     </div>    
-                    <!-- <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label-placeholder="Tipo Vehículo"
-                        v-model="car.tipo"
+                        label-placeholder="Modelo"
+                        v-model="car.modelo"
                         class="w-full"
-                        name="tipo"
+                        name="modelo"
                         v-validate="'required'"
-                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        :danger="(errors.first('step-2.modelo') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.modelo') }}</span>
                     </div>
          					  <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Tipo Vehículo"
-                        v-model="car.tipo"
+                        label="Año"
+                        v-model="car.ano"
                         class="w-full"
-                        name="tipo"
+                        name="ano"
                         v-validate="'required'"
-                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        :danger="(errors.first('step-2.ano') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.ano') }}</span>
                     </div>  
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Tipo Vehículo"
-                        v-model="car.tipo"
+                        label="N° Motor"
+                        v-model="car.motor"
                         class="w-full"
-                        name="tipo"
+                        name="motor"
                         v-validate="'required'"
-                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        :danger="(errors.first('step-2.motor') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.motor') }}</span>
                     </div>
          					  <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Tipo Vehículo"
-                        v-model="car.tipo"
+                        label="N° Patente"
+                        v-model="car.patente"
                         class="w-full"
-                        name="tipo"
+                        name="patente"
                         v-validate="'required'"
-                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        :danger="(errors.first('step-2.patente') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.patente') }}</span>
                     </div>  
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Tipo Vehículo"
-                        v-model="car.tipo"
+                        label="Color"
+                        v-model="car.color"
                         class="w-full"
-                        name="tipo"
+                        name="color"
                         v-validate="'required'"
-                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        :danger="(errors.first('step-2.color') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.color') }}</span>
                     </div>
          					  <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Tipo Vehículo"
-                        v-model="car.tipo"
+                        label="N° Asientos"
+                        v-model="car.asientos"
                         class="w-full"
-                        name="tipo"
+                        name="asientos"
                         v-validate="'required'"
-                        :danger="(errors.first('step-2.tipo') ? true : false)"
+                        :danger="(errors.first('step-2.asientos') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
-                    </div>          -->
+                      <span class="text-danger">{{ errors.first('step-2.asientos') }}</span>
+                    </div>         
                   </div>
                 </form>
               </tab-content>
@@ -424,23 +424,23 @@ const dict = {
     rut: {
       required: "El rut es requerido",
       alpha_dash: "Ingrese un rut valido"
-	},
+	  },
     ciudad: {
       required: "La ciudad es requerida",
       email: "Ingrese una ciudad valida"
-	}, 
-	comuna: {
-      required: "La comuna es requerida",
-      email: "Ingrese una comuna valida"
-	}, 
-	direccion: {
-      required: "La dirección es requerida",
-      email: "Ingrese una dirección valida"
-	},
+  	}, 
+    comuna: {
+        required: "La comuna es requerida",
+        email: "Ingrese una comuna valida"
+    }, 
+    direccion: {
+        required: "La dirección es requerida",
+        email: "Ingrese una dirección valida"
+    },
     numeracion: {
-      required: "La numeración es requerida",
-      email: "Ingrese una numeración valida"
-	},
+        required: "La numeración es requerida",
+        email: "Ingrese una numeración valida"
+    },
     email: {
       required: "El email es requerido",
       email: "Ingrese un emil valido"
@@ -448,10 +448,12 @@ const dict = {
     telefono: {
       required: "El telefono es requerido",
       numeric: "El numero de telefono debe ser valido"
-	},
-	tipo: {
-      required: "El tipo es requerido",
-      numeric: "El numero de telefono debe ser valido"
+	  },
+    tipo: {
+        required: "El tipo es requerido",
+    },
+    marca: {
+      required: "La marca es requerida",
     },
     
   }
@@ -582,9 +584,9 @@ export default {
 
     initValues() {
       //this.$refs.wizard.navigateToTab(0);
-	  this.item = {};
-	  this.car = {};
-	  this.user = {};
+	    this.item = {};
+	    this.car = {};
+	    this.user = {};
       this.errors.clear();
       this.$refs.wizard.reset();
       //this.modoEditar = false;
