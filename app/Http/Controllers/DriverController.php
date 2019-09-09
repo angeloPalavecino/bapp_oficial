@@ -105,7 +105,7 @@ class DriverController extends Controller
         $dataCar = $request->all()['car'];
 
         $dataUser['habilitado'] = 1;
-        $dataUser['empresa_id'] = 1;
+        $dataUser['empresa_id'] = 6; //AGREGAR EMPRESA 0 "SIN EMPRESA"
         $rut = substr($dataUser['rut'], 0, -1);
         $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
 
