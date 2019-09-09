@@ -404,6 +404,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -433,7 +436,10 @@ __webpack_require__.r(__webpack_exports__);
       },
       autoFocusSearch: false,
       showBookmarkPagesDropdown: false,
-      item: {}
+      item: {
+        imagen: "avatar.png"
+      },
+      ruta: '/users/'
     };
   },
   watch: {
@@ -478,7 +484,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.$cargarDatosNavegacion();
+    this.$cargarDatosPerfil();
   },
   methods: {
     showSidebar: function showSidebar() {
@@ -2014,7 +2020,7 @@ var render = function() {
                   attrs: {
                     autoFocus: _vm.showFullSearch,
                     data: _vm.navbarSearchAndPinList,
-                    placeholder: "Search...",
+                    placeholder: "Buscar...",
                     inputClassses:
                       "w-full vs-input-no-border vs-input-no-shdow-focus no-icon-border",
                     icon: "SearchIcon",
@@ -2089,7 +2095,8 @@ var render = function() {
                         staticClass:
                           "rounded-full shadow-md cursor-pointer block",
                         attrs: {
-                          src: __webpack_require__(/*! ../../../../assets/images/portrait/small/avatar-s-11.png */ "./resources/assets/images/portrait/small/avatar-s-11.png"),
+                          src: __webpack_require__("./resources/assets/images/profile/avatar sync recursive ^\\.\\/.*$")("./" +
+                            _vm.item.imagen),
                           alt: "",
                           width: "40",
                           height: "40"
@@ -2112,7 +2119,9 @@ var render = function() {
                                   "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
                                 on: {
                                   click: function($event) {
-                                    return _vm.$router.push("/pages/profile")
+                                    return _vm.$router.push(
+                                      "/pages/administracion/users/perfil"
+                                    )
                                   }
                                 }
                               },
@@ -2904,17 +2913,6 @@ module.exports = "/images/logo.png?663d35ecbe17dc3def8213bd4503f2b8";
 
 /***/ }),
 
-/***/ "./resources/assets/images/portrait/small/avatar-s-11.png":
-/*!****************************************************************!*\
-  !*** ./resources/assets/images/portrait/small/avatar-s-11.png ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/images/avatar-s-11.png?51a23c074bd7469a69e220c62dce541a";
-
-/***/ }),
-
 /***/ "./resources/js/src/components/vx-auto-suggest/VxAutoSuggest.vue":
 /*!***********************************************************************!*\
   !*** ./resources/js/src/components/vx-auto-suggest/VxAutoSuggest.vue ***!
@@ -3075,15 +3073,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/src/layouts/components/TheNavbar.vue ***!
   \***********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TheNavbar_vue_vue_type_template_id_71a5bfd2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TheNavbar.vue?vue&type=template&id=71a5bfd2& */ "./resources/js/src/layouts/components/TheNavbar.vue?vue&type=template&id=71a5bfd2&");
 /* harmony import */ var _TheNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TheNavbar.vue?vue&type=script&lang=js& */ "./resources/js/src/layouts/components/TheNavbar.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _TheNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _TheNavbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -3113,7 +3110,7 @@ component.options.__file = "resources/js/src/layouts/components/TheNavbar.vue"
 /*!************************************************************************************!*\
   !*** ./resources/js/src/layouts/components/TheNavbar.vue?vue&type=script&lang=js& ***!
   \************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

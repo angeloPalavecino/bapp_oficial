@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\User;
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -272,19 +273,53 @@ class UserController extends Controller
         
     }
 
-    public function perfil(Request $request, $id)
+    public function perfil(Request $request)
     {
-
-        $user = User::with('roles')->where('id',$id)->get(); 
-      
-        //$user = User::findOrFail('1');
-        //$user->syncRoles('1');
-        //$user = User::find($id);
-
+        $user = User::with('roles')->where('id',Auth::user()->id)->get()->toArray(); 
+        
+        $user[0]['name'] = ucwords($user[0]['name']);
+        $user[0]['lastname'] = ucwords($user[0]['lastname'] );
+        
+        $emp = Empresa::find($user[0]['empresa_id']);
+        
+        $user[0]['nombreEmpr'] = $emp['razon_social'];
+        
         return response()->json(
             [
                 'status' => 'success',
-                'item' => $user->toArray(),
+                'item' => $user,
+            ], 200);
+    }
+
+    public function cambiarpass(Request $request)
+    {
+        
+        $validar = array(
+            'password' => 'required|min:8|confirmed'
+        );
+        
+        $validation = Validator::make($request->all(), $validar);
+
+        if ($validation->fails()) {
+
+             return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validation->errors(),
+                ], 300);
+        }
+
+        $id = Auth::user()->id;
+        $password = Hash::make($request->get('password'));
+
+        //Actualiza Clave
+        User::where('id', $id)->update(array(
+            'password'     => $password,
+         ));
+        
+        return response()->json(
+            [
+                'status' => 'success',
             ], 200);
     }
 
