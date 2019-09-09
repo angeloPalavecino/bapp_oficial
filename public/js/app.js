@@ -5434,7 +5434,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-form-wizard/dist/vue-form-wizard.min.css */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.min.css");
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 //
 //
 //
@@ -5844,60 +5846,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
  // For custom error message
 
@@ -5967,11 +5916,12 @@ var dict = {
   }
 }; // register custom messages
 
-vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize("en", dict);
+vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     FormWizard: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["FormWizard"],
-    TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"]
+    TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"],
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   data: function data() {
     return {
@@ -6017,17 +5967,17 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize("en", dict);
         });
       });
     },
-    validateStep3: function validateStep3() {
+    validateStep2: function validateStep2() {
       var _this2 = this;
 
       return new Promise(function (resolve, reject) {
-        _this2.$validator.validateAll("step-3").then(function (result) {
+        _this2.$validator.validateAll("step-2").then(function (result) {
           if (result) {
-            if (_this2.modoEditar == false) {
-              _this2.item.driver = _this2.driver;
-              _this2.item.user = _this2.user;
-              _this2.item.car = _this2.car;
+            _this2.item.driver = _this2.driver;
+            _this2.item.user = _this2.user;
+            _this2.item.car = _this2.car;
 
+            if (_this2.modoEditar == false) {
               _this2.$submitAgregar();
             } else {
               _this2.$submitActualizar();
@@ -6073,18 +6023,29 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize("en", dict);
       });
     },
     editar: function editar(item) {
+      console.log(item);
       this.initValues();
       this.modoEditar = true;
-      /* this.item.email = item.email;
-      this.item.name = item.name;
-      this.item.lastname = item.lastname;
-      this.item.rut = item.rut;
-      this.item.telefono = item.telefono;
-      this.item.habilitado = item.habilitado;
-      this.item.roles = item.roles[0].id;
-      this.item.id = item.id;*/
-      //this.usuario = item;
-
+      this.user.email = item.email;
+      this.user.name = item.name;
+      this.user.lastname = item.lastname;
+      this.user.rut = item.rut;
+      this.user.telefono = item.telefono;
+      this.user.habilitado = item.habilitado;
+      this.driver.ciudad = item.ciudad;
+      this.driver.comuna = item.comuna;
+      this.driver.direccion = item.direccion;
+      this.driver.numeracion = item.numeracion;
+      this.car.tipo = item.cars[0].tipo;
+      this.car.asientos = item.cars[0].asientos;
+      this.car.color = item.cars[0].color;
+      this.car.marca = item.cars[0].marca;
+      this.car.modelo = item.cars[0].modelo;
+      this.car.motor = item.cars[0].motor;
+      this.car.patente = item.cars[0].patente;
+      this.car.ano = item.cars[0].ano;
+      this.car.id = item.cars[0].id;
+      this.user.id = item.id;
       this.popupActive = true;
     },
     initValues: function initValues() {
@@ -6096,11 +6057,11 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize("en", dict);
       this.$refs.wizard.reset(); //this.modoEditar = false;
     },
     successUpload: function successUpload() {
-      this.$vs.notify({
-        color: "success",
-        title: "Upload Success",
-        text: "Lorem ipsum dolor sit amet, consectetur"
-      });
+      return true; // this.$vs.notify({
+      //   color: "success",
+      //   title: "Upload Success",
+      //   text: "Lorem ipsum dolor sit amet, consectetur"
+      // });
     }
   },
   created: function created() {
@@ -44282,8 +44243,8 @@ var render = function() {
                             {
                               staticClass: "mb-5",
                               attrs: {
-                                title: "Dcomunetos Conductor",
-                                icon: "feather icon-file",
+                                title: "Datos Movil",
+                                icon: "feather icon-truck",
                                 "before-change": _vm.validateStep2
                               }
                             },
@@ -44291,167 +44252,6 @@ var render = function() {
                               _c(
                                 "form",
                                 { attrs: { "data-vv-scope": "step-2" } },
-                                [
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      { staticClass: "vx-col 2" },
-                                      [
-                                        _c("vs-upload", {
-                                          attrs: {
-                                            text: "14",
-                                            multiple: "false",
-                                            "show-upload-button": "false",
-                                            "single-upload": "true",
-                                            limit: "1",
-                                            fileName: "hola"
-                                          },
-                                          on: {
-                                            "on-success": _vm.successUpload
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-2.empresa"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-2.empresa')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.empresa"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "vx-col 2" },
-                                      [
-                                        _c("vs-upload", {
-                                          attrs: {
-                                            text: "1er4",
-                                            multiple: "false",
-                                            "show-upload-button": "true",
-                                            limit: "1"
-                                          },
-                                          on: {
-                                            "on-success": _vm.successUpload
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-2.empresa"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-2.empresa')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.empresa"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "vx-col 2" },
-                                      [
-                                        _c("vs-upload", {
-                                          attrs: {
-                                            text: "15",
-                                            multiple: "false",
-                                            "show-upload-button": "false",
-                                            limit: "1"
-                                          },
-                                          on: {
-                                            "on-success": _vm.successUpload
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-2.empresa"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-2.empresa')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.empresa"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "tab-content",
-                            {
-                              staticClass: "mb-5",
-                              attrs: {
-                                title: "Datos Movil",
-                                icon: "feather icon-truck",
-                                "before-change": _vm.validateStep3
-                              }
-                            },
-                            [
-                              _c(
-                                "form",
-                                { attrs: { "data-vv-scope": "step-3" } },
                                 [
                                   _c(
                                     "div",
@@ -44487,7 +44287,7 @@ var render = function() {
                                             label: "Tipo Vehículo",
                                             name: "tipo",
                                             danger: _vm.errors.first(
-                                              "step-3.tipo"
+                                              "step-2.tipo"
                                             )
                                               ? true
                                               : false,
@@ -44508,7 +44308,7 @@ var render = function() {
                                           [
                                             _vm._v(
                                               _vm._s(
-                                                _vm.errors.first("step-3.tipo")
+                                                _vm.errors.first("step-2.tipo")
                                               )
                                             )
                                           ]
@@ -44538,7 +44338,7 @@ var render = function() {
                                             label: "Marca",
                                             name: "marca",
                                             danger: _vm.errors.first(
-                                              "step-3.marca"
+                                              "step-2.marca"
                                             )
                                               ? true
                                               : false,
@@ -44559,7 +44359,7 @@ var render = function() {
                                           [
                                             _vm._v(
                                               _vm._s(
-                                                _vm.errors.first("step-3.marca")
+                                                _vm.errors.first("step-2.marca")
                                               )
                                             )
                                           ]
@@ -44589,7 +44389,7 @@ var render = function() {
                                             "label-placeholder": "Modelo",
                                             name: "modelo",
                                             danger: _vm.errors.first(
-                                              "step-3.modelo"
+                                              "step-2.modelo"
                                             )
                                               ? true
                                               : false,
@@ -44611,7 +44411,7 @@ var render = function() {
                                             _vm._v(
                                               _vm._s(
                                                 _vm.errors.first(
-                                                  "step-3.modelo"
+                                                  "step-2.modelo"
                                                 )
                                               )
                                             )
@@ -44642,7 +44442,7 @@ var render = function() {
                                             label: "Año",
                                             name: "ano",
                                             danger: _vm.errors.first(
-                                              "step-3.ano"
+                                              "step-2.ano"
                                             )
                                               ? true
                                               : false,
@@ -44663,7 +44463,7 @@ var render = function() {
                                           [
                                             _vm._v(
                                               _vm._s(
-                                                _vm.errors.first("step-3.ano")
+                                                _vm.errors.first("step-2.ano")
                                               )
                                             )
                                           ]
@@ -44693,7 +44493,7 @@ var render = function() {
                                             label: "N° Motor",
                                             name: "motor",
                                             danger: _vm.errors.first(
-                                              "step-3.motor"
+                                              "step-2.motor"
                                             )
                                               ? true
                                               : false,
@@ -44714,7 +44514,7 @@ var render = function() {
                                           [
                                             _vm._v(
                                               _vm._s(
-                                                _vm.errors.first("step-3.motor")
+                                                _vm.errors.first("step-2.motor")
                                               )
                                             )
                                           ]
@@ -44744,7 +44544,7 @@ var render = function() {
                                             label: "N° Patente",
                                             name: "patente",
                                             danger: _vm.errors.first(
-                                              "step-3.patente"
+                                              "step-2.patente"
                                             )
                                               ? true
                                               : false,
@@ -44766,7 +44566,7 @@ var render = function() {
                                             _vm._v(
                                               _vm._s(
                                                 _vm.errors.first(
-                                                  "step-3.patente"
+                                                  "step-2.patente"
                                                 )
                                               )
                                             )
@@ -44797,7 +44597,7 @@ var render = function() {
                                             label: "Color",
                                             name: "color",
                                             danger: _vm.errors.first(
-                                              "step-3.color"
+                                              "step-2.color"
                                             )
                                               ? true
                                               : false,
@@ -44818,7 +44618,7 @@ var render = function() {
                                           [
                                             _vm._v(
                                               _vm._s(
-                                                _vm.errors.first("step-3.color")
+                                                _vm.errors.first("step-2.color")
                                               )
                                             )
                                           ]
@@ -44848,7 +44648,7 @@ var render = function() {
                                             label: "N° Asientos",
                                             name: "asientos",
                                             danger: _vm.errors.first(
-                                              "step-3.asientos"
+                                              "step-2.asientos"
                                             )
                                               ? true
                                               : false,
@@ -44870,7 +44670,7 @@ var render = function() {
                                             _vm._v(
                                               _vm._s(
                                                 _vm.errors.first(
-                                                  "step-3.asientos"
+                                                  "step-2.asientos"
                                                 )
                                               )
                                             )
@@ -79921,7 +79721,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/Login */ "./resources/js/src/views/Login.vue");
 /* harmony import */ var _views_pages_administracion_roles_Roles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/pages/administracion/roles/Roles */ "./resources/js/src/views/pages/administracion/roles/Roles.vue");
 /* harmony import */ var _views_pages_administracion_users_Users__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/pages/administracion/users/Users */ "./resources/js/src/views/pages/administracion/users/Users.vue");
-/* harmony import */ var _views_pages_administracion_users_Perfil__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/pages/administracion/users/Perfil */ "./resources/js/src/views/pages/administracion/users/Perfil.vue");
+/* harmony import */ var _views_pages_administracion_users_Perfil__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./views/pages/administracion/users/Perfil */ "./resources/js/src/views/pages/administracion/users/Perfil.vue");
 /* harmony import */ var _views_pages_administracion_empresas_Empresas__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./views/pages/administracion/empresas/Empresas */ "./resources/js/src/views/pages/administracion/empresas/Empresas.vue");
 /* harmony import */ var _views_pages_administracion_fuerazona_FueraZona__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./views/pages/administracion/fuerazona/FueraZona */ "./resources/js/src/views/pages/administracion/fuerazona/FueraZona.vue");
 /* harmony import */ var _views_pages_administracion_excepciones_Excepciones__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/pages/administracion/excepciones/Excepciones */ "./resources/js/src/views/pages/administracion/excepciones/Excepciones.vue");
@@ -79983,7 +79783,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     }, {
       path: '/pages/administracion/users/perfil',
       name: 'perfil',
-      component: _views_pages_administracion_users_Perfil__WEBPACK_IMPORTED_MODULE_13__["default"],
+      component: _views_pages_administracion_users_Perfil__WEBPACK_IMPORTED_MODULE_6__["default"],
       meta: {
         auth: true,
         breadcrumb: [{
@@ -81445,9 +81245,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! C:\xampp\htdocs\laravel\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\laravel\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\laravel\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })

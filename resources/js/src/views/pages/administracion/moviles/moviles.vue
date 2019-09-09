@@ -197,66 +197,12 @@
 
               <!-- tab 2 content -->
               <tab-content
-                title="Dcomunetos Conductor"
-                class="mb-5"
-                icon="feather icon-file"
-                :before-change="validateStep2"
-              >
-                <form data-vv-scope="step-2">
-                  <div class="vx-row">
-                    <div class="vx-col 2">
-                      <vs-upload
-                        text="14"
-                        multiple="false"
-                        show-upload-button="false"
-                        single-upload="true"
-                        limit="1"
-                        fileName="hola"
-                        @on-success="successUpload"
-                      />
-                      <span
-                        class="text-danger text-sm"
-                        v-show="errors.has('step-2.empresa')"
-                      >{{ errors.first('step-2.empresa') }}</span>
-                    </div>
-                    <div class="vx-col 2">
-                      <vs-upload
-                        text="1er4"
-                        multiple="false"
-                        show-upload-button="true"
-                        limit="1"
-                        @on-success="successUpload"
-                      />
-                      <span
-                        class="text-danger text-sm"
-                        v-show="errors.has('step-2.empresa')"
-                      >{{ errors.first('step-2.empresa') }}</span>
-                    </div>
-                    <div class="vx-col 2">
-                      <vs-upload
-                        text="15"
-                        multiple="false"
-                        show-upload-button="false"
-                        limit="1"
-                        @on-success="successUpload"
-                      />
-                      <span
-                        class="text-danger text-sm"
-                        v-show="errors.has('step-2.empresa')"
-                      >{{ errors.first('step-2.empresa') }}</span>
-                    </div>
-                  </div>
-                </form>
-              </tab-content>
-
-              <!-- tab 3 content -->
-              <tab-content
                 title="Datos Movil"
                 class="mb-5"
                 icon="feather icon-truck"
-                :before-change="validateStep3"
+                :before-change="validateStep2"
               >
-                <form data-vv-scope="step-3">
+                <form data-vv-scope="step-2">
                   <div>
                     <vs-divider color="primary">
                       <h5>Datos Movil</h5>
@@ -270,10 +216,10 @@
                         class="w-full"
                         name="tipo"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.tipo') ? true : false)"
+                        :danger="(errors.first('step-2.tipo') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -282,10 +228,10 @@
                         class="w-full"
                         name="marca"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.marca') ? true : false)"
+                        :danger="(errors.first('step-2.marca') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.marca') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.marca') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -294,10 +240,10 @@
                         class="w-full"
                         name="modelo"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.modelo') ? true : false)"
+                        :danger="(errors.first('step-2.modelo') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.modelo') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.modelo') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -306,10 +252,10 @@
                         class="w-full"
                         name="ano"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.ano') ? true : false)"
+                        :danger="(errors.first('step-2.ano') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.ano') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.ano') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -318,10 +264,10 @@
                         class="w-full"
                         name="motor"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.motor') ? true : false)"
+                        :danger="(errors.first('step-2.motor') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.motor') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.motor') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -330,10 +276,10 @@
                         class="w-full"
                         name="patente"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.patente') ? true : false)"
+                        :danger="(errors.first('step-2.patente') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.patente') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.patente') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -342,10 +288,10 @@
                         class="w-full"
                         name="color"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.color') ? true : false)"
+                        :danger="(errors.first('step-2.color') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.color') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.color') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
@@ -354,10 +300,10 @@
                         class="w-full"
                         name="asientos"
                         v-validate="'required'"
-                        :danger="(errors.first('step-3.asientos') ? true : false)"
+                        :danger="(errors.first('step-2.asientos') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('step-3.asientos') }}</span>
+                      <span class="text-danger">{{ errors.first('step-2.asientos') }}</span>
                     </div>
                   </div>
                 </form>
@@ -464,6 +410,8 @@
 <script>
 import { FormWizard, TabContent } from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
+import flatPickr from 'vue-flatpickr-component';
+
 
 // For custom error message
 import { Validator } from "vee-validate";
@@ -538,7 +486,9 @@ Validator.localize("en", dict);
 export default {
   components: {
     FormWizard,
-    TabContent
+    TabContent,
+    flatPickr
+
   },
   data() {
     return {
@@ -581,14 +531,15 @@ export default {
         });
       });
     },
-    validateStep3() {
+    validateStep2() {
       return new Promise((resolve, reject) => {
-        this.$validator.validateAll("step-3").then(result => {
+        this.$validator.validateAll("step-2").then(result => {
           if (result) {
+            this.item.driver = this.driver;
+            this.item.user = this.user;
+            this.item.car = this.car;
+            
             if (this.modoEditar == false) {
-              this.item.driver = this.driver;
-              this.item.user = this.user;
-              this.item.car = this.car;
               this.$submitAgregar();
             } else {
               this.$submitActualizar();
@@ -640,17 +591,33 @@ export default {
         });
     },
     editar(item) {
+      console.log(item);
       this.initValues();
       this.modoEditar = true;
-      /* this.item.email = item.email;
-      this.item.name = item.name;
-      this.item.lastname = item.lastname;
-      this.item.rut = item.rut;
-      this.item.telefono = item.telefono;
-      this.item.habilitado = item.habilitado;
-      this.item.roles = item.roles[0].id;
-      this.item.id = item.id;*/
-      //this.usuario = item;
+      this.user.email = item.email;
+      this.user.name = item.name;
+      this.user.lastname = item.lastname;
+      this.user.rut = item.rut;
+      this.user.telefono = item.telefono;
+      this.user.habilitado = item.habilitado;
+      
+      this.driver.ciudad = item.ciudad;
+      this.driver.comuna = item.comuna;
+      this.driver.direccion = item.direccion;
+      this.driver.numeracion = item.numeracion;
+
+      this.car.tipo = item.cars[0].tipo;
+      this.car.asientos = item.cars[0].asientos;
+      this.car.color = item.cars[0].color;
+      this.car.marca = item.cars[0].marca;
+      this.car.modelo = item.cars[0].modelo;
+      this.car.motor = item.cars[0].motor;
+      this.car.patente = item.cars[0].patente;
+      this.car.ano = item.cars[0].ano;
+      this.car.id = item.cars[0].id;
+
+      this.user.id = item.id;
+
       this.popupActive = true;
     },
 
@@ -664,11 +631,12 @@ export default {
       //this.modoEditar = false;
     },
     successUpload() {
-      this.$vs.notify({
-        color: "success",
-        title: "Upload Success",
-        text: "Lorem ipsum dolor sit amet, consectetur"
-      });
+      return true;
+      // this.$vs.notify({
+      //   color: "success",
+      //   title: "Upload Success",
+      //   text: "Lorem ipsum dolor sit amet, consectetur"
+      // });
     }
   },
   created() {

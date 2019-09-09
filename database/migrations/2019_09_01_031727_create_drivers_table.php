@@ -27,6 +27,11 @@ class CreateDriversTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('telefono');
             $table->boolean('habilitado');
+            $table->string('clase');
+            $table->dateTime('carnet_fin')->nullable();
+            $table->dateTime('antecedentes_fin')->nullable();
+            $table->dateTime('licencia_fin')->nullable();
+
             $table->timestamps();
 
             $table->foreign('user_id')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Models\Driver;
 use App\Models\User;
+use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -46,6 +47,22 @@ class DriverController extends Controller
             'numeracion' => 'required',
          ]);
     }
+
+    public function validatorCar(array $data){ 
+
+        return Validator::make($data, [
+            'tipo' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required',
+            'ano' => 'required',
+            'motor' => 'required|email', 
+            'patente' => 'required',
+            'habilitado' => 'required',
+            'color' => 'required',
+            'asientos' => 'required',
+            'driver_id' => 'required',
+         ]);
+    }
     
     /**
      * Display a listing of the resource.
@@ -54,7 +71,8 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $driver = Driver::all();
+        //$driver = Driver::all();
+        $driver = Driver::with('cars')->get();
         return response()->json(
             [
                 'status' => 'success',
@@ -84,6 +102,7 @@ class DriverController extends Controller
         //User
         $dataUser = $request->all()['user'];
         $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
+        $dataCar = $request->all()['car'];
 
         $dataUser['habilitado'] = 1;
         $dataUser['empresa_id'] = 1;
@@ -141,12 +160,36 @@ class DriverController extends Controller
                     'message' => 'Problemas al ingresar el Conductor',
                 ], 300);
         }
-        //Documento Driver
 
-        //Car
+        //Car 
+        $dataCar['driver_id'] = $idDriver;
+        $dataCar['habilitado'] = 1;
+
+        $validationCar = $this->validatorCar($dataCar);
+
+        if ($validationCar->fails()) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validationCar->errors(),
+                ], 300);
+           
+        }
+
+        $returnCar = Car::create($dataCar);
+
+        $idCar = $returnCar->id;
+
+        if ($idCar < 1) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Problemas al ingresar el Movil',
+                ], 300);
+        }
         
-        //Dcoumento Car
-       
+        
     }
 
     /**
@@ -180,7 +223,41 @@ class DriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dataUser = $request->all()['user'];
+        $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
+        $dataCar = $request->all()['car'];
+
+        $getDriver = Driver::where('id', $dataUser['id'])->first();
+
+        $dataDriver['user_id'] = $getDriver->user_id;
+        $validationDriver = $this->validatorDriver($dataDriver);
+
+        if ($validationDriver->fails()) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validationDriver->errors(),
+                ], 300);
+           
+        }
+        Driver::where('id', $dataDriver['id'])->update($dataDriver);
+        
+        $dataCar['driver_id'] = $dataDriver['id'];
+        $validationCar = $this->validatorCar($dataCar);
+
+        if ($validationCar->fails()) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validationCar->errors(),
+                ], 300);
+           
+        }
+        
+        Car::where('id', $dataCar['id'])->update($dataCar);
+
     }
 
     /**
@@ -191,6 +268,82 @@ class DriverController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        try{
+          
+           $driver = Driver::findOrFail($id);
+            
+           if(!is_null($driver)){
+                
+                $driver->delete();
+
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'El Conductor ha sido eliminado!!'
+                    ], 200);
+            
+            }else{
+        
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'El Conductor no existe!!'
+                    ], 300);
+            }
+
+
+        }catch(ModelNotFoundException $e){
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El Conductor no existe!!'
+                ], 300);
+  
+        }
+
+        
+    }
+
+    public function borrar(Request $request)
+    {
+      
+        
+        $ids = array_column($request->all(), 'id');
+        
+        try{
+
+            if(count($ids) > 0 ){          
+                
+                Driver::destroy($ids);
+                
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'Los registros ha sido eliminados!'
+                    ], 200);
+
+            }else{
+        
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Error al intentar eliminar los registros!'
+                        ], 300);
+            }
+        
+
+        }catch(ModelNotFoundException $e){
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Error al intentar eliminar los registros!'
+                ], 300);
+  
+        }
+
+        
     }
 }
