@@ -3961,11 +3961,15 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.selected = [];
     },
     //Carga datos perfil
-    $cargarDatosNavegacion: function $cargarDatosNavegacion() {
+    $cargarDatosPerfil: function $cargarDatosPerfil() {
       var thisIns = this;
-      var url = thisIns.ruta;
+      var url = thisIns.ruta + 'perfil';
       this.$http.get(url).then(function (response) {
-        thisIns.item = response.data.items;
+        thisIns.item = response.data.item[0];
+
+        if (response.data.item[0].imagen != null) {
+          thisIns.item.imagen = response.data.item[0].imagen;
+        }
       })["catch"](function (error) {
         thisIns.$vs.notify({
           title: 'Error',
@@ -6754,11 +6758,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-form-wizard */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.js");
-/* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-form-wizard/dist/vue-form-wizard.min.css */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.min.css");
-/* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 //
 //
 //
@@ -6943,237 +6942,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
- // For custom error message
-
-
-var dict = {
-  custom: {
-    name: {
-      required: 'El nombre es requerido',
-      alpha_spaces: "El nombre solo puede contener letras"
-    },
-    lastname: {
-      required: 'El apellido es requerido',
-      alpha_spaces: "El apellido solo puede contener letras"
-    },
-    rut: {
-      required: 'El rut es requerido',
-      alpha_dash: "Ingrese un rut valido"
-    },
-    email: {
-      required: 'El email es requerido',
-      email: "Ingrese un email valido"
-    },
-    roles: {
-      required: 'El rol es requerido'
-    },
-    empresa: {
-      required: 'La empresa es requerido'
-    },
-    telefono: {
-      required: 'El telefono es requerido',
-      numeric: "El numero de telefono debe ser valido"
-    },
-    password: {
-      required: 'La password es requerida',
-      min: "La password debe tener minimo 8 caracteres"
-    },
-    password_confirmation: {
-      required: 'Debe ingresar la confirmacion de la password',
-      min: "La confirmacion de la password debe tener minimo 8 caracteres",
-      confirmed: "Las password debe ser iguales"
-    }
-  }
-}; // register custom messages
-
-vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    FormWizard: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["FormWizard"],
-    TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"]
-  },
   data: function data() {
     return {
-      ruta: '/users/users/',
-      selected: [],
-      items: [],
-      itemsPerPage: 4,
-      isMounted: false,
-      ite: "",
-      ind: "",
-      popupActive: false,
-      item: {},
-      modoEditar: false,
-      roles_choices: [],
-      empresa_choices: [],
-      exportData: [],
-      aux: 0
+      item: {
+        imagen: "avatar.png",
+        roles: [{
+          name: ""
+        }]
+      },
+      ruta: '/users/',
+      popupActivo: false,
+      credendial: {
+        password: "",
+        password_confirmation: ""
+      }
     };
   },
-  computed: {
-    currentPage: function currentPage() {
-      if (this.isMounted) {
-        return this.$refs.table.currentx;
-      }
-
-      return 0;
-    }
-  },
+  computed: {},
   methods: {
-    validateStep1: function validateStep1() {
+    //Cambiar Password
+    cambiarPassword: function cambiarPassword() {
       var _this = this;
 
-      return new Promise(function (resolve, reject) {
-        _this.$validator.validateAll('step-1').then(function (result) {
-          if (result) {
-            resolve(true);
-          } else {
-            reject("correct all values");
-          }
-        });
-      });
-    },
-    validateStep2: function validateStep2() {
-      var _this2 = this;
-
-      return new Promise(function (resolve, reject) {
-        _this2.$validator.validateAll("step-2").then(function (result) {
-          if (result) {
-            if (_this2.modoEditar == false) {
-              _this2.$submitAgregar();
-            } else {
-              _this2.$submitActualizar();
-            }
-
-            resolve(true);
-          } else {
-            reject("correct all values");
-          }
-        });
-      });
-    },
-    getStatusColor: function getStatusColor(status) {
-      if (status == 1) return "success";
-      if (status == 0) return "danger";
-      return "danger";
-    },
-    refrescaOtrosDatos: function refrescaOtrosDatos() {
-      //Carga Roles   
       var thisIns = this;
-      this.$http.get('roles/roles').then(function (response) {
-        thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
-      })["catch"](function (error) {
-        thisIns.$vs.notify({
-          title: 'Error',
-          text: error,
-          color: 'danger',
-          iconPack: 'feather',
-          icon: 'icon-alert-circle'
-        });
-      }); //Carga Empresa
+      var url = thisIns.ruta + 'cambiarpass';
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          _this.$http.post(url, _this.credendial) //this.item
+          .then(function (res) {
+            _this.$vs.loading({
+              type: 'radius',
+              scale: 0.6
+            });
 
-      this.$http.get('empresas/empresas').then(function (response) {
-        thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
-      })["catch"](function (error) {
-        thisIns.$vs.notify({
-          title: 'Error',
-          text: error,
-          color: 'danger',
-          iconPack: 'feather',
-          icon: 'icon-alert-circle'
-        });
+            _this.popupActivo = false;
+            setTimeout(function () {
+              _this.$vs.loading.close();
+            }, 500);
+            thisIns.$vs.notify({
+              title: 'Exito',
+              text: 'La password se ha cambiado con exito!.',
+              color: 'success',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
+            });
+          })["catch"](function (error) {
+            thisIns.$vs.notify({
+              title: 'Error',
+              text: error,
+              color: 'danger',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
+            });
+          });
+        } else {}
       });
-    },
-    editar: function editar(item) {
-      this.initValues();
-      this.modoEditar = true; //console.log(item.roles[0].id);
-
-      this.item.empresa_id = item.empresa_id;
-      this.item.email = item.email;
-      this.item.name = item.name;
-      this.item.lastname = item.lastname;
-      this.item.rut = item.rut;
-      this.item.telefono = item.telefono;
-      this.item.habilitado = item.habilitado;
-      this.item.roles = item.roles[0].id;
-      this.item.id = item.id; //this.usuario = item;
-
-      this.selected = [];
-      this.popupActive = true;
-    },
-    initValues: function initValues() {
-      //this.$refs.wizard.navigateToTab(0);
-      this.item = {};
-      this.item.roles = '';
-      this.item.empresa_id = '';
-      this.errors.clear();
-      this.$refs.wizard.reset(); //this.modoEditar = false;    
     }
   },
+  components: {},
+  mounted: function mounted() {},
   created: function created() {
-    this.$refrescaTabla();
-    this.refrescaOtrosDatos();
+    this.$cargarDatosPerfil();
   },
-  mounted: function mounted() {
-    this.isMounted = true;
-  }
+  beforeDestroy: function beforeDestroy() {}
 });
 
 /***/ }),
@@ -8540,7 +8372,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}", ""]);
+exports.push([module.i, "/*=========================================================================================\n    File Name: profile.scss\n    Description: Profile page styles\n    ----------------------------------------------------------------------------------------\n    Item Name: Vuesax Admin - VueJS Dashboard Admin Template\n      Author: Pixinvent\n    Author URL: http://www.themeforest.net/user/pixinvent\n==========================================================================================*/\n#profile-page .profile-img-container {\n  display: flex;\n  align-items: center;\n  position: absolute;\n  bottom: -3.6rem;\n  left: 10%;\n  width: 80%;\n  justify-content: space-between;\n}\n#profile-page .user-profile-img {\n  border: 0.3rem solid #fff;\n  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3);\n}\n#profile-page .user-latest-image {\n  transition: all 0.2s ease-in-out;\n}\n#profile-page .user-latest-image:hover {\n  transform: scale(1.2);\n}\n#profile-page .profile-header-nav {\n  background-color: #fff;\n}", ""]);
 
 // exports
 
@@ -46540,248 +46372,174 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "data-list-container",
-      attrs: { id: "data-list-list-view" }
-    },
+    { attrs: { id: "profile-page" } },
     [
-      _c(
-        "vs-table",
-        {
-          ref: "table",
-          attrs: {
-            multiple: "",
-            pagination: "",
-            "max-items": _vm.itemsPerPage,
-            search: "",
-            data: _vm.items
-          },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(ref) {
-                var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr, attrs: { data: tr } },
-                        [
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-name" }, [
-                              _vm._v(_vm._s(tr.name))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-lastname" }, [
-                              _vm._v(_vm._s(tr.lastname))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-email" }, [
-                              _vm._v(_vm._s(tr.email))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-rol" }, [
-                              _vm._v(_vm._s(tr.roles[0].name))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _c(
-                                "vs-chip",
-                                {
-                                  staticClass: "items-status",
-                                  attrs: {
-                                    color: _vm.getStatusColor(tr.habilitado)
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      tr.habilitado == 1 ? "Activo" : "Inactivo"
-                                    )
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
-                              },
-                              [
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: { color: "primary", text: "Editar" }
-                                  },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Eliminar"
-                                    }
-                                  },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    }),
-                    1
-                  )
-                ]
-              }
-            }
-          ]),
-          model: {
-            value: _vm.selected,
-            callback: function($$v) {
-              _vm.selected = $$v
-            },
-            expression: "selected"
-          }
-        },
-        [
+      _c("div", { staticClass: "profile-header" }, [
+        _c("div", { staticClass: "relative" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
             "div",
-            {
-              staticClass:
-                "flex flex-wrap-reverse items-center flex-grow justify-between",
-              attrs: { slot: "header" },
-              slot: "header"
-            },
+            { staticClass: "profile-img-container pointer-events-none" },
             [
               _c(
                 "div",
-                { staticClass: "flex flex-wrap-reverse items-center" },
                 [
+                  _c("vs-avatar", {
+                    staticClass: "user-profile-img",
+                    attrs: {
+                      src: __webpack_require__("./resources/assets/images/profile/avatar sync recursive ^\\.\\/.*$")("./" +
+                        _vm.item.imagen),
+                      size: "120px"
+                    }
+                  })
+                ],
+                1
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _vm._m(1)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "vx-row" }, [
+        _c(
+          "div",
+          { staticClass: "vx-col w-full" },
+          [
+            _c(
+              "vx-card",
+              { staticClass: "mt-base" },
+              [
+                _c("template", { slot: "actions" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-row flex-col-reverse lg:flex-row" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "vx-col w-full lg:w-1/2 xl:w-1/2 flex flex-col justify-between"
+                      },
+                      [
+                        _c(
+                          "div",
+                          [
+                            _c("h2", { staticClass: "mb-1 font-bold" }, [
+                              _vm._v("Perfil")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "vs-chip",
+                              { attrs: { color: "primary mt-2" } },
+                              [
+                                _c("vs-avatar", {
+                                  attrs: {
+                                    "icon-pack": "user",
+                                    icon: "icon-mail"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "font-medium" }, [
+                                  _vm._v("Datos usuario")
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "vx-col w-full lg:w-1/2 xl:w-1/2 flex flex-col lg:mb-0 mb-base",
+                        staticStyle: {
+                          margin: "auto",
+                          "align-items": "flex-end"
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "social-links flex mt-6" },
+                          [
+                            _c(
+                              "vx-tooltip",
+                              {
+                                attrs: {
+                                  color: "primary",
+                                  text: "Enviar correo"
+                                }
+                              },
+                              [
+                                _c("feather-icon", {
+                                  staticClass: "mr-2",
+                                  attrs: {
+                                    svgClasses:
+                                      "h-7 w-7 cursor-pointer bg-primary p-1 text-white rounded",
+                                    icon: "MailIcon"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              {
+                                attrs: {
+                                  color: "primary",
+                                  text: "Cambiar password"
+                                }
+                              },
+                              [
+                                _c("feather-icon", {
+                                  staticClass: "mr-2",
+                                  attrs: {
+                                    svgClasses:
+                                      "h-7 w-7 cursor-pointer bg-primary p-1 text-white rounded",
+                                    icon: "KeyIcon"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.popupActivo = true
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("vs-divider", { staticClass: "my-6" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "vx-row" }, [
                   _c(
-                    "vs-dropdown",
-                    {
-                      staticClass: "cursor-pointer mr-4 mb-4",
-                      attrs: { "vs-trigger-click": "" }
-                    },
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
                     [
                       _c(
-                        "div",
-                        {
-                          staticClass:
-                            "p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
-                        },
-                        [
-                          _c("span", { staticClass: "mr-2" }, [
-                            _vm._v("Acciones")
-                          ]),
-                          _vm._v(" "),
-                          _c("feather-icon", {
-                            attrs: {
-                              icon: "ChevronDownIcon",
-                              svgClasses: "h-4 w-4"
-                            }
-                          })
-                        ],
-                        1
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("NOMBRE")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "vs-dropdown-menu",
-                        [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(2)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Exportar")])]
-                          )
-                        ],
-                        1
-                      )
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.name))
+                      ])
                     ],
                     1
                   ),
@@ -46789,988 +46547,358 @@ var render = function() {
                   _c(
                     "div",
                     {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n          text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
+                      staticClass: "vx-col w-1/2 mb-3 mt-4",
+                      style: [{ transitionDelay: 2 * 0.1 + "s" }]
                     },
                     [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
                       _c(
-                        "vx-tooltip",
-                        {
-                          attrs: { color: "primary", text: "Agregar usuario" }
-                        },
-                        [
-                          _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Usuario")]
-                          )
-                        ]
-                      )
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("APELLIDO")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.lastname))
+                      ])
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
+                    [
+                      _c(
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("RUT")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v("  " + _vm._s(_vm.item.rut))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
+                    [
+                      _c(
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("EMPRESA")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.nombreEmpr))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
+                    [
+                      _c(
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("ROL")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.roles[0].name))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
+                    [
+                      _c(
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("EMAIL")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.email))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
+                    [
+                      _c(
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("TELEFONO")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.telefono))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "vx-col w-1/2 mb-3 mt-4" }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
+                    [
+                      _c(
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("CREADO")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.created_at))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "vx-col w-1/2 mb-3 mt-4" },
+                    [
+                      _c(
+                        "vs-divider",
+                        { attrs: { position: "left", color: "primary" } },
+                        [_vm._v("ACTUALIZADO")]
+                      ),
+                      _vm._v(" "),
+                      _c("h4", { staticStyle: { "margin-left": "50px" } }, [
+                        _vm._v(" " + _vm._s(_vm.item.updated_at))
+                      ])
+                    ],
+                    1
+                  )
+                ])
+              ],
+              2
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          attrs: {
+            classContent: "popup-example",
+            title: "Cambiar Password",
+            active: _vm.popupActivo
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActivo = $event
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "p-5" }, [
+            _c("h3", [
+              _vm._v("\n            Ingresa la nueva clave\n        ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "vx-row" }, [
+              _c(
+                "div",
+                { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                [
+                  _c("vs-input", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required|min:8",
+                        expression: "'required|min:8'"
+                      }
+                    ],
+                    ref: "password",
+                    staticClass: "w-full",
+                    attrs: {
+                      type: "password",
+                      "label-placeholder": "Password",
+                      name: "password",
+                      danger: _vm.errors.first("password") ? true : false,
+                      "val-icon-danger": "clear"
+                    },
+                    model: {
+                      value: _vm.credendial.password,
+                      callback: function($$v) {
+                        _vm.$set(_vm.credendial, "password", $$v)
+                      },
+                      expression: "credendial.password"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.errors.has("password"),
+                          expression: "errors.has('password')"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.first("password")))]
                   )
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
-                "vs-popup",
-                {
-                  ref: "modal",
-                  staticClass: "holamundo",
-                  attrs: {
-                    title:
-                      _vm.modoEditar == false
-                        ? "AGREGAR USUARIO"
-                        : "ACTUALIZAR USUARIO",
-                    active: _vm.popupActive
-                  },
-                  on: {
-                    "update:active": function($event) {
-                      _vm.popupActive = $event
+                "div",
+                { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                [
+                  _c("vs-input", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required|min:8|confirmed:password",
+                        expression: "'required|min:8|confirmed:password'"
+                      }
+                    ],
+                    staticClass: "w-full",
+                    attrs: {
+                      type: "password",
+                      "data-vv-as": "password",
+                      "label-placeholder": "Confirmar Password",
+                      name: "password_confirmation",
+                      danger: _vm.errors.first("password_confirmation")
+                        ? true
+                        : false,
+                      "val-icon-danger": "clear"
                     },
-                    close: function($event) {
-                      return _vm.$close($event)
+                    model: {
+                      value: _vm.credendial.password_confirmation,
+                      callback: function($$v) {
+                        _vm.$set(_vm.credendial, "password_confirmation", $$v)
+                      },
+                      expression: "credendial.password_confirmation"
                     }
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "mt-5" },
-                    [
-                      _c(
-                        "form-wizard",
-                        {
-                          ref: "wizard",
-                          attrs: {
-                            color: "rgba(var(--vs-primary), 1)",
-                            errorColor: "rgba(var(--vs-danger), 1)",
-                            title:
-                              _vm.modoEditar == false
-                                ? "AGREGAR USUARIO"
-                                : "ACTUALIZAR USUARIO",
-                            subtitle:
-                              _vm.modoEditar == false
-                                ? "Ingrese todos los campos para ingresar el usuario"
-                                : "Modifique los campos que desee actualizar",
-                            finishButtonText:
-                              _vm.modoEditar == false ? "Agregar" : "Actualizar"
-                          }
-                        },
-                        [
-                          _c(
-                            "tab-content",
-                            {
-                              staticClass: "mb-5",
-                              attrs: {
-                                title: "Paso 1",
-                                icon: "feather icon-user",
-                                "before-change": _vm.validateStep1
-                              }
-                            },
-                            [
-                              _c(
-                                "form",
-                                { attrs: { "data-vv-scope": "step-1" } },
-                                [
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [_c("h5", [_vm._v("Datos Usuarios")])]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|alpha_spaces",
-                                              expression:
-                                                "'required|alpha_spaces'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Nombre",
-                                            name: "name",
-                                            danger: _vm.errors.first(
-                                              "step-1.name"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.item.name,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.item, "name", $$v)
-                                            },
-                                            expression: "item.name"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-1.name")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|alpha_spaces",
-                                              expression:
-                                                "'required|alpha_spaces'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Apellido",
-                                            name: "lastname",
-                                            danger: _vm.errors.first(
-                                              "step-1.lastname"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.item.lastname,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.item,
-                                                "lastname",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "item.lastname"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.lastname"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|email",
-                                              expression: "'required|email'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            type: "Email",
-                                            "label-placeholder": "Email",
-                                            name: "email",
-                                            danger: _vm.errors.first(
-                                              "step-1.email"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.item.email,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.item, "email", $$v)
-                                            },
-                                            expression: "item.email"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-1.email")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|alpha_dash",
-                                              expression:
-                                                "'required|alpha_dash'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Rut",
-                                            name: "rut",
-                                            danger: _vm.errors.first(
-                                              "step-1.rut"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.item.rut,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.item, "rut", $$v)
-                                            },
-                                            expression: "item.rut"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-1.rut")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "tab-content",
-                            {
-                              staticClass: "mb-5",
-                              attrs: {
-                                title: "Paso 2",
-                                icon: "feather icon-briefcase",
-                                "before-change": _vm.validateStep2
-                              }
-                            },
-                            [
-                              _c(
-                                "form",
-                                { attrs: { "data-vv-scope": "step-2" } },
-                                [
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [
-                                          _c("h5", [
-                                            _vm._v("Informacion adicional")
-                                          ])
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-select",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "validate",
-                                                rawName: "v-validate",
-                                                value: "required",
-                                                expression: "'required'"
-                                              }
-                                            ],
-                                            staticClass: "w-full",
-                                            attrs: {
-                                              label: "Roles",
-                                              name: "roles"
-                                            },
-                                            model: {
-                                              value: _vm.item.roles,
-                                              callback: function($$v) {
-                                                _vm.$set(_vm.item, "roles", $$v)
-                                              },
-                                              expression: "item.roles"
-                                            }
-                                          },
-                                          _vm._l(_vm.roles_choices, function(
-                                            item
-                                          ) {
-                                            return _c("vs-select-item", {
-                                              key: item.id,
-                                              attrs: {
-                                                value: item.id,
-                                                text: item.name
-                                              }
-                                            })
-                                          }),
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-2.roles"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-2.roles')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-2.roles")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-select",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "validate",
-                                                rawName: "v-validate",
-                                                value: "required",
-                                                expression: "'required'"
-                                              }
-                                            ],
-                                            staticClass: "w-full",
-                                            attrs: {
-                                              label: "Empresa",
-                                              name: "empresa"
-                                            },
-                                            model: {
-                                              value: _vm.item.empresa_id,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.item,
-                                                  "empresa_id",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "item.empresa_id"
-                                            }
-                                          },
-                                          _vm._l(_vm.empresa_choices, function(
-                                            item
-                                          ) {
-                                            return _c("vs-select-item", {
-                                              key: item.id,
-                                              attrs: {
-                                                value: item.id,
-                                                text: item.razon_social
-                                              }
-                                            })
-                                          }),
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-2.empresa"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-2.empresa')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.empresa"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|numeric",
-                                              expression: "'required|numeric'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Telefono",
-                                            name: "telefono",
-                                            danger: _vm.errors.first(
-                                              "step-2.telefono"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.item.telefono,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.item,
-                                                "telefono",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "item.telefono"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.telefono"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", {
-                                      staticClass: "vx-col md:w-1/2 w-full mt-2"
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value:
-                                                _vm.modoEditar == false
-                                                  ? "required|min:8"
-                                                  : "min:8",
-                                              expression:
-                                                "(modoEditar == false ? 'required|min:8' : 'min:8')"
-                                            }
-                                          ],
-                                          ref: "password",
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            type: "password",
-                                            "label-placeholder": "Password",
-                                            name: "password",
-                                            danger: _vm.errors.first(
-                                              "step-2.password"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.item.password,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.item,
-                                                "password",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "item.password"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-2.password"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-2.password')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.password"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value:
-                                                _vm.modoEditar == false
-                                                  ? "required|min:8|confirmed:password"
-                                                  : "min:8|confirmed:password",
-                                              expression:
-                                                "(modoEditar == false ? 'required|min:8|confirmed:password' : 'min:8|confirmed:password')"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            type: "password",
-                                            "data-vv-as": "password",
-                                            "label-placeholder":
-                                              "Confirmar Password",
-                                            name: "password_confirmation",
-                                            danger: _vm.errors.first(
-                                              "step-2.password_confirmation"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.item.password_confirmation,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.item,
-                                                "password_confirmation",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "item.password_confirmation"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-2.password_confirmation"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-2.password_confirmation')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.password_confirmation"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "vx-col md:w-1 w-full" },
-                                      [
-                                        _c(
-                                          "div",
-                                          { staticClass: "demo-alignment" },
-                                          [
-                                            _c("span", [_vm._v("Habilitado:")]),
-                                            _vm._v(" "),
-                                            _c("div", { staticClass: "flex" }, [
-                                              _c(
-                                                "ul",
-                                                { staticClass: "centerx" },
-                                                [
-                                                  _c(
-                                                    "li",
-                                                    [
-                                                      _c(
-                                                        "vs-radio",
-                                                        {
-                                                          attrs: {
-                                                            color: "success",
-                                                            "vs-value": "1"
-                                                          },
-                                                          model: {
-                                                            value:
-                                                              _vm.item
-                                                                .habilitado,
-                                                            callback: function(
-                                                              $$v
-                                                            ) {
-                                                              _vm.$set(
-                                                                _vm.item,
-                                                                "habilitado",
-                                                                $$v
-                                                              )
-                                                            },
-                                                            expression:
-                                                              "item.habilitado"
-                                                          }
-                                                        },
-                                                        [_vm._v("Activo")]
-                                                      )
-                                                    ],
-                                                    1
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "li",
-                                                    [
-                                                      _c(
-                                                        "vs-radio",
-                                                        {
-                                                          attrs: {
-                                                            color: "danger",
-                                                            "vs-value": "0"
-                                                          },
-                                                          model: {
-                                                            value:
-                                                              _vm.item
-                                                                .habilitado,
-                                                            callback: function(
-                                                              $$v
-                                                            ) {
-                                                              _vm.$set(
-                                                                _vm.item,
-                                                                "habilitado",
-                                                                $$v
-                                                              )
-                                                            },
-                                                            expression:
-                                                              "item.habilitado"
-                                                          }
-                                                        },
-                                                        [_vm._v("Inactivo")]
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                ]
-                                              )
-                                            ])
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "vs-dropdown",
-                {
-                  staticClass: "cursor-pointer mb-4 mr-4",
-                  attrs: { "vs-trigger-click": "" }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
-                    },
-                    [
-                      _c("span", { staticClass: "mr-2" }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm.currentPage * _vm.itemsPerPage -
-                              (_vm.itemsPerPage - 1)
-                          ) +
-                            " - " +
-                            _vm._s(
-                              _vm.items.length -
-                                _vm.currentPage * _vm.itemsPerPage >
-                                0
-                                ? _vm.currentPage * _vm.itemsPerPage
-                                : _vm.items.length
-                            ) +
-                            " of " +
-                            _vm._s(_vm.items.length)
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("feather-icon", {
-                        attrs: {
-                          icon: "ChevronDownIcon",
-                          svgClasses: "h-4 w-4"
-                        }
-                      })
-                    ],
-                    1
-                  ),
+                  }),
                   _vm._v(" "),
                   _c(
-                    "vs-dropdown-menu",
-                    [
-                      _c(
-                        "vs-dropdown-item",
+                    "span",
+                    {
+                      directives: [
                         {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 4
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("4")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-dropdown-item",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 10
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("10")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-dropdown-item",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 15
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("15")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-dropdown-item",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 20
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("20")])]
-                      )
-                    ],
-                    1
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.errors.has("password_confirmation"),
+                          expression: "errors.has('password_confirmation')"
+                        }
+                      ],
+                      staticClass: "text-danger text-sm"
+                    },
+                    [_vm._v(_vm._s(_vm.errors.first("password_confirmation")))]
                   )
                 ],
                 1
               )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "template",
-            { slot: "thead" },
-            [
-              _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
-                _vm._v("ID")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-name" } }, [
-                _vm._v("Nombre")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-lastname" } }, [
-                _vm._v("Apellido")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-email" } }, [
-                _vm._v("Email")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-rol" } }, [
-                _vm._v("Rol")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-status" } }, [
-                _vm._v("Estado")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
-                _vm._v("Accion")
-              ])
-            ],
-            1
-          )
-        ],
-        2
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "flex flex-wrap items-center justify-center p-6",
+                attrs: { slot: "footer" },
+                slot: "footer"
+              },
+              [
+                _c(
+                  "vs-button",
+                  {
+                    staticClass: "mr-3",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.cambiarPassword()
+                      }
+                    }
+                  },
+                  [_vm._v("GUARDAR")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "vs-button",
+                  {
+                    ref: "btncancelar",
+                    attrs: { type: "border", color: "danger" },
+                    on: {
+                      click: function($event) {
+                        _vm.popupActivo = false
+                      }
+                    }
+                  },
+                  [_vm._v("CANCELAR")]
+                )
+              ],
+              1
+            )
+          ])
+        ]
       )
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "cover-container rounded-t-lg" }, [
+      _c("img", {
+        staticClass: "responsive block",
+        attrs: {
+          src: __webpack_require__(/*! ../../../../../../assets/images/profile/user-uploads/cover.jpg */ "./resources/assets/images/profile/user-uploads/cover.jpg"),
+          alt: "user-profile-cover"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "flex items-center justify-end flex-wrap profile-header-nav p-6"
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "w-full flex-grow sm:flex sm:items-center sm:w-auto" },
+          [_c("div", { staticClass: "text-sm sm:flex-grow" })]
+        )
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -78464,6 +77592,373 @@ module.exports = "/images/login.png?d814adb752d2d047b8292d6de603025f";
 
 /***/ }),
 
+/***/ "./resources/assets/images/profile/avatar sync recursive ^\\.\\/.*$":
+/*!**************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar sync ^\.\/.*$ ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./avatar-s-1.png": "./resources/assets/images/profile/avatar/avatar-s-1.png",
+	"./avatar-s-10.png": "./resources/assets/images/profile/avatar/avatar-s-10.png",
+	"./avatar-s-11.png": "./resources/assets/images/profile/avatar/avatar-s-11.png",
+	"./avatar-s-12.png": "./resources/assets/images/profile/avatar/avatar-s-12.png",
+	"./avatar-s-13.png": "./resources/assets/images/profile/avatar/avatar-s-13.png",
+	"./avatar-s-14.png": "./resources/assets/images/profile/avatar/avatar-s-14.png",
+	"./avatar-s-15.png": "./resources/assets/images/profile/avatar/avatar-s-15.png",
+	"./avatar-s-16.png": "./resources/assets/images/profile/avatar/avatar-s-16.png",
+	"./avatar-s-17.png": "./resources/assets/images/profile/avatar/avatar-s-17.png",
+	"./avatar-s-18.png": "./resources/assets/images/profile/avatar/avatar-s-18.png",
+	"./avatar-s-19.png": "./resources/assets/images/profile/avatar/avatar-s-19.png",
+	"./avatar-s-2.png": "./resources/assets/images/profile/avatar/avatar-s-2.png",
+	"./avatar-s-20.png": "./resources/assets/images/profile/avatar/avatar-s-20.png",
+	"./avatar-s-21.png": "./resources/assets/images/profile/avatar/avatar-s-21.png",
+	"./avatar-s-22.png": "./resources/assets/images/profile/avatar/avatar-s-22.png",
+	"./avatar-s-23.png": "./resources/assets/images/profile/avatar/avatar-s-23.png",
+	"./avatar-s-24.png": "./resources/assets/images/profile/avatar/avatar-s-24.png",
+	"./avatar-s-25.png": "./resources/assets/images/profile/avatar/avatar-s-25.png",
+	"./avatar-s-26.png": "./resources/assets/images/profile/avatar/avatar-s-26.png",
+	"./avatar-s-3.png": "./resources/assets/images/profile/avatar/avatar-s-3.png",
+	"./avatar-s-4.png": "./resources/assets/images/profile/avatar/avatar-s-4.png",
+	"./avatar-s-5.png": "./resources/assets/images/profile/avatar/avatar-s-5.png",
+	"./avatar-s-6.png": "./resources/assets/images/profile/avatar/avatar-s-6.png",
+	"./avatar-s-7.png": "./resources/assets/images/profile/avatar/avatar-s-7.png",
+	"./avatar-s-8.png": "./resources/assets/images/profile/avatar/avatar-s-8.png",
+	"./avatar-s-9.png": "./resources/assets/images/profile/avatar/avatar-s-9.png",
+	"./avatar.png": "./resources/assets/images/profile/avatar/avatar.png"
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./resources/assets/images/profile/avatar sync recursive ^\\.\\/.*$";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-1.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-1.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-1.png?8edbcdedecdd3284f9aaa19b417c8b5a";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-10.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-10.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-10.png?7be10c5705a8bd9eb9bc9bca9ff30da6";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-11.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-11.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-11.png?51a23c074bd7469a69e220c62dce541a";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-12.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-12.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-12.png?cec148feffe8d6a77c51ab10fc3013d0";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-13.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-13.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-13.png?1875411a1a1c12898f9cd4ef98996d45";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-14.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-14.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-14.png?9ab8c5145b6b0ca0f39eea73aabead5f";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-15.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-15.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-15.png?30fed846366adf11f8ee1014fb2185c9";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-16.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-16.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-16.png?88e40556adbbc9ce12c1d79bd2a06531";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-17.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-17.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-17.png?a92e96b20acdf06888462dd9ef51e5a1";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-18.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-18.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-18.png?6f5c3253da8a82c2cb14bae61d84a2dd";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-19.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-19.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-19.png?908c8b7896636515e5ec2e874c067e4b";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-2.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-2.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-2.png?93c7a17a77d076a725b4280c8d45fcc8";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-20.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-20.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-20.png?aa019f1dca634669abf1ccbb56167412";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-21.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-21.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-21.png?5aee13d88923688c3e2766cee073e823";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-22.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-22.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-22.png?350e5390e5333dd0a18dce3744d7b860";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-23.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-23.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-23.png?5e55f9497dfc1b8fac16cc142c59f189";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-24.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-24.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-24.png?13572d01d6c52d379b94d8ee42f19c14";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-25.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-25.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-25.png?d1c0b48d54f68a0e3dc22dd3cabac6ef";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-26.png":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-26.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-26.png?d1c0b48d54f68a0e3dc22dd3cabac6ef";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-3.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-3.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-3.png?a718f09ae7f1fb4a74bbc5d919ffb041";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-4.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-4.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-4.png?88863dbbc2ac97ccf75be4ace8c8e9fe";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-5.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-5.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-5.png?73b9c8f89f23bd02f99ba036a70b5562";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-6.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-6.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-6.png?6b63817cd7446ee6b140a297e22dd3be";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-7.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-7.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-7.png?9241b5d6708f97ada7c9cfeaa15a052d";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-8.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-8.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-8.png?2579bd6d8eef35e22e7ec84b69bcee3b";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar-s-9.png":
+/*!***************************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar-s-9.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar-s-9.png?ec990ac17b3841dd6b9c4dd5cb96be6b";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/avatar/avatar.png":
+/*!***********************************************************!*\
+  !*** ./resources/assets/images/profile/avatar/avatar.png ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/avatar.png?c2a08a3fc43816b1301189993011bcc7";
+
+/***/ }),
+
+/***/ "./resources/assets/images/profile/user-uploads/cover.jpg":
+/*!****************************************************************!*\
+  !*** ./resources/assets/images/profile/user-uploads/cover.jpg ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/cover.jpg?f6a4c77899182af5612322fcc7261fc7";
+
+/***/ }),
+
 /***/ "./resources/assets/utils/color.js":
 /*!*****************************************!*\
   !*** ./resources/assets/utils/color.js ***!
@@ -80994,14 +80489,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************************!*\
   !*** ./resources/js/src/views/pages/administracion/users/Perfil.vue ***!
   \**********************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Perfil_vue_vue_type_template_id_3d031e6e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Perfil.vue?vue&type=template&id=3d031e6e& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=template&id=3d031e6e&");
 /* harmony import */ var _Perfil_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Perfil.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _Perfil_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Perfil.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=style&index=0&lang=scss&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Perfil_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Perfil_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _Perfil_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Perfil.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -81033,7 +80529,7 @@ component.options.__file = "resources/js/src/views/pages/administracion/users/Pe
 /*!***********************************************************************************************!*\
   !*** ./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

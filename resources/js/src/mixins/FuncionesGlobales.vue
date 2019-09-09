@@ -281,22 +281,26 @@
     },
 
      //Carga datos perfil
-    $cargarDatosNavegacion(){
+    $cargarDatosPerfil(){
       
-       const thisIns = this;
-        const url = thisIns.ruta
-        this.$http.get(url)
-          .then(function (response) {
-              thisIns.item = response.data.items 
-          })
-          .catch(function (error) {
-            thisIns.$vs.notify({
-              title:'Error',
-              text: error,
-              color:'danger',
-              iconPack: 'feather',
-              icon:'icon-alert-circle'})
-          });
+      const thisIns = this;
+      const url = thisIns.ruta + 'perfil';
+      this.$http.get(url)
+        .then(function (response) {
+          thisIns.item = response.data.item[0]; 
+         if(response.data.item[0].imagen != null){
+            thisIns.item.imagen = response.data.item[0].imagen;
+
+        }     
+         })
+        .catch(function (error) {
+           thisIns.$vs.notify({
+             title:'Error',
+             text: error,
+             color:'danger',
+             iconPack: 'feather',
+             icon:'icon-alert-circle'})
+        });
     }
 
     

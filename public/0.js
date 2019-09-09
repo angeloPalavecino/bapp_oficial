@@ -404,6 +404,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -433,7 +436,10 @@ __webpack_require__.r(__webpack_exports__);
       },
       autoFocusSearch: false,
       showBookmarkPagesDropdown: false,
-      item: {}
+      item: {
+        imagen: "avatar.png"
+      },
+      ruta: '/users/'
     };
   },
   watch: {
@@ -478,7 +484,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.$cargarDatosNavegacion();
+    this.$cargarDatosPerfil();
   },
   methods: {
     showSidebar: function showSidebar() {
@@ -2014,7 +2020,7 @@ var render = function() {
                   attrs: {
                     autoFocus: _vm.showFullSearch,
                     data: _vm.navbarSearchAndPinList,
-                    placeholder: "Search...",
+                    placeholder: "Buscar...",
                     inputClassses:
                       "w-full vs-input-no-border vs-input-no-shdow-focus no-icon-border",
                     icon: "SearchIcon",
@@ -2089,7 +2095,8 @@ var render = function() {
                         staticClass:
                           "rounded-full shadow-md cursor-pointer block",
                         attrs: {
-                          src: __webpack_require__(/*! ../../../../assets/images/portrait/small/avatar-s-11.png */ "./resources/assets/images/portrait/small/avatar-s-11.png"),
+                          src: __webpack_require__("./resources/assets/images/profile/avatar sync recursive ^\\.\\/.*$")("./" +
+                            _vm.item.imagen),
                           alt: "",
                           width: "40",
                           height: "40"
@@ -2112,7 +2119,9 @@ var render = function() {
                                   "flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white",
                                 on: {
                                   click: function($event) {
-                                    return _vm.$router.push("/pages/profile")
+                                    return _vm.$router.push(
+                                      "/pages/administracion/users/perfil"
+                                    )
                                   }
                                 }
                               },
@@ -2901,17 +2910,6 @@ render._withStripped = true
 /***/ (function(module, exports) {
 
 module.exports = "/images/logo.png?663d35ecbe17dc3def8213bd4503f2b8";
-
-/***/ }),
-
-/***/ "./resources/assets/images/portrait/small/avatar-s-11.png":
-/*!****************************************************************!*\
-  !*** ./resources/assets/images/portrait/small/avatar-s-11.png ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/images/avatar-s-11.png?51a23c074bd7469a69e220c62dce541a";
 
 /***/ }),
 

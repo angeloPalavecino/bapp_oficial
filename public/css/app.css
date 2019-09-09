@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700);/*=========================================================================================
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700);/*=========================================================================================
   File Name: app.scss
   Description: Write your custom scss
   ----------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@
 ==========================================================================================*/
 
 html {
-  font-size: 14px;
+  font-size: 13px;
   height: 100%;
   width: 100%;
   line-height: 1.5;
@@ -672,32 +672,32 @@ h6,
 
 h1,
 .h1 {
-  font-size: 28px;
+  font-size: 26px;
 }
 
 h2,
 .h2 {
-  font-size: 24.36px;
+  font-size: 22.62px;
 }
 
 h3,
 .h3 {
-  font-size: 21.14px;
+  font-size: 19.63px;
 }
 
 h4,
 .h4 {
-  font-size: 18.48px;
+  font-size: 17.16px;
 }
 
 h5,
 .h5 {
-  font-size: 15.96px;
+  font-size: 14.82px;
 }
 
 h6,
 .h6 {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .vs-tooltip h4 {
@@ -3729,7 +3729,7 @@ i.feather {
 .vs-notifications h3 {
   color: #fff;
   font-weight: 600;
-  font-size: 15.96px;
+  font-size: 14.82px;
 }
 
 .vs-navbar-null .vs-navbar--item a:hover,
