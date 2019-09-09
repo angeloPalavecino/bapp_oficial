@@ -51,7 +51,6 @@
 
         <!-- POP UP -->
         <vs-popup
-          fullscreen
           class="holamundo"
           ref="modal"
           :title="(modoEditar == false ? 'AGREGAR CONDUCTOR' : 'ACTUALIZAR CONDUCTOR')"
@@ -506,8 +505,6 @@ export default {
       car: {},
       user: {},
       modoEditar: false,
-      roles_choices: [],
-      empresa_choices: [],
       exportData: [],
       aux: 0
     };
@@ -627,6 +624,7 @@ export default {
       this.item = {};
       this.car = {};
       this.user = {};
+      this.driver = {};
       this.errors.clear();
       this.$refs.wizard.reset();
       //this.modoEditar = false;

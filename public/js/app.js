@@ -5849,7 +5849,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
  // For custom error message
@@ -5943,8 +5942,6 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       car: {},
       user: {},
       modoEditar: false,
-      roles_choices: [],
-      empresa_choices: [],
       exportData: [],
       aux: 0
     };
@@ -6058,6 +6055,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.item = {};
       this.car = {};
       this.user = {};
+      this.driver = {};
       this.errors.clear();
       this.$refs.wizard.reset(); //this.modoEditar = false;
     },
@@ -43499,7 +43497,6 @@ var render = function() {
                   ref: "modal",
                   staticClass: "holamundo",
                   attrs: {
-                    fullscreen: "",
                     title:
                       _vm.modoEditar == false
                         ? "AGREGAR CONDUCTOR"

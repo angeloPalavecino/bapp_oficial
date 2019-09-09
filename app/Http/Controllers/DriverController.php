@@ -54,12 +54,12 @@ class DriverController extends Controller
             'tipo' => 'required',
             'marca' => 'required',
             'modelo' => 'required',
-            'ano' => 'required',
-            'motor' => 'required|email', 
+            'ano' => 'required|numeric',
+            'motor' => 'required', 
             'patente' => 'required',
             'habilitado' => 'required',
             'color' => 'required',
-            'asientos' => 'required',
+            'asientos' => 'required|numeric',
             'driver_id' => 'required',
          ]);
     }
