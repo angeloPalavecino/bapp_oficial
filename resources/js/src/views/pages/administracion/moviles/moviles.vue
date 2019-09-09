@@ -211,7 +211,7 @@
                   <div class="vx-row">
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Tipo Vehículo"
+                        label-placeholder="Tipo Vehículo"
                         v-model="car.tipo"
                         class="w-full"
                         name="tipo"
@@ -223,7 +223,7 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Marca"
+                        label-placeholder="Marca"
                         v-model="car.marca"
                         class="w-full"
                         name="marca"
@@ -247,7 +247,7 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Año"
+                        label-placeholder="Año"
                         v-model="car.ano"
                         class="w-full"
                         name="ano"
@@ -259,7 +259,7 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="N° Motor"
+                        label-placeholder="N° Motor"
                         v-model="car.motor"
                         class="w-full"
                         name="motor"
@@ -271,7 +271,7 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="N° Patente"
+                        label-placeholder="N° Patente"
                         v-model="car.patente"
                         class="w-full"
                         name="patente"
@@ -283,7 +283,7 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="Color"
+                        label-placeholder="Color"
                         v-model="car.color"
                         class="w-full"
                         name="color"
@@ -295,11 +295,11 @@
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-5">
                       <vs-input
-                        label="N° Asientos"
+                        label-placeholder="N° Asientos"
                         v-model="car.asientos"
                         class="w-full"
                         name="asientos"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         :danger="(errors.first('step-2.asientos') ? true : false)"
                         val-icon-danger="clear"
                       />
@@ -475,7 +475,8 @@ const dict = {
       required: "El color es requerido"
     },
     asientos: {
-      required: "Los asientos son requerido"
+      required: "Los asientos son requerido",
+      numeric: "La cantidad de asientos debe ser numerico"
     }
   }
 };

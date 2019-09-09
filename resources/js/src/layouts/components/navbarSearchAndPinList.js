@@ -10,5 +10,7 @@ export default {
     {index: 5, label: 'Observaciones', url: '/pages/administracion/observaciones/observaciones', labelIcon: 'ListIcon', highlightAction: false},
     {index: 6, label: 'Observaciones internas', url: '/pages/administracion/obsinternas/obsinternas', labelIcon: 'ListIcon', highlightAction: false},
     {index: 7, label: 'Fuera de zona', url: '/pages/administracion/fuerazona/fuerazona', labelIcon: 'MapIcon', highlightAction: false},
+    {index: 8, label: 'Moviles', url: '/pages/administracion/moviles/moviles', labelIcon: 'TruckIcon', highlightAction: false},
+ 
   ]
 }

@@ -3451,7 +3451,7 @@ __webpack_require__.r(__webpack_exports__);
     submenu: ""
   }, {
     url: "/pages/administracion/fuerazona/fuerazona",
-    name: "Fuera de zona2",
+    name: "Fuera de zona",
     slug: "fuerazona",
     icon: "",
     submenu: ""

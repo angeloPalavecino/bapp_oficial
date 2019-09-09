@@ -5915,7 +5915,8 @@ var dict = {
       required: "El color es requerido"
     },
     asientos: {
-      required: "Los asientos son requerido"
+      required: "Los asientos son requerido",
+      numeric: "La cantidad de asientos debe ser numerico"
     }
   }
 }; // register custom messages
@@ -44116,7 +44117,8 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Tipo Vehículo",
+                                            "label-placeholder":
+                                              "Tipo Vehículo",
                                             name: "tipo",
                                             danger: _vm.errors.first(
                                               "step-2.tipo"
@@ -44167,7 +44169,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Marca",
+                                            "label-placeholder": "Marca",
                                             name: "marca",
                                             danger: _vm.errors.first(
                                               "step-2.marca"
@@ -44271,7 +44273,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Año",
+                                            "label-placeholder": "Año",
                                             name: "ano",
                                             danger: _vm.errors.first(
                                               "step-2.ano"
@@ -44322,7 +44324,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "N° Motor",
+                                            "label-placeholder": "N° Motor",
                                             name: "motor",
                                             danger: _vm.errors.first(
                                               "step-2.motor"
@@ -44373,7 +44375,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "N° Patente",
+                                            "label-placeholder": "N° Patente",
                                             name: "patente",
                                             danger: _vm.errors.first(
                                               "step-2.patente"
@@ -44426,7 +44428,7 @@ var render = function() {
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "Color",
+                                            "label-placeholder": "Color",
                                             name: "color",
                                             danger: _vm.errors.first(
                                               "step-2.color"
@@ -44471,13 +44473,13 @@ var render = function() {
                                             {
                                               name: "validate",
                                               rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
+                                              value: "required|numeric",
+                                              expression: "'required|numeric'"
                                             }
                                           ],
                                           staticClass: "w-full",
                                           attrs: {
-                                            label: "N° Asientos",
+                                            "label-placeholder": "N° Asientos",
                                             name: "asientos",
                                             danger: _vm.errors.first(
                                               "step-2.asientos"
@@ -78927,6 +78929,12 @@ __webpack_require__.r(__webpack_exports__);
     label: 'Fuera de zona',
     url: '/pages/administracion/fuerazona/fuerazona',
     labelIcon: 'MapIcon',
+    highlightAction: false
+  }, {
+    index: 8,
+    label: 'Moviles',
+    url: '/pages/administracion/moviles/moviles',
+    labelIcon: 'TruckIcon',
     highlightAction: false
   }]
 });

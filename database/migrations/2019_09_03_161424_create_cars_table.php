@@ -25,16 +25,17 @@ class CreateCarsTable extends Migration
             $table->string('patente');
             $table->string('color');
             $table->string('asientos');
-            $table->string('padron');
+           /* $table->string('padron');
             $table->string('permiso');
             $table->dateTime('permiso_fin')->nullable();
             $table->string('revision');
             $table->dateTime('revision_fin')->nullable();
             $table->string('mtt');
             $table->dateTime('mtt_fin')->nullable();
+            */
             $table->boolean('habilitado');
             $table->timestamps();
-
+            
             $table->foreign('driver_id')
             ->references('id')
             ->on('drivers')
