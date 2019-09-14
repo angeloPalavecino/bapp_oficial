@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCiclofacturacionTable extends Migration
+class CreateServiciosplanasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,25 @@ class CreateCiclofacturacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('ciclofacturacions', function (Blueprint $table) {
+        Schema::create('servicios_planas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('empresa_id');
-            $table->integer('dias');
-            $table->integer('inicio')->nullable();
-            $table->integer('fin')->nullable();
+            $table->decimal('desde', 8, 2);
+            $table->decimal('hasta', 8, 2);
+            $table->decimal('valormin', 8, 2);
+            $table->decimal('valorpsjadicional', 8, 2);
+            $table->tinyInteger('tipo');
+            $table->decimal('fz1', 8, 2);
+            $table->decimal('fz2', 8, 2);
+            $table->decimal('fz3', 8, 2);
             $table->timestamps();
+
+
 
             $table->foreign('empresa_id')
             ->references('id')
             ->on('empresas')
             ->onDelete('cascade');
-
-
         });
     }
 
@@ -37,6 +42,6 @@ class CreateCiclofacturacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ciclofacturacions');
+        Schema::dropIfExists('serviciosplanas');
     }
 }

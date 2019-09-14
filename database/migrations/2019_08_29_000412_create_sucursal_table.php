@@ -18,10 +18,6 @@ class CreateSucursalTable extends Migration
             $table->unsignedBigInteger('empresa_id');
             $table->string('nombre');
             $table->string('direccion');
-            $table->string('pais');
-            $table->string('ciudad');
-            $table->string('comuna');
-            $table->integer('numeracion')->nullable();
             $table->boolean('matriz')->nullable();
             $table->decimal('lat', 10 , 5)->nullable();  
             $table->decimal('lng', 10 , 5)->nullable();  

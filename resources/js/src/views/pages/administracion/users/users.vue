@@ -302,7 +302,10 @@ export default {
       ite : "",
       ind : "",
       popupActive: false,
-      item : {},
+      item : {
+        habilitado:1,
+
+      },
       modoEditar: false,      
       roles_choices: [],
       empresa_choices: [],
@@ -403,7 +406,9 @@ export default {
     initValues() {
 
       //this.$refs.wizard.navigateToTab(0);
-      this.item = {};
+      this.item = {
+        habilitado:1,
+      };
       this.item.roles = '';
       this.item.empresa_id = '';
       this.errors.clear();

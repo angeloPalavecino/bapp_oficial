@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tiposervicio;
+use App\Models\ServiciosKMS;
 use Illuminate\Http\Request;
 
-class TiposervicioController extends Controller
+class ServiciosKMSController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TiposervicioController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tiposervicio  $tiposervicio
+     * @param  \App\ServiciosKMS  $serviciosKMS
      * @return \Illuminate\Http\Response
      */
-    public function show(Tiposervicio $tiposervicio)
+    public function show(ServiciosKMS $serviciosKMS)
     {
         //
     }
@@ -52,10 +52,10 @@ class TiposervicioController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tiposervicio  $tiposervicio
+     * @param  \App\ServiciosKMS  $serviciosKMS
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tiposervicio $tiposervicio)
+    public function edit(ServiciosKMS $serviciosKMS)
     {
         //
     }
@@ -64,10 +64,10 @@ class TiposervicioController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tiposervicio  $tiposervicio
+     * @param  \App\ServiciosKMS  $serviciosKMS
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tiposervicio $tiposervicio)
+    public function update(Request $request, ServiciosKMS $serviciosKMS)
     {
         //
     }
@@ -75,10 +75,10 @@ class TiposervicioController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tiposervicio  $tiposervicio
+     * @param  \App\ServiciosKMS  $serviciosKMS
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tiposervicio $tiposervicio)
+    public function destroy(ServiciosKMS $serviciosKMS)
     {
         //
     }

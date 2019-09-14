@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\Empresa;
-use App\Models\Tiposervicio;
+use App\Models\ServiciosKMS;
+use App\Models\ServiciosPasajeros;
+use App\Models\ServiciosPlanas;
 use App\Models\Responsable;
 use App\Models\Sucursal;
 use App\Models\Ciclofacturacion;
@@ -61,11 +63,13 @@ class EmpresaController extends Controller
         //dd($request->all());
         $datos = $request->all();
         $empresa = $datos[0];
-        $servicio= $datos[1];
-        $responsables = $datos[2];
-        $sucursales = $datos[3];
-        $cicfac = $datos[4];
-        $cicprod = $datos[5];
+        $servicioplana = $datos[1];
+        $serviciopasajero = $datos[2];
+        $serviciokm = $datos[3];
+        $responsables = $datos[4];
+        $sucursales = $datos[5];
+        $cicfac = $datos[6];
+        $cicprod = $datos[7];
         
         //Valida datos empresa
         $validation = $this->validator( $empresa);
@@ -80,18 +84,14 @@ class EmpresaController extends Controller
            
         }
 
-        //Agrega Ciclo Produccion
-        $cicpro = Cicloproduccion::create($cicprod);
-        //Agrega Ciclo Facturacion
-        $cicfac = Ciclofacturacion::create($cicfac);
-      
         //Agrega Empresa
         $rut = $empresa['rut'];
         $dv = $empresa['dv'];
         $razon_social = $empresa['razon_social'];
         $giro = $empresa['giro'];
-        $produccion_id = $cicpro->id;
-        $facturacion_id = $cicfac->id;
+        $fecha_incorporacion =  $empresa['fecha_incorporacion'];
+        $habilitado =  $empresa['habilitado'];
+       
      
         $emp = Empresa::create(
          array(
@@ -99,26 +99,50 @@ class EmpresaController extends Controller
                  'dv'                   => $dv,
                  'razon_social'         => $razon_social,
                  'giro'                 => $giro,
-                 'produccion_id'        => $produccion_id,
-                 'facturacion_id'       => $facturacion_id,    
+                 'fecha_incorporacion'  => $fecha_incorporacion,
+                 'habilitado'           => $habilitado,
+                
               )
          );
 
 
-        //Agrega Tipo Servicio
-        $servicio["empresa_id"] =  $emp->id;
-        $tservicio = Tiposervicio::create($servicio);
+        //Agrega Servicio KMS
+        $serviciokm["empresa_id"] =  $emp->id;
+        $tserviciokm = ServiciosKMS::create($serviciokm);
+
+        //Agrega Servicio Pasajeros
+        $serviciopasajero["empresa_id"] =  $emp->id;
+        $tserviciopasajero = ServiciosPasajeros::create($serviciopasajero);
+
+        //Agrega Servicio Plana
+        $servicioplana["empresa_id"] =  $emp->id;
+        $tservicioplana = ServiciosPlanas::create($servicioplana);
+        
+        //Agrega Ciclo Produccion
+        $cicprod["empresa_id"] =  $emp->id;
+        $tcicprod = Cicloproduccion::create($cicprod);
+
+        //Agrega Ciclo Facturacion
+        $cicfac["empresa_id"] =  $emp->id;
+        $tcicfac = Ciclofacturacion::create($cicfac);
+      
 
         //Agrega Sucursales
          $auxSuc = array();
          
          foreach ($sucursales as $key => $itemsuc) {
             try {
-                $direccion = $itemsuc['direccion'].','.$itemsuc['comuna'].','.$itemsuc['ciudad'].','.$itemsuc['pais'];  
+                $direccion = $itemsuc['direccion'];  
                 //$geocode = Geocoder::geocode($direccion)->get()->first();
                 $geocode = app('geocoder')->geocode($direccion)->get()->first();
-                $itemsuc['lat'] = $geocode->getCoordinates()->getLatitude();
-                $itemsuc['lng'] = $geocode->getCoordinates()->getLongitude();
+                if($geocode){
+                    $itemsuc['lat'] = $geocode->getCoordinates()->getLatitude();
+                    $itemsuc['lng'] = $geocode->getCoordinates()->getLongitude();
+                }else{
+                    $itemsuc['lat'] = null;
+                    $itemsuc['lng'] = null;                  
+
+                }
               } catch (Exception $e) {
                 $itemsuc['lat'] = null;
                 $itemsuc['lng'] = null;
@@ -186,11 +210,13 @@ class EmpresaController extends Controller
 
         $datos = $request->all();
         $empresa = $datos[0];
-        $servicio = $datos[1];
-        $responsables = $datos[2];
-        $sucursales = $datos[3];
-        $cicfac = $datos[4];
-        $cicprod = $datos[5];
+        $servicioplana = $datos[1];
+        $serviciopasajero = $datos[2];
+        $serviciokm = $datos[3];
+        $responsables = $datos[4];
+        $sucursales = $datos[5];
+        $cicfac = $datos[6];
+        $cicprod = $datos[7];
 
         $validation = $this->validator($empresa);
 
@@ -213,19 +239,31 @@ class EmpresaController extends Controller
         //Actualizar Ciclo Facturacion
         Ciclofacturacion::where('id', $cicfac['id'])->update($cicfac);
 
-        //Actualizar Tipo Servicio
-        Tiposervicio::where('id', $servicio['id'])->update($servicio);
+        //Actualizar Servicio KMS
+        ServiciosKMS::where('id', $serviciokm['id'])->update($serviciokm);
+
+        //Actualizar Servicio Pasajeros
+        ServiciosPasajeros::where('id', $serviciopasajero['id'])->update($serviciopasajero);
+
+        //Actualizar Servicio Plana
+        ServiciosPlanas::where('id', $servicioplana['id'])->update($servicioplana);
         
         //Actualiza Sucursal   
         $auxsuc = array_column($sucursales, 'id');
         Sucursal::whereNotIn('id', $auxsuc)->delete();
         foreach ($sucursales as $keysuc => $itemsuc) {    
            try {
-              $direccion = $itemsuc['direccion'].','.$itemsuc['comuna'].','.$itemsuc['ciudad'].','.$itemsuc['pais'];  
+            $direccion = $itemsuc['direccion'];   
               //$geocode = Geocoder::geocode($direccion)->get()->first();
               $geocode = app('geocoder')->geocode($direccion)->get()->first();
-              $itemsuc['lat'] = $geocode->getCoordinates()->getLatitude();
-              $itemsuc['lng'] = $geocode->getCoordinates()->getLongitude();
+            if($geocode){
+                $itemsuc['lat'] = $geocode->getCoordinates()->getLatitude();
+                $itemsuc['lng'] = $geocode->getCoordinates()->getLongitude();
+            }else{
+                $itemsuc['lat'] = null;
+                $itemsuc['lng'] = null;                  
+
+            }
             } catch (Exception $e) {
               $itemsuc['lat'] = null;
               $itemsuc['lng'] = null;
@@ -258,6 +296,8 @@ class EmpresaController extends Controller
                 'dv'                   => $empresa['dv'],
                 'razon_social'         => $empresa['razon_social'],
                 'giro'                 => $empresa['giro'],
+                'habilitado'           => $empresa['habilitado'],
+                'fecha_incorporacion'  => $empresa['fecha_incorporacion'],
               )
          );
             
@@ -371,16 +411,20 @@ class EmpresaController extends Controller
     {
 
         $empresa = Empresa::findOrFail($id);
-        $tiposervicio = Tiposervicio::where('empresa_id', $id)->get();
+        $servicioskms = ServiciosKMS::where('empresa_id', $id)->get();
+        $serviciospasajeros = ServiciosPasajeros::where('empresa_id', $id)->get();
+        $serviciosplanas = ServiciosPlanas::where('empresa_id', $id)->get();
         $responsables = Responsable::where('empresa_id', $id)->get();
         $sucursales = Sucursal::where('empresa_id', $id)->get();
-        $cicfac = Ciclofacturacion::findOrFail($empresa->facturacion_id);
-        $cicpro = Cicloproduccion::findOrFail($empresa->produccion_id);
+        $cicfac = Ciclofacturacion::where('empresa_id', $id)->get();
+        $cicpro = Cicloproduccion::where('empresa_id', $id)->get();
 
         return response()->json(
             [
                 'status' => 'success',
-                'tiposervicio' => $tiposervicio->toArray(),
+                'servicioplana' => $serviciosplanas->toArray(),
+                'serviciopasajero' => $serviciospasajeros->toArray(),
+                'serviciokm' => $servicioskms->toArray(),
                 'responsables' => $responsables->toArray(),
                 'sucursales' => $sucursales->toArray(),
                 'cicfac' => $cicfac->toArray(),

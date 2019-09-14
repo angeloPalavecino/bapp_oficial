@@ -12,6 +12,6 @@ class Cicloproduccion extends Model
      * @var array
      */
     protected $fillable = [
-         'dias' ,'inicio', 'fin',
+         'dias' ,'inicio', 'fin','empresa_id'
     ];
 }

@@ -287,11 +287,14 @@
       const url = thisIns.ruta + 'perfil';
       this.$http.get(url)
         .then(function (response) {
-          thisIns.item = response.data.item[0]; 
-         if(response.data.item[0].imagen != null){
-            thisIns.item.imagen = response.data.item[0].imagen;
-
+          thisIns.item = response.data.item; 
+          
+         if(response.data.item.imagen === null){
+          thisIns.item.imagen = "avatar.png";
+           }else{
+          thisIns.item.imagen = response.data.item.imagen;
         }     
+
          })
         .catch(function (error) {
            thisIns.$vs.notify({

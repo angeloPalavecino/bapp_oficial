@@ -3965,10 +3965,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var thisIns = this;
       var url = thisIns.ruta + 'perfil';
       this.$http.get(url).then(function (response) {
-        thisIns.item = response.data.item[0];
+        thisIns.item = response.data.item;
 
-        if (response.data.item[0].imagen != null) {
-          thisIns.item.imagen = response.data.item[0].imagen;
+        if (response.data.item.imagen === null) {
+          thisIns.item.imagen = "avatar.png";
+        } else {
+          thisIns.item.imagen = response.data.item.imagen;
         }
       })["catch"](function (error) {
         thisIns.$vs.notify({
@@ -4176,6 +4178,175 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+var _custom;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4527,7 +4698,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var dict = {
-  custom: {
+  custom: (_custom = {
     razon_social: {
       required: 'El nombre es requerido'
     },
@@ -4539,46 +4710,127 @@ var dict = {
       required: 'El digito verificador es requerido',
       max: 'Debe ingresar solo 1 caracter'
     },
-    responsable_nombre: {
-      required: 'El nombre es requerido'
+    fecha_incorporacion: {
+      required: 'La fecha de incorporacion es requerido'
     },
-    responsable_telefono: {
-      required: 'El telefono es requerido',
-      numeric: 'El numero de telefono debe ser valido'
+    servicioplana_desde: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    responsable_email: {
-      required: 'El email es requerido',
-      email: 'Ingrese un email valido'
+    servicioplana_hasta: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    tiposervicio_outsourcing: {
-      required: 'El outsourcing es requerido'
+    servicioplana_distancia: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    tiposervicio_tipo: {
-      required: 'El tipo de servicio es requerido'
+    servicioplana_valormin: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    tiposervicio_valor: {
-      required: 'El valor es requerido',
-      decimal: 'El valor debe ser numerico'
+    servicioplana_valorpsjadicional: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    cicprod_tipo: {
-      required: 'El tipo es requerido'
+    servicioplana_fz1: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    cicprod_desde: {
-      required: 'La fecha desde es requerida'
+    servicioplana_fz2: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    cicprod_hasta: {
-      required: 'La fecha hasta es requerida'
+    servicioplana_fz3: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    cicfac_tipo: {
-      required: 'El tipo es requerido'
+    serviciopasajero_valorfz1: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    cicfac_desde: {
-      required: 'La fecha desde es requerida'
+    serviciopasajero_hastafz1: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     },
-    cicfac_hasta: {
-      required: 'La fecha hasta es requerida'
+    serviciopasajero_desdefz1: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
+    },
+    serviciopasajero_valorfz2: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
+    },
+    serviciopasajero_hastafz2: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
+    },
+    serviciopasajero_desdefz2: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
+    },
+    serviciopasajero_valorfz3: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
+    },
+    serviciopasajero_hastafz3: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
+    },
+    serviciopasajero_desdefz3: {
+      required: 'El campo es requerido',
+      decimal: 'Debe ingresar solo numeros'
     }
-  }
+  }, _defineProperty(_custom, "serviciopasajero_desdefz3", {
+    required: 'El campo es requerido',
+    decimal: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "serviciokms_valor", {
+    required: 'El campo es requerido',
+    decimal: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "serviciokms_distancia", {
+    required: 'El campo es requerido',
+    decimal: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "serviciokms_bajabandera", {
+    required: 'El campo es requerido',
+    decimal: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "serviciokms_valorportico", {
+    required: 'El campo es requerido',
+    decimal: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "serviciokms_tiempo", {
+    required: 'El campo es requerido',
+    decimal: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "serviciokms_pasajeros", {
+    required: 'El campo es requerido',
+    decimal: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "responsable_nombre", {
+    required: 'El nombre es requerido'
+  }), _defineProperty(_custom, "responsable_telefono", {
+    required: 'El telefono es requerido',
+    numeric: 'El numero de telefono debe ser valido'
+  }), _defineProperty(_custom, "responsable_email", {
+    required: 'El email es requerido',
+    email: 'Ingrese un email valido'
+  }), _defineProperty(_custom, "sucursal_nombre", {
+    required: 'El nombre es requerido'
+  }), _defineProperty(_custom, "sucursal_direccion", {
+    required: 'La direccion es requerido'
+  }), _defineProperty(_custom, "cicprod_tipo", {
+    required: 'El tipo es requerido'
+  }), _defineProperty(_custom, "cicprod_desde", {
+    required: 'El campo es requerido',
+    numeric: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "cicprod_hasta", {
+    required: 'El campo es requerido',
+    numeric: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "cicfac_tipo", {
+    required: 'El tipo es requerido'
+  }), _defineProperty(_custom, "cicfac_desde", {
+    required: 'El campo es requerido',
+    numeric: 'Debe ingresar solo numeros'
+  }), _defineProperty(_custom, "cicfac_hasta", {
+    required: 'El campo es requerido',
+    numeric: 'Debe ingresar solo numeros'
+  }), _custom)
 }; // register custom messages
 
 vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
@@ -4599,7 +4851,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       ite: "",
       ind: "",
       popupActive: false,
-      item: {},
+      item: {
+        habilitado: 1
+      },
       modoEditar: false,
       roles_choices: [],
       empresa_choices: [],
@@ -4616,16 +4870,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         value: "3"
       }],
       tipoCicloProduccion: [{
-        text: "Por defecto (30 dias)",
-        value: 30
+        text: "Por defecto (Mes Completo)",
+        value: 31
       }, {
         text: "Personalizado",
         value: 0
       }],
       tipoCiclofacturacion: [{
-        text: "Por dia",
-        value: 1
-      }, {
         text: "Por 15 dias",
         value: 15
       }, {
@@ -4638,7 +4889,6 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         text: "Personalizado",
         value: 0
       }],
-      tiposervicio: {},
       responsables: [{
         id: "",
         empresa_id: "",
@@ -4651,15 +4901,22 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         empresa_id: "",
         nombre: "",
         direccion: "",
-        pais: "",
-        ciudad: "",
-        comuna: "",
-        numeracion: "",
         matriz: ""
       }],
-      ciclofacturacion: {},
+      serviciokm: {},
+      serviciopasajero: {},
+      servicioplana: {
+        tipo: 1
+      },
+      ciclofacturacion: {
+        inicio: 1,
+        fin: 1
+      },
       disabledcicfac: true,
-      cicloproduccion: {},
+      cicloproduccion: {
+        inicio: 1,
+        fin: 1
+      },
       disabledcicpro: true
     };
   },
@@ -4678,8 +4935,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         this.disabledcicpro = false;
       } else {
         this.disabledcicpro = true;
-        this.cicloproduccion.inicio = "";
-        this.cicloproduccion.fin = "";
+        this.cicloproduccion.inicio = 1;
+        this.cicloproduccion.fin = 1;
         this.errors.clear();
       }
     },
@@ -4688,8 +4945,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         this.disabledcicfac = false;
       } else {
         this.disabledcicfac = true;
-        this.ciclofacturacion.inicio = "";
-        this.ciclofacturacion.fin = "";
+        this.ciclofacturacion.inicio = 1;
+        this.ciclofacturacion.fin = 1;
         this.errors.clear();
       }
     },
@@ -4754,14 +5011,27 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       return new Promise(function (resolve, reject) {
         _this4.$validator.validateAll("step-4").then(function (result) {
           if (result) {
-            if (_this4.modoEditar == false) {
-              var url = _this4.ruta + 'store';
+            resolve(true);
+          } else {
+            reject("correct all values");
+          }
+        });
+      });
+    },
+    validateStep5: function validateStep5() {
+      var _this5 = this;
 
-              _this4.submitRegistros(url);
+      return new Promise(function (resolve, reject) {
+        _this5.$validator.validateAll("step-5").then(function (result) {
+          if (result) {
+            if (_this5.modoEditar == false) {
+              var url = _this5.ruta + 'store';
+
+              _this5.submitRegistros(url);
             } else {
-              var _url = _this4.ruta + _this4.item.id;
+              var _url = _this5.ruta + _this5.item.id;
 
-              _this4.submitActualizaRegistros(_url);
+              _this5.submitActualizaRegistros(_url);
             }
 
             resolve(true);
@@ -4779,6 +5049,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       this.item.razon_social = item.razon_social;
       this.item.giro = item.giro;
       this.item.id = item.id;
+      this.item.habilitado = item.habilitado;
+      this.item.fecha_incorporacion = item.fecha_incorporacion;
       this.traeOtrosDatos(item.id);
       this.selected = [];
       this.popupActive = true;
@@ -4786,7 +5058,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
     initValues: function initValues() {
       this.datos = []; //this.$refs.wizard.navigateToTab(0);
 
-      this.item = {};
+      this.item = {
+        habilitado: 1
+      };
       this.responsables = [{
         id: "",
         empresa_id: "",
@@ -4799,47 +5073,52 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         empresa_id: "",
         nombre: "",
         direccion: "",
-        pais: "",
-        ciudad: "",
-        comuna: "",
-        numeracion: "",
         matriz: ""
       }];
-      this.tiposervicio = {};
-      this.ciclofacturacion = {};
-      this.cicloproduccion = {};
+      this.serviciokm = {}, this.serviciopasajero = {}, this.servicioplana = {
+        tipo: 1
+      }, this.ciclofacturacion = {
+        inicio: 1,
+        fin: 1
+      };
+      this.cicloproduccion = {
+        inicio: 1,
+        fin: 1
+      };
       this.disabledcicfac = true, this.disabledcicpro = true, this.errors.clear();
       this.$refs.wizard.reset();
     },
     //Enviar Registros
     submitRegistros: function submitRegistros(url) {
-      var _this5 = this;
+      var _this6 = this;
 
       var thisIns = this;
       this.datos = [];
       this.datos.push(this.item);
-      this.datos.push(this.tiposervicio);
+      this.datos.push(this.servicioplana);
+      this.datos.push(this.serviciopasajero);
+      this.datos.push(this.serviciokm);
       this.datos.push(this.responsables);
       this.datos.push(this.sucursales);
       this.datos.push(this.ciclofacturacion);
       this.datos.push(this.cicloproduccion);
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          _this5.$http.post(url, _this5.datos) //this.item
+          _this6.$http.post(url, _this6.datos) //this.item
           .then(function (res) {
-            _this5.$vs.loading({
+            _this6.$vs.loading({
               type: 'radius',
               scale: 0.6
             });
 
-            _this5.$refrescaTabla();
+            _this6.$refrescaTabla();
 
-            _this5.initValues();
+            _this6.initValues();
 
-            _this5.modoEditar = false;
-            _this5.popupActive = false;
+            _this6.modoEditar = false;
+            _this6.popupActive = false;
             setTimeout(function () {
-              _this5.$vs.loading.close();
+              _this6.$vs.loading.close();
             }, 500);
             thisIns.$vs.notify({
               title: 'Exito',
@@ -4862,34 +5141,35 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
     },
     //Actuliza Registros
     submitActualizaRegistros: function submitActualizaRegistros(url) {
-      var _this6 = this;
+      var _this7 = this;
 
       var thisIns = this;
       this.datos = [];
       this.datos.push(this.item);
-      this.datos.push(this.tiposervicio);
+      this.datos.push(this.servicioplana);
+      this.datos.push(this.serviciopasajero);
+      this.datos.push(this.serviciokm);
       this.datos.push(this.responsables);
       this.datos.push(this.sucursales);
       this.datos.push(this.ciclofacturacion);
       this.datos.push(this.cicloproduccion);
-      return;
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          _this6.$http.put(url, _this6.datos) //this.item
+          _this7.$http.put(url, _this7.datos) //this.item
           .then(function (res) {
-            _this6.$vs.loading({
+            _this7.$vs.loading({
               type: 'radius',
               scale: 0.6
             });
 
-            _this6.$refrescaTabla();
+            _this7.$refrescaTabla();
 
-            _this6.initValues();
+            _this7.initValues();
 
-            _this6.modoEditar = false;
-            _this6.popupActive = false;
+            _this7.modoEditar = false;
+            _this7.popupActive = false;
             setTimeout(function () {
-              _this6.$vs.loading.close();
+              _this7.$vs.loading.close();
             }, 500);
             thisIns.$vs.notify({
               title: 'Exito',
@@ -4911,20 +5191,22 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     traeOtrosDatos: function traeOtrosDatos(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       //Carga datos empresa   
       var thisIns = this;
       var url = this.ruta + 'otros/' + this.item.id; //thisIns.treeData = {};
 
       this.$http.get(url).then(function (response) {
-        _this7.tiposervicio = response.data.tiposervicio[0];
-        _this7.responsables = response.data.responsables;
-        _this7.sucursales = response.data.sucursales;
-        _this7.ciclofacturacion = response.data.cicfac;
-        _this7.cicloproduccion = response.data.cicpro;
-        response.data.cicfac.dias === 0 ? _this7.disabledcicfac = false : _this7.disabledcicfac = true;
-        response.data.cicpro.dias === 0 ? _this7.disabledcicpro = false : _this7.disabledcicpro = true;
+        _this8.servicioplana = response.data.servicioplana[0];
+        _this8.serviciopasajero = response.data.serviciopasajero[0];
+        _this8.serviciokm = response.data.serviciokm[0];
+        _this8.responsables = response.data.responsables;
+        _this8.sucursales = response.data.sucursales;
+        _this8.ciclofacturacion = response.data.cicfac[0];
+        _this8.cicloproduccion = response.data.cicpro[0];
+        response.data.cicfac[0].dias === 0 ? _this8.disabledcicfac = false : _this8.disabledcicfac = true;
+        response.data.cicpro[0].dias === 0 ? _this8.disabledcicpro = false : _this8.disabledcicpro = true;
       })["catch"](function (error) {
         thisIns.$vs.notify({
           title: 'Error',
@@ -7323,7 +7605,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
       ite: "",
       ind: "",
       popupActive: false,
-      item: {},
+      item: {
+        habilitado: 1
+      },
       modoEditar: false,
       roles_choices: [],
       empresa_choices: [],
@@ -7424,7 +7708,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
     },
     initValues: function initValues() {
       //this.$refs.wizard.navigateToTab(0);
-      this.item = {};
+      this.item = {
+        habilitado: 1
+      };
       this.item.roles = '';
       this.item.empresa_id = '';
       this.errors.clear();
@@ -40412,100 +40698,16 @@ var render = function() {
                                         )
                                       ],
                                       1
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [_c("h5", [_vm._v("Tipo servicio")])]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-select",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "validate",
-                                                rawName: "v-validate",
-                                                value: "required",
-                                                expression: "'required'"
-                                              }
-                                            ],
-                                            staticClass: "w-full select-large",
-                                            attrs: {
-                                              label: "Tipo",
-                                              name: "tiposervicio_tipo"
-                                            },
-                                            model: {
-                                              value: _vm.tiposervicio.tipo,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.tiposervicio,
-                                                  "tipo",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "tiposervicio.tipo"
-                                            }
-                                          },
-                                          _vm._l(_vm.tipoOpciones, function(
-                                            item,
-                                            index
-                                          ) {
-                                            return _c("vs-select-item", {
-                                              key: index,
-                                              staticClass: "w-full",
-                                              attrs: {
-                                                value: item.value,
-                                                text: item.text
-                                              }
-                                            })
-                                          }),
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.tiposervicio_tipo"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
                                     ),
                                     _vm._v(" "),
                                     _c(
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
+                                          "vx-col md:w-1/2 w-full mt-6"
                                       },
                                       [
-                                        _c("vs-input", {
+                                        _c("flat-pickr", {
                                           directives: [
                                             {
                                               name: "validate",
@@ -40514,28 +40716,22 @@ var render = function() {
                                               expression: "'required'"
                                             }
                                           ],
-                                          staticClass: "w-full",
+                                          staticClass: "w-full select-large",
                                           attrs: {
-                                            "label-placeholder": "Outsourcing",
-                                            name: "tiposervicio_outsourcing",
-                                            danger: _vm.errors.first(
-                                              "step-1.tiposervicio_outsourcing"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
+                                            placeholder: "Fecha Incorporacion",
+                                            name: "fecha_incorporacion"
                                           },
                                           model: {
-                                            value: _vm.tiposervicio.outsourcing,
+                                            value: _vm.item.fecha_incorporacion,
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.tiposervicio,
-                                                "outsourcing",
+                                                _vm.item,
+                                                "fecha_incorporacion",
                                                 $$v
                                               )
                                             },
                                             expression:
-                                              "tiposervicio.outsourcing"
+                                              "item.fecha_incorporacion"
                                           }
                                         }),
                                         _vm._v(" "),
@@ -40548,7 +40744,7 @@ var render = function() {
                                             _vm._v(
                                               _vm._s(
                                                 _vm.errors.first(
-                                                  "step-1.tiposervicio_outsourcing"
+                                                  "step-1.fecha_incorporacion"
                                                 )
                                               )
                                             )
@@ -40560,9 +40756,134 @@ var render = function() {
                                     _vm._v(" "),
                                     _c(
                                       "div",
+                                      { staticClass: "vx-col md:w-1 w-full" },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "demo-alignment" },
+                                          [
+                                            _c("span", [_vm._v("Habilitado:")]),
+                                            _vm._v(" "),
+                                            _c("div", { staticClass: "flex" }, [
+                                              _c(
+                                                "ul",
+                                                { staticClass: "centerx" },
+                                                [
+                                                  _c(
+                                                    "li",
+                                                    [
+                                                      _c(
+                                                        "vs-radio",
+                                                        {
+                                                          attrs: {
+                                                            color: "success",
+                                                            "vs-value": "1"
+                                                          },
+                                                          model: {
+                                                            value:
+                                                              _vm.item
+                                                                .habilitado,
+                                                            callback: function(
+                                                              $$v
+                                                            ) {
+                                                              _vm.$set(
+                                                                _vm.item,
+                                                                "habilitado",
+                                                                $$v
+                                                              )
+                                                            },
+                                                            expression:
+                                                              "item.habilitado"
+                                                          }
+                                                        },
+                                                        [_vm._v("Activo")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "li",
+                                                    [
+                                                      _c(
+                                                        "vs-radio",
+                                                        {
+                                                          attrs: {
+                                                            color: "danger",
+                                                            "vs-value": "0"
+                                                          },
+                                                          model: {
+                                                            value:
+                                                              _vm.item
+                                                                .habilitado,
+                                                            callback: function(
+                                                              $$v
+                                                            ) {
+                                                              _vm.$set(
+                                                                _vm.item,
+                                                                "habilitado",
+                                                                $$v
+                                                              )
+                                                            },
+                                                            expression:
+                                                              "item.habilitado"
+                                                          }
+                                                        },
+                                                        [_vm._v("Inactivo")]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ]
+                                              )
+                                            ])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "tab-content",
+                            {
+                              staticClass: "mb-5",
+                              attrs: {
+                                title: "Paso 2",
+                                icon: "feather icon-credit-card",
+                                "before-change": _vm.validateStep2
+                              }
+                            },
+                            [
+                              _c(
+                                "form",
+                                { attrs: { "data-vv-scope": "step-2" } },
+                                [
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "vs-divider",
+                                        { attrs: { color: "primary" } },
+                                        [
+                                          _c("h5", [
+                                            _vm._v("Servicio por plana")
+                                          ])
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "vx-row" }, [
+                                    _c(
+                                      "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
+                                          "vx-col md:w-1/3 w-full mt-1"
                                       },
                                       [
                                         _c("vs-input", {
@@ -40577,24 +40898,25 @@ var render = function() {
                                           staticClass: "w-full",
                                           attrs: {
                                             "label-placeholder": "Valor",
-                                            name: "tiposervicio_valor",
+                                            name: "servicioplana_valormin",
+                                            size: "small",
                                             danger: _vm.errors.first(
-                                              "step-1.tiposervicio_outsourcing"
+                                              "step-2.servicioplana_valormin"
                                             )
                                               ? true
                                               : false,
                                             "val-icon-danger": "clear"
                                           },
                                           model: {
-                                            value: _vm.tiposervicio.valor,
+                                            value: _vm.servicioplana.valormin,
                                             callback: function($$v) {
                                               _vm.$set(
-                                                _vm.tiposervicio,
-                                                "valor",
+                                                _vm.servicioplana,
+                                                "valormin",
                                                 $$v
                                               )
                                             },
-                                            expression: "tiposervicio.valor"
+                                            expression: "servicioplana.valormin"
                                           }
                                         }),
                                         _vm._v(" "),
@@ -40607,7 +40929,1402 @@ var render = function() {
                                             _vm._v(
                                               _vm._s(
                                                 _vm.errors.first(
-                                                  "step-1.tiposervicio_valor"
+                                                  "step-2.servicioplana_valormin"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder": "Desde",
+                                            name: "servicioplana_desde",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.servicioplana_desde"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.servicioplana.desde,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.servicioplana,
+                                                "desde",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "servicioplana.desde"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.servicioplana_desde"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder": "Hasta",
+                                            name: "servicioplana_hasta",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.servicioplana_hasta"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.servicioplana.hasta,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.servicioplana,
+                                                "hasta",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "servicioplana.hasta"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.servicioplana_hasta"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor psj adicional",
+                                            name:
+                                              "servicioplana_valorpsjadicional",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.servicioplana_valorpsjadicional"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.servicioplana
+                                                .valorpsjadicional,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.servicioplana,
+                                                "valorpsjadicional",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "servicioplana.valorpsjadicional"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.servicioplana_valorpsjadicional"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-6"
+                                      },
+                                      [
+                                        _c(
+                                          "vs-radio",
+                                          {
+                                            staticClass: "mt-1",
+                                            attrs: {
+                                              color: "success",
+                                              "vs-value": "1"
+                                            },
+                                            model: {
+                                              value: _vm.servicioplana.tipo,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.servicioplana,
+                                                  "tipo",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "servicioplana.tipo"
+                                            }
+                                          },
+                                          [_vm._v("Programado")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-6"
+                                      },
+                                      [
+                                        _c(
+                                          "vs-radio",
+                                          {
+                                            staticClass: "mt-1",
+                                            attrs: {
+                                              color: "danger",
+                                              "vs-value": "0"
+                                            },
+                                            model: {
+                                              value: _vm.servicioplana.tipo,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.servicioplana,
+                                                  "tipo",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "servicioplana.tipo"
+                                            }
+                                          },
+                                          [_vm._v("Transportado")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor F.Zona 1",
+                                            name: "servicioplana_fz1",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.servicioplana_fz1"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.servicioplana.fz1,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.servicioplana,
+                                                "fz1",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "servicioplana.fz1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.servicioplana_fz1"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor F.Zona 2",
+                                            name: "servicioplana_fz2",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.servicioplana_fz2"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.servicioplana.fz2,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.servicioplana,
+                                                "fz2",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "servicioplana.fz2"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.servicioplana_fz2"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor F.Zona 3",
+                                            name: "servicioplana_fz3",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.servicioplana_fz3"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.servicioplana.fz3,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.servicioplana,
+                                                "fz3",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "servicioplana.fz3"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.servicioplana_fz3"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "vs-divider",
+                                        { attrs: { color: "primary" } },
+                                        [
+                                          _c("h5", [
+                                            _vm._v("Servicio por pasajero")
+                                          ])
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "vx-row" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor F.Zona 1",
+                                            name: "serviciopasajero_valorfz1",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_valorfz1"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.valorfz1,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "valorfz1",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.valorfz1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_valorfz1"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Desde F.Zona 1",
+                                            name: "serviciopasajero_desdefz1",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_desdefz1"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.desdefz1,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "desdefz1",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.desdefz1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_desdefz1"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Hasta F.Zona 1",
+                                            name: "serviciopasajero_hastafz1",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_hastafz1"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.hastafz1,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "hastafz1",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.hastafz1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_hastafz1"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor F.Zona 2",
+                                            name: "serviciopasajero_valorfz2",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_valorfz2"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.valorfz2,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "valorfz2",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.valorfz2"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_valorfz2"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Desde F.Zona 2",
+                                            name: "serviciopasajero_desdefz2",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_desdefz2"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.desdefz2,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "desdefz2",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.desdefz2"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_desdefz2"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Hasta F.Zona 2",
+                                            name: "serviciopasajero_hastafz2",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_hastafz2"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.hastafz2,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "hastafz2",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.hastafz2"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_hastafz2"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor F.Zona 3",
+                                            name: "serviciopasajero_valorfz3",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_valorfz3"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.valorfz3,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "valorfz3",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.valorfz3"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_valorfz3"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Desde F.Zona 3",
+                                            name: "serviciopasajero_desdefz3",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_desdefz3"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.desdefz3,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "desdefz3",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.desdefz3"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_desdefz3"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Hasta F.Zona 3",
+                                            name: "serviciopasajero_hastafz3",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciopasajero_hastafz3"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value:
+                                              _vm.serviciopasajero.hastafz3,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciopasajero,
+                                                "hastafz3",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciopasajero.hastafz3"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciopasajero_hastafz3"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "vs-divider",
+                                        { attrs: { color: "primary" } },
+                                        [_c("h5", [_vm._v("Servicio por KMS")])]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "vx-row" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder": "Valor",
+                                            name: "serviciokms_valor",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciokms_valor"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.serviciokm.valor,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciokm,
+                                                "valor",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "serviciokm.valor"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciokms_valor"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder":
+                                              "Valor portico",
+                                            name: "serviciokms_valorportico",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciokms_valorportico"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.serviciokm.valorportico,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciokm,
+                                                "valorportico",
+                                                $$v
+                                              )
+                                            },
+                                            expression:
+                                              "serviciokm.valorportico"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciokms_valorportico"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder": "Distancia",
+                                            name: "serviciokms_distancia",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciokms_distancia"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.serviciokm.distancia,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciokm,
+                                                "distancia",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "serviciokm.distancia"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciokms_distancia"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder": "Pasajeros",
+                                            name: "serviciokms_pasajeros",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciokms_pasajeros"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.serviciokm.pasajeros,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciokm,
+                                                "pasajeros",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "serviciokm.pasajeros"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciokms_pasajeros"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder": "Tiempo",
+                                            name: "serviciokms_tiempo",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciokms_tiempo"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.serviciokm.tiempo,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciokm,
+                                                "tiempo",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "serviciokm.tiempo"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciokms_tiempo"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/3 w-full mt-1"
+                                      },
+                                      [
+                                        _c("vs-input", {
+                                          directives: [
+                                            {
+                                              name: "validate",
+                                              rawName: "v-validate",
+                                              value: "required|decimal",
+                                              expression: "'required|decimal'"
+                                            }
+                                          ],
+                                          staticClass: "w-full",
+                                          attrs: {
+                                            "label-placeholder": "Baja Bandera",
+                                            name: "serviciokms_bajabandera",
+                                            size: "small",
+                                            danger: _vm.errors.first(
+                                              "step-2.serviciokms_bajabandera"
+                                            )
+                                              ? true
+                                              : false,
+                                            "val-icon-danger": "clear"
+                                          },
+                                          model: {
+                                            value: _vm.serviciokm.bajabandera,
+                                            callback: function($$v) {
+                                              _vm.$set(
+                                                _vm.serviciokm,
+                                                "bajabandera",
+                                                $$v
+                                              )
+                                            },
+                                            expression: "serviciokm.bajabandera"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "text-danger text-sm"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.errors.first(
+                                                  "step-2.serviciokms_bajabandera"
                                                 )
                                               )
                                             )
@@ -40627,15 +42344,15 @@ var render = function() {
                             {
                               staticClass: "mb-5",
                               attrs: {
-                                title: "Paso 2",
+                                title: "Paso 3",
                                 icon: "feather icon-users",
-                                "before-change": _vm.validateStep2
+                                "before-change": _vm.validateStep3
                               }
                             },
                             [
                               _c(
                                 "form",
-                                { attrs: { "data-vv-scope": "step-2" } },
+                                { attrs: { "data-vv-scope": "step-3" } },
                                 [
                                   _c(
                                     "div",
@@ -40705,7 +42422,7 @@ var render = function() {
                                                     "Responsable",
                                                   name: "responsable_nombre",
                                                   danger: _vm.errors.first(
-                                                    "step-2.responsable_nombre"
+                                                    "step-3.responsable_nombre"
                                                   )
                                                     ? true
                                                     : false,
@@ -40731,7 +42448,7 @@ var render = function() {
                                                   _vm._v(
                                                     _vm._s(
                                                       _vm.errors.first(
-                                                        "step-2.responsable_nombre"
+                                                        "step-3.responsable_nombre"
                                                       )
                                                     )
                                                   )
@@ -40764,7 +42481,7 @@ var render = function() {
                                                     "Telefono",
                                                   name: "responsable_telefono",
                                                   danger: _vm.errors.first(
-                                                    "step-2.responsable_telefono"
+                                                    "step-3.responsable_telefono"
                                                   )
                                                     ? true
                                                     : false,
@@ -40794,7 +42511,7 @@ var render = function() {
                                                   _vm._v(
                                                     _vm._s(
                                                       _vm.errors.first(
-                                                        "step-2.responsable_telefono"
+                                                        "step-3.responsable_telefono"
                                                       )
                                                     )
                                                   )
@@ -40826,7 +42543,7 @@ var render = function() {
                                                   "label-placeholder": "Email",
                                                   name: "responsable_email",
                                                   danger: _vm.errors.first(
-                                                    "step-2.responsable_email"
+                                                    "step-3.responsable_email"
                                                   )
                                                     ? true
                                                     : false,
@@ -40852,7 +42569,7 @@ var render = function() {
                                                   _vm._v(
                                                     _vm._s(
                                                       _vm.errors.first(
-                                                        "step-2.responsable_email"
+                                                        "step-3.responsable_email"
                                                       )
                                                     )
                                                   )
@@ -40904,15 +42621,15 @@ var render = function() {
                             {
                               staticClass: "mb-5",
                               attrs: {
-                                title: "Paso 3",
+                                title: "Paso 4",
                                 icon: "feather icon-map-pin",
-                                "before-change": _vm.validateStep3
+                                "before-change": _vm.validateStep4
                               }
                             },
                             [
                               _c(
                                 "form",
-                                { attrs: { "data-vv-scope": "step-3" } },
+                                { attrs: { "data-vv-scope": "step-4" } },
                                 [
                                   _c(
                                     "div",
@@ -40991,7 +42708,7 @@ var render = function() {
                                                       "Nombre",
                                                     name: "sucursal_nombre",
                                                     danger: _vm.errors.first(
-                                                      "step-3.sucursal_nombre"
+                                                      "step-4.sucursal_nombre"
                                                     )
                                                       ? true
                                                       : false,
@@ -41036,7 +42753,7 @@ var render = function() {
                                                       "Direccion",
                                                     name: "sucursal_direccion",
                                                     danger: _vm.errors.first(
-                                                      "step-3.sucursal_direccion"
+                                                      "step-4.sucursal_direccion"
                                                     )
                                                       ? true
                                                       : false,
@@ -41069,6 +42786,7 @@ var render = function() {
                                                 _c(
                                                   "vs-radio",
                                                   {
+                                                    staticClass: "mt-1",
                                                     attrs: { "vs-value": "1" },
                                                     on: {
                                                       change: function($event) {
@@ -41122,136 +42840,6 @@ var render = function() {
                                                 })
                                               ],
                                               1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "vx-col md:w-1/3 w-full mt-2"
-                                              },
-                                              [
-                                                _c("vs-input", {
-                                                  directives: [
-                                                    {
-                                                      name: "validate",
-                                                      rawName: "v-validate",
-                                                      value: "required",
-                                                      expression: "'required'"
-                                                    }
-                                                  ],
-                                                  staticClass: "w-full",
-                                                  attrs: {
-                                                    "label-placeholder": "Pais",
-                                                    name: "sucursal_pais",
-                                                    danger: _vm.errors.first(
-                                                      "step-3.sucursal_pais"
-                                                    )
-                                                      ? true
-                                                      : false,
-                                                    "val-icon-danger": "clear",
-                                                    size: "small"
-                                                  },
-                                                  model: {
-                                                    value: suc.pais,
-                                                    callback: function($$v) {
-                                                      _vm.$set(suc, "pais", $$v)
-                                                    },
-                                                    expression: "suc.pais"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "vx-col md:w-1/3 w-full mt-2"
-                                              },
-                                              [
-                                                _c("vs-input", {
-                                                  directives: [
-                                                    {
-                                                      name: "validate",
-                                                      rawName: "v-validate",
-                                                      value: "required",
-                                                      expression: "'required'"
-                                                    }
-                                                  ],
-                                                  staticClass: "w-full",
-                                                  attrs: {
-                                                    "label-placeholder":
-                                                      "Ciudad",
-                                                    name: "sucursal_ciudad",
-                                                    danger: _vm.errors.first(
-                                                      "step-3.sucursal_ciudad"
-                                                    )
-                                                      ? true
-                                                      : false,
-                                                    "val-icon-danger": "clear",
-                                                    size: "small"
-                                                  },
-                                                  model: {
-                                                    value: suc.ciudad,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        suc,
-                                                        "ciudad",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression: "suc.ciudad"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "vx-col md:w-1/3 w-full mt-2"
-                                              },
-                                              [
-                                                _c("vs-input", {
-                                                  directives: [
-                                                    {
-                                                      name: "validate",
-                                                      rawName: "v-validate",
-                                                      value: "required",
-                                                      expression: "'required'"
-                                                    }
-                                                  ],
-                                                  staticClass: "w-full",
-                                                  attrs: {
-                                                    "label-placeholder":
-                                                      "Comuna",
-                                                    name: "sucursal_comuna",
-                                                    danger: _vm.errors.first(
-                                                      "step-3.sucursal_comuna"
-                                                    )
-                                                      ? true
-                                                      : false,
-                                                    "val-icon-danger": "clear",
-                                                    size: "small"
-                                                  },
-                                                  model: {
-                                                    value: suc.comuna,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        suc,
-                                                        "comuna",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression: "suc.comuna"
-                                                  }
-                                                })
-                                              ],
-                                              1
                                             )
                                           ],
                                           1
@@ -41270,15 +42858,15 @@ var render = function() {
                             {
                               staticClass: "mb-5",
                               attrs: {
-                                title: "Paso 4",
+                                title: "Paso 5",
                                 icon: "feather icon-refresh-cw",
-                                "before-change": _vm.validateStep4
+                                "before-change": _vm.validateStep5
                               }
                             },
                             [
                               _c(
                                 "form",
-                                { attrs: { "data-vv-scope": "step-4" } },
+                                { attrs: { "data-vv-scope": "step-5" } },
                                 [
                                   _c("div", { staticClass: "vx-row" }, [
                                     _c(
@@ -41368,7 +42956,7 @@ var render = function() {
                                                 _vm._v(
                                                   _vm._s(
                                                     _vm.errors.first(
-                                                      "step-4.cicprod_tipo"
+                                                      "step-5.cicprod_tipo"
                                                     )
                                                   )
                                                 )
@@ -41385,7 +42973,13 @@ var render = function() {
                                               "vx-col md:w-1/2  w-full mt-2"
                                           },
                                           [
-                                            _c("flat-pickr", {
+                                            _c(
+                                              "span",
+                                              { staticClass: " text-sm" },
+                                              [_vm._v("Desde")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("vs-input-number", {
                                               directives: [
                                                 {
                                                   name: "validate",
@@ -41394,11 +42988,12 @@ var render = function() {
                                                   expression: "'required'"
                                                 }
                                               ],
-                                              staticClass:
-                                                "w-full select-large",
                                               attrs: {
-                                                placeholder: "Desde",
                                                 name: "cicprod_desde",
+                                                min: "1",
+                                                max: "31",
+                                                "icon-inc": "expand_less",
+                                                "icon-dec": "expand_more",
                                                 disabled: _vm.disabledcicpro
                                               },
                                               model: {
@@ -41426,7 +43021,7 @@ var render = function() {
                                                 _vm._v(
                                                   _vm._s(
                                                     _vm.errors.first(
-                                                      "step-4.cicprod_desde"
+                                                      "step-5.cicprod_desde"
                                                     )
                                                   )
                                                 )
@@ -41443,7 +43038,13 @@ var render = function() {
                                               "vx-col md:w-1/2 w-full mt-2"
                                           },
                                           [
-                                            _c("flat-pickr", {
+                                            _c(
+                                              "span",
+                                              { staticClass: " text-sm" },
+                                              [_vm._v("Hasta")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("vs-input-number", {
                                               directives: [
                                                 {
                                                   name: "validate",
@@ -41452,11 +43053,12 @@ var render = function() {
                                                   expression: "'required'"
                                                 }
                                               ],
-                                              staticClass:
-                                                "w-full select-large",
                                               attrs: {
-                                                placeholder: "Hasta",
                                                 name: "cicprod_hasta",
+                                                min: "1",
+                                                max: "31",
+                                                "icon-inc": "expand_less",
+                                                "icon-dec": "expand_more",
                                                 disabled: _vm.disabledcicpro
                                               },
                                               model: {
@@ -41483,7 +43085,7 @@ var render = function() {
                                                 _vm._v(
                                                   _vm._s(
                                                     _vm.errors.first(
-                                                      "step-4.cicprod_hasta"
+                                                      "step-5.cicprod_hasta"
                                                     )
                                                   )
                                                 )
@@ -41582,7 +43184,7 @@ var render = function() {
                                                 _vm._v(
                                                   _vm._s(
                                                     _vm.errors.first(
-                                                      "step-4.cicfac_tipo"
+                                                      "step-5.cicfac_tipo"
                                                     )
                                                   )
                                                 )
@@ -41599,7 +43201,13 @@ var render = function() {
                                               "vx-col md:w-1/2  w-full mt-2"
                                           },
                                           [
-                                            _c("flat-pickr", {
+                                            _c(
+                                              "span",
+                                              { staticClass: " text-sm" },
+                                              [_vm._v("Desde")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("vs-input-number", {
                                               directives: [
                                                 {
                                                   name: "validate",
@@ -41608,11 +43216,12 @@ var render = function() {
                                                   expression: "'required'"
                                                 }
                                               ],
-                                              staticClass:
-                                                "w-full select-large",
                                               attrs: {
-                                                placeholder: "Desde",
                                                 name: "cicfac_desde",
+                                                min: "1",
+                                                max: "31",
+                                                "icon-inc": "expand_less",
+                                                "icon-dec": "expand_more",
                                                 disabled: _vm.disabledcicfac
                                               },
                                               model: {
@@ -41640,7 +43249,7 @@ var render = function() {
                                                 _vm._v(
                                                   _vm._s(
                                                     _vm.errors.first(
-                                                      "step-4.cicfac_desde"
+                                                      "step-5.cicfac_desde"
                                                     )
                                                   )
                                                 )
@@ -41657,7 +43266,13 @@ var render = function() {
                                               "vx-col md:w-1/2 w-full mt-2"
                                           },
                                           [
-                                            _c("flat-pickr", {
+                                            _c(
+                                              "span",
+                                              { staticClass: " text-sm" },
+                                              [_vm._v("Hasta")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("vs-input-number", {
                                               directives: [
                                                 {
                                                   name: "validate",
@@ -41666,11 +43281,12 @@ var render = function() {
                                                   expression: "'required'"
                                                 }
                                               ],
-                                              staticClass:
-                                                "w-full select-large",
                                               attrs: {
-                                                placeholder: "Hasta",
                                                 name: "cicfac_hasta",
+                                                min: "1",
+                                                max: "31",
+                                                "icon-inc": "expand_less",
+                                                "icon-dec": "expand_more",
                                                 disabled: _vm.disabledcicfac
                                               },
                                               model: {
@@ -41697,7 +43313,7 @@ var render = function() {
                                                 _vm._v(
                                                   _vm._s(
                                                     _vm.errors.first(
-                                                      "step-4.cicfac_hasta"
+                                                      "step-5.cicfac_hasta"
                                                     )
                                                   )
                                                 )
@@ -80494,15 +82110,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************************!*\
   !*** ./resources/js/src/views/pages/administracion/users/Perfil.vue ***!
   \**********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Perfil_vue_vue_type_template_id_3d031e6e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Perfil.vue?vue&type=template&id=3d031e6e& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=template&id=3d031e6e&");
 /* harmony import */ var _Perfil_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Perfil.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Perfil_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Perfil_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _Perfil_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Perfil.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=style&index=0&lang=scss&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Perfil_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Perfil.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=style&index=0&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -80534,7 +82149,7 @@ component.options.__file = "resources/js/src/views/pages/administracion/users/Pe
 /*!***********************************************************************************************!*\
   !*** ./resources/js/src/views/pages/administracion/users/Perfil.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

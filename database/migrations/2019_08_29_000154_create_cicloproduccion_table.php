@@ -15,10 +15,17 @@ class CreateCicloproduccionTable extends Migration
     {
         Schema::create('cicloproduccions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('empresa_id');
             $table->integer('dias');
-            $table->dateTime('inicio')->nullable();
-            $table->dateTime('fin')->nullable();
+            $table->integer('inicio')->nullable();
+            $table->integer('fin')->nullable();
             $table->timestamps();
+
+            $table->foreign('empresa_id')
+            ->references('id')
+            ->on('empresas')
+            ->onDelete('cascade');
+
         });
     }
 

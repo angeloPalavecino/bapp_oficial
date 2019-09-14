@@ -77,39 +77,214 @@
                 :danger="(errors.first('step-1.dv') ? true : false)" val-icon-danger="clear" />
               <span class="text-danger text-sm" >{{ errors.first('step-1.dv') }}</span>
             </div>
-            </div>
-             <div>
-                <vs-divider color="primary"><h5>Tipo servicio</h5></vs-divider>
-              </div>
-            <div class="vx-row">
-               <div class="vx-col md:w-1/2 w-full mt-2">
-                <vs-select v-model="tiposervicio.tipo" class="w-full select-large" label="Tipo" name="tiposervicio_tipo" v-validate="'required'">
-                      <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in tipoOpciones" class="w-full" />
-                  </vs-select>
-               <span class="text-danger text-sm" >{{ errors.first('step-1.tiposervicio_tipo') }}</span>
+
+             <div class="vx-col md:w-1/2 w-full mt-6">
+               <flat-pickr v-model="item.fecha_incorporacion" class="w-full select-large" placeholder="Fecha Incorporacion" 
+                  name="fecha_incorporacion" v-validate="'required'" />
+                  <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span>
             
               </div>
-   
-            <div class="vx-col md:w-1/2 w-full mt-2">
-              <vs-input label-placeholder="Outsourcing" v-model="tiposervicio.outsourcing" class="w-full" name="tiposervicio_outsourcing" v-validate="'required'" 
-             :danger="(errors.first('step-1.tiposervicio_outsourcing') ? true : false)" val-icon-danger="clear" />
-              <span class="text-danger text-sm" >{{ errors.first('step-1.tiposervicio_outsourcing') }}</span>
+               <div class="vx-col md:w-1 w-full">
+              <div class="demo-alignment">
+                <span>Habilitado:</span>
+                <div class="flex">
+                  <ul class="centerx">
+                  <li>
+                    <vs-radio color="success" v-model="item.habilitado" vs-value="1" >Activo</vs-radio>
+                  </li>
+                  <li>
+                    <vs-radio color="danger" v-model="item.habilitado" vs-value="0" >Inactivo</vs-radio>
+                  </li>
+                  </ul>
+                </div>
+              </div>
+              </div>
+          
+          </div>
+             
+          </form>
+        </tab-content>
+        
+        <!-- tab 2 content -->
+        <tab-content title="Paso 2" class="mb-5" icon="feather icon-credit-card" :before-change="validateStep2">
+          <form data-vv-scope="step-2">
+          <div>
+               <vs-divider color="primary" ><h5>Servicio por plana</h5></vs-divider>    
+          </div>
+          <div class="vx-row">
+             <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor" v-model="servicioplana.valormin" class="w-full" name="servicioplana_valormin" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.servicioplana_valormin') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.servicioplana_valormin') }}</span>
+              </div>
+              <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Desde" v-model="servicioplana.desde" class="w-full" name="servicioplana_desde" 
+                v-validate="'required|decimal'" size="small" 
+              :danger="(errors.first('step-2.servicioplana_desde') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.servicioplana_desde') }}</span>
+              </div>
+              <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Hasta" v-model="servicioplana.hasta" class="w-full" name="servicioplana_hasta"
+                 v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.servicioplana_hasta') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.servicioplana_hasta') }}</span>
+              </div>
+             
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor psj adicional" v-model="servicioplana.valorpsjadicional" class="w-full" name="servicioplana_valorpsjadicional" 
+                v-validate="'required|decimal'" size="small" 
+              :danger="(errors.first('step-2.servicioplana_valorpsjadicional') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.servicioplana_valorpsjadicional') }}</span>
+              </div>
+
+              <div class="vx-col md:w-1/3 w-full mt-6">
+                 <vs-radio color="success" v-model="servicioplana.tipo" vs-value="1" class="mt-1" >Programado</vs-radio>
+                </div>
+
+              <div class="vx-col md:w-1/3 w-full mt-6">
+                <vs-radio color="danger" v-model="servicioplana.tipo" vs-value="0" class="mt-1">Transportado</vs-radio>
+                 </div>
+
+
+
+
+
+
+              <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor F.Zona 1" v-model="servicioplana.fz1" class="w-full" name="servicioplana_fz1" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.servicioplana_fz1') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.servicioplana_fz1') }}</span>
+              </div>
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor F.Zona 2" v-model="servicioplana.fz2" class="w-full" name="servicioplana_fz2" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.servicioplana_fz2') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.servicioplana_fz2') }}</span>
+              </div>
+                <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor F.Zona 3" v-model="servicioplana.fz3" class="w-full" name="servicioplana_fz3" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.servicioplana_fz3') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.servicioplana_fz3') }}</span>
+              </div>
+
+
+    
+          </div>
+
+          <div>
+               <vs-divider color="primary" ><h5>Servicio por pasajero</h5></vs-divider>    
+          </div>
+          <div class="vx-row">
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor F.Zona 1" v-model="serviciopasajero.valorfz1" class="w-full" name="serviciopasajero_valorfz1" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciopasajero_valorfz1') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_valorfz1') }}</span>
+              </div>
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Desde F.Zona 1" v-model="serviciopasajero.desdefz1" class="w-full" name="serviciopasajero_desdefz1" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciopasajero_desdefz1') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_desdefz1') }}</span>
+              </div>
+                <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Hasta F.Zona 1" v-model="serviciopasajero.hastafz1" class="w-full" name="serviciopasajero_hastafz1" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciopasajero_hastafz1') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_hastafz1') }}</span>
+              </div>
+
+              <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor F.Zona 2" v-model="serviciopasajero.valorfz2" class="w-full" name="serviciopasajero_valorfz2" 
+                v-validate="'required|decimal'" size="small"
+              :danger="(errors.first('step-2.serviciopasajero_valorfz2') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_valorfz2') }}</span>
+              </div>
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Desde F.Zona 2" v-model="serviciopasajero.desdefz2" class="w-full" name="serviciopasajero_desdefz2" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciopasajero_desdefz2') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_desdefz2') }}</span>
+              </div>
+                <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Hasta F.Zona 2" v-model="serviciopasajero.hastafz2" class="w-full" name="serviciopasajero_hastafz2" 
+                v-validate="'required|decimal'" size="small"
+              :danger="(errors.first('step-2.serviciopasajero_hastafz2') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_hastafz2') }}</span>
+              </div>
+
+              <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor F.Zona 3" v-model="serviciopasajero.valorfz3" class="w-full" name="serviciopasajero_valorfz3" 
+                v-validate="'required|decimal'" size="small"
+              :danger="(errors.first('step-2.serviciopasajero_valorfz3') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_valorfz3') }}</span>
+              </div>
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Desde F.Zona 3" v-model="serviciopasajero.desdefz3" class="w-full" name="serviciopasajero_desdefz3" 
+                v-validate="'required|decimal'" size="small"
+              :danger="(errors.first('step-2.serviciopasajero_desdefz3') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_desdefz3') }}</span>
+              </div>
+                <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Hasta F.Zona 3" v-model="serviciopasajero.hastafz3" class="w-full" name="serviciopasajero_hastafz3" 
+                v-validate="'required|decimal'" size="small"
+              :danger="(errors.first('step-2.serviciopasajero_hastafz3') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciopasajero_hastafz3') }}</span>
+              </div>
             </div>
 
-         
-            <div class="vx-col md:w-1/2 w-full mt-2">
-              <vs-input label-placeholder="Valor"  v-model="tiposervicio.valor" class="w-full" name="tiposervicio_valor" v-validate="'required|decimal'"
-              :danger="(errors.first('step-1.tiposervicio_outsourcing') ? true : false)" val-icon-danger="clear"/>
-              <span class="text-danger text-sm" >{{ errors.first('step-1.tiposervicio_valor') }}</span>
-            </div>
+                    <div>
+               <vs-divider color="primary" ><h5>Servicio por KMS</h5></vs-divider>    
+          </div>
+          <div class="vx-row">
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor" v-model="serviciokm.valor" class="w-full" name="serviciokms_valor" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciokms_valor') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_valor') }}</span>
+              </div>
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Valor portico" v-model="serviciokm.valorportico" class="w-full" name="serviciokms_valorportico" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciokms_valorportico') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_valorportico') }}</span>
+              </div>
+                <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Distancia" v-model="serviciokm.distancia" class="w-full" name="serviciokms_distancia" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciokms_distancia') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_distancia') }}</span>
+              </div>
+              <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Pasajeros" v-model="serviciokm.pasajeros" class="w-full" name="serviciokms_pasajeros" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciokms_pasajeros') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_pasajeros') }}</span>
+              </div>
+              <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Tiempo" v-model="serviciokm.tiempo" class="w-full" name="serviciokms_tiempo" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciokms_tiempo') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_tiempo') }}</span>
+              </div>
+               <div class="vx-col md:w-1/3 w-full mt-1">
+                <vs-input label-placeholder="Baja Bandera" v-model="serviciokm.bajabandera" class="w-full" name="serviciokms_bajabandera" 
+                v-validate="'required|decimal'"  size="small"
+              :danger="(errors.first('step-2.serviciokms_bajabandera') ? true : false)" val-icon-danger="clear" />
+                <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_bajabandera') }}</span>
+              </div>
 
           </div>
+   
           </form>
         </tab-content>
 
-        <!-- tab 2 content -->
-        <tab-content title="Paso 2" class="mb-5" icon="feather icon-users" :before-change="validateStep2">
-          <form data-vv-scope="step-2">
+        <!-- tab 3 content -->
+        <tab-content title="Paso 3" class="mb-5" icon="feather icon-users" :before-change="validateStep3">
+          <form data-vv-scope="step-3">
           <div>
                <vs-divider color="primary" ><h5>Responsables</h5></vs-divider>
               <div class="vx-col md:w-1/7 w-full mt-2">
@@ -120,18 +295,18 @@
           <div class="vx-row" >
             <div class="vx-col md:w-1/3 w-full mt-2">
               <vs-input label-placeholder="Responsable"  v-model="res.name" class="w-full" name="responsable_nombre" v-validate="'required'" 
-              :danger="(errors.first('step-2.responsable_nombre') ? true : false)" val-icon-danger="clear" size="small"/>
-              <span class="text-danger text-sm" >{{ errors.first('step-2.responsable_nombre') }}</span>
+              :danger="(errors.first('step-3.responsable_nombre') ? true : false)" val-icon-danger="clear" size="small"/>
+              <span class="text-danger text-sm" >{{ errors.first('step-3.responsable_nombre') }}</span>
             </div>
             <div class="vx-col md:w-1/4 w-full mt-2">
               <vs-input label-placeholder="Telefono"  v-model="res.telefono" class="w-full" name="responsable_telefono" v-validate="'required|numeric'" 
-              :danger="(errors.first('step-2.responsable_telefono') ? true : false)" val-icon-danger="clear" size="small"/>
-              <span class="text-danger text-sm" >{{ errors.first('step-2.responsable_telefono') }}</span>
+              :danger="(errors.first('step-3.responsable_telefono') ? true : false)" val-icon-danger="clear" size="small"/>
+              <span class="text-danger text-sm" >{{ errors.first('step-3.responsable_telefono') }}</span>
             </div>
              <div class="vx-col md:w-1/3 w-full mt-2">
               <vs-input label-placeholder="Email"  v-model="res.email" class="w-full" name="responsable_email" v-validate="'required|email'" 
-              :danger="(errors.first('step-2.responsable_email') ? true : false)" val-icon-danger="clear" size="small"/>
-              <span class="text-danger text-sm" >{{ errors.first('step-2.responsable_email') }}</span>
+              :danger="(errors.first('step-3.responsable_email') ? true : false)" val-icon-danger="clear" size="small"/>
+              <span class="text-danger text-sm" >{{ errors.first('step-3.responsable_email') }}</span>
             </div>
             <div class="mt-6  items-center">
                  <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-user-minus" size="small" 
@@ -142,9 +317,9 @@
           </div>
           </form>
         </tab-content>
-        <!-- tab 3 content -->
-         <tab-content title="Paso 3" class="mb-5" icon="feather icon-map-pin" :before-change="validateStep3">
-          <form data-vv-scope="step-3">
+        <!-- tab 4 content -->
+         <tab-content title="Paso 4" class="mb-5" icon="feather icon-map-pin" :before-change="validateStep4">
+          <form data-vv-scope="step-4">
           <div>
                <vs-divider color="primary" ><h5>Sucursales</h5></vs-divider>
               <div class="vx-col md:w-1/7 w-full mt-2">
@@ -156,44 +331,28 @@
             <vs-divider color="primary" >Detalle</vs-divider>
             <div class="vx-col md:w-1/4 w-full mt-2">
                   <vs-input label-placeholder="Nombre"  v-model="suc.nombre" class="w-full" name="sucursal_nombre" v-validate="'required'" 
-                :danger="(errors.first('step-3.sucursal_nombre') ? true : false)" val-icon-danger="clear" size="small"/>
+                :danger="(errors.first('step-4.sucursal_nombre') ? true : false)" val-icon-danger="clear" size="small"/>
                 
               </div>
             <div class="vx-col md:w-1/4 w-full mt-2">
                 <vs-input label-placeholder="Direccion"  v-model="suc.direccion" class="w-full" name="sucursal_direccion" v-validate="'required'" 
-                :danger="(errors.first('step-3.sucursal_direccion') ? true : false)" val-icon-danger="clear" size="small"/>
+                :danger="(errors.first('step-4.sucursal_direccion') ? true : false)" val-icon-danger="clear" size="small"/>
                 
               </div>
              <div class="vx-col md:w-1/6 w-full mt-6">
-               <vs-radio v-model="suc.matriz" vs-value="1"  @change="foo($event.target.checked)">Matriz</vs-radio>
+               <vs-radio v-model="suc.matriz" vs-value="1" class="mt-1"  @change="foo($event.target.checked)">Matriz</vs-radio>
               </div>
             <div class="vx-col md:w-1/6 w-full mt-6">
                  <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-minus" size="small" 
                   @click.prevent="quitarSucursal(indexsuc)"></vs-button>   
-            </div>
-             <div class="vx-col md:w-1/3 w-full mt-2">
-               <vs-input label-placeholder="Pais"  v-model="suc.pais" class="w-full" name="sucursal_pais" v-validate="'required'" 
-                :danger="(errors.first('step-3.sucursal_pais') ? true : false)" val-icon-danger="clear" size="small"/>
-                
-              </div>
-              <div class="vx-col md:w-1/3 w-full mt-2">
-                 <vs-input label-placeholder="Ciudad"  v-model="suc.ciudad" class="w-full" name="sucursal_ciudad" v-validate="'required'" 
-                :danger="(errors.first('step-3.sucursal_ciudad') ? true : false)" val-icon-danger="clear" size="small"/>
-                
-              </div>
-              <div class="vx-col md:w-1/3 w-full mt-2">
-                  <vs-input label-placeholder="Comuna"  v-model="suc.comuna" class="w-full" name="sucursal_comuna" v-validate="'required'" 
-                :danger="(errors.first('step-3.sucursal_comuna') ? true : false)" val-icon-danger="clear" size="small"/>
-             
-              </div>
-             
+            </div>            
           </div>
           </div>
           </form>
         </tab-content>
-          <!-- tab 4 content -->
-         <tab-content title="Paso 4" class="mb-5" icon="feather icon-refresh-cw" :before-change="validateStep4">
-          <form data-vv-scope="step-4">
+          <!-- tab 5 content -->
+         <tab-content title="Paso 5" class="mb-5" icon="feather icon-refresh-cw" :before-change="validateStep5">
+          <form data-vv-scope="step-5">
                <div class="vx-row" >
                 <div class="vx-col md:w-1/2 w-full mt-2">
                    <div>
@@ -205,26 +364,28 @@
                 @input="changecicprod">
                   <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in tipoCicloProduccion" class="w-full" />
                 </vs-select>  
-               <span class="text-danger text-sm" >{{ errors.first('step-4.cicprod_tipo') }}</span>
+               <span class="text-danger text-sm" >{{ errors.first('step-5.cicprod_tipo') }}</span>
 
-
-               <!-- <vs-select v-model="cicloproduccion.dias" class="w-full select-large" label="Tipo" name="cicprod_tipo" v-validate="'required'" 
-                @input="changecicprod">
-                        <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in tipoCicloProduccion" class="w-full" />
-                    </vs-select>
-                <span class="text-danger text-sm" >{{ errors.first('step-4.cicprod_tipo') }}</span>-->
               
             </div>
 
             <div class="vx-col md:w-1/2  w-full mt-2">
-                  <flat-pickr v-model="cicloproduccion.inicio" class="w-full select-large" placeholder="Desde" 
-                  name="cicprod_desde" v-validate="'required'" :disabled="disabledcicpro"/>
-                  <span class="text-danger text-sm" >{{ errors.first('step-4.cicprod_desde') }}</span>
+              <span class=" text-sm" >Desde</span>
+                 <vs-input-number v-model="cicloproduccion.inicio" 
+                 name="cicprod_desde" v-validate="'required'"  min="1" max="31" 
+                 icon-inc="expand_less" icon-dec="expand_more" :disabled="disabledcicpro"/>
+                  <!--<flat-pickr v-model="cicloproduccion.inicio" class="w-full select-large" placeholder="Desde" 
+                  name="cicprod_desde" v-validate="'required'" :disabled="disabledcicpro"/>-->
+                  <span class="text-danger text-sm" >{{ errors.first('step-5.cicprod_desde') }}</span>
               </div>
              <div class="vx-col md:w-1/2 w-full mt-2">
-                  <flat-pickr v-model="cicloproduccion.fin" class="w-full select-large" placeholder="Hasta" 
-                  name="cicprod_hasta" v-validate="'required'" :disabled="disabledcicpro"/>
-                  <span class="text-danger text-sm" >{{ errors.first('step-4.cicprod_hasta') }}</span>
+             <span class=" text-sm" >Hasta</span>
+              <vs-input-number v-model="cicloproduccion.fin" 
+                 name="cicprod_hasta" v-validate="'required'"  min="1" max="31"
+                 icon-inc="expand_less" icon-dec="expand_more" :disabled="disabledcicpro"/>
+                 <!-- <flat-pickr v-model="cicloproduccion.fin" class="w-full select-large" placeholder="Hasta" 
+                  name="cicprod_hasta" v-validate="'required'" :disabled="disabledcicpro"/>-->
+                  <span class="text-danger text-sm" >{{ errors.first('step-5.cicprod_hasta') }}</span>
               </div>
 
               </div>    
@@ -238,25 +399,29 @@
                   <vs-select v-model="ciclofacturacion.dias" class="w-full select-large" label="Tipo" name="cicfac_tipo" v-validate="'required'" @input="changecicfac">
                   <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in tipoCiclofacturacion" class="w-full" />
                 </vs-select>
-               <span class="text-danger text-sm" >{{ errors.first('step-4.cicfac_tipo') }}</span>
+               <span class="text-danger text-sm" >{{ errors.first('step-5.cicfac_tipo') }}</span>
 
 
-
-               <!--    <vs-select v-model="ciclofacturacion.dias" class="w-full select-large" label="Tipo" name="cicfac_tipo" v-validate="'required'"
-                   @input="changecicfac">
-                        <vs-select-item :key="ind" :value="itm.value" :text="itm.text" v-for="(itm,ind) in tipoCiclofacturacion" class="w-full" />
-                    </vs-select>
-                <span class="text-danger text-sm" >{{ errors.first('step-4.cicfac_tipo') }}</span>-->
               </div>
             <div class="vx-col md:w-1/2  w-full mt-2">
-                  <flat-pickr v-model="ciclofacturacion.inicio" class="w-full select-large" placeholder="Desde" 
-                  name="cicfac_desde" v-validate="'required'" :disabled="disabledcicfac"/>
-                  <span class="text-danger text-sm" >{{ errors.first('step-4.cicfac_desde') }}</span>
+                  <span class=" text-sm" >Desde</span>
+                 <vs-input-number v-model="ciclofacturacion.inicio" 
+                 name="cicfac_desde" v-validate="'required'"  min="1" max="31"
+                 icon-inc="expand_less" icon-dec="expand_more" :disabled="disabledcicfac"/>
+
+                  <!--<flat-pickr v-model="ciclofacturacion.inicio" class="w-full select-large" placeholder="Desde" 
+                  name="cicfac_desde" v-validate="'required'" :disabled="disabledcicfac"/>-->
+                  <span class="text-danger text-sm" >{{ errors.first('step-5.cicfac_desde') }}</span>
               </div>
              <div class="vx-col md:w-1/2 w-full mt-2">
-                  <flat-pickr v-model="ciclofacturacion.fin" class="w-full select-large" placeholder="Hasta" 
-                  name="cicfac_hasta" v-validate="'required'" :disabled="disabledcicfac"/>
-                  <span class="text-danger text-sm" >{{ errors.first('step-4.cicfac_hasta') }}</span>
+                  <span class=" text-sm" >Hasta</span>
+                   <vs-input-number v-model="ciclofacturacion.fin" 
+                 name="cicfac_hasta" v-validate="'required'"  min="1" max="31"
+                 icon-inc="expand_less" icon-dec="expand_more" :disabled="disabledcicfac"/>
+
+                  <!--<flat-pickr v-model="ciclofacturacion.fin" class="w-full select-large" placeholder="Hasta" 
+                  name="cicfac_hasta" v-validate="'required'" :disabled="disabledcicfac"/>-->
+                  <span class="text-danger text-sm" >{{ errors.first('step-5.cicfac_hasta') }}</span>
               </div>
 
                 </div>  
@@ -363,6 +528,106 @@ const dict = {
             required: 'El digito verificador es requerido',
             max: 'Debe ingresar solo 1 caracter',
         },
+        fecha_incorporacion: {
+            required: 'La fecha de incorporacion es requerido',
+        },
+        servicioplana_desde:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+         servicioplana_hasta:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+         servicioplana_distancia:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        servicioplana_valormin:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        servicioplana_valorpsjadicional:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        servicioplana_fz1:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        servicioplana_fz2:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        servicioplana_fz3:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_valorfz1:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_hastafz1:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_desdefz1:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_valorfz2:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_hastafz2:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_desdefz2:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_valorfz3:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_hastafz3:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+        serviciopasajero_desdefz3:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+         serviciopasajero_desdefz3:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+
+         serviciokms_valor:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+          serviciokms_distancia:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+          serviciokms_bajabandera:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+          serviciokms_valorportico:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+          serviciokms_tiempo:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
+         serviciokms_pasajeros:{
+            required: 'El campo es requerido',
+            decimal: 'Debe ingresar solo numeros'
+        },
          responsable_nombre: {
             required: 'El nombre es requerido'
         },
@@ -374,33 +639,33 @@ const dict = {
             required: 'El email es requerido',
             email: 'Ingrese un email valido'
         },
-        tiposervicio_outsourcing:{
-            required: 'El outsourcing es requerido',
+        sucursal_nombre : {
+            required: 'El nombre es requerido',
         },
-        tiposervicio_tipo:{
-            required: 'El tipo de servicio es requerido',     
-        },
-        tiposervicio_valor:{
-            required: 'El valor es requerido',
-            decimal: 'El valor debe ser numerico'
+        sucursal_direccion : {
+            required: 'La direccion es requerido',
         },
         cicprod_tipo:{
             required: 'El tipo es requerido',
         },
         cicprod_desde:{
-            required: 'La fecha desde es requerida',
+            required: 'El campo es requerido',
+            numeric: 'Debe ingresar solo numeros'
         },
         cicprod_hasta:{
-            required: 'La fecha hasta es requerida',
+            required: 'El campo es requerido',
+            numeric: 'Debe ingresar solo numeros'
         },
         cicfac_tipo:{
             required: 'El tipo es requerido',
         },
         cicfac_desde:{
-            required: 'La fecha desde es requerida',
+            required: 'El campo es requerido',
+            numeric: 'Debe ingresar solo numeros'
         },
         cicfac_hasta:{
-            required: 'La fecha hasta es requerida',
+            required: 'El campo es requerido',
+            numeric: 'Debe ingresar solo numeros'
         }
     }
 };
@@ -425,7 +690,9 @@ export default {
       ite : "",
       ind : "",
       popupActive: false,
-      item : {},
+      item : {
+        habilitado : 1,
+      },
       modoEditar: false,      
       roles_choices: [],
       empresa_choices: [],
@@ -438,18 +705,17 @@ export default {
        
       ],
       tipoCicloProduccion: [
-        {text: "Por defecto (30 dias)", value: 30},
+        {text: "Por defecto (Mes Completo)", value: 31},
         {text: "Personalizado", value: 0},       
       ],
       tipoCiclofacturacion: [
-        {text: "Por dia", value: 1},
         {text: "Por 15 dias", value: 15},
         {text: "Por 30 dias", value: 30},
         {text: "Por 90 dias", value: 90},
         {text: "Personalizado", value: 0},
        
       ],
-      tiposervicio : {},
+      
       responsables : [{ 
             id: "",
             empresa_id: "",
@@ -462,17 +728,25 @@ export default {
             empresa_id: "",
             nombre: "",
             direccion: "",
-            pais: "",
-            ciudad: "",
-            comuna: "",
-            numeracion: "",
             matriz: "",
         }],
 
-      
-      ciclofacturacion : { },
+      serviciokm : {},
+      serviciopasajero : {},
+      servicioplana : {
+        tipo: 1,
+      },
+
+      ciclofacturacion : { 
+          inicio:1,
+          fin:1,
+
+      },
       disabledcicfac: true,
-      cicloproduccion : {},
+      cicloproduccion : {
+          inicio:1,
+          fin:1,
+      },
       disabledcicpro: true,
 
     }
@@ -491,8 +765,8 @@ export default {
           this.disabledcicpro = false;
       }else{
           this.disabledcicpro = true;
-          this.cicloproduccion.inicio = "";
-          this.cicloproduccion.fin = "";
+          this.cicloproduccion.inicio = 1;
+          this.cicloproduccion.fin = 1;
           this.errors.clear();
       }
       
@@ -503,8 +777,8 @@ export default {
           this.disabledcicfac = false;
       }else{
           this.disabledcicfac = true;
-          this.ciclofacturacion.inicio = "";
-          this.ciclofacturacion.fin = "";
+          this.ciclofacturacion.inicio = 1;
+          this.ciclofacturacion.fin = 1;
           this.errors.clear();
       }
     
@@ -561,6 +835,17 @@ export default {
         validateStep4() {
             return new Promise((resolve, reject) => {
                 this.$validator.validateAll("step-4").then(result => {
+                     if (result) {          
+                        resolve(true)
+                    } else {
+                        reject("correct all values");
+                    }
+                })
+            })
+        },
+        validateStep5() {
+            return new Promise((resolve, reject) => {
+                this.$validator.validateAll("step-5").then(result => {
                     if (result) {
                       if(this.modoEditar == false){
                           const url = this.ruta + 'store';
@@ -585,6 +870,8 @@ export default {
       this.item.razon_social = item.razon_social;
       this.item.giro = item.giro;
       this.item.id = item.id;
+      this.item.habilitado = item.habilitado;
+      this.item.fecha_incorporacion = item.fecha_incorporacion;
       this.traeOtrosDatos(item.id);
       this.selected = [];
       this.popupActive=true;
@@ -593,7 +880,9 @@ export default {
     initValues() {
       this.datos = [];
       //this.$refs.wizard.navigateToTab(0);
-      this.item = {};
+      this.item = {
+          habilitado: 1,
+      };
       this.responsables = [{ 
             id: "",
             empresa_id: "",
@@ -606,15 +895,21 @@ export default {
             empresa_id: "",
             nombre: "",
             direccion: "",
-            pais: "",
-            ciudad: "",
-            comuna: "",
-            numeracion: "",
             matriz: "",
         }];
-      this.tiposervicio = {};
-      this.ciclofacturacion = {};
-      this.cicloproduccion = {};
+      this.serviciokm = {},
+      this.serviciopasajero = {},
+      this.servicioplana = {
+        tipo: 1,
+      },
+      this.ciclofacturacion = {
+        inicio:1,
+          fin:1,
+      };
+      this.cicloproduccion = {
+        inicio:1,
+          fin:1,
+      };
       this.disabledcicfac = true,
       this.disabledcicpro = true,
       this.errors.clear();
@@ -627,7 +922,9 @@ export default {
       const thisIns = this;
       this.datos = [];
       this.datos.push(this.item);
-      this.datos.push(this.tiposervicio);
+      this.datos.push(this.servicioplana);
+      this.datos.push(this.serviciopasajero);
+      this.datos.push(this.serviciokm);
       this.datos.push(this.responsables);
       this.datos.push(this.sucursales);
       this.datos.push(this.ciclofacturacion);
@@ -676,12 +973,14 @@ export default {
       const thisIns = this;
       this.datos = [];
       this.datos.push(this.item);
-      this.datos.push(this.tiposervicio);
+      this.datos.push(this.servicioplana);
+      this.datos.push(this.serviciopasajero);
+      this.datos.push(this.serviciokm);
       this.datos.push(this.responsables);
       this.datos.push(this.sucursales);
       this.datos.push(this.ciclofacturacion);
       this.datos.push(this.cicloproduccion);
-    return;
+
       this.$validator.validateAll().then(result =>{
         if (result) {
 
@@ -726,14 +1025,16 @@ export default {
         //thisIns.treeData = {};
         this.$http.get(url)
           .then((response) =>{
-                     
-             this.tiposervicio = response.data.tiposervicio[0]
+            
+             this.servicioplana = response.data.servicioplana[0]
+             this.serviciopasajero = response.data.serviciopasajero[0]
+             this.serviciokm = response.data.serviciokm[0]
              this.responsables = response.data.responsables
              this.sucursales = response.data.sucursales
-             this.ciclofacturacion = response.data.cicfac
-             this.cicloproduccion = response.data.cicpro
-             response.data.cicfac.dias === 0 ? this.disabledcicfac = false : this.disabledcicfac = true;
-             response.data.cicpro.dias === 0 ? this.disabledcicpro = false : this.disabledcicpro = true;
+             this.ciclofacturacion = response.data.cicfac[0]
+             this.cicloproduccion = response.data.cicpro[0]
+             response.data.cicfac[0].dias === 0 ? this.disabledcicfac = false : this.disabledcicfac = true;
+             response.data.cicpro[0].dias === 0 ? this.disabledcicpro = false : this.disabledcicpro = true;
 
           })
           .catch(function (error) {

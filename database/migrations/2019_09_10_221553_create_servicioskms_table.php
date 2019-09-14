@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTiposervicioTable extends Migration
+class CreateServicioskmsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,23 @@ class CreateTiposervicioTable extends Migration
      */
     public function up()
     {
-        Schema::create('tiposervicios', function (Blueprint $table) {
+        Schema::create('servicios_k_m_s_s', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('empresa_id');
-            $table->string('outsourcing');
-            $table->tinyInteger('tipo');
             $table->decimal('valor', 8, 2);
+            $table->decimal('valorportico', 8, 2);
+            $table->decimal('distancia', 8, 2);
+            $table->integer('tiempo');
+            $table->integer('pasajeros');
+            $table->decimal('bajabandera', 8, 2);
             $table->timestamps();
+
 
             $table->foreign('empresa_id')
             ->references('id')
             ->on('empresas')
             ->onDelete('cascade');
+
         });
     }
 
@@ -35,6 +40,6 @@ class CreateTiposervicioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tiposervicios');
+        Schema::dropIfExists('servicioskms');
     }
 }
