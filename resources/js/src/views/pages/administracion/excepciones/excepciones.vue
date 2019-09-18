@@ -61,11 +61,13 @@
 
                 <div class="vs-component vs-con-input-label vs-input mt-5 w-full vs-input-primary is-label-placeholder">
                 <div class="vs-con-input">
+
                 <input type="text" required ref="autocomplete"  name="direccion" v-model="item.direccion" 
                   :class="(item.direccion ? 'vs-inputx vs-input--input normal hasValue' : 'vs-inputx vs-input--input normal')" 
                  
                   :style="(errors.first('direccion') ? 'border: 1px solid rgba(var(--vs-danger),1)!important;' : 'border: 1px solid rgba(0, 0, 0, 0.2);')" 
-                 placeholder="" @input="myChangeFunction(item)" >
+                 placeholder=""  >
+
                    <span class="input-span-placeholder vs-input--placeholder normal normal vs-placeholder-label">
         Direccion
       </span>
@@ -183,10 +185,6 @@ export default {
     },
   },
   methods: {
-
-    myChangeFunction(i){
-     // console.log(i);
-    },
    asignaDireccion() {
      //console.log(this.autocomplete.getPlace().formatted_address);
      this.item.direccion = this.autocomplete.getPlace().formatted_address;

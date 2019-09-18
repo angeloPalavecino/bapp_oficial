@@ -36,23 +36,23 @@
 
           <!-- ADD NEW -->
           <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
-          text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
+          text-primary border border-solid border-primary" @click="agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
               <vx-tooltip color="primary" text="Agregar empresa">
               <span class="ml-2 text-base text-primary">Agregar Empresa</span>
               </vx-tooltip>
           </div>
-        </div>
+       </div>
 
         <!-- POP UP -->
         <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR EMPRESA' : 'ACTUALIZAR EMPRESA')" 
          :active.sync="popupActive"  @close="$close($event)">
-        <div class="mt-5">
+        <div class="mt-1">
       <form-wizard color="rgba(var(--vs-primary), 1)" errorColor="rgba(var(--vs-danger), 1)" 
       :title="(modoEditar == false ? 'AGREGAR EMPRESA' : 'ACTUALIZAR EMPRESA')" 
       :subtitle="(modoEditar == false ? 'Ingrese todos los campos para ingresar la empresa' : 'Modifique los campos que desee actualizar')" 
       :finishButtonText="(modoEditar == false ? 'Agregar' : 'Actualizar')" ref="wizard">
-        <tab-content title="Paso 1" class="mb-5" icon="feather icon-home" :before-change="validateStep1">
+        <tab-content title="Paso 1" class="mb-1" icon="feather icon-home" :before-change="validateStep1">
           <!-- tab 1 content -->
           <form data-vv-scope="step-1">
            <div>
@@ -259,9 +259,15 @@
                 <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_distancia') }}</span>
               </div>
               <div class="vx-col md:w-1/3 w-full mt-1">
-                <vs-input label-placeholder="Pasajeros" v-model="serviciokm.pasajeros" class="w-full" name="serviciokms_pasajeros" 
+
+                     <vs-input-number v-model="serviciokm.pasajeros" class="w-full mt-5"
+                 name="serviciokms_pasajeros" v-validate="'required'"  min="1" 
+                 icon-inc="expand_less" icon-dec="expand_more" />
+
+               <!-- <vs-input label-placeholder="Pasajeros" v-model="serviciokm.pasajeros" class="w-full" name="serviciokms_pasajeros" 
                 v-validate="'required|decimal'"  size="small"
-              :danger="(errors.first('step-2.serviciokms_pasajeros') ? true : false)" val-icon-danger="clear" />
+              :danger="(errors.first('step-2.serviciokms_pasajeros') ? true : false)" val-icon-danger="clear" />-->
+
                 <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_pasajeros') }}</span>
               </div>
               <div class="vx-col md:w-1/3 w-full mt-1">
@@ -326,21 +332,42 @@
                 <vs-button color="primary" size="small" icon-pack="feather" icon="icon-plus" @click.prevent="agregarSucursal()"></vs-button>
               </div>      
           </div>
+          <vs-divider color="primary" >Detalle</vs-divider>
           <div :data="suc" :key="indexsuc" v-for="(suc, indexsuc) in sucursales">
           <div class="vx-row" >
-            <vs-divider color="primary" >Detalle</vs-divider>
+            
             <div class="vx-col md:w-1/4 w-full mt-2">
                   <vs-input label-placeholder="Nombre"  v-model="suc.nombre" class="w-full" name="sucursal_nombre" v-validate="'required'" 
                 :danger="(errors.first('step-4.sucursal_nombre') ? true : false)" val-icon-danger="clear" size="small"/>
                 
               </div>
-            <div class="vx-col md:w-1/4 w-full mt-2">
-                <vs-input label-placeholder="Direccion"  v-model="suc.direccion" class="w-full" name="sucursal_direccion" v-validate="'required'" 
-                :danger="(errors.first('step-4.sucursal_direccion') ? true : false)" val-icon-danger="clear" size="small"/>
+            <div class="vx-col md:w-1/3 w-full mt-2">
+                <vs-input v-model="suc.direccion" type="hidden"  name="sucursal_direccion" v-validate="'required'" />
+
+                <div class="vs-component vs-con-input-label vs-input mt-5 w-full vs-input-primary is-label-placeholder">
+                <div class="vs-con-input">
+
+                <input type="text" required ref="autocomplete" :id="indexsuc" name="sucursal_direccion" v-model="suc.direccion" 
+                  :class="(suc.direccion ? 'vs-inputx vs-input--input small hasValue' : 'vs-inputx vs-input--input small')" 
+                 
+                  :style="(errors.first('step-4.sucursal_direccion') ? 'border: 1px solid rgba(var(--vs-danger),1)!important;' : 'border: 1px solid rgba(0, 0, 0, 0.2);')" 
+                 placeholder="" />
+                 
+                   <span class="input-span-placeholder vs-input--placeholder small small vs-placeholder-label">
+        Direccion
+      </span>
+                  <span v-show="errors.has('step-4.sucursal_direccion')" class="input-icon-validate vs-input--icon-validate" style="background: rgba(var(--vs-danger),.2);">
+                    <i class="vs-icon notranslate icon-scale material-icons null" valiconpack="material-icons" style="color: rgba(var(--vs-danger),1);">clear</i></span>
+                  
+                </div>
+                </div>
+
+
+
                 
               </div>
              <div class="vx-col md:w-1/6 w-full mt-6">
-               <vs-radio v-model="suc.matriz" vs-value="1" class="mt-1"  @change="foo($event.target.checked)">Matriz</vs-radio>
+               <vs-radio v-model="suc.matriz" vs-value="1" class="mt-1" @change="cambioMatriz(indexsuc)">Matriz</vs-radio>
               </div>
             <div class="vx-col md:w-1/6 w-full mt-6">
                  <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-minus" size="small" 
@@ -697,6 +724,7 @@ export default {
       roles_choices: [],
       empresa_choices: [],
       exportData : [],
+      //autocompletes : [],
       aux: 0,
       tipoOpciones: [
         {text: "Por plana", value:"1"},
@@ -731,8 +759,9 @@ export default {
             matriz: "",
         }],
 
-      serviciokm : {},
-      serviciopasajero : {},
+      serviciokm : { pasajeros:1,},
+      serviciopasajero : {       
+      },
       servicioplana : {
         tipo: 1,
       },
@@ -760,6 +789,13 @@ export default {
     },
   },
   methods: {
+    cambioMatriz(id) {
+      const varInst = this;
+      for (var x in varInst.sucursales) { 
+        varInst.sucursales[x].matriz = "";
+      }
+      varInst.sucursales[id].matriz = 1;
+    },
     changecicprod(event) {
       if(this.cicloproduccion.dias == 0) {
           this.disabledcicpro = false;
@@ -793,11 +829,16 @@ export default {
         },
         agregarSucursal() {
             this.sucursales.push({});
+            setTimeout(() => {
+                this.inicializaAutocomplete();
+            }, 500);
+            
         },
         quitarSucursal(id) {
           if(this.sucursales.length > 1){
             this.sucursales.splice(id, 1)
            }
+           
         },
     validateStep1() {
             return new Promise((resolve, reject) => {
@@ -862,6 +903,17 @@ export default {
                 })
             })
         },
+    agregarPopUp(){
+  
+      this.initValues();
+      this.modoEditar = false; 
+      this.selected = [];
+      setTimeout(() => {
+          this.inicializaAutocomplete();
+      }, 500);
+      this.popupActive=true;
+      
+    },
     editar(item){      
       this.initValues();
       this.modoEditar = true; 
@@ -872,9 +924,13 @@ export default {
       this.item.id = item.id;
       this.item.habilitado = item.habilitado;
       this.item.fecha_incorporacion = item.fecha_incorporacion;
-      this.traeOtrosDatos(item.id);
+      this.traeOtrosDatos(item.id);   
       this.selected = [];
+      setTimeout(() => {
+          this.inicializaAutocomplete();
+      }, 500);
       this.popupActive=true;
+      
     },
 
     initValues() {
@@ -882,6 +938,7 @@ export default {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
           habilitado: 1,
+          fecha_incorporacion: "",
       };
       this.responsables = [{ 
             id: "",
@@ -897,7 +954,7 @@ export default {
             direccion: "",
             matriz: "",
         }];
-      this.serviciokm = {},
+      this.serviciokm = { pasajeros:1,},
       this.serviciopasajero = {},
       this.servicioplana = {
         tipo: 1,
@@ -912,6 +969,7 @@ export default {
       };
       this.disabledcicfac = true,
       this.disabledcicpro = true,
+      this.errors.fecha_incorporacion = "";
       this.errors.clear();
       this.$refs.wizard.reset();
  
@@ -1035,7 +1093,7 @@ export default {
              this.cicloproduccion = response.data.cicpro[0]
              response.data.cicfac[0].dias === 0 ? this.disabledcicfac = false : this.disabledcicfac = true;
              response.data.cicpro[0].dias === 0 ? this.disabledcicpro = false : this.disabledcicpro = true;
-
+             
           })
           .catch(function (error) {
             thisIns.$vs.notify({
@@ -1046,9 +1104,21 @@ export default {
               icon:'icon-alert-circle'})
           });
       },
-      foo(id) {
-            console.log(id);
-        },
+    inicializaAutocomplete(){
+        const refs = this.$refs.autocomplete;
+        const varInst = this;
+        
+        for (var x in refs) {
+          const autocomplete = ""
+          autocomplete  = new google.maps.places.Autocomplete((refs[x]),{types: ['geocode']});
+          autocomplete.itemId = x;
+          google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                varInst.sucursales[autocomplete.itemId].direccion = autocomplete.getPlace().formatted_address;
+          });
+          //this.autocompletes[x] = autocomplete;         
+        }
+ 
+    },
   },
   created() {
       this.$refrescaTabla();       
@@ -1060,6 +1130,30 @@ export default {
 </script>
 <style src="flatpickr/dist/flatpickr.css"></style>
 <style lang="scss">
+
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    #c2c6dc !important;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #c2c6dc !important;
+    opacity:  1;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #c2c6dc !important;
+    opacity:  1;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #c2c6dc !important;
+  }
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color:    #c2c6dc !important;
+  }
+
+  ::placeholder { /* Most modern browsers support this now. */
+    color:   #c2c6dc !important;
+  }
+
+
 #data-list-list-view {
   .vs-con-table {
 
@@ -1141,7 +1235,15 @@ export default {
 }
 
 .vs-popup {
-  width: 720px !important;
+  width: 730px !important;
+}
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 999999;
+    position: fixed;
+    display: inline-block;
+    float: left;
 }
 
 </style>

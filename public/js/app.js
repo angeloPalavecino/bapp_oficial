@@ -4692,6 +4692,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
  // For custom error message
@@ -4858,6 +4885,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       roles_choices: [],
       empresa_choices: [],
       exportData: [],
+      //autocompletes : [],
       aux: 0,
       tipoOpciones: [{
         text: "Por plana",
@@ -4903,7 +4931,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         direccion: "",
         matriz: ""
       }],
-      serviciokm: {},
+      serviciokm: {
+        pasajeros: 1
+      },
       serviciopasajero: {},
       servicioplana: {
         tipo: 1
@@ -4930,6 +4960,15 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
     }
   },
   methods: {
+    cambioMatriz: function cambioMatriz(id) {
+      var varInst = this;
+
+      for (var x in varInst.sucursales) {
+        varInst.sucursales[x].matriz = "";
+      }
+
+      varInst.sucursales[id].matriz = 1;
+    },
     changecicprod: function changecicprod(event) {
       if (this.cicloproduccion.dias == 0) {
         this.disabledcicpro = false;
@@ -4959,7 +4998,12 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       }
     },
     agregarSucursal: function agregarSucursal() {
+      var _this = this;
+
       this.sucursales.push({});
+      setTimeout(function () {
+        _this.inicializaAutocomplete();
+      }, 500);
     },
     quitarSucursal: function quitarSucursal(id) {
       if (this.sucursales.length > 1) {
@@ -4967,10 +5011,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       }
     },
     validateStep1: function validateStep1() {
-      var _this = this;
+      var _this2 = this;
 
       return new Promise(function (resolve, reject) {
-        _this.$validator.validateAll('step-1').then(function (result) {
+        _this2.$validator.validateAll('step-1').then(function (result) {
           if (result) {
             resolve(true);
           } else {
@@ -4980,10 +5024,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     validateStep2: function validateStep2() {
-      var _this2 = this;
+      var _this3 = this;
 
       return new Promise(function (resolve, reject) {
-        _this2.$validator.validateAll("step-2").then(function (result) {
+        _this3.$validator.validateAll("step-2").then(function (result) {
           if (result) {
             resolve(true);
           } else {
@@ -4993,10 +5037,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     validateStep3: function validateStep3() {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function (resolve, reject) {
-        _this3.$validator.validateAll("step-3").then(function (result) {
+        _this4.$validator.validateAll("step-3").then(function (result) {
           if (result) {
             resolve(true);
           } else {
@@ -5006,10 +5050,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     validateStep4: function validateStep4() {
-      var _this4 = this;
+      var _this5 = this;
 
       return new Promise(function (resolve, reject) {
-        _this4.$validator.validateAll("step-4").then(function (result) {
+        _this5.$validator.validateAll("step-4").then(function (result) {
           if (result) {
             resolve(true);
           } else {
@@ -5019,19 +5063,19 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     validateStep5: function validateStep5() {
-      var _this5 = this;
+      var _this6 = this;
 
       return new Promise(function (resolve, reject) {
-        _this5.$validator.validateAll("step-5").then(function (result) {
+        _this6.$validator.validateAll("step-5").then(function (result) {
           if (result) {
-            if (_this5.modoEditar == false) {
-              var url = _this5.ruta + 'store';
+            if (_this6.modoEditar == false) {
+              var url = _this6.ruta + 'store';
 
-              _this5.submitRegistros(url);
+              _this6.submitRegistros(url);
             } else {
-              var _url = _this5.ruta + _this5.item.id;
+              var _url = _this6.ruta + _this6.item.id;
 
-              _this5.submitActualizaRegistros(_url);
+              _this6.submitActualizaRegistros(_url);
             }
 
             resolve(true);
@@ -5041,7 +5085,20 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         });
       });
     },
+    agregarPopUp: function agregarPopUp() {
+      var _this7 = this;
+
+      this.initValues();
+      this.modoEditar = false;
+      this.selected = [];
+      setTimeout(function () {
+        _this7.inicializaAutocomplete();
+      }, 500);
+      this.popupActive = true;
+    },
     editar: function editar(item) {
+      var _this8 = this;
+
       this.initValues();
       this.modoEditar = true;
       this.item.rut = item.rut;
@@ -5053,13 +5110,17 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       this.item.fecha_incorporacion = item.fecha_incorporacion;
       this.traeOtrosDatos(item.id);
       this.selected = [];
+      setTimeout(function () {
+        _this8.inicializaAutocomplete();
+      }, 500);
       this.popupActive = true;
     },
     initValues: function initValues() {
       this.datos = []; //this.$refs.wizard.navigateToTab(0);
 
       this.item = {
-        habilitado: 1
+        habilitado: 1,
+        fecha_incorporacion: ""
       };
       this.responsables = [{
         id: "",
@@ -5075,7 +5136,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         direccion: "",
         matriz: ""
       }];
-      this.serviciokm = {}, this.serviciopasajero = {}, this.servicioplana = {
+      this.serviciokm = {
+        pasajeros: 1
+      }, this.serviciopasajero = {}, this.servicioplana = {
         tipo: 1
       }, this.ciclofacturacion = {
         inicio: 1,
@@ -5085,12 +5148,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         inicio: 1,
         fin: 1
       };
-      this.disabledcicfac = true, this.disabledcicpro = true, this.errors.clear();
+      this.disabledcicfac = true, this.disabledcicpro = true, this.errors.fecha_incorporacion = "";
+      this.errors.clear();
       this.$refs.wizard.reset();
     },
     //Enviar Registros
     submitRegistros: function submitRegistros(url) {
-      var _this6 = this;
+      var _this9 = this;
 
       var thisIns = this;
       this.datos = [];
@@ -5104,21 +5168,21 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       this.datos.push(this.cicloproduccion);
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          _this6.$http.post(url, _this6.datos) //this.item
+          _this9.$http.post(url, _this9.datos) //this.item
           .then(function (res) {
-            _this6.$vs.loading({
+            _this9.$vs.loading({
               type: 'radius',
               scale: 0.6
             });
 
-            _this6.$refrescaTabla();
+            _this9.$refrescaTabla();
 
-            _this6.initValues();
+            _this9.initValues();
 
-            _this6.modoEditar = false;
-            _this6.popupActive = false;
+            _this9.modoEditar = false;
+            _this9.popupActive = false;
             setTimeout(function () {
-              _this6.$vs.loading.close();
+              _this9.$vs.loading.close();
             }, 500);
             thisIns.$vs.notify({
               title: 'Exito',
@@ -5141,7 +5205,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
     },
     //Actuliza Registros
     submitActualizaRegistros: function submitActualizaRegistros(url) {
-      var _this7 = this;
+      var _this10 = this;
 
       var thisIns = this;
       this.datos = [];
@@ -5155,21 +5219,21 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       this.datos.push(this.cicloproduccion);
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          _this7.$http.put(url, _this7.datos) //this.item
+          _this10.$http.put(url, _this10.datos) //this.item
           .then(function (res) {
-            _this7.$vs.loading({
+            _this10.$vs.loading({
               type: 'radius',
               scale: 0.6
             });
 
-            _this7.$refrescaTabla();
+            _this10.$refrescaTabla();
 
-            _this7.initValues();
+            _this10.initValues();
 
-            _this7.modoEditar = false;
-            _this7.popupActive = false;
+            _this10.modoEditar = false;
+            _this10.popupActive = false;
             setTimeout(function () {
-              _this7.$vs.loading.close();
+              _this10.$vs.loading.close();
             }, 500);
             thisIns.$vs.notify({
               title: 'Exito',
@@ -5191,22 +5255,22 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     traeOtrosDatos: function traeOtrosDatos(id) {
-      var _this8 = this;
+      var _this11 = this;
 
       //Carga datos empresa   
       var thisIns = this;
       var url = this.ruta + 'otros/' + this.item.id; //thisIns.treeData = {};
 
       this.$http.get(url).then(function (response) {
-        _this8.servicioplana = response.data.servicioplana[0];
-        _this8.serviciopasajero = response.data.serviciopasajero[0];
-        _this8.serviciokm = response.data.serviciokm[0];
-        _this8.responsables = response.data.responsables;
-        _this8.sucursales = response.data.sucursales;
-        _this8.ciclofacturacion = response.data.cicfac[0];
-        _this8.cicloproduccion = response.data.cicpro[0];
-        response.data.cicfac[0].dias === 0 ? _this8.disabledcicfac = false : _this8.disabledcicfac = true;
-        response.data.cicpro[0].dias === 0 ? _this8.disabledcicpro = false : _this8.disabledcicpro = true;
+        _this11.servicioplana = response.data.servicioplana[0];
+        _this11.serviciopasajero = response.data.serviciopasajero[0];
+        _this11.serviciokm = response.data.serviciokm[0];
+        _this11.responsables = response.data.responsables;
+        _this11.sucursales = response.data.sucursales;
+        _this11.ciclofacturacion = response.data.cicfac[0];
+        _this11.cicloproduccion = response.data.cicpro[0];
+        response.data.cicfac[0].dias === 0 ? _this11.disabledcicfac = false : _this11.disabledcicfac = true;
+        response.data.cicpro[0].dias === 0 ? _this11.disabledcicpro = false : _this11.disabledcicpro = true;
       })["catch"](function (error) {
         thisIns.$vs.notify({
           title: 'Error',
@@ -5217,8 +5281,24 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         });
       });
     },
-    foo: function foo(id) {
-      console.log(id);
+    inicializaAutocomplete: function inicializaAutocomplete() {
+      var refs = this.$refs.autocomplete;
+      var varInst = this;
+
+      var _loop = function _loop() {
+        var autocomplete = "";
+        autocomplete = new google.maps.places.Autocomplete(refs[x], {
+          types: ['geocode']
+        });
+        autocomplete.itemId = x;
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+          varInst.sucursales[autocomplete.itemId].direccion = autocomplete.getPlace().formatted_address;
+        }); //this.autocompletes[x] = autocomplete;         
+      };
+
+      for (var x in refs) {
+        _loop();
+      }
     }
   },
   created: function created() {
@@ -5240,6 +5320,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -5422,8 +5504,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    myChangeFunction: function myChangeFunction(i) {// console.log(i);
-    },
     asignaDireccion: function asignaDireccion() {
       //console.log(this.autocomplete.getPlace().formatted_address);
       this.item.direccion = this.autocomplete.getPlace().formatted_address;
@@ -8524,7 +8604,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 720px !important;\n}", ""]);
+exports.push([module.i, "::-webkit-input-placeholder {\n  /* WebKit, Blink, Edge */\n  color: #c2c6dc !important;\n}\n::-moz-placeholder {\n  /* Mozilla Firefox 19+ */\n  color: #c2c6dc !important;\n  opacity: 1;\n}\n:-ms-input-placeholder {\n  /* Internet Explorer 10-11 */\n  color: #c2c6dc !important;\n}\n::-ms-input-placeholder {\n  /* Microsoft Edge */\n  color: #c2c6dc !important;\n}\n::placeholder {\n  /* Most modern browsers support this now. */\n  color: #c2c6dc !important;\n}\n#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 730px !important;\n}\n.pac-container {\n  background-color: #FFF;\n  z-index: 999999;\n  position: fixed;\n  display: inline-block;\n  float: left;\n}", ""]);
 
 // exports
 
@@ -40402,7 +40482,7 @@ var render = function() {
                         "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
                       on: {
                         click: function($event) {
-                          return _vm.$agregarPopUp()
+                          return _vm.agregarPopUp()
                         }
                       }
                     },
@@ -40455,7 +40535,7 @@ var render = function() {
                 [
                   _c(
                     "div",
-                    { staticClass: "mt-5" },
+                    { staticClass: "mt-1" },
                     [
                       _c(
                         "form-wizard",
@@ -40480,7 +40560,7 @@ var render = function() {
                           _c(
                             "tab-content",
                             {
-                              staticClass: "mb-5",
+                              staticClass: "mb-1",
                               attrs: {
                                 title: "Paso 1",
                                 icon: "feather icon-home",
@@ -42161,26 +42241,21 @@ var render = function() {
                                           "vx-col md:w-1/3 w-full mt-1"
                                       },
                                       [
-                                        _c("vs-input", {
+                                        _c("vs-input-number", {
                                           directives: [
                                             {
                                               name: "validate",
                                               rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
+                                              value: "required",
+                                              expression: "'required'"
                                             }
                                           ],
-                                          staticClass: "w-full",
+                                          staticClass: "w-full mt-5",
                                           attrs: {
-                                            "label-placeholder": "Pasajeros",
                                             name: "serviciokms_pasajeros",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciokms_pasajeros"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
+                                            min: "1",
+                                            "icon-inc": "expand_less",
+                                            "icon-dec": "expand_more"
                                           },
                                           model: {
                                             value: _vm.serviciokm.pasajeros,
@@ -42668,6 +42743,12 @@ var render = function() {
                                     1
                                   ),
                                   _vm._v(" "),
+                                  _c(
+                                    "vs-divider",
+                                    { attrs: { color: "primary" } },
+                                    [_vm._v("Detalle")]
+                                  ),
+                                  _vm._v(" "),
                                   _vm._l(_vm.sucursales, function(
                                     suc,
                                     indexsuc
@@ -42676,174 +42757,273 @@ var render = function() {
                                       "div",
                                       { key: indexsuc, attrs: { data: suc } },
                                       [
-                                        _c(
-                                          "div",
-                                          { staticClass: "vx-row" },
-                                          [
-                                            _c(
-                                              "vs-divider",
-                                              { attrs: { color: "primary" } },
-                                              [_vm._v("Detalle")]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "vx-col md:w-1/4 w-full mt-2"
-                                              },
-                                              [
-                                                _c("vs-input", {
-                                                  directives: [
-                                                    {
-                                                      name: "validate",
-                                                      rawName: "v-validate",
-                                                      value: "required",
-                                                      expression: "'required'"
-                                                    }
-                                                  ],
-                                                  staticClass: "w-full",
-                                                  attrs: {
-                                                    "label-placeholder":
-                                                      "Nombre",
-                                                    name: "sucursal_nombre",
-                                                    danger: _vm.errors.first(
-                                                      "step-4.sucursal_nombre"
-                                                    )
-                                                      ? true
-                                                      : false,
-                                                    "val-icon-danger": "clear",
-                                                    size: "small"
-                                                  },
-                                                  model: {
-                                                    value: suc.nombre,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        suc,
-                                                        "nombre",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression: "suc.nombre"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "vx-col md:w-1/4 w-full mt-2"
-                                              },
-                                              [
-                                                _c("vs-input", {
-                                                  directives: [
-                                                    {
-                                                      name: "validate",
-                                                      rawName: "v-validate",
-                                                      value: "required",
-                                                      expression: "'required'"
-                                                    }
-                                                  ],
-                                                  staticClass: "w-full",
-                                                  attrs: {
-                                                    "label-placeholder":
-                                                      "Direccion",
-                                                    name: "sucursal_direccion",
-                                                    danger: _vm.errors.first(
-                                                      "step-4.sucursal_direccion"
-                                                    )
-                                                      ? true
-                                                      : false,
-                                                    "val-icon-danger": "clear",
-                                                    size: "small"
-                                                  },
-                                                  model: {
-                                                    value: suc.direccion,
-                                                    callback: function($$v) {
-                                                      _vm.$set(
-                                                        suc,
-                                                        "direccion",
-                                                        $$v
-                                                      )
-                                                    },
-                                                    expression: "suc.direccion"
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "vx-col md:w-1/6 w-full mt-6"
-                                              },
-                                              [
-                                                _c(
-                                                  "vs-radio",
+                                        _c("div", { staticClass: "vx-row" }, [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "vx-col md:w-1/4 w-full mt-2"
+                                            },
+                                            [
+                                              _c("vs-input", {
+                                                directives: [
                                                   {
-                                                    staticClass: "mt-1",
-                                                    attrs: { "vs-value": "1" },
-                                                    on: {
-                                                      change: function($event) {
-                                                        return _vm.foo(
-                                                          $event.target.checked
-                                                        )
-                                                      }
+                                                    name: "validate",
+                                                    rawName: "v-validate",
+                                                    value: "required",
+                                                    expression: "'required'"
+                                                  }
+                                                ],
+                                                staticClass: "w-full",
+                                                attrs: {
+                                                  "label-placeholder": "Nombre",
+                                                  name: "sucursal_nombre",
+                                                  danger: _vm.errors.first(
+                                                    "step-4.sucursal_nombre"
+                                                  )
+                                                    ? true
+                                                    : false,
+                                                  "val-icon-danger": "clear",
+                                                  size: "small"
+                                                },
+                                                model: {
+                                                  value: suc.nombre,
+                                                  callback: function($$v) {
+                                                    _vm.$set(suc, "nombre", $$v)
+                                                  },
+                                                  expression: "suc.nombre"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "vx-col md:w-1/3 w-full mt-2"
+                                            },
+                                            [
+                                              _c("vs-input", {
+                                                directives: [
+                                                  {
+                                                    name: "validate",
+                                                    rawName: "v-validate",
+                                                    value: "required",
+                                                    expression: "'required'"
+                                                  }
+                                                ],
+                                                attrs: {
+                                                  type: "hidden",
+                                                  name: "sucursal_direccion"
+                                                },
+                                                model: {
+                                                  value: suc.direccion,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      suc,
+                                                      "direccion",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression: "suc.direccion"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "vs-component vs-con-input-label vs-input mt-5 w-full vs-input-primary is-label-placeholder"
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "vs-con-input"
                                                     },
-                                                    model: {
-                                                      value: suc.matriz,
-                                                      callback: function($$v) {
-                                                        _vm.$set(
-                                                          suc,
-                                                          "matriz",
-                                                          $$v
+                                                    [
+                                                      _c("input", {
+                                                        directives: [
+                                                          {
+                                                            name: "model",
+                                                            rawName: "v-model",
+                                                            value:
+                                                              suc.direccion,
+                                                            expression:
+                                                              "suc.direccion"
+                                                          }
+                                                        ],
+                                                        ref: "autocomplete",
+                                                        refInFor: true,
+                                                        class: suc.direccion
+                                                          ? "vs-inputx vs-input--input small hasValue"
+                                                          : "vs-inputx vs-input--input small",
+                                                        style: _vm.errors.first(
+                                                          "step-4.sucursal_direccion"
                                                         )
-                                                      },
-                                                      expression: "suc.matriz"
-                                                    }
-                                                  },
-                                                  [_vm._v("Matriz")]
-                                                )
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "vx-col md:w-1/6 w-full mt-6"
-                                              },
-                                              [
-                                                _c("vs-button", {
-                                                  attrs: {
-                                                    radius: "",
-                                                    color: "primary",
-                                                    type: "border",
-                                                    "icon-pack": "feather",
-                                                    icon: "icon-minus",
-                                                    size: "small"
-                                                  },
+                                                          ? "border: 1px solid rgba(var(--vs-danger),1)!important;"
+                                                          : "border: 1px solid rgba(0, 0, 0, 0.2);",
+                                                        attrs: {
+                                                          type: "text",
+                                                          required: "",
+                                                          id: indexsuc,
+                                                          name:
+                                                            "sucursal_direccion",
+                                                          placeholder: ""
+                                                        },
+                                                        domProps: {
+                                                          value: suc.direccion
+                                                        },
+                                                        on: {
+                                                          input: function(
+                                                            $event
+                                                          ) {
+                                                            if (
+                                                              $event.target
+                                                                .composing
+                                                            ) {
+                                                              return
+                                                            }
+                                                            _vm.$set(
+                                                              suc,
+                                                              "direccion",
+                                                              $event.target
+                                                                .value
+                                                            )
+                                                          }
+                                                        }
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          staticClass:
+                                                            "input-span-placeholder vs-input--placeholder small small vs-placeholder-label"
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n      Direccion\n    "
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          directives: [
+                                                            {
+                                                              name: "show",
+                                                              rawName: "v-show",
+                                                              value: _vm.errors.has(
+                                                                "step-4.sucursal_direccion"
+                                                              ),
+                                                              expression:
+                                                                "errors.has('step-4.sucursal_direccion')"
+                                                            }
+                                                          ],
+                                                          staticClass:
+                                                            "input-icon-validate vs-input--icon-validate",
+                                                          staticStyle: {
+                                                            background:
+                                                              "rgba(var(--vs-danger),.2)"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "i",
+                                                            {
+                                                              staticClass:
+                                                                "vs-icon notranslate icon-scale material-icons null",
+                                                              staticStyle: {
+                                                                color:
+                                                                  "rgba(var(--vs-danger),1)"
+                                                              },
+                                                              attrs: {
+                                                                valiconpack:
+                                                                  "material-icons"
+                                                              }
+                                                            },
+                                                            [_vm._v("clear")]
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "vx-col md:w-1/6 w-full mt-6"
+                                            },
+                                            [
+                                              _c(
+                                                "vs-radio",
+                                                {
+                                                  staticClass: "mt-1",
+                                                  attrs: { "vs-value": "1" },
                                                   on: {
-                                                    click: function($event) {
-                                                      $event.preventDefault()
-                                                      return _vm.quitarSucursal(
+                                                    change: function($event) {
+                                                      return _vm.cambioMatriz(
                                                         indexsuc
                                                       )
                                                     }
+                                                  },
+                                                  model: {
+                                                    value: suc.matriz,
+                                                    callback: function($$v) {
+                                                      _vm.$set(
+                                                        suc,
+                                                        "matriz",
+                                                        $$v
+                                                      )
+                                                    },
+                                                    expression: "suc.matriz"
                                                   }
-                                                })
-                                              ],
-                                              1
-                                            )
-                                          ],
-                                          1
-                                        )
+                                                },
+                                                [_vm._v("Matriz")]
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "vx-col md:w-1/6 w-full mt-6"
+                                            },
+                                            [
+                                              _c("vs-button", {
+                                                attrs: {
+                                                  radius: "",
+                                                  color: "primary",
+                                                  type: "border",
+                                                  "icon-pack": "feather",
+                                                  icon: "icon-minus",
+                                                  size: "small"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    $event.preventDefault()
+                                                    return _vm.quitarSucursal(
+                                                      indexsuc
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ])
                                       ]
                                     )
                                   })
@@ -43873,21 +44053,16 @@ var render = function() {
                               },
                               domProps: { value: _vm.item.direccion },
                               on: {
-                                input: [
-                                  function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.item,
-                                      "direccion",
-                                      $event.target.value
-                                    )
-                                  },
-                                  function($event) {
-                                    return _vm.myChangeFunction(_vm.item)
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                ]
+                                  _vm.$set(
+                                    _vm.item,
+                                    "direccion",
+                                    $event.target.value
+                                  )
+                                }
                               }
                             }),
                             _vm._v(" "),
@@ -81497,14 +81672,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************************************!*\
   !*** ./resources/js/src/views/pages/administracion/empresas/Empresas.vue ***!
   \***************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Empresas_vue_vue_type_template_id_cebe3ff8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Empresas.vue?vue&type=template&id=cebe3ff8& */ "./resources/js/src/views/pages/administracion/empresas/Empresas.vue?vue&type=template&id=cebe3ff8&");
 /* harmony import */ var _Empresas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Empresas.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/administracion/empresas/Empresas.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var flatpickr_dist_flatpickr_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css?vue&type=style&index=0&lang=css& */ "./node_modules/flatpickr/dist/flatpickr.css?vue&type=style&index=0&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Empresas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Empresas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var flatpickr_dist_flatpickr_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flatpickr/dist/flatpickr.css?vue&type=style&index=0&lang=css& */ "./node_modules/flatpickr/dist/flatpickr.css?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _Empresas_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Empresas.vue?vue&type=style&index=1&lang=scss& */ "./resources/js/src/views/pages/administracion/empresas/Empresas.vue?vue&type=style&index=1&lang=scss&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -81538,7 +81714,7 @@ component.options.__file = "resources/js/src/views/pages/administracion/empresas
 /*!****************************************************************************************************!*\
   !*** ./resources/js/src/views/pages/administracion/empresas/Empresas.vue?vue&type=script&lang=js& ***!
   \****************************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
