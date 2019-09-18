@@ -3661,7 +3661,7 @@ i.feather {
 
 .con-vs-checkbox,
 .con-vs-radio {
-  justify-content: flex-start !important;
+  justify-content: center !important;
 }
 
 .con-vs-radio {

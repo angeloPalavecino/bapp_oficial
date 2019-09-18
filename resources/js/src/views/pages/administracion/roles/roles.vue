@@ -69,10 +69,40 @@
                         </vs-select-group>
                       </div>
                   </vs-select> -->
+                  <br/>
+                <label class="typo__label" style="font-size: 12px;">Permisos</label>
+                  <br/><br/> 
+                <vs-table :data="options" pagination   max-items="7">
 
+                      <template slot="thead">
+                        <vs-th>Modulo</vs-th>
+                        <vs-th>Agregar</vs-th>
+                        <vs-th>Crear</vs-th>
+                        <vs-th>Inicio</vs-th>
+                        <vs-th>Actualizar</vs-th>
+                        <vs-th>Ver</vs-th>
+                        <vs-th>Eliminar</vs-th>
+                        <vs-th>Editar</vs-th>
+                      </template>
+
+                      <template slot-scope="{data}">
+                        <vs-tr :key="indextr" v-for="(tr, indextr) in data">
+                          
+                          <vs-td :data="data[indextr].modulos">
+                            {{ data[indextr].modulos }}
+                          </vs-td>
+                                                              
+                            <vs-td v-for="(td, index) in data[indextr].roles" :key="index">
+                              <vs-checkbox name="permisos" v-validate="'required'" v-model="item.permisos" :vs-value="td.id"/>
+                            </vs-td>
+                     
+                        </vs-tr>
+                      </template>
+
+                    </vs-table>
 
                <div>
-                <label class="typo__label" style="font-size: 12px;">Permisos</label>
+              <!--  <label class="typo__label" style="font-size: 12px;">Permisos</label>
                 <multiselect v-model="item.permisos" :options="options" :multiple="true" 
                 group-values="roles" group-label="modulos" :group-select="true" v-validate="'required'" 
                 track-by="id" label="name" :searchable="false" :show-labels="true" name="permisos" placeholder="Seleccione una opcion" 
@@ -80,7 +110,8 @@
                 <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" 
                 v-if="values.length &amp;&amp; !isOpen">{{ values.length }} opciones seleccionadas</span></template>
                 
-                </multiselect>
+                </multiselect>-->
+          
                 <span class="text-danger text-sm" v-show="errors.has('permisos')">{{ errors.first('permisos') }}</span>
               
                 
@@ -219,16 +250,15 @@ export default {
       ite : "",
       ind : "",
       popupActive: false,
-      item : {},
+      item : {
+        permisos:[],
+      },
       modoEditar: false,      
       exportData : [],
       permisos : [],
       aux: 0,
-
-      //select2:'',
-      //options1:[],
-
-       options: []
+      options: [],
+ 
 
     }
   },
@@ -248,8 +278,6 @@ export default {
         this.$http.get('permisos/permisos')
           .then(function (response) {
             //thisIns.permisos = response.data.permisos //thisIns.formatData(response.data.users) formatear data
-
-             thisIns.options1 = response.data.permisos_aux
              thisIns.options = response.data.permisos_aux
             
           })
@@ -262,6 +290,11 @@ export default {
               icon:'icon-alert-circle'})
           });
       },
+    arrayColumn(array, columnName) {
+        return array.map(function(value,index) {
+        return value[columnName];
+      })
+    },
     editar(item){      
       
       this.initValues();
@@ -269,12 +302,18 @@ export default {
       //console.log(item.roles[0].id);
       this.item.name = item.name;
       this.item.id = item.id;
-      this.item.permisos = item.permisos;
+      //Nuevo
+      //this.item.permisos = item.permisos;
+      const ids = this.arrayColumn(item.permisos, 'id');
+      this.item.permisos = ids;
+      //Nuevo
       this.selected = [];
       this.popupActive=true;
-    },
+    },    
     initValues() {
-      this.item = {};
+      this.item = {
+        permisos:[],
+      };
       this.errors.clear();
     }
   },
@@ -423,6 +462,10 @@ export default {
 
     .vs-table--pagination {
       justify-content: center;
+    }
+
+    .vs-checkbox {
+     justify-content: center !important; 
     }
   }
 }

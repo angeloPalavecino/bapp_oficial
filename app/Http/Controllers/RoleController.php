@@ -51,8 +51,7 @@ class RoleController extends Controller
     {
 
         $validation = $this->validator($request->all());
-       
-        
+            
         if ($validation->fails()) {
 
             return response()->json(
@@ -76,8 +75,8 @@ class RoleController extends Controller
          );
         
         //Actualiza permisos
-        $aux = array_column($request->get('permisos'), 'id');
-        $role->givePermissionTo($aux);
+        //$aux = array_column($request->get('permisos'), 'id');
+        $role->givePermissionTo($request->get('permisos'));
 
         return response()->json(
             [
@@ -131,9 +130,9 @@ class RoleController extends Controller
                   )
              );
     
-              //Actualiza permisos
-            $aux = array_column($request->get('permisos'), 'id');
-            $role->syncPermissions($aux);
+            //Actualiza permisos
+            //$aux = array_column($request->get('permisos'), 'id');
+            $role->syncPermissions($request->get('permisos'));
 
             return response()->json(
                 [

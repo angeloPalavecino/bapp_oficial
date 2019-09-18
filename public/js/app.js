@@ -7031,6 +7031,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -7046,13 +7077,13 @@ __webpack_require__.r(__webpack_exports__);
       ite: "",
       ind: "",
       popupActive: false,
-      item: {},
+      item: {
+        permisos: []
+      },
       modoEditar: false,
       exportData: [],
       permisos: [],
       aux: 0,
-      //select2:'',
-      //options1:[],
       options: []
     };
   },
@@ -7072,7 +7103,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$http.get('permisos/permisos').then(function (response) {
         //thisIns.permisos = response.data.permisos //thisIns.formatData(response.data.users) formatear data
-        thisIns.options1 = response.data.permisos_aux;
         thisIns.options = response.data.permisos_aux;
       })["catch"](function (error) {
         thisIns.$vs.notify({
@@ -7084,18 +7114,29 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
+    arrayColumn: function arrayColumn(array, columnName) {
+      return array.map(function (value, index) {
+        return value[columnName];
+      });
+    },
     editar: function editar(item) {
       this.initValues();
       this.modoEditar = true; //console.log(item.roles[0].id);
 
       this.item.name = item.name;
-      this.item.id = item.id;
-      this.item.permisos = item.permisos;
+      this.item.id = item.id; //Nuevo
+      //this.item.permisos = item.permisos;
+
+      var ids = this.arrayColumn(item.permisos, 'id');
+      this.item.permisos = ids; //Nuevo
+
       this.selected = [];
       this.popupActive = true;
     },
     initValues: function initValues() {
-      this.item = {};
+      this.item = {
+        permisos: []
+      };
       this.errors.clear();
     }
   },
@@ -8718,7 +8759,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, ".selectExample {\n  margin: 0px;\n}\n.con-select-example {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 10px;\n}\n.con-select .vs-select {\n  width: 100%;\n  margin: 20px;\n}\n@media (max-width: 550px) {\n.con-select {\n    flex-direction: column;\n}\n.con-select .vs-select {\n    width: 100%;\n}\n}\n.multiselect__tags {\n  border: 1px solid rgba(0, 0, 0, 0.2) !important;\n  font-size: 12px;\n  z-index: 999999 !important;\n}\n.multiselect__single {\n  color: #adadad !important;\n  font-size: 12px !important;\n  z-index: 999999 !important;\n}\n.multiselect__placeholder {\n  color: #adadad !important;\n  z-index: 999999 !important;\n  font-size: 12px !important;\n}\n.multiselect--active {\n  z-index: 999999 !important;\n}\n.multiselect__option {\n  cursor: pointer !important;\n  overflow: hidden !important;\n  z-index: 999999 !important;\n  text-overflow: ellipsis !important;\n  transition: all 0.2s ease;\n  font-size: 12px;\n}\n#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}", ""]);
+exports.push([module.i, ".selectExample {\n  margin: 0px;\n}\n.con-select-example {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 10px;\n}\n.con-select .vs-select {\n  width: 100%;\n  margin: 20px;\n}\n@media (max-width: 550px) {\n.con-select {\n    flex-direction: column;\n}\n.con-select .vs-select {\n    width: 100%;\n}\n}\n.multiselect__tags {\n  border: 1px solid rgba(0, 0, 0, 0.2) !important;\n  font-size: 12px;\n  z-index: 999999 !important;\n}\n.multiselect__single {\n  color: #adadad !important;\n  font-size: 12px !important;\n  z-index: 999999 !important;\n}\n.multiselect__placeholder {\n  color: #adadad !important;\n  z-index: 999999 !important;\n  font-size: 12px !important;\n}\n.multiselect--active {\n  z-index: 999999 !important;\n}\n.multiselect__option {\n  cursor: pointer !important;\n  overflow: hidden !important;\n  z-index: 999999 !important;\n  text-overflow: ellipsis !important;\n  transition: all 0.2s ease;\n  font-size: 12px;\n}\n#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n#data-list-list-view .vs-con-table .vs-checkbox {\n  justify-content: center !important;\n}", ""]);
 
 // exports
 
@@ -47861,94 +47902,141 @@ var render = function() {
                         [_vm._v(_vm._s(_vm.errors.first("name")))]
                       ),
                       _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
                       _c(
-                        "div",
+                        "label",
+                        {
+                          staticClass: "typo__label",
+                          staticStyle: { "font-size": "12px" }
+                        },
+                        [_vm._v("Permisos")]
+                      ),
+                      _vm._v(" "),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "vs-table",
+                        {
+                          attrs: {
+                            data: _vm.options,
+                            pagination: "",
+                            "max-items": "7"
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(ref) {
+                                var data = ref.data
+                                return _vm._l(data, function(tr, indextr) {
+                                  return _c(
+                                    "vs-tr",
+                                    { key: indextr },
+                                    [
+                                      _c(
+                                        "vs-td",
+                                        {
+                                          attrs: { data: data[indextr].modulos }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                            " +
+                                              _vm._s(data[indextr].modulos) +
+                                              "\n                          "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(data[indextr].roles, function(
+                                        td,
+                                        index
+                                      ) {
+                                        return _c(
+                                          "vs-td",
+                                          { key: index },
+                                          [
+                                            _c("vs-checkbox", {
+                                              directives: [
+                                                {
+                                                  name: "validate",
+                                                  rawName: "v-validate",
+                                                  value: "required",
+                                                  expression: "'required'"
+                                                }
+                                              ],
+                                              attrs: {
+                                                name: "permisos",
+                                                "vs-value": td.id
+                                              },
+                                              model: {
+                                                value: _vm.item.permisos,
+                                                callback: function($$v) {
+                                                  _vm.$set(
+                                                    _vm.item,
+                                                    "permisos",
+                                                    $$v
+                                                  )
+                                                },
+                                                expression: "item.permisos"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                })
+                              }
+                            }
+                          ])
+                        },
                         [
                           _c(
-                            "label",
-                            {
-                              staticClass: "typo__label",
-                              staticStyle: { "font-size": "12px" }
-                            },
-                            [_vm._v("Permisos")]
-                          ),
-                          _vm._v(" "),
-                          _c("multiselect", {
-                            directives: [
-                              {
-                                name: "validate",
-                                rawName: "v-validate",
-                                value: "required",
-                                expression: "'required'"
-                              }
+                            "template",
+                            { slot: "thead" },
+                            [
+                              _c("vs-th", [_vm._v("Modulo")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Agregar")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Crear")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Inicio")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Actualizar")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Ver")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Eliminar")]),
+                              _vm._v(" "),
+                              _c("vs-th", [_vm._v("Editar")])
                             ],
-                            attrs: {
-                              options: _vm.options,
-                              multiple: true,
-                              "group-values": "roles",
-                              "group-label": "modulos",
-                              "group-select": true,
-                              "track-by": "id",
-                              label: "name",
-                              searchable: false,
-                              "show-labels": true,
-                              name: "permisos",
-                              placeholder: "Seleccione una opcion",
-                              "close-on-select": false
-                            },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "selection",
-                                fn: function(ref) {
-                                  var values = ref.values
-                                  var search = ref.search
-                                  var isOpen = ref.isOpen
-                                  return [
-                                    values.length && !isOpen
-                                      ? _c(
-                                          "span",
-                                          {
-                                            staticClass: "multiselect__single"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(values.length) +
-                                                " opciones seleccionadas"
-                                            )
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ]
-                                }
-                              }
-                            ]),
-                            model: {
-                              value: _vm.item.permisos,
-                              callback: function($$v) {
-                                _vm.$set(_vm.item, "permisos", $$v)
-                              },
-                              expression: "item.permisos"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.errors.has("permisos"),
-                                  expression: "errors.has('permisos')"
-                                }
-                              ],
-                              staticClass: "text-danger text-sm"
-                            },
-                            [_vm._v(_vm._s(_vm.errors.first("permisos")))]
+                            1
                           )
                         ],
-                        1
+                        2
                       ),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.errors.has("permisos"),
+                                expression: "errors.has('permisos')"
+                              }
+                            ],
+                            staticClass: "text-danger text-sm"
+                          },
+                          [_vm._v(_vm._s(_vm.errors.first("permisos")))]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",

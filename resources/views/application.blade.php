@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="icon" href="/images/favicon.ico">
+    <link rel="icon" href="/images/logo.png">
    
     <title>{{ config('app.name', 'Bapp') }}</title>
     <!-- Styles -->

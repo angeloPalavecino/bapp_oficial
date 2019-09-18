@@ -20,7 +20,7 @@ class PermisosController extends Controller
         $auxNom = [];
         $Nom = "";
         
-
+        //dd($permisos->toArray());
         foreach ($permisos->toArray() as $items) {
             $auxNom = explode('.', $items['name'], 2);  
             
@@ -34,7 +34,7 @@ class PermisosController extends Controller
            array_push( $aux[$x]['roles'] , [ "name" => PermisosController::nombres($Nom)." - ".PermisosController::nombres($auxNom[1]), "id" => $items['id']]);
             
         }
-
+        //    dd($aux);
         /*foreach ($permisos->toArray() as $items) {
             $auxNom = explode('.', $items['name'], 2);  
             
