@@ -72,7 +72,7 @@
                   <br/>
                 <label class="typo__label" style="font-size: 12px;">Permisos</label>
                   <br/><br/> 
-                <vs-table :data="options" pagination   max-items="7">
+                <vs-table :data="options" pagination   max-items="7" class="permisos">
 
                       <template slot="thead">
                         <vs-th>Modulo</vs-th>
@@ -93,7 +93,7 @@
                           </vs-td>
                                                               
                             <vs-td v-for="(td, index) in data[indextr].roles" :key="index">
-                              <vs-checkbox name="permisos" v-validate="'required'" v-model="item.permisos" :vs-value="td.id"/>
+                              <vs-checkbox name="permisos" v-validate="'required'" icon-pack="feather" icon="icon-check" v-model="item.permisos" :vs-value="td.id"/>
                             </vs-td>
                      
                         </vs-tr>
@@ -381,11 +381,17 @@ export default {
     z-index: 999999 !important;
     text-overflow: ellipsis !important;
     transition: all .2s ease;
-        font-size: 12px;
+        font-size: 12px; 
     
 }
-
-
+.permisos {
+  .vs-checkbox {
+      justify-content: center !important; 
+    }
+      th .vs-table-text {
+        justify-content: center !important;
+  }
+}
 #data-list-list-view {
   .vs-con-table {
 
@@ -464,9 +470,7 @@ export default {
       justify-content: center;
     }
 
-    .vs-checkbox {
-     justify-content: center !important; 
-    }
+    
   }
 }
 </style>
