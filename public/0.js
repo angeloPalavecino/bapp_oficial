@@ -641,6 +641,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -655,6 +656,9 @@ __webpack_require__.r(__webpack_exports__);
       type: String
     },
     logo: {
+      type: String
+    },
+    logo2: {
       type: String
     },
     parent: {
@@ -1158,6 +1162,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _themeConfig_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/../themeConfig.js */ "./resources/js/themeConfig.js");
 /* harmony import */ var _layouts_components_vx_sidebar_sidebarItems_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/layouts/components/vx-sidebar/sidebarItems.js */ "./resources/js/src/layouts/components/vx-sidebar/sidebarItems.js");
 /* harmony import */ var vue_backtotop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-backtotop */ "./node_modules/vue-backtotop/src/main.js");
+//
+//
 //
 //
 //
@@ -2270,22 +2276,20 @@ var render = function() {
                         })
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.title
-                      ? _c(
-                          "span",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.isMouseEnter || !_vm.reduce,
-                                expression: "isMouseEnter || !reduce"
-                              }
-                            ],
-                            staticClass: "logo-text"
-                          },
-                          [_vm._v(_vm._s(_vm.title))]
-                        )
+                    _vm.logo2
+                      ? _c("img", {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.isMouseEnter || !_vm.reduce,
+                              expression: "isMouseEnter || !reduce"
+                            }
+                          ],
+                          staticClass: "mr-4",
+                          staticStyle: { width: "9.5rem !important" },
+                          attrs: { src: _vm.logo2, alt: "logo" }
+                        })
                       : _vm._e()
                   ]),
                   _vm._v(" "),
@@ -2765,7 +2769,8 @@ var render = function() {
       _c("vx-sidebar", {
         attrs: {
           sidebarItems: _vm.sidebarItems,
-          logo: __webpack_require__(/*! @assets/images/logo/logo.png */ "./resources/assets/images/logo/logo.png"),
+          logo: __webpack_require__(/*! @assets/images/logo/Bapp-isotipo-White.png */ "./resources/assets/images/logo/Bapp-isotipo-White.png"),
+          logo2: __webpack_require__(/*! @assets/images/logo/Bapp-tipo-blck.png */ "./resources/assets/images/logo/Bapp-tipo-blck.png"),
           title: "Bapp",
           parent: ".layout--main"
         }
@@ -2902,14 +2907,25 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/assets/images/logo/logo.png":
-/*!***********************************************!*\
-  !*** ./resources/assets/images/logo/logo.png ***!
-  \***********************************************/
+/***/ "./resources/assets/images/logo/Bapp-isotipo-White.png":
+/*!*************************************************************!*\
+  !*** ./resources/assets/images/logo/Bapp-isotipo-White.png ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/logo.png?663d35ecbe17dc3def8213bd4503f2b8";
+module.exports = "/images/Bapp-isotipo-White.png?5b0291fa01fe32b6633749c38964462f";
+
+/***/ }),
+
+/***/ "./resources/assets/images/logo/Bapp-tipo-blck.png":
+/*!*********************************************************!*\
+  !*** ./resources/assets/images/logo/Bapp-tipo-blck.png ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/Bapp-tipo-blck.png?77b4097c6f2879ecdac8b030b901c196";
 
 /***/ }),
 
@@ -3410,58 +3426,62 @@ __webpack_require__.r(__webpack_exports__);
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 /* harmony default export */ __webpack_exports__["default"] = ([{
-  url: "/",
-  name: "Administracion",
-  slug: "administracion",
+  header: "Administracion",
+  i18n: "Others"
+}, {
+  url: "/pages/administracion/users/users",
+  name: "Usuarios",
+  slug: "users",
+  icon: "UsersIcon",
+  i18n: "UsersIcon"
+}, {
+  url: "/pages/administracion/roles/roles",
+  name: "Roles",
+  slug: "roles",
+  icon: "UserCheckIcon",
+  i18n: "UserCheckIcon"
+}, {
+  url: null,
+  name: "Config. Planificacion",
   icon: "SettingsIcon",
+  i18n: "SettingsIcon",
   submenu: [{
-    url: "/pages/administracion/users/users",
-    name: "Usuarios",
-    slug: "users",
-    icon: ""
-  }, {
-    url: "/pages/administracion/roles/roles",
-    name: "Roles",
-    slug: "roles",
-    icon: "",
-    submenu: ""
-  }, {
-    url: "/pages/administracion/empresas/empresas",
-    name: "Empresas",
-    slug: "empresas",
-    icon: "",
-    submenu: ""
+    url: "/pages/administracion/excepciones/excepciones",
+    name: "Excepciones",
+    slug: "excepciones",
+    icon: "AlertCircleIcon",
+    i18n: "AlertCircleIcon"
   }, {
     url: "/pages/administracion/observaciones/observaciones",
     name: "Observaciones",
     slug: "observaciones",
-    icon: "",
-    submenu: ""
+    icon: "ListIcon",
+    i18n: "ListIcon"
   }, {
     url: "/pages/administracion/obsinternas/obsinternas",
-    name: "Obs. internas",
+    name: "Obs. Internas",
     slug: "obsinternas",
-    icon: "",
-    submenu: ""
-  }, {
-    url: "/pages/administracion/excepciones/excepciones",
-    name: "Excepciones",
-    slug: "excepciones",
-    icon: "",
-    submenu: ""
+    icon: "ListIcon",
+    i18n: "ListIcon"
   }, {
     url: "/pages/administracion/fuerazona/fuerazona",
     name: "Fuera de zona",
     slug: "fuerazona",
-    icon: "",
-    submenu: ""
-  }, {
-    url: "/pages/administracion/moviles/moviles",
-    name: "Moviles",
-    slug: "moviles",
-    icon: "",
-    submenu: ""
+    icon: "MapIcon",
+    i18n: "MapIcon"
   }]
+}, {
+  url: "/pages/administracion/moviles/moviles",
+  name: "Config. Baptner",
+  slug: "moviles",
+  icon: "TruckIcon",
+  i18n: "TruckIcon"
+}, {
+  url: "/pages/administracion/empresas/empresas",
+  name: "Config. Cuenta",
+  slug: "empresas",
+  icon: "GlobeIcon",
+  i18n: "GlobeIcon"
 }]);
 
 /***/ }),

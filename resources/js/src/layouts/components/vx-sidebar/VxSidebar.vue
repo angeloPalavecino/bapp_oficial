@@ -16,7 +16,8 @@
                 <div class="header-sidebar flex items-end justify-between" slot="header">
                     <div class="logo flex items-center">
                         <img :src="logo" alt="logo" class="w-10 mr-4" v-if="logo">
-                        <span class="logo-text" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
+                        <img :src="logo2" alt="logo" v-show="isMouseEnter || !reduce" class="mr-4" v-if="logo2" style="width: 9.5rem !important;">
+                       <!--  <span class="logo-text" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>-->
                     </div>
                     <div>
                         <template v-if="showCloseButton">
@@ -73,6 +74,9 @@ export default {
             type: String,
         },
         logo: {
+            type: String
+        },
+        logo2: {
             type: String
         },
         parent: {

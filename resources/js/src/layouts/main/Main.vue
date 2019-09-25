@@ -11,8 +11,10 @@
 <template>
     <div class="layout--main" :class="[navbarClasses, footerClasses, {'app-page': isAppPage}]">
 
-        <vx-sidebar :sidebarItems="sidebarItems" :logo="require('@assets/images/logo/logo.png')" title="Bapp" parent=".layout--main" />
-
+        <vx-sidebar :sidebarItems="sidebarItems" :logo="require('@assets/images/logo/Bapp-isotipo-White.png')" 
+        :logo2="require('@assets/images/logo/Bapp-tipo-blck.png')" 
+        title="Bapp" parent=".layout--main" />
+   
         <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
 
             <div id="content-overlay"></div>
