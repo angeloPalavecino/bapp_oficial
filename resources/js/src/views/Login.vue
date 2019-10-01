@@ -52,7 +52,7 @@
                                 <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
                                 <div class="flex flex-wrap justify-between my-5">
-                                    <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox>
+                                    <vs-checkbox v-model="checkbox_remember_me" class="mb-3" icon-pack="feather" icon="icon-check" >Recordarme</vs-checkbox>
                                     <router-link to="/pages/forgot-password">Se te olvidó tu contraseña?</router-link>
                                 </div>
                                <!--  <vs-button  type="border">Register</vs-button>-->
