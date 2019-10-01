@@ -21,7 +21,7 @@
                             <div class="p-8">
                                 <div class="vx-card__title mb-8">
                                     <h4 class="mb-4">Login</h4>
-                                    <p>Welcome back, please login to your account.</p>
+                                    <p>Bienvenido, inicie sesión con cuenta.</p>
                                 </div>
                                 <div v-if="has_error && !success">
                                   <span class="text-danger text-sm" v-if="error == 'login_error'">Error de validacion.</span>
@@ -52,8 +52,8 @@
                                 <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
                                 <div class="flex flex-wrap justify-between my-5">
-                                    <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-                                    <router-link to="/pages/forgot-password">Forgot Password?</router-link>
+                                    <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox>
+                                    <router-link to="/pages/forgot-password">Se te olvidó tu contraseña?</router-link>
                                 </div>
                                <!--  <vs-button  type="border">Register</vs-button>-->
                                 <vs-button class="float-right" :disabled="!validateForm" @click="login">Login</vs-button>
