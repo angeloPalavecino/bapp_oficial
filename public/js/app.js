@@ -40484,9 +40484,7 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("p", [
-                                _vm._v(
-                                  "Welcome back, please login to your account."
-                                )
+                                _vm._v("Bienvenido, inicie sesión con cuenta.")
                               ])
                             ]),
                             _vm._v(" "),
@@ -40584,6 +40582,10 @@ var render = function() {
                                   "vs-checkbox",
                                   {
                                     staticClass: "mb-3",
+                                    attrs: {
+                                      "icon-pack": "feather",
+                                      icon: "icon-check"
+                                    },
                                     model: {
                                       value: _vm.checkbox_remember_me,
                                       callback: function($$v) {
@@ -40592,13 +40594,13 @@ var render = function() {
                                       expression: "checkbox_remember_me"
                                     }
                                   },
-                                  [_vm._v("Remember Me")]
+                                  [_vm._v("Recordarme")]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "router-link",
                                   { attrs: { to: "/pages/forgot-password" } },
-                                  [_vm._v("Forgot Password?")]
+                                  [_vm._v("Se te olvidó tu contraseña?")]
                                 )
                               ],
                               1
@@ -81812,7 +81814,7 @@ __webpack_require__.r(__webpack_exports__);
     highlightAction: false
   }, {
     index: 3,
-    label: 'Empresas',
+    label: 'Config. Cuenta',
     url: '/pages/administracion/empresas/empresas',
     labelIcon: 'GlobeIcon',
     highlightAction: false
@@ -81842,7 +81844,7 @@ __webpack_require__.r(__webpack_exports__);
     highlightAction: false
   }, {
     index: 8,
-    label: 'Moviles',
+    label: 'Config. Baptner',
     url: '/pages/administracion/moviles/moviles',
     labelIcon: 'TruckIcon',
     highlightAction: false
