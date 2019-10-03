@@ -21,60 +21,79 @@
 
 export default [
   {
-    url: "/",
-    name: "Administracion",
-    slug: "administracion",
-    icon: "SettingsIcon",
-    submenu: [{
-      url: "/pages/administracion/users/users",
-      name: "Usuarios",
-      slug: "users",
-      icon: "",
-    },{
-      url: "/pages/administracion/roles/roles",
-      name: "Roles",
-      slug: "roles",
-      icon: "",
-      submenu: ""
-    },
-    {
-      url: "/pages/administracion/empresas/empresas",
-      name: "Empresas",
-      slug: "empresas",
-      icon: "",
-      submenu: ""
-    },{
-      url: "/pages/administracion/observaciones/observaciones",
-      name: "Observaciones",
-      slug: "observaciones",
-      icon: "",
-      submenu: ""
-    },{
-      url: "/pages/administracion/obsinternas/obsinternas",
-      name: "Obs. internas",
-      slug: "obsinternas",
-      icon: "",
-      submenu: ""
-    },{
-      url: "/pages/administracion/excepciones/excepciones",
-      name: "Excepciones",
-      slug: "excepciones",
-      icon: "",
-      submenu: ""
-    },{
-      url: "/pages/administracion/fuerazona/fuerazona",
-      name: "Fuera de zona",
-      slug: "fuerazona",
-      icon: "",
-      submenu: ""
-    },{
-      url: "/pages/administracion/moviles/moviles",
-      name: "Moviles",
-      slug: "moviles",
-      icon: "",
-      submenu: ""
-    }]
+    header: "Administracion",
+    i18n: "Others",
   },
+  {
+    url: "/pages/administracion/users/users",
+    name: "Usuarios",
+    slug: "users",
+    icon: "UsersIcon",
+    i18n: "UsersIcon",
+
+  },
+  {
+    url: "/pages/administracion/roles/roles",
+    name: "Roles",
+    slug: "roles",
+    icon: "UserCheckIcon",
+    i18n: "UserCheckIcon",
+  
+  },
+  {
+    url: null,
+    name: "Config. Planificacion",
+    icon: "SettingsIcon",
+    i18n: "SettingsIcon",
+    submenu: [
+      {
+        url: "/pages/administracion/excepciones/excepciones",
+        name: "Excepciones",
+        slug: "excepciones",
+        icon: "AlertCircleIcon",
+        i18n: "AlertCircleIcon",
+      },
+      {
+        url: "/pages/administracion/observaciones/observaciones",
+        name: "Observaciones",
+        slug: "observaciones",
+        icon: "ListIcon",
+        i18n: "ListIcon",
+      },
+      {
+        url: "/pages/administracion/obsinternas/obsinternas",
+        name: "Obs. Internas",
+        slug: "obsinternas",
+        icon: "ListIcon",
+        i18n: "ListIcon",
+      },
+      {
+        url: "/pages/administracion/fuerazona/fuerazona",
+        name: "Fuera de zona",
+        slug: "fuerazona",
+        icon: "MapIcon",
+        i18n: "MapIcon",
+      },
+    ]
+  },
+  {
+    url: "/pages/administracion/moviles/moviles",
+    name: "Config. Baptner",
+    slug: "moviles",
+    icon: "TruckIcon",
+    i18n: "TruckIcon",
+
+  },
+
+  {
+    url: "/pages/administracion/empresas/empresas",
+    name: "Config. Cuenta",
+    slug: "empresas",
+    icon: "GlobeIcon",
+    i18n: "GlobeIcon",
+  
+  },
+
   
   
 ]
