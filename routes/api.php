@@ -268,7 +268,25 @@ Route::prefix('v1')->group(function () {
             Route::put('driver/{id}', 'DriverController@update');
             Route::post('driver/store', 'DriverController@store');
             Route::get('driver/{id}/edit', 'DriverController@edit');
+            Route::post('driver/upload', 'DriverController@upload');
+
        
            });
     });
+
+    //TIPO DOCUMENTOS
+    Route::prefix('tipodocumentos')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+      // MOVILES
+          Route::get('tipodocumentos', 'TipoDocumentosController@index');
+          Route::get('tipodocumentos/create', 'TipoDocumentosController@create');
+          Route::get('tipodocumentos/{id}', 'TipoDocumentosController@show');
+          Route::delete('tipodocumentos/{id}', 'TipoDocumentosController@destroy');
+          Route::post('tipodocumentos/borrar', 'TipoDocumentosController@borrar');
+          Route::put('tipodocumentos/{id}', 'TipoDocumentosController@update');
+          Route::post('tipodocumentos/store', 'TipoDocumentosController@store');
+          Route::get('tipodocumentos/{id}/edit', 'TipoDocumentosController@edit');
+     
+         });
+  });    
 });

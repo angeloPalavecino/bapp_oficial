@@ -30,6 +30,8 @@ import Excepciones from './views/pages/administracion/excepciones/Excepciones'
 import Observaciones from './views/pages/administracion/observaciones/Observaciones'
 import ObsInternas from './views/pages/administracion/obsinternas/ObsInternas'
 import Moviles from './views/pages/administracion/moviles/Moviles'
+import TipoDocumentos from './views/pages/administracion/tipodocumentos/TipoDocumentos'
+
 
 
 Vue.use(Router)
@@ -188,6 +190,21 @@ const router = new Router({
               { title: 'Lista de moviles', active: true },
               ],
               pageTitle: 'Lista de moviles',
+
+          }
+        },
+        {
+          path: '/pages/administracion/tipodocumentos/tipodocumentos',
+          name: 'tipodocumentos',
+          component: TipoDocumentos,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'TipoDocumentos'},
+              { title: 'Lista de Tipo de Documentos', active: true },
+              ],
+              pageTitle: 'Lista de tipo de documentos',
 
           }
         }

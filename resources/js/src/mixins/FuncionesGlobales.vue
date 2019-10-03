@@ -62,7 +62,7 @@
       })
     },
     //Agrega Registros
-     $submitAgregar() {
+    $submitAgregar() {
 
       const thisIns = this;
       const url = thisIns.ruta + 'store';
@@ -106,7 +106,7 @@
       })
     },
     //Elimina registo
-     $submitEliminar(x, index) {
+    $submitEliminar(x, index) {
         this.ite = x;
         this.ind = index;
         this.selected = [];
@@ -304,7 +304,52 @@
              iconPack: 'feather',
              icon:'icon-alert-circle'})
         });
-    }
+    },
+
+    //Agrega Registros
+    $upload() {
+      
+      const thisIns = this;
+      const url = thisIns.ruta + 'upload';
+      const formData = new FormData();     
+       
+      formData.append('file', (this.item.file));
+      formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
+      formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
+
+      if (this.item.file.size > 0) {
+        this.$http.post(url, formData, {headers: {
+          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json"
+        }})
+        .then((res) =>{
+          this.$vs.loading({ type: 'radius' , scale: 0.6 });
+          //this.$refrescaTabla();
+          this.initValues();
+          this.modoEditar = false; 
+          this.popupActive=false;
+          setTimeout(() => { this.$vs.loading.close() }, 500);
+
+          thisIns.$vs.notify({
+            title:'Exito',
+            text: 'El registro se ha creado con exito!.',
+            color:'success',
+            iconPack: 'feather',
+            icon:'icon-alert-circle'
+          })                                      
+        })
+        .catch(function (error) {
+          thisIns.$vs.notify({
+            title:'Error',
+            text: error,
+            color:'danger',
+            iconPack: 'feather',
+            icon:'icon-alert-circle'
+          })
+        });
+      } else {
+      }
+    },
 
     
       

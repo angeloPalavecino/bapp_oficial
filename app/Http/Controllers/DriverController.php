@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class DriverController extends Controller
@@ -105,7 +107,7 @@ class DriverController extends Controller
         $dataCar = $request->all()['car'];
 
         $dataUser['habilitado'] = 1;
-        $dataUser['empresa_id'] = 6; //AGREGAR EMPRESA 0 "SIN EMPRESA"
+        $dataUser['empresa_id'] = 1; //AGREGAR EMPRESA 0 "SIN EMPRESA"
         $rut = substr($dataUser['rut'], 0, -1);
         $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
 
@@ -345,5 +347,27 @@ class DriverController extends Controller
         }
 
         
+    }
+
+    public function upload(Request $request)
+    {
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        $uploadFile = Storage::disk('local')->put($fileName, file_get_contents($file));
+        if($uploadFile == true)
+        {
+            dd($request->tipo_documento_id);
+            $url = Storage::url($fileName);
+
+        }
+        else
+        {
+            dd("Fallo");
+        }
+        
+        
+      
+        return true;
     }
 }

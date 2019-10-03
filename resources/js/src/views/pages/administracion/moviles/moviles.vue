@@ -36,6 +36,41 @@
             </vs-dropdown-menu>
           </vs-dropdown>
 
+          <!-- DOCUEMTOS -->
+          <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento">            
+            <div class="vx-row">
+              <div class="vx-col md:w-1/2 w-full mt-5">
+                <vs-select v-model="item.tipo_documento_id" label="Tipo de Documento" name="tipo_documento_id" class="w-full"  >
+                  <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in tipodocumentos_choices"  />
+                </vs-select>
+                <!-- <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span> -->
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+                <vs-input
+                  label="Documento"
+                  type="file"
+                  class="w-full"
+                  name="file"
+                  id="file"
+                  @change="uploadData"                
+                />
+                <!-- <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span> -->
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+                <flat-pickr v-model="item.fecha_vencimiento" class="w-full select-large" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
+                <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+                <vs-button @click="upload" color="primary" type="filled">Adjuntar</vs-button>
+                <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
+              </div>
+
+            </div>
+            <div class="vx-row">
+            </div>
+          </vs-popup>
+          <!-- FIN DOCUMENTOS -->
+
           <!-- ADD NEW -->
           <div
             class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
@@ -397,6 +432,18 @@
                     @click="$submitEliminar(tr, indextr)"
                   ></vs-button>
                 </vx-tooltip>
+                <vx-tooltip color="primary" text="Documentos">
+                  <vs-button
+                    radius
+                    color="primary"
+                    type="border"
+                    icon-pack="feather"
+                    icon="icon-file"
+                    size="small"
+                    class="ml-3"
+                    @click="initUpload(tr)"
+                  ></vs-button>
+                </vx-tooltip>
               </div>
             </vs-td>
           </vs-tr>
@@ -500,12 +547,15 @@ export default {
       ite: "",
       ind: "",
       popupActive: false,
+      popupDocumento: false,      
       item: {},
       driver: {},
       car: {},
       user: {},
       modoEditar: false,
       exportData: [],
+      empresa_choices: [],
+      tipodocumentos_choices: [],      
       aux: 0
     };
   },
@@ -587,6 +637,22 @@ export default {
             icon: "icon-alert-circle"
           });
         });
+      
+      //Carga Type Documents
+      this.$http
+        .get("tipodocumentos/tipodocumentos")
+        .then(function(response) {
+          thisIns.tipodocumentos_choices = response.data.items;
+        })
+        .catch(function(error) {
+          thisIns.$vs.notify({
+            title: "Error",
+            text: error,
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+        });        
     },
     editar(item) {
       console.log(item);
@@ -618,7 +684,6 @@ export default {
 
       this.popupActive = true;
     },
-
     initValues() {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {};
@@ -629,13 +694,21 @@ export default {
       this.$refs.wizard.reset();
       //this.modoEditar = false;
     },
-    successUpload() {
+    initUpload(item) {
+      console.log(1212);
+      this.popupDocumento = true;
       return true;
       // this.$vs.notify({
       //   color: "success",
       //   title: "Upload Success",
       //   text: "Lorem ipsum dolor sit amet, consectetur"
       // });
+    },
+    upload(e){
+      this.$upload();
+    },
+    uploadData(e) {
+      this.item.file = e.target.files[0];
     }
   },
   created() {
