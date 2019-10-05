@@ -3985,15 +3985,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       });
     },
     //Agrega Registros
-    $upload: function $upload() {
+    $upload: function $upload(formData) {
       var _this5 = this;
 
       var thisIns = this;
       var url = thisIns.ruta + 'upload';
-      var formData = new FormData();
-      formData.append('file', this.item.file);
-      formData.append('tipo_documento_id', this.item.tipo_documento_id);
-      formData.append('fecha_vencimiento', this.item.fecha_vencimiento);
 
       if (this.item.file.size > 0) {
         this.$http.post(url, formData, {
@@ -6559,16 +6555,17 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.$refs.wizard.reset(); //this.modoEditar = false;
     },
     initUpload: function initUpload(item) {
-      console.log(1212);
       this.popupDocumento = true;
-      return true; // this.$vs.notify({
-      //   color: "success",
-      //   title: "Upload Success",
-      //   text: "Lorem ipsum dolor sit amet, consectetur"
-      // });
+      this.dataItem = item;
+      return true;
     },
-    upload: function upload(e) {
-      this.$upload();
+    upload: function upload(item) {
+      var formData = new FormData();
+      formData.append('file', this.item.file);
+      formData.append('tipo_documento_id', this.item.tipo_documento_id);
+      formData.append('fecha_vencimiento', this.item.fecha_vencimiento);
+      formData.append('driver_id', this.dataItem.cars[0].driver_id);
+      this.$upload(formData);
     },
     uploadData: function uploadData(e) {
       this.item.file = e.target.files[0];
@@ -45797,7 +45794,11 @@ var render = function() {
                               "vs-button",
                               {
                                 attrs: { color: "primary", type: "filled" },
-                                on: { click: _vm.upload }
+                                on: {
+                                  click: function($event) {
+                                    return _vm.upload(_vm.tr)
+                                  }
+                                }
                               },
                               [_vm._v("Adjuntar")]
                             )

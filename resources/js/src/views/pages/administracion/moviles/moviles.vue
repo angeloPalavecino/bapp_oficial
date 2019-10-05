@@ -61,7 +61,7 @@
                 <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
-                <vs-button @click="upload" color="primary" type="filled">Adjuntar</vs-button>
+                <vs-button @click="upload(tr)" color="primary" type="filled">Adjuntar</vs-button>
                 <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
               </div>
 
@@ -719,18 +719,18 @@ export default {
       this.$refs.wizard.reset();
       //this.modoEditar = false;
     },
-    initUpload(item) {
-      console.log(1212);
+    initUpload(item) {      
       this.popupDocumento = true;
+      this.dataItem = item;
       return true;
-      // this.$vs.notify({
-      //   color: "success",
-      //   title: "Upload Success",
-      //   text: "Lorem ipsum dolor sit amet, consectetur"
-      // });
     },
-    upload(e){
-      this.$upload();
+    upload(item){
+      const formData = new FormData();     
+      formData.append('file', (this.item.file));
+      formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
+      formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
+      formData.append('driver_id', (this.dataItem.cars[0].driver_id));
+      this.$upload(formData);
     },
     uploadData(e) {
       this.item.file = e.target.files[0];

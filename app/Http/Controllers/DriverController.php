@@ -6,6 +6,8 @@ use Validator;
 use App\Models\Driver;
 use App\Models\User;
 use App\Models\Car;
+use App\Models\Document;
+use App\Models\DriversHasDocument;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -112,7 +114,6 @@ class DriverController extends Controller
         $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
         
         $validation = $this->validatorUser($dataUser);
-        //dd($validation);
 
         if ($validation->fails()) {
 
@@ -352,15 +353,51 @@ class DriverController extends Controller
 
     public function upload(Request $request)
     {
+
         $file = $request->file('file');
         $fileName = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
         $uploadFile = Storage::disk('local')->put($fileName, file_get_contents($file));
         if($uploadFile == true)
         {
-            dd($request->tipo_documento_id);
+            //$returnUser = Document::create($dataUser);
+            //return Storage::download($fileName);
+
             $url = Storage::url($fileName);
 
+            $documentResult = Document::create(
+                array(
+                        'type_document_id'  => $request->tipo_documento_id,
+                        'name'              => $fileName,
+                        'url'               => $url,
+                        'fecha_vencimiento' => date($request->fecha_vencimiento),
+                        'informacion'       => "",
+                        'habilitado'        => 1
+                )
+            );
+            if($documentResult->id > 0)
+            {   
+                $dataHas = DriversHasDocument::create(
+                    array(
+                        'driver_id'     => $request->driver_id,
+                        'document_id'   => $documentResult->id,
+                        'habilitado'    => 1
+                    )
+                );
+
+                if($dataHas->id > 0)
+                {
+                    dd($dataHas);
+                }
+                else
+                {
+                    dd("Fallo");
+                }
+            }
+            else
+            {
+                dd("Error");
+            }        
         }
         else
         {
