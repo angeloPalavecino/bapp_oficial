@@ -307,15 +307,10 @@
     },
 
     //Agrega Registros
-    $upload() {
+    $upload(formData) {
       
       const thisIns = this;
       const url = thisIns.ruta + 'upload';
-      const formData = new FormData();     
-       
-      formData.append('file', (this.item.file));
-      formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
-      formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
 
       if (this.item.file.size > 0) {
         this.$http.post(url, formData, {headers: {
@@ -327,7 +322,7 @@
           //this.$refrescaTabla();
           this.initValues();
           this.modoEditar = false; 
-          this.popupActive=false;
+          this.popupDocumento=false;
           setTimeout(() => { this.$vs.loading.close() }, 500);
 
           thisIns.$vs.notify({
