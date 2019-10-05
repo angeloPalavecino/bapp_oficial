@@ -322,7 +322,7 @@
           //this.$refrescaTabla();
           this.initValues();
           this.modoEditar = false; 
-          this.popupActive=false;
+          this.popupDocumento=false;
           setTimeout(() => { this.$vs.loading.close() }, 500);
 
           thisIns.$vs.notify({

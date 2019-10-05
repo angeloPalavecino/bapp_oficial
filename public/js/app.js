@@ -4006,7 +4006,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           _this5.initValues();
 
           _this5.modoEditar = false;
-          _this5.popupActive = false;
+          _this5.popupDocumento = false;
           setTimeout(function () {
             _this5.$vs.loading.close();
           }, 500);
