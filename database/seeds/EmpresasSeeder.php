@@ -18,8 +18,10 @@ class EmpresasSeeder extends Seeder
             'rut' => 00000000,
             'dv' => 0,
             'razon_social' => 'Sin Empresa',
-            'giro' => '',
-            'habilitado' => 1
+            'giro' => 'Sin Empresa',
+            'habilitado' => 1,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s")
         ]);
     }
 }

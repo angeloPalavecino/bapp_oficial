@@ -33,7 +33,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        $empresas = Empresa::all();
+        $empresas = Empresa::all()->where("id",">",1);
          
           return response()->json(
               [

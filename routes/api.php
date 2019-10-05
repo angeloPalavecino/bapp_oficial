@@ -56,6 +56,7 @@ Route::prefix('v1')->group(function () {
             Route::get('users/{id}/edit', 'UserController@edit');
             Route::get('perfil', 'UserController@perfil');
             Route::post('cambiarpass', 'UserController@cambiarpass');
+            Route::get('empresas', 'UserController@empresas');
 
         });
     });

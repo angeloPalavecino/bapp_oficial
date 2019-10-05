@@ -67,6 +67,12 @@ class PermisosController extends Controller
             case "roles":
                 return "Roles";
                 break;
+            case "obsinternas":
+                return "Obs. Internas";
+                break;
+            case "fuerazona":
+                return "Fuera de Zona";
+                break;
             case "index":
                 return "Inicio";
                 break;
@@ -88,6 +94,11 @@ class PermisosController extends Controller
             case "update":
                 return "Actualizar";
                 break;
+            default:
+                return ucwords($nombre);
+                break;
+
+                
         }
 
     } 

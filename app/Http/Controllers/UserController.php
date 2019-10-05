@@ -323,6 +323,18 @@ class UserController extends Controller
             ], 200);
     }
 
+
+    public function empresas()
+    {
+        $empresas = Empresa::all();
+         
+          return response()->json(
+              [
+                  'status' => 'success',
+                  'items' => $empresas->toArray(),
+              ], 200);
+    }
+
     
 }
 
