@@ -16,6 +16,7 @@ class CreateDriversTable extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('empresa_id');
             $table->string('name');
             $table->string('lastname');
             $table->integer('rut');
@@ -24,10 +25,10 @@ class CreateDriversTable extends Migration
             $table->string('comuna');
             $table->integer('numeracion');
             $table->string('email')->unique();
+            $table->string('clase');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('telefono');
             $table->boolean('habilitado');
-            //$table->string('clase');
             //$table->dateTime('carnet_fin')->nullable();
             //$table->dateTime('antecedentes_fin')->nullable();
            // $table->dateTime('licencia_fin')->nullable();
@@ -38,6 +39,11 @@ class CreateDriversTable extends Migration
             ->references('id')
             ->on('users')
             ->onDelete('cascade');
+
+            
+            $table->foreign('empresa_id')
+            ->references('id')
+            ->on('empresas');
         });
     }
 

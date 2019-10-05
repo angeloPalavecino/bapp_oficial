@@ -100,18 +100,19 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-       
+               
         //User
         $dataUser = $request->all()['user'];
         $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
         $dataCar = $request->all()['car'];
 
         $dataUser['habilitado'] = 1;
-        $dataUser['empresa_id'] = 1; //AGREGAR EMPRESA 0 "SIN EMPRESA"
+        $dataUser['empresa_id'] = 1;
         $rut = substr($dataUser['rut'], 0, -1);
         $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
-
+        
         $validation = $this->validatorUser($dataUser);
+        //dd($validation);
 
         if ($validation->fails()) {
 
@@ -365,9 +366,7 @@ class DriverController extends Controller
         {
             dd("Fallo");
         }
-        
-        
-      
+              
         return true;
     }
 }

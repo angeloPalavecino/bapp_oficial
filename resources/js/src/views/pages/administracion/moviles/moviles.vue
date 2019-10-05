@@ -225,6 +225,24 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.numeracion') }}</span>
                     </div>
+                    <div class="vx-col md:w-1/2 w-full mt-4">
+                      <vs-select v-model="driver.empresa_id" label="Empresa" name="empresa" class="w-full" v-validate="'required'" >
+                        <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
+                      </vs-select>
+                      <span class="text-danger text-sm" v-show="errors.has('step-1.empresa')">{{ errors.first('step-1.empresa') }}</span>          
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-5">
+                      <vs-input
+                        label-placeholder="Licencias"
+                        v-model="driver.clase"
+                        class="w-full"
+                        name="clase"
+                        v-validate="'required'"
+                        :danger="(errors.first('step-1.clase') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('step-1.clase') }}</span>
+                    </div>
                   </div>
                 </form>
               </tab-content>
@@ -491,6 +509,9 @@ const dict = {
       required: "La numeración es requerida",
       numeric: "Ingrese una numeración valida"
     },
+    empresa: {
+      required: "La empresa es requerida",
+    },
     email: {
       required: "El email es requerido",
       email: "Ingrese un emil valido"
@@ -523,7 +544,10 @@ const dict = {
     asientos: {
       required: "Los asientos son requerido",
       numeric: "La cantidad de asientos debe ser numerico"
-    }
+    },
+    clase: {
+      required: "La clase es requerida",
+    }    
   }
 };
 
@@ -669,6 +693,7 @@ export default {
       this.driver.comuna = item.comuna;
       this.driver.direccion = item.direccion;
       this.driver.numeracion = item.numeracion;
+      this.driver.empresa_id = item.empresa_id;
 
       this.car.tipo = item.cars[0].tipo;
       this.car.asientos = item.cars[0].asientos;
