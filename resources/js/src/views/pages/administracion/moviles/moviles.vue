@@ -103,8 +103,8 @@
                         {{ indextr + 1 }}
                       </vs-td>
 
-                      <vs-td :data="data[indextr].name">
-                        {{data[indextr].name}}
+                      <vs-td :data="data[indextr].documents[0].name">
+                        {{data[indextr].documents[0].name}}
                       </vs-td>
 
                       <vs-td :data="data[indextr].url">
@@ -811,8 +811,7 @@ export default {
       
       this.$http.get('driver/driver/documents/' + item.id)
           .then(function (response) {
-            thisIns.documentos_choices = response.data.items[0].documents 
-            console.log(response.data.items[0].documents );           
+            thisIns.documentos_choices = response.data.items
           })
           .catch(function (error) {
             thisIns.$vs.notify({

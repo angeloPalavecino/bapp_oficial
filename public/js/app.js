@@ -6644,8 +6644,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       input.type = 'file';
       this.errors.clear();
       this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
-        thisIns.documentos_choices = response.data.items[0].documents;
-        console.log(response.data.items[0].documents);
+        thisIns.documentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$vs.notify({
           title: 'Error',
@@ -46114,14 +46113,17 @@ var render = function() {
                                                 "vs-td",
                                                 {
                                                   attrs: {
-                                                    data: data[indextr].name
+                                                    data:
+                                                      data[indextr].documents[0]
+                                                        .name
                                                   }
                                                 },
                                                 [
                                                   _vm._v(
                                                     "\n                      " +
                                                       _vm._s(
-                                                        data[indextr].name
+                                                        data[indextr]
+                                                          .documents[0].name
                                                       ) +
                                                       "\n                    "
                                                   )
@@ -82621,7 +82623,7 @@ vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_16__["default"]); //Axios
 
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("", "/api/v1");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:9090", "/api/v1");
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(_websanova_vue_auth__WEBPACK_IMPORTED_MODULE_2___default.a, _auth__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vuejs - Vue wrapper for hammerjs
 
 
@@ -84386,9 +84388,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })
