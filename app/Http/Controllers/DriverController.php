@@ -205,8 +205,8 @@ class DriverController extends Controller
         }
         
         
+        }
     }
-
     /**
      * Display the specified resource.
      *
@@ -370,8 +370,8 @@ class DriverController extends Controller
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();        
         $fileName = $request->rut."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName();
-        $exists = Storage::disk('public_uploads')->exists($fileName);
-        $uploadFile = Storage::disk('public_uploads')->put($fileName, file_get_contents($file));
+        $exists = Storage::disk('local')->exists($fileName);
+        $uploadFile = Storage::disk('local')->put($fileName, file_get_contents($file));
 
         if($uploadFile == true)
         {
