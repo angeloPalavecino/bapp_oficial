@@ -104,7 +104,7 @@
                       </vs-td>
 
                       <vs-td :data="data[indextr].documents[0].name">
-                        {{data[indextr].documents[0].name}}
+                        {{data[indextr].documents[0].name }}
                       </vs-td>
 
                       <vs-td :data="data[indextr].url">
