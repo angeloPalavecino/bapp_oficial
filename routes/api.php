@@ -270,8 +270,7 @@ Route::prefix('v1')->group(function () {
             Route::post('driver/store', 'DriverController@store');
             Route::get('driver/{id}/edit', 'DriverController@edit');
             Route::post('driver/upload', 'DriverController@upload');
-
-       
+            Route::get('driver/documents/{id}', 'DriverController@documents');
            });
     });
 
