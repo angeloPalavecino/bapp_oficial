@@ -654,6 +654,7 @@ export default {
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
+<<<<<<< HEAD
       tipodocumentos_choices: [],      
       aux: 0,
       documents:[
@@ -671,6 +672,11 @@ export default {
       },
     
     ]
+=======
+      tipodocumentos_choices: [],    
+      documentos_choices: [],  
+      aux: 0
+>>>>>>> 9a14d1faac921899f165b119c4cb9f270b12010e
     };
   },
   computed: {
