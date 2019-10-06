@@ -114,13 +114,6 @@
                     </vs-tr>
                   </template>
                 </vs-table>
-              
-           
-
-
-
-
-
           </vs-tab>
         </vs-tabs>
           </vs-popup>
@@ -669,6 +662,18 @@ export default {
         "link": "Antonette",
        
       },
+            {
+        "numero": 3,
+        "documento": "Leanne Graham",
+        "link": "Bret",
+       
+      },
+      {
+        "numero": 4,
+        "documento": "Ervin Howell",
+        "link": "Antonette",
+       
+      },
     
     ]
     };
@@ -814,8 +819,7 @@ export default {
       //this.modoEditar = false;
     },
     async initUpload(item) {    
-      console.log(item);
-      var documentos = await this.$http.get("driver/driver/documents/1"); 
+      var documentos = await this.$http.get("driver/driver/documents/"+item.id); 
       this.documentos_choices = documentos.items; 
 
       this.item.tipo_documento = "";

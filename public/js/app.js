@@ -6398,13 +6398,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
  // For custom error message
@@ -6529,6 +6522,14 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
         "link": "Bret"
       }, {
         "numero": 2,
+        "documento": "Ervin Howell",
+        "link": "Antonette"
+      }, {
+        "numero": 3,
+        "documento": "Leanne Graham",
+        "link": "Bret"
+      }, {
+        "numero": 4,
         "documento": "Ervin Howell",
         "link": "Antonette"
       }]
@@ -6672,11 +6673,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(item);
-                _context.next = 3;
-                return this.$http.get("driver/driver/documents/1");
+                _context.next = 2;
+                return this.$http.get("driver/driver/documents/" + item.id);
 
-              case 3:
+              case 2:
                 documentos = _context.sent;
                 this.documentos_choices = documentos.items;
                 this.item.tipo_documento = "";
@@ -6690,7 +6690,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
                 this.popupDocumento = true;
                 this.dataItem = item;
 
-              case 15:
+              case 14:
               case "end":
                 return _context.stop();
             }
