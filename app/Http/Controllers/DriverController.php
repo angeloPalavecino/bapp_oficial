@@ -362,16 +362,17 @@ class DriverController extends Controller
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();        
         $fileName = $request->rut."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName();
-        $exists = Storage::disk('local')->exists($fileName);
-        $uploadFile = Storage::disk('local')->put($fileName, file_get_contents($file));
+        $exists = Storage::disk('public_uploads')->exists($fileName);
+        $uploadFile = Storage::disk('public_uploads')->put($fileName, file_get_contents($file));
 
         if($uploadFile == true)
         {
             //$returnUser = Document::create($dataUser);
             //return Storage::download($fileName);
 
-            $url = Storage::url($fileName);
-
+            //$url = Storage::url($fileName);
+            $url = "/documents/".$fileName;
+            
             $dataDocument = array(
                 'type_document_id'  => $request->tipo_documento_id,
                 'name'              => $fileName,

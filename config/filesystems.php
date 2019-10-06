@@ -43,6 +43,13 @@ return [
 
     'disks' => [
 
+        'public_uploads' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/documents',
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('documents'),

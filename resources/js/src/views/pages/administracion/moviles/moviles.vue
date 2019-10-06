@@ -1,42 +1,6 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
-    <vs-table
-      ref="table"
-      multiple
-      v-model="selected"
-      pagination
-      :max-items="itemsPerPage"
-      search
-      :data="items"
-    >
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-        <div class="flex flex-wrap-reverse items-center">
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
-            <div
-              class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
-            >
-              <span class="mr-2">Acciones</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
-
-            <vs-dropdown-menu>
-              <vs-dropdown-item @click.prevent="$accion(1)">
-                <span>Borrar</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click.prevent="$accion(2)">
-                <span>Exportar</span>
-              </vs-dropdown-item>
-              <!--<vs-dropdown-item @click.prevent="accion(3)">
-                <span>Imprimir</span>
-              </vs-dropdown-item>
-               <vs-dropdown-item>
-                <span>Another Action</span>
-              </vs-dropdown-item>-->
-            </vs-dropdown-menu>
-          </vs-dropdown>
-
-          <!-- DOCUEMTOS -->
+              <!-- DOCUEMTOS -->
           <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento"
           @close="$close($event)">   
 
@@ -79,61 +43,47 @@
             </div>
           </vs-tab>
           <vs-tab label="Documentos" icon-pack="feather" icon="icon-file-text">
-            <vs-table max-items="4" pagination  :data="documentos_choices">
+
+            <vs-table max-items="4" pagination  :data="documentos_choices" ref="tabladoc">
                   <template slot="header">
                     <h3>
                       Documentos Subidos
                     </h3>
                   </template>
                   <template slot="thead">
-                    <vs-th>
-                      Nro
+                    <vs-th colspan="2">
+                       Documento
                     </vs-th>
                     <vs-th>
-                      Documento
+                       Vencimiento
                     </vs-th>
-                     <vs-th>
-                      Link
-                    </vs-th> 
+                   
+                   
                   </template>
 
                   <template slot-scope="{data}">
-                    <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                    <vs-tr :key="indextrdoc" v-for="(trdoc, indextrdoc) in data" >
+                      <vs-td colspan="2">
+                        {{ trdoc.documents[0].name }}
+                      </vs-td>
                       <vs-td>
-                        {{ indextr + 1 }}
+                        <vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
                       </vs-td>
+                    
 
-                      <vs-td :data="data[indextr].documents[0].name">
-                        {{data[indextr].documents[0].name }}
-                      </vs-td>
-
-                      <vs-td :data="data[indextr].url">
-                        <a :href="data[indextr].url" target="_blank" rel="nofollow">Ver</a>
-                        
-                      </vs-td>
+                     
 
                     </vs-tr>
                   </template>
                 </vs-table>
+
           </vs-tab>
         </vs-tabs>
           </vs-popup>
           <!-- FIN DOCUMENTOS -->
+    
 
-          <!-- ADD NEW -->
-          <div
-            class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
-            @click="$agregarPopUp()"
-          >
-            <!-- @click="addNewDataSidebar = true" -->
-            <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <vx-tooltip color="primary" text="Agregar conductor">
-              <span class="ml-2 text-base text-primary">Agregar Conductor</span>
-            </vx-tooltip>
-          </div>
-        </div>
-
-        <!-- POP UP -->
+            <!-- POP UP -->
         <vs-popup
           class="holamundo"
           ref="modal"
@@ -419,7 +369,57 @@
           </div>
         </vs-popup>
         <!-- POP UP -->
+    
+    
+    <vs-table
+            ref="table"
+            multiple
+            v-model="selected"
+            pagination
+            :max-items="itemsPerPage"
+            search
+            :data="items"
+          >
+      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
+        <div class="flex flex-wrap-reverse items-center">
+          <!-- ACTION - DROPDOWN -->
+          <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
+            <div
+              class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
+            >
+              <span class="mr-2">Acciones</span>
+              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
+            </div>
 
+            <vs-dropdown-menu>
+              <vs-dropdown-item @click.prevent="$accion(1)">
+                <span>Borrar</span>
+              </vs-dropdown-item>
+              <vs-dropdown-item @click.prevent="$accion(2)">
+                <span>Exportar</span>
+              </vs-dropdown-item>
+              <!--<vs-dropdown-item @click.prevent="accion(3)">
+                <span>Imprimir</span>
+              </vs-dropdown-item>
+               <vs-dropdown-item>
+                <span>Another Action</span>
+              </vs-dropdown-item>-->
+            </vs-dropdown-menu>
+          </vs-dropdown>
+
+          <!-- ADD NEW -->
+          <div
+            class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
+            @click="$agregarPopUp()"
+          >
+            <!-- @click="addNewDataSidebar = true" -->
+            <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
+            <vx-tooltip color="primary" text="Agregar conductor">
+              <span class="ml-2 text-base text-primary">Agregar Conductor</span>
+            </vx-tooltip>
+          </div>
+        </div>
+     
         <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4">
           <div
@@ -694,9 +694,11 @@ export default {
         });
       });
     },
-    getStatusColor(status) {
-      if (status == 1) return "success";
-      if (status == 0) return "danger";
+    getStatusColor(fecha) {
+      var factual = new Date();
+      var fvencimiento = new Date(fecha);  
+      if (fvencimiento.getTime() >= factual.getTime()) return "success";
+      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
       return "danger";
     },
     refrescaOtrosDatos() {
@@ -796,12 +798,12 @@ export default {
     initUpload(item) {   
       const thisIns = this; 
 
-      thisIns.documentos_choices = [];
-
-      thisIns.item.tipo_documento = "";
-      thisIns.item.fecha_vencimiento = ""; 
-      thisIns.item.file = ""; 
-      thisIns.item.filename = ""; 
+      this.documentos_choices = [];
+      
+      this.item.tipo_documento = "";
+      this.item.fecha_vencimiento = ""; 
+      this.item.file = ""; 
+      this.item.filename = ""; 
       
       const input = this.$refs.fileupload;
       input.type = 'text';
@@ -833,8 +835,9 @@ export default {
       
     },
 
-    upload(){
-       this.$validator.validateAll().then(result =>{
+    upload($name = null){
+      $name = $name == null ? true : $name;
+       this.$validator.validateAll($name).then(result =>{
         if (result) {          
           const formData = new FormData();     
           formData.append('file', (this.item.file));
@@ -893,6 +896,9 @@ export default {
           });
 
       }
+    },
+    handleSelected(tr) {
+      console.log(tr);
     }
   },
   created() {
