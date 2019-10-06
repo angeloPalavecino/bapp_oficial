@@ -92,9 +92,9 @@
                     <vs-th>
                       Documento
                     </vs-th>
-                    <vs-th>
+                    <!-- <vs-th>
                       Link
-                    </vs-th>
+                    </vs-th> -->
                   </template>
 
                   <template slot-scope="{data}">
@@ -115,13 +115,6 @@
                     </vs-tr>
                   </template>
                 </vs-table>
-              
-           
-
-
-
-
-
           </vs-tab>
         </vs-tabs>
           </vs-popup>

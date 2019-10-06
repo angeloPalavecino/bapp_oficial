@@ -6380,13 +6380,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
  // For custom error message
@@ -46186,12 +46179,6 @@ var render = function() {
                                       _c("vs-th", [
                                         _vm._v(
                                           "\n                    Documento\n                  "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("vs-th", [
-                                        _vm._v(
-                                          "\n                    Link\n                  "
                                         )
                                       ])
                                     ],
