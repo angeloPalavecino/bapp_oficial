@@ -79,7 +79,7 @@
             </div>
           </vs-tab>
           <vs-tab label="Documentos" icon-pack="feather" icon="icon-file-text">
-            <vs-table max-items="4" pagination  :data="documents">
+            <vs-table max-items="4" pagination  :data="documentos_choices">
                   <template slot="header">
                     <h3>
                       Documentos Subidos
@@ -99,16 +99,17 @@
 
                   <template slot-scope="{data}">
                     <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
-                      <vs-td :data="data[indextr].numero">
-                        {{data[indextr].numero}}
+                      <vs-td>
+                        {{ indextr + 1 }}
                       </vs-td>
 
-                      <vs-td :data="data[indextr].documento">
-                        {{data[indextr].documento}}
+                      <vs-td :data="data[indextr].name">
+                        {{data[indextr].name}}
                       </vs-td>
 
-                      <vs-td :data="data[indextr].ruta">
-                        {{data[indextr].ruta}}
+                      <vs-td :data="data[indextr].url">
+                        <a :href="data[indextr].url" target="_blank" rel="nofollow">Ver</a>
+                        
                       </vs-td>
 
                     </vs-tr>
@@ -656,21 +657,7 @@ export default {
       empresa_choices: [],
       tipodocumentos_choices: [],      
       aux: 0,
-      documents:[
-      {
-        "numero": 1,
-        "documento": "Leanne Graham",
-        "link": "Bret",
-       
-      },
-      {
-        "numero": 2,
-        "documento": "Ervin Howell",
-        "link": "Antonette",
-       
-      },
-    
-    ]
+      documentos_choices: []
     };
   },
   computed: {
@@ -704,7 +691,7 @@ export default {
             if (this.modoEditar == false) {
               this.$submitAgregar("step-2");
             } else {
-              this.$submitActualizar();
+              this.$submitActualizar("step-2");
             }
 
             resolve(true);
@@ -813,23 +800,45 @@ export default {
       this.$refs.wizard.reset();
       //this.modoEditar = false;
     },
-    async initUpload(item) {    
-      console.log(item);
-      var documentos = await this.$http.get("driver/driver/documents/1"); 
-      this.documentos_choices = documentos.items; 
+    initUpload(item) {   
+      const thisIns = this; 
 
-      this.item.tipo_documento = "";
-      this.item.fecha_vencimiento = ""; 
-      this.item.file = ""; 
-      this.item.filename = ""; 
+      thisIns.documentos_choices = [];
+
+      thisIns.item.tipo_documento = "";
+      thisIns.item.fecha_vencimiento = ""; 
+      thisIns.item.file = ""; 
+      thisIns.item.filename = ""; 
       
       const input = this.$refs.fileupload;
       input.type = 'text';
       input.type = 'file';
 
       this.errors.clear(); 
-      this.popupDocumento = true;
-      this.dataItem = item;  
+      
+      this.$http.get('driver/driver/documents/' + item.id)
+          .then(function (response) {
+            thisIns.documentos_choices = response.data.items[0].documents 
+            console.log(response.data.items[0].documents );           
+          })
+          .catch(function (error) {
+            thisIns.$vs.notify({
+              title:'Error',
+              text: "Error al traer los documentos",
+              color:'danger',
+              iconPack: 'feather',
+              icon:'icon-alert-circle'})
+      });      
+
+       setTimeout(() => {
+                
+                this.popupDocumento = true;
+                this.dataItem = item;   
+
+                }, 200);
+
+
+      
     },
 
     upload(){
