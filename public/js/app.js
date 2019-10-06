@@ -6322,6 +6322,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
  // For custom error message
@@ -6395,6 +6409,15 @@ var dict = {
     },
     clase: {
       required: "La clase es requerida"
+    },
+    tipo_documento_id: {
+      required: "El tipo de documento es requerido"
+    },
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida"
+    },
+    documents: {
+      required: "El documento es requerido"
     }
   }
 }; // register custom messages
@@ -6420,7 +6443,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       item: {},
       driver: {},
       car: {},
-      user: {},
+      user: {
+        habilitado: 1
+      },
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
@@ -6519,7 +6544,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       });
     },
     editar: function editar(item) {
-      console.log(item);
+      //console.log(item);
       this.initValues();
       this.modoEditar = true;
       this.user.email = item.email;
@@ -6533,6 +6558,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.driver.direccion = item.direccion;
       this.driver.numeracion = item.numeracion;
       this.driver.empresa_id = item.empresa_id;
+      this.driver.clase = item.clase;
       this.car.tipo = item.cars[0].tipo;
       this.car.asientos = item.cars[0].asientos;
       this.car.color = item.cars[0].color;
@@ -6549,26 +6575,75 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       //this.$refs.wizard.navigateToTab(0);
       this.item = {};
       this.car = {};
-      this.user = {};
+      this.user = {
+        habilitado: 1
+      };
       this.driver = {};
       this.errors.clear();
       this.$refs.wizard.reset(); //this.modoEditar = false;
     },
     initUpload: function initUpload(item) {
+      this.item.tipo_documento_id = "";
+      this.item.fecha_vencimiento = "";
+      this.item.file = "";
+      this.item.filename = "";
+      var input = this.$refs.fileupload;
+      input.type = 'text';
+      input.type = 'file';
+      this.errors.clear();
       this.popupDocumento = true;
       this.dataItem = item;
       return true;
     },
-    upload: function upload(item) {
-      var formData = new FormData();
-      formData.append('file', this.item.file);
-      formData.append('tipo_documento_id', this.item.tipo_documento_id);
-      formData.append('fecha_vencimiento', this.item.fecha_vencimiento);
-      formData.append('driver_id', this.dataItem.cars[0].driver_id);
-      this.$upload(formData);
+    upload: function upload() {
+      var _this3 = this;
+
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append('file', _this3.item.file);
+          formData.append('tipo_documento_id', _this3.item.tipo_documento_id);
+          formData.append('fecha_vencimiento', _this3.item.fecha_vencimiento);
+          formData.append('driver_id', _this3.dataItem.cars[0].driver_id);
+
+          _this3.$upload(formData);
+        } else {}
+      });
     },
     uploadData: function uploadData(e) {
-      this.item.file = e.target.files[0];
+      var tipo = e.target.files[0].type;
+      var size = e.target.files[0].size;
+
+      if (tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || tipo == "application/pdf" || tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        if (size <= 2000000) {
+          //2097152
+          this.item.file = e.target.files[0];
+          this.item.filename = e.target.files[0].name;
+        } else {
+          var input = this.$refs.fileupload;
+          input.type = 'text';
+          input.type = 'file';
+          this.$vs.notify({
+            title: "Error",
+            text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+        }
+      } else {
+        //this.$refs.fileupload.value = '';
+        var _input = this.$refs.fileupload;
+        _input.type = 'text';
+        _input.type = 'file';
+        this.$vs.notify({
+          title: "Error",
+          text: "El archivo no tiene el formato correcto",
+          color: "danger",
+          iconPack: "feather",
+          icon: "icon-alert-circle"
+        });
+      }
     }
   },
   created: function created() {
@@ -45713,6 +45788,9 @@ var render = function() {
                       on: {
                         "update:active": function($event) {
                           _vm.popupDocumento = $event
+                        },
+                        close: function($event) {
+                          return _vm.$close($event)
                         }
                       }
                     },
@@ -45720,11 +45798,19 @@ var render = function() {
                       _c("div", { staticClass: "vx-row" }, [
                         _c(
                           "div",
-                          { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+                          { staticClass: "vx-col md:w-1/2 w-full mt-2" },
                           [
                             _c(
                               "vs-select",
                               {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
                                 staticClass: "w-full",
                                 attrs: {
                                   label: "Tipo de Documento",
@@ -45747,6 +45833,27 @@ var render = function() {
                                 })
                               }),
                               1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.errors.has("tipo_documento_id"),
+                                    expression:
+                                      "errors.has('tipo_documento_id')"
+                                  }
+                                ],
+                                staticClass: "text-danger text-sm"
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("tipo_documento_id"))
+                                )
+                              ]
                             )
                           ],
                           1
@@ -45754,29 +45861,20 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "div",
-                          { staticClass: "vx-col md:w-1/2 w-full mt-5" },
-                          [
-                            _c("vs-input", {
-                              staticClass: "w-full",
-                              attrs: {
-                                label: "Documento",
-                                type: "file",
-                                name: "file",
-                                id: "file"
-                              },
-                              on: { change: _vm.uploadData }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+                          { staticClass: "vx-col md:w-1/2 w-full mt-3" },
                           [
                             _c("flat-pickr", {
-                              staticClass: "w-full select-large",
+                              directives: [
+                                {
+                                  name: "validate",
+                                  rawName: "v-validate",
+                                  value: "required",
+                                  expression: "'required'"
+                                }
+                              ],
+                              staticClass: "w-full select-large mt-5",
                               attrs: {
+                                label: "Fecha de Vencimiento",
                                 placeholder: "Fecha de Vencimiento",
                                 name: "fecha_vencimiento"
                               },
@@ -45787,9 +45885,43 @@ var render = function() {
                                 },
                                 expression: "item.fecha_vencimiento"
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "text-danger text-sm" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.first("fecha_vencimiento"))
+                              )
+                            ])
                           ],
                           1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+                          [
+                            _c("input", {
+                              ref: "fileupload",
+                              staticClass: "w-full",
+                              attrs: {
+                                label: "Documento",
+                                type: "file",
+                                name: "file",
+                                id: "file"
+                              },
+                              on: { change: _vm.uploadData }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "text-sm" }, [
+                              _vm._v(
+                                "Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "text-sm" }, [
+                              _c("i", [_vm._v("Tamaño maximo 2 MB")])
+                            ])
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -45802,7 +45934,7 @@ var render = function() {
                                 attrs: { color: "primary", type: "filled" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.upload(_vm.tr)
+                                    return _vm.upload()
                                   }
                                 }
                               },
@@ -45931,7 +46063,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -45982,7 +46114,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46039,7 +46171,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46091,7 +46223,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46149,7 +46281,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46201,7 +46333,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46258,7 +46390,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46315,7 +46447,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46372,7 +46504,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46429,7 +46561,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-4"
+                                          "vx-col md:w-1/2 w-full mt-1"
                                       },
                                       [
                                         _c(
@@ -46508,7 +46640,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46553,6 +46685,72 @@ var render = function() {
                                         )
                                       ],
                                       1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/6 w-full mt-5"
+                                      },
+                                      [
+                                        _c(
+                                          "vs-radio",
+                                          {
+                                            staticClass: "mt-5",
+                                            attrs: {
+                                              color: "success",
+                                              "vs-value": "1"
+                                            },
+                                            model: {
+                                              value: _vm.user.habilitado,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.user,
+                                                  "habilitado",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "user.habilitado"
+                                            }
+                                          },
+                                          [_vm._v("Activo")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "vx-col md:w-1/6 w-full mt-5"
+                                      },
+                                      [
+                                        _c(
+                                          "vs-radio",
+                                          {
+                                            staticClass: "mt-5",
+                                            attrs: {
+                                              color: "danger",
+                                              "vs-value": "0"
+                                            },
+                                            model: {
+                                              value: _vm.user.habilitado,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.user,
+                                                  "habilitado",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "user.habilitado"
+                                            }
+                                          },
+                                          [_vm._v("Inactivo")]
+                                        )
+                                      ],
+                                      1
                                     )
                                   ])
                                 ]
@@ -46592,7 +46790,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46644,7 +46842,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46695,7 +46893,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46748,7 +46946,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46799,7 +46997,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46850,7 +47048,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46903,7 +47101,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {
@@ -46954,7 +47152,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass:
-                                          "vx-col md:w-1/2 w-full mt-5"
+                                          "vx-col md:w-1/2 w-full mt-2"
                                       },
                                       [
                                         _c("vs-input", {

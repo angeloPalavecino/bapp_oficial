@@ -108,7 +108,7 @@ class DriverController extends Controller
         $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
         $dataCar = $request->all()['car'];
 
-        $dataUser['habilitado'] = 1;
+        //$dataUser['habilitado'] = 1;
         $dataUser['empresa_id'] = 1;
         $rut = substr($dataUser['rut'], 0, -1);
         $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
@@ -139,9 +139,11 @@ class DriverController extends Controller
         $returnUser->assignRole(1);
 
         //Driver
-        $dataDriver['habilitado'] = 1;
+        $dataDriver['habilitado'] = $dataUser['habilitado'];//1;
         $dataDriver['user_id'] = $idUser;
         $validationDriver = $this->validatorDriver($dataDriver);
+
+        
 
         if ($validationDriver->fails()) {
 
@@ -167,7 +169,8 @@ class DriverController extends Controller
 
         //Car 
         $dataCar['driver_id'] = $idDriver;
-        $dataCar['habilitado'] = 1;
+        //$dataCar['habilitado'] = 1;
+        $dataCar['habilitado'] = $dataUser['habilitado'];
 
         $validationCar = $this->validatorCar($dataCar);
 
@@ -234,8 +237,9 @@ class DriverController extends Controller
         $getDriver = Driver::where('id', $dataUser['id'])->first();
 
         $dataDriver['user_id'] = $getDriver->user_id;
+        $dataDriver['habilitado'] = $dataUser['habilitado'];
         $validationDriver = $this->validatorDriver($dataDriver);
-
+        
         if ($validationDriver->fails()) {
 
             return response()->json(
@@ -248,6 +252,7 @@ class DriverController extends Controller
         Driver::where('id', $dataDriver['id'])->update($dataDriver);
         
         $dataCar['driver_id'] = $dataDriver['id'];
+        $dataCar['habilitado'] = $dataUser['habilitado'];
         $validationCar = $this->validatorCar($dataCar);
 
         if ($validationCar->fails()) {
