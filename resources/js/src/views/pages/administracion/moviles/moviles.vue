@@ -37,52 +37,40 @@
           </vs-dropdown>
 
           <!-- DOCUEMTOS -->
-          <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento">            
-              <div class="vx-row">
-                <div class="vx-col md:w-1/2 w-full mt-5">
-                  <vs-select  v-validate="'required'" data-vv-scope="documents" v-model="item.tipo_documento_id" label="Tipo de Documento" name="tipo_documento_id" class="w-full"  >
-                    <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in tipodocumentos_choices"  />
-                  </vs-select>
-                  <span class="text-danger text-sm" v-show="errors.has('documents.tipoDocumento')">{{ errors.first('documents.tipoDocumento') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-5">
-                  <vs-input
-                    label="Documento"
-                    type="file"
-                    class="w-full"
-                    name="file"
-                    id="file"
-                    @change="uploadData"                
-                  />
-                  <!-- <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span> -->
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-5">
-                  <flat-pickr v-model="item.fecha_vencimiento" class="w-full select-large" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
-                  <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-5">
-                  <vs-button @click="upload()" color="primary" type="filled">Adjuntar</vs-button>
-                  <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
-                </div>
-
+          <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento"
+          @close="$close($event)">            
+            <div class="vx-row">
+              <div class="vx-col md:w-1/2 w-full mt-2">
+                <vs-select v-model="item.tipo_documento_id" v-validate="'required'" label="Tipo de Documento" name="tipo_documento_id" class="w-full"  >
+                  <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in tipodocumentos_choices"  />
+                </vs-select>
+                <span class="text-danger text-sm" v-show="errors.has('tipo_documento_id')">{{ errors.first('tipo_documento_id') }}</span> 
               </div>
-              <div class="vx-row">
-                <vs-table :data="documentos_choices">
-                  <template slot="thead">
-                    <vs-th>Nombre</vs-th>
-                    <vs-th>Tipo de Documento</vs-th>
-                  </template>
-                  <template slot-scope="{data}">
-                    <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-                      <vs-td :data="data[indextr].documents[0].name">
-                        {{ data[indextr].documents[0].name }}
-                      </vs-td>
-                      <vs-td :data="data[indextr].documents[0].name">
-                        {{ data[indextr].documents[0].name }}
-                      </vs-td>
-                    </vs-tr>
-                  </template>
-                </vs-table>
+              <div class="vx-col md:w-1/2 w-full mt-3">
+                    <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
+                 <span class="text-danger text-sm" >{{ errors.first('fecha_vencimiento') }}</span> 
+           
+
+               <!--<vs-input v-validate="'required'" type="hidden" name="documents" v-model="item.filename"/>
+                 <span class="text-danger text-sm" v-show="errors.has('documents')">{{ errors.first('documents') }}</span>-->
+                 
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+               <input
+                  label="Documento"
+                  type="file"
+                  class="w-full"
+                  name="file"
+                  id="file"
+                  @change = "uploadData"  
+                  ref="fileupload"
+                />
+                <span class="text-sm" >Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF</span>
+                <span class="text-sm" ><i>Tamaño maximo 2 MB</i></span>
+              
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+                <vs-button @click="upload()" color="primary" type="filled">Adjuntar</vs-button>
               </div>
           </vs-popup>
           <!-- FIN DOCUMENTOS -->
@@ -131,7 +119,7 @@
                     </vs-divider>
                   </div>
                   <div class="vx-row">
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Nombres"
                         v-model="user.name"
@@ -143,7 +131,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.name') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Apellidos"
                         v-model="user.lastname"
@@ -155,7 +143,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.lastname') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         type="Email"
                         label-placeholder="Email"
@@ -168,7 +156,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.email') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         type="Telefono"
                         label-placeholder="Telefono"
@@ -181,7 +169,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.telefono') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Rut"
                         v-model="user.rut"
@@ -193,7 +181,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.rut') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Ciudad"
                         v-model="driver.ciudad"
@@ -205,7 +193,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.ciudad') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Comuna"
                         v-model="driver.comuna"
@@ -217,7 +205,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.comuna') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Dirección"
                         v-model="driver.direccion"
@@ -229,7 +217,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.direccion') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Numeración"
                         v-model="driver.numeracion"
@@ -241,13 +229,13 @@
                       />
                       <span class="text-danger">{{ errors.first('step-1.numeracion') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-4">
+                    <div class="vx-col md:w-1/2 w-full mt-1">
                       <vs-select v-model="driver.empresa_id" label="Empresa" name="empresa" class="w-full" v-validate="'required'" >
                         <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
                       </vs-select>
                       <span class="text-danger text-sm" v-show="errors.has('step-1.empresa')">{{ errors.first('step-1.empresa') }}</span>          
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Licencias"
                         v-model="driver.clase"
@@ -258,6 +246,12 @@
                         val-icon-danger="clear"
                       />
                       <span class="text-danger">{{ errors.first('step-1.clase') }}</span>
+                    </div>
+                     <div class="vx-col md:w-1/6 w-full mt-5">
+                    <vs-radio color="success" class="mt-5"  v-model="user.habilitado" vs-value="1" >Activo</vs-radio>
+                    </div>
+                     <div class="vx-col md:w-1/6 w-full mt-5">
+                    <vs-radio color="danger" class="mt-5" v-model="user.habilitado" vs-value="0" >Inactivo</vs-radio>
                     </div>
                   </div>
                 </form>
@@ -277,7 +271,7 @@
                     </vs-divider>
                   </div>
                   <div class="vx-row">
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Tipo Vehículo"
                         v-model="car.tipo"
@@ -289,7 +283,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.tipo') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Marca"
                         v-model="car.marca"
@@ -301,7 +295,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.marca') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Modelo"
                         v-model="car.modelo"
@@ -313,7 +307,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.modelo') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Año"
                         v-model="car.ano"
@@ -325,7 +319,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.ano') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="N° Motor"
                         v-model="car.motor"
@@ -337,7 +331,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.motor') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="N° Patente"
                         v-model="car.patente"
@@ -349,7 +343,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.patente') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Color"
                         v-model="car.color"
@@ -361,7 +355,7 @@
                       />
                       <span class="text-danger">{{ errors.first('step-2.color') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-5">
+                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="N° Asientos"
                         v-model="car.asientos"
@@ -566,7 +560,16 @@ const dict = {
     },
     clase: {
       required: "La clase es requerida",
-    }    
+    },
+    tipo_documento_id: {
+      required: "El tipo de documento es requerido",
+    }, 
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida",
+    },
+    documents: {
+      required: "El documento es requerido",
+    }
   }
 };
 
@@ -594,7 +597,9 @@ export default {
       item: {},
       driver: {},
       car: {},
-      user: {},
+      user: {
+        habilitado:1,
+      },
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
@@ -700,7 +705,7 @@ export default {
            
     },
     editar(item) {
-      console.log(item);
+      //console.log(item);
       this.initValues();
       this.modoEditar = true;
       this.user.email = item.email;
@@ -715,6 +720,7 @@ export default {
       this.driver.direccion = item.direccion;
       this.driver.numeracion = item.numeracion;
       this.driver.empresa_id = item.empresa_id;
+      this.driver.clase = item.clase;
 
       this.car.tipo = item.cars[0].tipo;
       this.car.asientos = item.cars[0].asientos;
@@ -734,37 +740,91 @@ export default {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {};
       this.car = {};
-      this.user = {};
+      this.user = {
+        habilitado:1,
+      };
       this.driver = {};
       this.errors.clear();
       this.$refs.wizard.reset();
       //this.modoEditar = false;
     },
-    async initUpload(item) {      
-      var $self = this;
-      //Charge Documents
+    initUpload(item) {    
+
       var documentos = await this.$http.get("driver/driver/documents/1"); 
       this.documentos_choices = documentos.items; 
+
+      this.item.tipo_documento_id = "";
+      this.item.fecha_vencimiento = ""; 
+      this.item.file = ""; 
+      this.item.filename = ""; 
+      
+      const input = this.$refs.fileupload;
+      input.type = 'text';
+      input.type = 'file';
+
+      this.errors.clear(); 
       this.popupDocumento = true;
       this.dataItem = item;  
     },
     upload(){
-        this.$validator.validateAll("documents").then(result => {
-          if (result) {
-            const formData = new FormData();     
-            formData.append('file', (this.item.file));
-            formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
-            formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
-            formData.append('driver_id', (this.dataItem.cars[0].driver_id));
-            this.$upload(formData);
-            resolve(true);
-          } else {
-            reject("correct all values");
-          }
-        });
+       this.$validator.validateAll().then(result =>{
+        if (result) {
+          
+          const formData = new FormData();     
+          formData.append('file', (this.item.file));
+          formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
+          formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
+          formData.append('driver_id', (this.dataItem.cars[0].driver_id));
+          this.$upload(formData);
+                     
+        } else {
+        }
+      })
+      
     },
     uploadData(e) {
-      this.item.file = e.target.files[0];
+      
+      const tipo = e.target.files[0].type;
+      const size = e.target.files[0].size;
+     if(tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || 
+      tipo == "application/pdf" || tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
+        
+        if(size <= 2000000){ //2097152
+            
+            this.item.file = e.target.files[0];
+            this.item.filename = e.target.files[0].name;
+            
+            }else{
+            
+              const input = this.$refs.fileupload;
+              input.type = 'text';
+              input.type = 'file';
+
+            this.$vs.notify({
+                title: "Error",
+                text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
+                color: "danger",
+                iconPack: "feather",
+                icon: "icon-alert-circle"
+            });
+
+
+          }
+      }else{
+          //this.$refs.fileupload.value = '';
+          const input = this.$refs.fileupload;
+          input.type = 'text';
+          input.type = 'file';
+
+          this.$vs.notify({
+            title: "Error",
+            text: "El archivo no tiene el formato correcto",
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+
+      }
     }
   },
   created() {
@@ -854,6 +914,7 @@ export default {
     .vs-table--pagination {
       justify-content: center;
     }
+  
   }
 }
 </style>

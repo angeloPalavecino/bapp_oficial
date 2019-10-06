@@ -92,13 +92,14 @@
             </div>
           <div class="vx-row">
             <div class="vx-col md:w-1/2 w-full mt-2">
-              <vs-select v-model="item.roles" label="Roles" name="roles" class="w-full" v-validate="'required'" @change="onChangeRoles($event)">
+              <vs-select v-model="item.roles" label="Roles" name="roles" class="w-full" v-validate="'required'" @input="setSelected">
                 <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in roles_choices"  />
               </vs-select>
               <span class="text-danger text-sm" v-show="errors.has('step-2.roles')">{{ errors.first('step-2.roles') }}</span>
             </div>
              <div class="vx-col md:w-1/2 w-full mt-2">
-                <vs-select v-model="item.empresa_id" label="Empresa" ref="empresa" name="empresa" class="w-full" :v-validate="(item.roles > 2 ? 'required' : '')" :disabled="(item.roles > 2 ? false : true)" >
+                <vs-select v-model="item.empresa_id" label="Empresa" ref="empresa" name="empresa" class="w-full" 
+                v-validate="'required'" :disabled="(item.roles > 2 ? false : true)" >
                 <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
               </vs-select>
               <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span>
@@ -323,15 +324,11 @@ export default {
     },
   },
   methods: {
-    onChangeRoles(event) {
-         const thisIns = this; 
-        console.log(event);
-          if(event  == 1){
-                  thisIns.$refs.empresa.selected = 1;
-                  thisIns.item.empresa_id = 1;
-          }
-            
-        },
+    setSelected(value) {
+            if(value <= 2){
+             this.item.empresa_id = 1;
+           }
+    },
     validateStep1() {
             return new Promise((resolve, reject) => {
                 this.$validator.validateAll('step-1').then(result => {
