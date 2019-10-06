@@ -654,7 +654,6 @@ export default {
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
-<<<<<<< HEAD
       tipodocumentos_choices: [],      
       aux: 0,
       documents:[
@@ -672,11 +671,6 @@ export default {
       },
     
     ]
-=======
-      tipodocumentos_choices: [],    
-      documentos_choices: [],  
-      aux: 0
->>>>>>> 9a14d1faac921899f165b119c4cb9f270b12010e
     };
   },
   computed: {
@@ -708,7 +702,7 @@ export default {
             this.item.car = this.car;
             
             if (this.modoEditar == false) {
-              this.$submitAgregar();
+              this.$submitAgregar("step-2");
             } else {
               this.$submitActualizar();
             }
@@ -820,7 +814,7 @@ export default {
       //this.modoEditar = false;
     },
     async initUpload(item) {    
-
+      console.log(item);
       var documentos = await this.$http.get("driver/driver/documents/1"); 
       this.documentos_choices = documentos.items; 
 
