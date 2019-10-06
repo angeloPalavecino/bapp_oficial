@@ -94,8 +94,7 @@
                 
                 
             })
-            .catch(function (error) {
-
+            .catch(function (error) {              
                 thisIns.$vs.notify({
                   title:'Error',
                   text: error,

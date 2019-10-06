@@ -112,7 +112,16 @@ class DriverController extends Controller
         $dataUser['empresa_id'] = 1;
         $rut = substr($dataUser['rut'], 0, -1);
         $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
-        
+
+        $existe_email = User::where('email', $dataUser['email'])->first();
+        if($existe_email != null)
+        {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El correo se encuentra registrado',
+                ], 300);
+        }
         $validation = $this->validatorUser($dataUser);
 
         if ($validation->fails()) {
@@ -123,18 +132,17 @@ class DriverController extends Controller
                     'message' => $validation->errors(),
                 ], 300);
            
-        $existe_usuario = User::where('rut', $dataUser['rut'])->get();
-        if($existe_usuario->id > 0)
-        {
-            $returnUser = $existe_usuario;
-
+        }
+        $existe_usuario = User::where('rut', $dataUser['rut'])->first();
+        if($existe_usuario != null)
+        {            
+            $returnUser = $existe_usuario;            
         }
         else
         {
             $returnUser = User::create($dataUser);
-
         }
-        
+
         $idUser = $returnUser->id;
         if ($idUser < 1) {
             return response()->json(
@@ -162,7 +170,16 @@ class DriverController extends Controller
                 ], 300);
            
         }
-        
+        $existe_driver = Driver::where('rut', $dataDriver['rut'])->first();
+        if ($existe_driver != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Conductor ya existe',
+                ], 300);
+           
+        }
         $returnDriver = Driver::create($dataDriver);
 
         $idDriver = $returnDriver->id;
@@ -368,32 +385,29 @@ class DriverController extends Controller
     {
 
         $file = $request->file('file');
-        $extension = $file->getClientOriginalExtension();        
+        $extension = $file->getClientOriginalExtension();  
+        $fileNameSinExtencion = $request->rut."-".$request->tipo_documento;
         $fileName = $request->rut."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName();
-        $exists = Storage::disk('public_uploads')->exists($fileName);
-        $uploadFile = Storage::disk('public_uploads')->put($fileName, file_get_contents($file));
+        $exists = Document::where('name', $fileNameSinExtencion)->first();
+        $uploadFile = Storage::disk('local')->put($fileName, file_get_contents($file));
 
         if($uploadFile == true)
         {
-            //$returnUser = Document::create($dataUser);
-            //return Storage::download($fileName);
 
-            //$url = Storage::url($fileName);
-            $url = "/documents/".$fileName;
+            $url = '/documents/'.$fileName;
             
             $dataDocument = array(
                 'type_document_id'  => $request->tipo_documento_id,
-                'name'              => $fileName,
+                'name'              => $fileNameSinExtencion,
                 'url'               => $url,
                 'fecha_vencimiento' => date($request->fecha_vencimiento),
                 'informacion'       => "",
                 'habilitado'        => 1
             );
-
-            if($exists == true)
+            if($exists != null)
             {
-                $existDocument = Document::where('name', $fileName)->update($dataDocument);
-                //dd($existDocument);
+                Storage::disk('delete')->delete($exists->url);
+                Document::where('name', $fileNameSinExtencion)->update($dataDocument);
             }
             else
             {
@@ -447,7 +461,7 @@ class DriverController extends Controller
     public function document ($id)
     {
         $document = Document::where('id', $id)->first();
-        return response()->download(storage_path('documents/'.$document->name), $document->name);
+        return response()->download(storage_path($document->url), $document->name);
     }
 
 }
