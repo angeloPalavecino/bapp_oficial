@@ -6381,6 +6381,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
  // For custom error message
@@ -45841,7 +45842,11 @@ var render = function() {
                                   _c("vs-td", { attrs: { colspan: "2" } }, [
                                     _vm._v(
                                       "\n                      " +
-                                        _vm._s(trdoc.documents[0].name) +
+                                        _vm._s(
+                                          trdoc.documents[0].name.split(
+                                            /[.,\/-]/
+                                          )[1]
+                                        ) +
                                         "\n                    "
                                     )
                                   ]),
@@ -45874,7 +45879,7 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "vs-td",
-                                    { attrs: { data: data[_vm.indextr].url } },
+                                    { attrs: { data: data[indextrdoc].url } },
                                     [
                                       _c(
                                         "a",
@@ -45883,15 +45888,15 @@ var render = function() {
                                           on: {
                                             click: function($event) {
                                               return _vm.downloadDocument(
-                                                data[_vm.indextr].documents[0]
+                                                data[indextrdoc].documents[0]
                                                   .id,
-                                                data[_vm.indextr].documents[0]
+                                                data[indextrdoc].documents[0]
                                                   .name
                                               )
                                             }
                                           }
                                         },
-                                        [_vm._v("Ver")]
+                                        [_vm._v("Descargar")]
                                       )
                                     ]
                                   )
@@ -45925,6 +45930,12 @@ var render = function() {
                           _c("vs-th", [
                             _vm._v(
                               "\n                     Vencimiento\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-th", [
+                            _vm._v(
+                              "\n                    Descarga\n                  "
                             )
                           ])
                         ],

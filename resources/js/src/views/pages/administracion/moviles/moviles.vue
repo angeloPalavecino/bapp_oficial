@@ -58,20 +58,21 @@
                     <vs-th>
                        Vencimiento
                     </vs-th>
-                   
-                   
+                    <vs-th>
+                      Descarga
+                    </vs-th>                                     
                   </template>
 
                   <template slot-scope="{data}">
                     <vs-tr :key="indextrdoc" v-for="(trdoc, indextrdoc) in data" >
                       <vs-td colspan="2">
-                        {{ trdoc.documents[0].name }}
+                        {{ trdoc.documents[0].name.split(/[.,\/-]/)[1] }}
                       </vs-td>
                       <vs-td>
                         <vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
                       </vs-td>                  
-                      <vs-td :data="data[indextr].url">
-                        <a rel="nofollow" @click="downloadDocument(data[indextr].documents[0].id, data[indextr].documents[0].name)">Ver</a>                        
+                      <vs-td :data="data[indextrdoc].url">
+                        <a rel="nofollow" @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)">Descargar</a>                        
                       </vs-td>
 
                     </vs-tr>
@@ -825,8 +826,7 @@ export default {
       
       this.$http.get('driver/driver/documents/' + item.id)
           .then(function (response) {
-            thisIns.documentos_choices = response.data.items;
-            
+            thisIns.documentos_choices = response.data.items;            
           })
           .catch(function (error) {
             thisIns.$vs.notify({

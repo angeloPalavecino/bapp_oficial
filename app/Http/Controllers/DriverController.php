@@ -439,23 +439,7 @@ class DriverController extends Controller
     public function document ($id)
     {
         $document = Document::where('id', $id)->first();
-        $file = Storage::disk('local')->get($document->name);
-
-        //return Storage::download(storage_path('documents/'.$document->name, $document->name)); 
-        $file= public_path(). "/download/info.pdf";
-
-        $headers = array(
-              'Content-Type: application/pdf',
-        );
-
         return response()->download(storage_path('documents/'.$document->name), $document->name);
-        // file_put_contents($document->name, $contents);
-        // return response()->download(storage_path('app/public/' . $filename)); 
-
-   
-        //  header("Content-type: application/pdf");
-        //  header("Content-Length: " . filesize($document->name));
-        //  readfile($document->name);
     }
 
 }
