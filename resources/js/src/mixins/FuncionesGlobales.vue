@@ -21,11 +21,12 @@
 
       },
       //Actualiza Registros
-      $submitActualizar() {
+    $submitActualizar() {
+      $name = $name == null ? true : $name;
       const thisIns = this;
       const url = thisIns.ruta + this.item.id;
       
-      this.$validator.validateAll().then(result =>{
+      this.$validator.validateAll($name).then(result =>{
         if (result) {
       
           this.$http.put(url, this.item) 
