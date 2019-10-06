@@ -37,23 +37,17 @@
           </vs-dropdown>
 
           <!-- DOCUEMTOS -->
-          <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento"
-          @close="$close($event)">            
+          <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento" @close="$close($event)">            
             <div class="vx-row">
               <div class="vx-col md:w-1/2 w-full mt-2">
-                <vs-select v-model="item.tipo_documento_id" v-validate="'required'" label="Tipo de Documento" name="tipo_documento_id" class="w-full"  >
-                  <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in tipodocumentos_choices"  />
+                <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="tipo_documento" class="w-full"  >
+                  <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
                 </vs-select>
-                <span class="text-danger text-sm" v-show="errors.has('tipo_documento_id')">{{ errors.first('tipo_documento_id') }}</span> 
+                <span class="text-danger text-sm" v-show="errors.has('tipo_documento')">{{ errors.first('tipo_documento') }}</span> 
               </div>
               <div class="vx-col md:w-1/2 w-full mt-3">
-                    <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
-                 <span class="text-danger text-sm" >{{ errors.first('fecha_vencimiento') }}</span> 
-           
-
-               <!--<vs-input v-validate="'required'" type="hidden" name="documents" v-model="item.filename"/>
-                 <span class="text-danger text-sm" v-show="errors.has('documents')">{{ errors.first('documents') }}</span>-->
-                 
+                <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
+                <span class="text-danger text-sm" >{{ errors.first('fecha_vencimiento') }}</span>                         
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
                <input
@@ -72,6 +66,10 @@
               <div class="vx-col md:w-1/2 w-full mt-5">
                 <vs-button @click="upload()" color="primary" type="filled">Adjuntar</vs-button>
               </div>
+            </div>  
+            <div class="vx-row">
+            </div>
+
           </vs-popup>
           <!-- FIN DOCUMENTOS -->
 
@@ -561,7 +559,7 @@ const dict = {
     clase: {
       required: "La clase es requerida",
     },
-    tipo_documento_id: {
+    tipo_documento: {
       required: "El tipo de documento es requerido",
     }, 
     fecha_vencimiento: {
@@ -748,12 +746,12 @@ export default {
       this.$refs.wizard.reset();
       //this.modoEditar = false;
     },
-    initUpload(item) {    
+    async initUpload(item) {    
 
       var documentos = await this.$http.get("driver/driver/documents/1"); 
       this.documentos_choices = documentos.items; 
 
-      this.item.tipo_documento_id = "";
+      this.item.tipo_documento = "";
       this.item.fecha_vencimiento = ""; 
       this.item.file = ""; 
       this.item.filename = ""; 
@@ -766,15 +764,17 @@ export default {
       this.popupDocumento = true;
       this.dataItem = item;  
     },
+
     upload(){
        this.$validator.validateAll().then(result =>{
-        if (result) {
-          
+        if (result) {          
           const formData = new FormData();     
           formData.append('file', (this.item.file));
-          formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
+          formData.append('tipo_documento_id', (this.item.tipo_documento.split("|")[0])); 
+          formData.append('tipo_documento', (this.item.tipo_documento.split("|")[1])); 
           formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
           formData.append('driver_id', (this.dataItem.cars[0].driver_id));
+          formData.append('rut', (this.dataItem.rut));
           this.$upload(formData);
                      
         } else {

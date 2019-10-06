@@ -360,9 +360,11 @@ class DriverController extends Controller
     {
 
         $file = $request->file('file');
-        $fileName = $file->getClientOriginalName();
-        $extension = $file->getClientOriginalExtension();
+        $extension = $file->getClientOriginalExtension();        
+        $fileName = $request->rut."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName();
+        $exists = Storage::disk('local')->exists($fileName);
         $uploadFile = Storage::disk('local')->put($fileName, file_get_contents($file));
+
         if($uploadFile == true)
         {
             //$returnUser = Document::create($dataUser);
@@ -370,39 +372,47 @@ class DriverController extends Controller
 
             $url = Storage::url($fileName);
 
-            $documentResult = Document::create(
-                array(
-                        'type_document_id'  => $request->tipo_documento_id,
-                        'name'              => $fileName,
-                        'url'               => $url,
-                        'fecha_vencimiento' => date($request->fecha_vencimiento),
-                        'informacion'       => "",
-                        'habilitado'        => 1
-                )
+            $dataDocument = array(
+                'type_document_id'  => $request->tipo_documento_id,
+                'name'              => $fileName,
+                'url'               => $url,
+                'fecha_vencimiento' => date($request->fecha_vencimiento),
+                'informacion'       => "",
+                'habilitado'        => 1
             );
-            if($documentResult->id > 0)
-            {   
-                $dataHas = DriversHasDocument::create(
-                    array(
-                        'driver_id'     => $request->driver_id,
-                        'document_id'   => $documentResult->id,
-                        'habilitado'    => 1
-                    )
-                );
 
-                if($dataHas->id > 0)
-                {
-                    dd($dataHas);
-                }
-                else
-                {
-                    dd("Fallo");
-                }
+            if($exists == true)
+            {
+                $existDocument = Document::where('name', $fileName)->update($dataDocument);
+                //dd($existDocument);
             }
             else
             {
-                dd("Error");
-            }        
+                $documentResult = Document::create($dataDocument);
+                if($documentResult->id > 0)
+                {   
+                    $dataHas = DriversHasDocument::create(
+                        array(
+                            'driver_id'     => $request->driver_id,
+                            'document_id'   => $documentResult->id,
+                            'habilitado'    => 1
+                        )
+                    );
+    
+                    if($dataHas->id > 0)
+                    {
+                        dd($dataHas);
+                    }
+                    else
+                    {
+                        dd("Fallo");
+                    }
+                }
+                else
+                {
+                    dd("Error");
+                } 
+            }       
         }
         else
         {
