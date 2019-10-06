@@ -54,6 +54,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('documents'),
         ],
+        'delete' => [
+            'driver' => 'local',
+            'root' => storage_path(''),
+        ],
 
         'public' => [
             'driver' => 'local',
