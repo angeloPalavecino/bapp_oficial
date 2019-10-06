@@ -6380,6 +6380,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
  // For custom error message
@@ -6640,10 +6641,18 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.item.tipo_documento = "";
       this.item.fecha_vencimiento = "";
       this.item.file = "";
-      this.item.filename = "";
-      var input = this.$refs.fileupload;
-      input.type = 'text';
-      input.type = 'file';
+      this.item.filename = ""; //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+
+      var tabs = this.$refs.tabdocs; //this.$refs.tabdocuments.childActive = 1;
+
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+      this.$refs.tabdocs.clickTag(0);
+      this.$refs.tabdocs.parseIndex(0);
+      tabs.value = 0;
+      console.log(tabs);
       this.errors.clear();
       this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
         thisIns.documentos_choices = response.data.items;
@@ -6659,7 +6668,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       setTimeout(function () {
         _this3.popupDocumento = true;
         _this3.dataItem = item;
-      }, 200);
+        thisIns.$refs.fileupload.value = '';
+      }, 300);
     },
     upload: function upload() {
       var _this4 = this;
@@ -6690,9 +6700,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
           this.item.file = e.target.files[0];
           this.item.filename = e.target.files[0].name;
         } else {
-          var input = this.$refs.fileupload;
-          input.type = 'text';
-          input.type = 'file';
+          this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
+
           this.$vs.notify({
             title: "Error",
             text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
@@ -6702,10 +6713,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
           });
         }
       } else {
-        //this.$refs.fileupload.value = '';
-        var _input = this.$refs.fileupload;
-        _input.type = 'text';
-        _input.type = 'file';
+        this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+        //input.type = 'text';
+        //input.type = 'file';
+
         this.$vs.notify({
           title: "Error",
           text: "El archivo no tiene el formato correcto",
@@ -45626,9 +45637,7 @@ var render = function() {
         [
           _c(
             "vs-tabs",
-            {
-              attrs: { position: "left", color: "primary", alignment: "fixed" }
-            },
+            { ref: "tabdocs", attrs: { color: "primary" } },
             [
               _c(
                 "vs-tab",

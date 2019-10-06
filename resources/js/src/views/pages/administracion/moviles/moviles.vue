@@ -1,11 +1,12 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
+
               <!-- DOCUEMTOS -->
           <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento"
           @close="$close($event)">   
-
-          <vs-tabs position="left" color="primary" alignment="fixed">
-          <vs-tab label="Adjuntar" icon-pack="feather" icon="icon-upload">
+         
+          <vs-tabs color="primary" ref="tabdocs" >
+          <vs-tab label="Adjuntar"   icon-pack="feather" icon="icon-upload">
     
          
           <div class="vx-row">
@@ -650,7 +651,8 @@ export default {
       empresa_choices: [],
       tipodocumentos_choices: [],      
       aux: 0,
-      documentos_choices: []
+      documentos_choices: [],
+
     };
   },
   computed: {
@@ -805,15 +807,26 @@ export default {
       this.item.file = ""; 
       this.item.filename = ""; 
       
-      const input = this.$refs.fileupload;
-      input.type = 'text';
-      input.type = 'file';
+      //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+      
+      const tabs = this.$refs.tabdocs;
+      //this.$refs.tabdocuments.childActive = 1;
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+      this.$refs.tabdocs.clickTag(0);
+      this.$refs.tabdocs.parseIndex(0);
+      tabs.value = 0;
+
+      console.log(tabs);
 
       this.errors.clear(); 
       
       this.$http.get('driver/driver/documents/' + item.id)
           .then(function (response) {
-            thisIns.documentos_choices = response.data.items
+            thisIns.documentos_choices = response.data.items;
+            
           })
           .catch(function (error) {
             thisIns.$vs.notify({
@@ -828,8 +841,9 @@ export default {
                 
                 this.popupDocumento = true;
                 this.dataItem = item;   
+                thisIns.$refs.fileupload.value = '';
 
-                }, 200);
+                }, 300);
 
 
       
@@ -866,10 +880,10 @@ export default {
             this.item.filename = e.target.files[0].name;
             
             }else{
-            
-              const input = this.$refs.fileupload;
-              input.type = 'text';
-              input.type = 'file';
+              this.$refs.fileupload.value = ''
+              //const input = this.$refs.fileupload;
+              //input.type = 'text';
+              //input.type = 'file';
 
             this.$vs.notify({
                 title: "Error",
@@ -882,10 +896,10 @@ export default {
 
           }
       }else{
-          //this.$refs.fileupload.value = '';
-          const input = this.$refs.fileupload;
-          input.type = 'text';
-          input.type = 'file';
+          this.$refs.fileupload.value = '';
+          //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
 
           this.$vs.notify({
             title: "Error",
