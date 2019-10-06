@@ -123,9 +123,17 @@ class DriverController extends Controller
                     'message' => $validation->errors(),
                 ], 300);
            
+        $existe_usuario = User::where('rut', $dataUser['rut'])->get();
+        if($existe_usuario->id > 0)
+        {
+            $returnUser = $existe_usuario;
+
         }
-        
-        $returnUser = User::create($dataUser);
+        else
+        {
+            $returnUser = User::create($dataUser);
+
+        }
         
         $idUser = $returnUser->id;
         if ($idUser < 1) {
