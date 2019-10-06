@@ -424,7 +424,9 @@ class DriverController extends Controller
 
     public function documents ($id){
         
-        $driver = DriversHasDocument::with('documents')->get();
+        
+        $driver = DriversHasDocument::with('documents')->where('driver_id', $id)->get();
+        
         return response()->json(
             [
                 'status' => 'success',

@@ -747,7 +747,7 @@ export default {
       //this.modoEditar = false;
     },
     async initUpload(item) {    
-
+      console.log(item);
       var documentos = await this.$http.get("driver/driver/documents/1"); 
       this.documentos_choices = documentos.items; 
 

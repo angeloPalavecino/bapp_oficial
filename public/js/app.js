@@ -6609,10 +6609,11 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                console.log(item);
+                _context.next = 3;
                 return this.$http.get("driver/driver/documents/1");
 
-              case 2:
+              case 3:
                 documentos = _context.sent;
                 this.documentos_choices = documentos.items;
                 this.item.tipo_documento = "";
@@ -6626,7 +6627,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
                 this.popupDocumento = true;
                 this.dataItem = item;
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
