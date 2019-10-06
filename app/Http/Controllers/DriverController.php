@@ -442,8 +442,10 @@ class DriverController extends Controller
             dd("Fallo");
         }
               
-        return true;
-    }
+        return response()->json(
+            [
+                'status' => 'success',
+            ], 200);     }
 
     public function documents ($id)
     {
