@@ -6379,7 +6379,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
  // For custom error message
@@ -6710,6 +6709,25 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
           icon: "icon-alert-circle"
         });
       }
+    },
+    downloadDocument: function downloadDocument(id, name) {
+      //var download = await this.$http.get('driver/driver/document/' + id);
+      //console.log(download);
+      this.$http.get('driver/driver/document/' + id, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var a = document.createElement('a');
+        var url = window.URL.createObjectURL(response.data);
+        a.href = url;
+        a.download = name;
+        document.body.append(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }, function (response) {
+        console.warn('error from download_contract');
+        console.log(response); // Manage errors
+      });
     }
   },
   created: function created() {
@@ -46142,9 +46160,19 @@ var render = function() {
                                                     "a",
                                                     {
                                                       attrs: {
-                                                        href: data[indextr].url,
-                                                        target: "_blank",
                                                         rel: "nofollow"
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.downloadDocument(
+                                                            data[indextr]
+                                                              .documents[0].id,
+                                                            data[indextr]
+                                                              .documents[0].name
+                                                          )
+                                                        }
                                                       }
                                                     },
                                                     [_vm._v("Ver")]

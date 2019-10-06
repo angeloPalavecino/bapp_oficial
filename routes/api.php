@@ -259,7 +259,7 @@ Route::prefix('v1')->group(function () {
 
     //MOVILES
     Route::prefix('driver')->group(function () {
-          Route::middleware('auth:api')->group(function () {
+        Route::middleware('auth:api')->group(function () {
         // MOVILES
             Route::get('driver', 'DriverController@index');
             Route::get('driver/create', 'DriverController@create');
@@ -271,7 +271,8 @@ Route::prefix('v1')->group(function () {
             Route::get('driver/{id}/edit', 'DriverController@edit');
             Route::post('driver/upload', 'DriverController@upload');
             Route::get('driver/documents/{id}', 'DriverController@documents');
-           });
+            Route::get('driver/document/{id}', 'DriverController@document');
+        });
     });
 
     //TIPO DOCUMENTOS

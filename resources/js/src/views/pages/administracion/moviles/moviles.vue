@@ -108,8 +108,7 @@
                       </vs-td>
 
                       <vs-td :data="data[indextr].url">
-                        <a :href="data[indextr].url" target="_blank" rel="nofollow">Ver</a>
-                        
+                        <a rel="nofollow" @click="downloadDocument(data[indextr].documents[0].id, data[indextr].documents[0].name)">Ver</a>                        
                       </vs-td>
 
                     </vs-tr>
@@ -893,7 +892,26 @@ export default {
           });
 
       }
-    }
+    },
+    downloadDocument(id, name){
+      //var download = await this.$http.get('driver/driver/document/' + id);
+      //console.log(download);
+      this.$http.get('driver/driver/document/'+id, {responseType: 'blob'}).then(response => {
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(response.data);
+            a.href = url;
+            a.download = name;
+            document.body.append(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+      }, response => {
+        console.warn('error from download_contract');
+        console.log(response);
+        // Manage errors
+        }
+      );
+    }, 
   },
   created() {
     this.$refrescaTabla();
