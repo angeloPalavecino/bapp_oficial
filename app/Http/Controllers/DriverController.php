@@ -406,4 +406,16 @@ class DriverController extends Controller
               
         return true;
     }
+
+    public function documents ($id){
+        
+        $driver = DriversHasDocument::with('documents')->get();
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $driver->toArray(),
+            ], 200); 
+    }
+
+
 }

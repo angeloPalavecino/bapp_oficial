@@ -38,36 +38,52 @@
 
           <!-- DOCUEMTOS -->
           <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento">            
-            <div class="vx-row">
-              <div class="vx-col md:w-1/2 w-full mt-5">
-                <vs-select v-model="item.tipo_documento_id" label="Tipo de Documento" name="tipo_documento_id" class="w-full"  >
-                  <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in tipodocumentos_choices"  />
-                </vs-select>
-                <!-- <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span> -->
-              </div>
-              <div class="vx-col md:w-1/2 w-full mt-5">
-                <vs-input
-                  label="Documento"
-                  type="file"
-                  class="w-full"
-                  name="file"
-                  id="file"
-                  @change="uploadData"                
-                />
-                <!-- <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span> -->
-              </div>
-              <div class="vx-col md:w-1/2 w-full mt-5">
-                <flat-pickr v-model="item.fecha_vencimiento" class="w-full select-large" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
-                <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
-              </div>
-              <div class="vx-col md:w-1/2 w-full mt-5">
-                <vs-button @click="upload(tr)" color="primary" type="filled">Adjuntar</vs-button>
-                <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
-              </div>
+              <div class="vx-row">
+                <div class="vx-col md:w-1/2 w-full mt-5">
+                  <vs-select  v-validate="'required'" data-vv-scope="documents" v-model="item.tipo_documento_id" label="Tipo de Documento" name="tipo_documento_id" class="w-full"  >
+                    <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in tipodocumentos_choices"  />
+                  </vs-select>
+                  <span class="text-danger text-sm" v-show="errors.has('documents.tipoDocumento')">{{ errors.first('documents.tipoDocumento') }}</span>
+                </div>
+                <div class="vx-col md:w-1/2 w-full mt-5">
+                  <vs-input
+                    label="Documento"
+                    type="file"
+                    class="w-full"
+                    name="file"
+                    id="file"
+                    @change="uploadData"                
+                  />
+                  <!-- <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span> -->
+                </div>
+                <div class="vx-col md:w-1/2 w-full mt-5">
+                  <flat-pickr v-model="item.fecha_vencimiento" class="w-full select-large" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
+                  <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
+                </div>
+                <div class="vx-col md:w-1/2 w-full mt-5">
+                  <vs-button @click="upload()" color="primary" type="filled">Adjuntar</vs-button>
+                  <!-- <span class="text-danger text-sm" >{{ errors.first('step-1.fecha_incorporacion') }}</span> -->
+                </div>
 
-            </div>
-            <div class="vx-row">
-            </div>
+              </div>
+              <div class="vx-row">
+                <vs-table :data="documentos_choices">
+                  <template slot="thead">
+                    <vs-th>Nombre</vs-th>
+                    <vs-th>Tipo de Documento</vs-th>
+                  </template>
+                  <template slot-scope="{data}">
+                    <vs-tr :key="indextr" v-for="(tr, indextr) in data">
+                      <vs-td :data="data[indextr].documents[0].name">
+                        {{ data[indextr].documents[0].name }}
+                      </vs-td>
+                      <vs-td :data="data[indextr].documents[0].name">
+                        {{ data[indextr].documents[0].name }}
+                      </vs-td>
+                    </vs-tr>
+                  </template>
+                </vs-table>
+              </div>
           </vs-popup>
           <!-- FIN DOCUMENTOS -->
 
@@ -523,6 +539,9 @@ const dict = {
     tipo: {
       required: "El tipo es requerido"
     },
+    tipoDocumento: {
+      required: "El tipo de documento es requerido"
+    },
     marca: {
       required: "La marca es requerida"
     },
@@ -579,7 +598,8 @@ export default {
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
-      tipodocumentos_choices: [],      
+      tipodocumentos_choices: [],    
+      documentos_choices: [],  
       aux: 0
     };
   },
@@ -662,7 +682,7 @@ export default {
           });
         });
       
-      //Carga Type Documents
+      //Charge Type Documents
       this.$http
         .get("tipodocumentos/tipodocumentos")
         .then(function(response) {
@@ -676,7 +696,8 @@ export default {
             iconPack: "feather",
             icon: "icon-alert-circle"
           });
-        });        
+        });   
+           
     },
     editar(item) {
       console.log(item);
@@ -719,18 +740,28 @@ export default {
       this.$refs.wizard.reset();
       //this.modoEditar = false;
     },
-    initUpload(item) {      
+    async initUpload(item) {      
+      var $self = this;
+      //Charge Documents
+      var documentos = await this.$http.get("driver/driver/documents/1"); 
+      this.documentos_choices = documentos.items; 
       this.popupDocumento = true;
-      this.dataItem = item;
-      return true;
+      this.dataItem = item;  
     },
-    upload(item){
-      const formData = new FormData();     
-      formData.append('file', (this.item.file));
-      formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
-      formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
-      formData.append('driver_id', (this.dataItem.cars[0].driver_id));
-      this.$upload(formData);
+    upload(){
+        this.$validator.validateAll("documents").then(result => {
+          if (result) {
+            const formData = new FormData();     
+            formData.append('file', (this.item.file));
+            formData.append('tipo_documento_id', (this.item.tipo_documento_id)); 
+            formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
+            formData.append('driver_id', (this.dataItem.cars[0].driver_id));
+            this.$upload(formData);
+            resolve(true);
+          } else {
+            reject("correct all values");
+          }
+        });
     },
     uploadData(e) {
       this.item.file = e.target.files[0];
