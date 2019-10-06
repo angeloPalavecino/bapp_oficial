@@ -6336,6 +6336,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
  // For custom error message
@@ -6450,7 +6503,16 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       exportData: [],
       empresa_choices: [],
       tipodocumentos_choices: [],
-      aux: 0
+      aux: 0,
+      documents: [{
+        "numero": 1,
+        "documento": "Leanne Graham",
+        "link": "Bret"
+      }, {
+        "numero": 2,
+        "documento": "Ervin Howell",
+        "link": "Antonette"
+      }]
     };
   },
   computed: {
@@ -45795,158 +45857,354 @@ var render = function() {
                       }
                     },
                     [
-                      _c("div", { staticClass: "vx-row" }, [
-                        _c(
-                          "div",
-                          { staticClass: "vx-col md:w-1/2 w-full mt-2" },
-                          [
-                            _c(
-                              "vs-select",
-                              {
-                                directives: [
-                                  {
-                                    name: "validate",
-                                    rawName: "v-validate",
-                                    value: "required",
-                                    expression: "'required'"
-                                  }
-                                ],
-                                staticClass: "w-full",
-                                attrs: {
-                                  label: "Tipo de Documento",
-                                  name: "tipo_documento_id"
-                                },
-                                model: {
-                                  value: _vm.item.tipo_documento_id,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.item, "tipo_documento_id", $$v)
-                                  },
-                                  expression: "item.tipo_documento_id"
-                                }
-                              },
-                              _vm._l(_vm.tipodocumentos_choices, function(
-                                item
-                              ) {
-                                return _c("vs-select-item", {
-                                  key: item.id,
-                                  attrs: { value: item.id, text: item.name }
-                                })
-                              }),
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.errors.has("tipo_documento_id"),
-                                    expression:
-                                      "errors.has('tipo_documento_id')"
-                                  }
-                                ],
-                                staticClass: "text-danger text-sm"
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.errors.first("tipo_documento_id"))
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "vx-col md:w-1/2 w-full mt-3" },
-                          [
-                            _c("flat-pickr", {
-                              directives: [
-                                {
-                                  name: "validate",
-                                  rawName: "v-validate",
-                                  value: "required",
-                                  expression: "'required'"
-                                }
-                              ],
-                              staticClass: "w-full select-large mt-5",
+                      _c(
+                        "vs-tabs",
+                        {
+                          attrs: {
+                            position: "left",
+                            color: "primary",
+                            alignment: "fixed"
+                          }
+                        },
+                        [
+                          _c(
+                            "vs-tab",
+                            {
                               attrs: {
-                                label: "Fecha de Vencimiento",
-                                placeholder: "Fecha de Vencimiento",
-                                name: "fecha_vencimiento"
-                              },
-                              model: {
-                                value: _vm.item.fecha_vencimiento,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.item, "fecha_vencimiento", $$v)
-                                },
-                                expression: "item.fecha_vencimiento"
+                                label: "Adjuntar",
+                                "icon-pack": "feather",
+                                icon: "icon-upload"
                               }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "text-danger text-sm" }, [
-                              _vm._v(
-                                _vm._s(_vm.errors.first("fecha_vencimiento"))
-                              )
-                            ])
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "vx-col md:w-1/2 w-full mt-5" },
-                          [
-                            _c("input", {
-                              ref: "fileupload",
-                              staticClass: "w-full",
+                            },
+                            [
+                              _c("div", { staticClass: "vx-row" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "vx-col md:w-1/2 w-full mt-2"
+                                  },
+                                  [
+                                    _c(
+                                      "vs-select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "validate",
+                                            rawName: "v-validate",
+                                            value: "required",
+                                            expression: "'required'"
+                                          }
+                                        ],
+                                        staticClass: "w-full",
+                                        attrs: {
+                                          label: "Tipo de Documento",
+                                          name: "tipo_documento_id"
+                                        },
+                                        model: {
+                                          value: _vm.item.tipo_documento_id,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.item,
+                                              "tipo_documento_id",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "item.tipo_documento_id"
+                                        }
+                                      },
+                                      _vm._l(
+                                        _vm.tipodocumentos_choices,
+                                        function(item) {
+                                          return _c("vs-select-item", {
+                                            key: item.id,
+                                            attrs: {
+                                              value: item.id,
+                                              text: item.name
+                                            }
+                                          })
+                                        }
+                                      ),
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: _vm.errors.has(
+                                              "tipo_documento_id"
+                                            ),
+                                            expression:
+                                              "errors.has('tipo_documento_id')"
+                                          }
+                                        ],
+                                        staticClass: "text-danger text-sm"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.errors.first(
+                                              "tipo_documento_id"
+                                            )
+                                          )
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "vx-col md:w-1/2 w-full mt-3"
+                                  },
+                                  [
+                                    _c("flat-pickr", {
+                                      directives: [
+                                        {
+                                          name: "validate",
+                                          rawName: "v-validate",
+                                          value: "required",
+                                          expression: "'required'"
+                                        }
+                                      ],
+                                      staticClass: "w-full select-large mt-5",
+                                      attrs: {
+                                        label: "Fecha de Vencimiento",
+                                        placeholder: "Fecha de Vencimiento",
+                                        name: "fecha_vencimiento"
+                                      },
+                                      model: {
+                                        value: _vm.item.fecha_vencimiento,
+                                        callback: function($$v) {
+                                          _vm.$set(
+                                            _vm.item,
+                                            "fecha_vencimiento",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "item.fecha_vencimiento"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      { staticClass: "text-danger text-sm" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.errors.first(
+                                              "fecha_vencimiento"
+                                            )
+                                          )
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "vx-col md:w-1/2 w-full mt-5"
+                                  },
+                                  [
+                                    _c("input", {
+                                      ref: "fileupload",
+                                      staticClass: "w-full",
+                                      attrs: {
+                                        label: "Documento",
+                                        type: "file",
+                                        name: "file",
+                                        id: "file"
+                                      },
+                                      on: { change: _vm.uploadData }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "text-sm" }, [
+                                      _vm._v(
+                                        "Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF"
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "text-sm" }, [
+                                      _c("i", [_vm._v("Tamaño maximo 2 MB")])
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "vx-col md:w-1/2 w-full mt-5"
+                                  },
+                                  [
+                                    _c(
+                                      "vs-button",
+                                      {
+                                        attrs: {
+                                          color: "primary",
+                                          type: "filled"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.upload()
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Adjuntar")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "vx-row" })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-tab",
+                            {
                               attrs: {
-                                label: "Documento",
-                                type: "file",
-                                name: "file",
-                                id: "file"
-                              },
-                              on: { change: _vm.uploadData }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "text-sm" }, [
-                              _vm._v(
-                                "Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF"
+                                label: "Documentos",
+                                "icon-pack": "feather",
+                                icon: "icon-file-text"
+                              }
+                            },
+                            [
+                              _c(
+                                "vs-table",
+                                {
+                                  attrs: {
+                                    "max-items": "4",
+                                    pagination: "",
+                                    data: _vm.documents
+                                  },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "default",
+                                      fn: function(ref) {
+                                        var data = ref.data
+                                        return _vm._l(data, function(
+                                          tr,
+                                          indextr
+                                        ) {
+                                          return _c(
+                                            "vs-tr",
+                                            { key: indextr },
+                                            [
+                                              _c(
+                                                "vs-td",
+                                                {
+                                                  attrs: {
+                                                    data: data[indextr].numero
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                      " +
+                                                      _vm._s(
+                                                        data[indextr].numero
+                                                      ) +
+                                                      "\n                    "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "vs-td",
+                                                {
+                                                  attrs: {
+                                                    data:
+                                                      data[indextr].documento
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                      " +
+                                                      _vm._s(
+                                                        data[indextr].documento
+                                                      ) +
+                                                      "\n                    "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "vs-td",
+                                                {
+                                                  attrs: {
+                                                    data: data[indextr].ruta
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                      " +
+                                                      _vm._s(
+                                                        data[indextr].ruta
+                                                      ) +
+                                                      "\n                    "
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        })
+                                      }
+                                    }
+                                  ])
+                                },
+                                [
+                                  _c("template", { slot: "header" }, [
+                                    _c("h3", [
+                                      _vm._v(
+                                        "\n                    Documentos Subidos\n                  "
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "template",
+                                    { slot: "thead" },
+                                    [
+                                      _c("vs-th", [
+                                        _vm._v(
+                                          "\n                    Nro\n                  "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("vs-th", [
+                                        _vm._v(
+                                          "\n                    Documento\n                  "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("vs-th", [
+                                        _vm._v(
+                                          "\n                    Link\n                  "
+                                        )
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                ],
+                                2
                               )
-                            ]),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "text-sm" }, [
-                              _c("i", [_vm._v("Tamaño maximo 2 MB")])
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "vx-col md:w-1/2 w-full mt-5" },
-                          [
-                            _c(
-                              "vs-button",
-                              {
-                                attrs: { color: "primary", type: "filled" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.upload()
-                                  }
-                                }
-                              },
-                              [_vm._v("Adjuntar")]
-                            )
-                          ],
-                          1
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "vx-row" })
-                    ]
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
                   ),
                   _vm._v(" "),
                   _c(
