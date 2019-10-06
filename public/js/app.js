@@ -6516,23 +6516,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
       empresa_choices: [],
       tipodocumentos_choices: [],
       aux: 0,
-      documents: [{
-        "numero": 1,
-        "documento": "Leanne Graham",
-        "link": "Bret"
-      }, {
-        "numero": 2,
-        "documento": "Ervin Howell",
-        "link": "Antonette"
-      }, {
-        "numero": 3,
-        "documento": "Leanne Graham",
-        "link": "Bret"
-      }, {
-        "numero": 4,
-        "documento": "Ervin Howell",
-        "link": "Antonette"
-      }]
+      documentos_choices: []
     };
   },
   computed: {
@@ -6678,7 +6662,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
 
               case 2:
                 documentos = _context.sent;
-                this.documentos_choices = documentos.items;
+                console.log(documentos);
+                this.documentos_choices = documentos.data.items;
                 this.item.tipo_documento = "";
                 this.item.fecha_vencimiento = "";
                 this.item.file = "";
@@ -6690,7 +6675,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
                 this.popupDocumento = true;
                 this.dataItem = item;
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -46868,7 +46853,7 @@ var render = function() {
                                   attrs: {
                                     "max-items": "4",
                                     pagination: "",
-                                    data: _vm.documents
+                                    data: _vm.documentos_choices
                                   },
                                   scopedSlots: _vm._u([
                                     {
@@ -46885,17 +46870,11 @@ var render = function() {
                                             [
                                               _c(
                                                 "vs-td",
-                                                {
-                                                  attrs: {
-                                                    data: data[indextr].numero
-                                                  }
-                                                },
+                                                { attrs: { data: indextr } },
                                                 [
                                                   _vm._v(
                                                     "\n                      " +
-                                                      _vm._s(
-                                                        data[indextr].numero
-                                                      ) +
+                                                      _vm._s(indextr) +
                                                       "\n                    "
                                                   )
                                                 ]
@@ -46906,32 +46885,15 @@ var render = function() {
                                                 {
                                                   attrs: {
                                                     data:
-                                                      data[indextr].documento
+                                                      data[indextr].documents
                                                   }
                                                 },
                                                 [
                                                   _vm._v(
                                                     "\n                      " +
                                                       _vm._s(
-                                                        data[indextr].documento
-                                                      ) +
-                                                      "\n                    "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "vs-td",
-                                                {
-                                                  attrs: {
-                                                    data: data[indextr].ruta
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                      " +
-                                                      _vm._s(
-                                                        data[indextr].ruta
+                                                        data[indextr]
+                                                          .documents[0].name
                                                       ) +
                                                       "\n                    "
                                                   )
@@ -46967,12 +46929,6 @@ var render = function() {
                                       _c("vs-th", [
                                         _vm._v(
                                           "\n                    Documento\n                  "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("vs-th", [
-                                        _vm._v(
-                                          "\n                    Link\n                  "
                                         )
                                       ])
                                     ],
@@ -83409,7 +83365,7 @@ vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_16__["default"]); //Axios
 
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("", "/api/v1");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:9090", "/api/v1");
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(_websanova_vue_auth__WEBPACK_IMPORTED_MODULE_2___default.a, _auth__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vuejs - Vue wrapper for hammerjs
 
 
@@ -85174,9 +85130,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })

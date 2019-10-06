@@ -79,7 +79,7 @@
             </div>
           </vs-tab>
           <vs-tab label="Documentos" icon-pack="feather" icon="icon-file-text">
-            <vs-table max-items="4" pagination  :data="documents">
+            <vs-table max-items="4" pagination  :data="documentos_choices">
                   <template slot="header">
                     <h3>
                       Documentos Subidos
@@ -92,24 +92,24 @@
                     <vs-th>
                       Documento
                     </vs-th>
-                    <vs-th>
+                    <!-- <vs-th>
                       Link
-                    </vs-th>
+                    </vs-th> -->
                   </template>
 
                   <template slot-scope="{data}">
                     <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
-                      <vs-td :data="data[indextr].numero">
-                        {{data[indextr].numero}}
+                      <vs-td :data="indextr">
+                        {{indextr}}
                       </vs-td>
 
-                      <vs-td :data="data[indextr].documento">
-                        {{data[indextr].documento}}
+                      <vs-td :data="data[indextr].documents">
+                        {{data[indextr].documents[0].name}}
                       </vs-td>
 
-                      <vs-td :data="data[indextr].ruta">
+                      <!-- <vs-td :data="data[indextr].ruta">
                         {{data[indextr].ruta}}
-                      </vs-td>
+                      </vs-td> -->
 
                     </vs-tr>
                   </template>
@@ -649,33 +649,7 @@ export default {
       empresa_choices: [],
       tipodocumentos_choices: [],      
       aux: 0,
-      documents:[
-      {
-        "numero": 1,
-        "documento": "Leanne Graham",
-        "link": "Bret",
-       
-      },
-      {
-        "numero": 2,
-        "documento": "Ervin Howell",
-        "link": "Antonette",
-       
-      },
-            {
-        "numero": 3,
-        "documento": "Leanne Graham",
-        "link": "Bret",
-       
-      },
-      {
-        "numero": 4,
-        "documento": "Ervin Howell",
-        "link": "Antonette",
-       
-      },
-    
-    ]
+      documentos_choices: [],
     };
   },
   computed: {
@@ -820,7 +794,8 @@ export default {
     },
     async initUpload(item) {    
       var documentos = await this.$http.get("driver/driver/documents/"+item.id); 
-      this.documentos_choices = documentos.items; 
+      console.log(documentos);
+      this.documentos_choices = documentos.data.items; 
 
       this.item.tipo_documento = "";
       this.item.fecha_vencimiento = ""; 
