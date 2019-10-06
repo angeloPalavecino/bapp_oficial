@@ -31,8 +31,10 @@
                   id="file"
                   @change = "uploadData"  
                   ref="fileupload"
+                  accept="application/pdf,application/msword,application/image/png,image/jpeg"           
                 />
-                <span class="text-sm" >Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF</span>
+                <span class="text-sm" >Fomatos permitidos: JPG - PNG - DOC - PDF</span>
+                <br/>
                 <span class="text-sm" ><i>Tamaño maximo 2 MB</i></span>
               
               </div>
@@ -848,7 +850,8 @@ export default {
     upload($name = null){
       $name = $name == null ? true : $name;
        this.$validator.validateAll($name).then(result =>{
-        if (result) {          
+        if (result) {       
+          
           const formData = new FormData();     
           formData.append('file', (this.item.file));
           formData.append('tipo_documento_id', (this.item.tipo_documento.split("|")[0])); 
@@ -856,6 +859,7 @@ export default {
           formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
           formData.append('driver_id', (this.dataItem.cars[0].driver_id));
           formData.append('rut', (this.dataItem.rut));
+
           this.$upload(formData);
                      
         } else {
@@ -868,8 +872,8 @@ export default {
       const tipo = e.target.files[0].type;
       const size = e.target.files[0].size;
      if(tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || 
-      tipo == "application/pdf" || tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
-        
+      tipo == "application/pdf" ){
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if(size <= 2000000){ //2097152
             
             this.item.file = e.target.files[0];

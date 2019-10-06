@@ -222,8 +222,8 @@ class DriverController extends Controller
         }
         
         
-        }
-    }
+     }
+         
     /**
      * Display the specified resource.
      *

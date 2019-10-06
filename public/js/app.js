@@ -6382,6 +6382,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
  // For custom error message
@@ -6692,7 +6694,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       var tipo = e.target.files[0].type;
       var size = e.target.files[0].size;
 
-      if (tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || tipo == "application/pdf" || tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+      if (tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || tipo == "application/pdf") {
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if (size <= 2000000) {
           //2097152
           this.item.file = e.target.files[0];
@@ -45766,16 +45769,18 @@ var render = function() {
                           label: "Documento",
                           type: "file",
                           name: "file",
-                          id: "file"
+                          id: "file",
+                          accept:
+                            "application/pdf,application/msword,application/image/png,image/jpeg"
                         },
                         on: { change: _vm.uploadData }
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "text-sm" }, [
-                        _vm._v(
-                          "Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF"
-                        )
+                        _vm._v("Fomatos permitidos: JPG - PNG - DOC - PDF")
                       ]),
+                      _vm._v(" "),
+                      _c("br"),
                       _vm._v(" "),
                       _c("span", { staticClass: "text-sm" }, [
                         _c("i", [_vm._v("Tamaño maximo 2 MB")])
@@ -45881,6 +45886,7 @@ var render = function() {
                                       _c(
                                         "a",
                                         {
+                                          staticStyle: { cursor: "pointer" },
                                           attrs: { rel: "nofollow" },
                                           on: {
                                             click: function($event) {
@@ -82299,7 +82305,7 @@ vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_16__["default"]); //Axios
 
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:9090", "/api/v1");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("", "/api/v1");
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(_websanova_vue_auth__WEBPACK_IMPORTED_MODULE_2___default.a, _auth__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vuejs - Vue wrapper for hammerjs
 
 
@@ -84064,9 +84070,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })
