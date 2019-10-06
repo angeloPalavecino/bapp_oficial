@@ -6646,14 +6646,11 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       //input.type = 'file';
       //input.type = 'text';
 
-      var tabs = this.$refs.tabdocs; //this.$refs.tabdocuments.childActive = 1;
-
+      var myElement = document.querySelector(".line-vs-tabs");
+      myElement.style.width = "95px";
+      myElement.style.left = "0px";
       this.$refs.tabdocs.activeChild(0);
       this.$refs.tabdocs.changePositionLine(0);
-      this.$refs.tabdocs.clickTag(0);
-      this.$refs.tabdocs.parseIndex(0);
-      tabs.value = 0;
-      console.log(tabs);
       this.errors.clear();
       this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
         thisIns.documentos_choices = response.data.items;

@@ -6,7 +6,7 @@
           @close="$close($event)">   
          
           <vs-tabs color="primary" ref="tabdocs" >
-          <vs-tab label="Adjuntar"   icon-pack="feather" icon="icon-upload">
+          <vs-tab label="Adjuntar"  icon-pack="feather" icon="icon-upload">
     
          
           <div class="vx-row">
@@ -811,16 +811,12 @@ export default {
       //const input = this.$refs.fileupload;
       //input.type = 'file';
       //input.type = 'text';
-      
-      const tabs = this.$refs.tabdocs;
-      //this.$refs.tabdocuments.childActive = 1;
+      let myElement = document.querySelector(".line-vs-tabs");
+      myElement.style.width = "95px";
+      myElement.style.left = "0px";
+
       this.$refs.tabdocs.activeChild(0);
       this.$refs.tabdocs.changePositionLine(0);
-      this.$refs.tabdocs.clickTag(0);
-      this.$refs.tabdocs.parseIndex(0);
-      tabs.value = 0;
-
-      console.log(tabs);
 
       this.errors.clear(); 
       
