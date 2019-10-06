@@ -62,12 +62,13 @@
       })
     },
     //Agrega Registros
-    $submitAgregar() {
+    $submitAgregar($name = null) {
 
+      $name = $name == null ? true : $name;
       const thisIns = this;
       const url = thisIns.ruta + 'store';
 
-      this.$validator.validateAll().then(result =>{
+      this.$validator.validateAll($name).then(result =>{
         if (result) {
 
          this.$http.post(url, this.item) //this.item

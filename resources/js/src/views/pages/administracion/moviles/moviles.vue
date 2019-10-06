@@ -702,7 +702,7 @@ export default {
             this.item.car = this.car;
             
             if (this.modoEditar == false) {
-              this.$submitAgregar();
+              this.$submitAgregar("step-2");
             } else {
               this.$submitActualizar();
             }

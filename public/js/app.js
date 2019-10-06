@@ -3770,9 +3770,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     $submitAgregar: function $submitAgregar() {
       var _this2 = this;
 
+      var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + 'store';
-      this.$validator.validateAll().then(function (result) {
+      this.$validator.validateAll($name).then(function (result) {
         if (result) {
           _this2.$http.post(url, _this2.item) //this.item
           .then(function (res) {
@@ -6566,7 +6568,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_4__["Validator"].localize("en", dict);
             _this2.item.car = _this2.car;
 
             if (_this2.modoEditar == false) {
-              _this2.$submitAgregar();
+              _this2.$submitAgregar("step-2");
             } else {
               _this2.$submitActualizar();
             }
@@ -83407,7 +83409,7 @@ vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_16__["default"]); //Axios
 
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("", "/api/v1");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:9090", "/api/v1");
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(_websanova_vue_auth__WEBPACK_IMPORTED_MODULE_2___default.a, _auth__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vuejs - Vue wrapper for hammerjs
 
 
@@ -85172,9 +85174,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })
