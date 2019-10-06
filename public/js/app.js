@@ -6379,6 +6379,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
  // For custom error message
@@ -6546,9 +6548,11 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
         });
       });
     },
-    getStatusColor: function getStatusColor(status) {
-      if (status == 1) return "success";
-      if (status == 0) return "danger";
+    getStatusColor: function getStatusColor(fecha) {
+      var factual = new Date();
+      var fvencimiento = new Date(fecha);
+      if (fvencimiento.getTime() >= factual.getTime()) return "success";
+      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
       return "danger";
     },
     refrescaOtrosDatos: function refrescaOtrosDatos() {
@@ -6633,14 +6637,22 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       var _this3 = this;
 
       var thisIns = this;
-      thisIns.documentos_choices = [];
-      thisIns.item.tipo_documento = "";
-      thisIns.item.fecha_vencimiento = "";
-      thisIns.item.file = "";
-      thisIns.item.filename = "";
-      var input = this.$refs.fileupload;
-      input.type = 'text';
-      input.type = 'file';
+      this.documentos_choices = [];
+      this.item.tipo_documento = "";
+      this.item.fecha_vencimiento = "";
+      this.item.file = "";
+      this.item.filename = ""; //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+
+      var tabs = this.$refs.tabdocs; //this.$refs.tabdocuments.childActive = 1;
+
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+      this.$refs.tabdocs.clickTag(0);
+      this.$refs.tabdocs.parseIndex(0);
+      tabs.value = 0;
+      console.log(tabs);
       this.errors.clear();
       this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
         thisIns.documentos_choices = response.data.items;
@@ -6656,12 +6668,15 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       setTimeout(function () {
         _this3.popupDocumento = true;
         _this3.dataItem = item;
-      }, 200);
+        thisIns.$refs.fileupload.value = '';
+      }, 300);
     },
     upload: function upload() {
       var _this4 = this;
 
-      this.$validator.validateAll().then(function (result) {
+      var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      $name = $name == null ? true : $name;
+      this.$validator.validateAll($name).then(function (result) {
         if (result) {
           var formData = new FormData();
           formData.append('file', _this4.item.file);
@@ -6685,9 +6700,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
           this.item.file = e.target.files[0];
           this.item.filename = e.target.files[0].name;
         } else {
-          var input = this.$refs.fileupload;
-          input.type = 'text';
-          input.type = 'file';
+          this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
+
           this.$vs.notify({
             title: "Error",
             text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
@@ -6697,10 +6713,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
           });
         }
       } else {
-        //this.$refs.fileupload.value = '';
-        var _input = this.$refs.fileupload;
-        _input.type = 'text';
-        _input.type = 'file';
+        this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+        //input.type = 'text';
+        //input.type = 'file';
+
         this.$vs.notify({
           title: "Error",
           text: "El archivo no tiene el formato correcto",
@@ -45621,6 +45637,1231 @@ var render = function() {
     },
     [
       _c(
+        "vs-popup",
+        {
+          staticClass: "holamundo",
+          attrs: { title: "Documentos Conductor", active: _vm.popupDocumento },
+          on: {
+            "update:active": function($event) {
+              _vm.popupDocumento = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "vs-tabs",
+            { ref: "tabdocs", attrs: { color: "primary" } },
+            [
+              _c(
+                "vs-tab",
+                {
+                  attrs: {
+                    label: "Adjuntar",
+                    "icon-pack": "feather",
+                    icon: "icon-upload"
+                  }
+                },
+                [
+                  _c("div", { staticClass: "vx-row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                      [
+                        _c(
+                          "vs-select",
+                          {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            staticClass: "w-full",
+                            attrs: {
+                              label: "Tipo de Documento",
+                              name: "tipo_documento"
+                            },
+                            model: {
+                              value: _vm.item.tipo_documento,
+                              callback: function($$v) {
+                                _vm.$set(_vm.item, "tipo_documento", $$v)
+                              },
+                              expression: "item.tipo_documento"
+                            }
+                          },
+                          _vm._l(_vm.tipodocumentos_choices, function(item) {
+                            return _c("vs-select-item", {
+                              key: item.id,
+                              attrs: {
+                                value: item.id + "|" + item.name,
+                                text: item.name
+                              }
+                            })
+                          }),
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.errors.has("tipo_documento"),
+                                expression: "errors.has('tipo_documento')"
+                              }
+                            ],
+                            staticClass: "text-danger text-sm"
+                          },
+                          [_vm._v(_vm._s(_vm.errors.first("tipo_documento")))]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-3" },
+                      [
+                        _c("flat-pickr", {
+                          directives: [
+                            {
+                              name: "validate",
+                              rawName: "v-validate",
+                              value: "required",
+                              expression: "'required'"
+                            }
+                          ],
+                          staticClass: "w-full select-large mt-5",
+                          attrs: {
+                            label: "Fecha de Vencimiento",
+                            placeholder: "Fecha de Vencimiento",
+                            name: "fecha_vencimiento"
+                          },
+                          model: {
+                            value: _vm.item.fecha_vencimiento,
+                            callback: function($$v) {
+                              _vm.$set(_vm.item, "fecha_vencimiento", $$v)
+                            },
+                            expression: "item.fecha_vencimiento"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-danger text-sm" }, [
+                          _vm._v(_vm._s(_vm.errors.first("fecha_vencimiento")))
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-5" }, [
+                      _c("input", {
+                        ref: "fileupload",
+                        staticClass: "w-full",
+                        attrs: {
+                          label: "Documento",
+                          type: "file",
+                          name: "file",
+                          id: "file"
+                        },
+                        on: { change: _vm.uploadData }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-sm" }, [
+                        _vm._v(
+                          "Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-sm" }, [
+                        _c("i", [_vm._v("Tamaño maximo 2 MB")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+                      [
+                        _c(
+                          "vs-button",
+                          {
+                            attrs: { color: "primary", type: "filled" },
+                            on: {
+                              click: function($event) {
+                                return _vm.upload()
+                              }
+                            }
+                          },
+                          [_vm._v("Adjuntar")]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "vx-row" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-tab",
+                {
+                  attrs: {
+                    label: "Documentos",
+                    "icon-pack": "feather",
+                    icon: "icon-file-text"
+                  }
+                },
+                [
+                  _c(
+                    "vs-table",
+                    {
+                      ref: "tabladoc",
+                      attrs: {
+                        "max-items": "4",
+                        pagination: "",
+                        data: _vm.documentos_choices
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(ref) {
+                            var data = ref.data
+                            return _vm._l(data, function(trdoc, indextrdoc) {
+                              return _c(
+                                "vs-tr",
+                                { key: indextrdoc },
+                                [
+                                  _c("vs-td", { attrs: { colspan: "2" } }, [
+                                    _vm._v(
+                                      "\n                      " +
+                                        _vm._s(trdoc.documents[0].name) +
+                                        "\n                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    [
+                                      _c(
+                                        "vs-chip",
+                                        {
+                                          attrs: {
+                                            color: _vm.getStatusColor(
+                                              trdoc.documents[0]
+                                                .fecha_vencimiento
+                                            )
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              trdoc.documents[0]
+                                                .fecha_vencimiento
+                                            )
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    { attrs: { data: data[_vm.indextr].url } },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: { rel: "nofollow" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.downloadDocument(
+                                                data[_vm.indextr].documents[0]
+                                                  .id,
+                                                data[_vm.indextr].documents[0]
+                                                  .name
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Ver")]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            })
+                          }
+                        }
+                      ])
+                    },
+                    [
+                      _c("template", { slot: "header" }, [
+                        _c("h3", [
+                          _vm._v(
+                            "\n                    Documentos Subidos\n                  "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "template",
+                        { slot: "thead" },
+                        [
+                          _c("vs-th", { attrs: { colspan: "2" } }, [
+                            _vm._v(
+                              "\n                     Documento\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-th", [
+                            _vm._v(
+                              "\n                     Vencimiento\n                  "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          ref: "modal",
+          staticClass: "holamundo",
+          attrs: {
+            title:
+              _vm.modoEditar == false
+                ? "AGREGAR CONDUCTOR"
+                : "ACTUALIZAR CONDUCTOR",
+            active: _vm.popupActive
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "mt-5" },
+            [
+              _c(
+                "form-wizard",
+                {
+                  ref: "wizard",
+                  attrs: {
+                    color: "rgba(var(--vs-primary), 1)",
+                    errorColor: "rgba(var(--vs-danger), 1)",
+                    title:
+                      _vm.modoEditar == false
+                        ? "AGREGAR CONDUCTOR"
+                        : "ACTUALIZAR CONDUCTOR",
+                    subtitle:
+                      _vm.modoEditar == false
+                        ? "Ingrese todos los campos para ingresar el conductor"
+                        : "Modifique los campos que desee actualizar",
+                    finishButtonText:
+                      _vm.modoEditar == false ? "Agregar" : "Actualizar"
+                  }
+                },
+                [
+                  _c(
+                    "tab-content",
+                    {
+                      staticClass: "mb-5",
+                      attrs: {
+                        title: "Datos Conductor",
+                        icon: "feather icon-user",
+                        "before-change": _vm.validateStep1
+                      }
+                    },
+                    [
+                      _c("form", { attrs: { "data-vv-scope": "step-1" } }, [
+                        _c(
+                          "div",
+                          [
+                            _c("vs-divider", { attrs: { color: "primary" } }, [
+                              _c("h5", [_vm._v("Datos Conductor")])
+                            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "vx-row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Nombres",
+                                  name: "name",
+                                  danger: _vm.errors.first("step-1.name")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.user.name,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.user, "name", $$v)
+                                  },
+                                  expression: "user.name"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-1.name")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Apellidos",
+                                  name: "lastname",
+                                  danger: _vm.errors.first("step-1.lastname")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.user.lastname,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.user, "lastname", $$v)
+                                  },
+                                  expression: "user.lastname"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-1.lastname"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required|email",
+                                    expression: "'required|email'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  type: "Email",
+                                  "label-placeholder": "Email",
+                                  name: "email",
+                                  danger: _vm.errors.first("step-1.email")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.user.email,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.user, "email", $$v)
+                                  },
+                                  expression: "user.email"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-1.email")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required|numeric",
+                                    expression: "'required|numeric'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  type: "Telefono",
+                                  "label-placeholder": "Telefono",
+                                  name: "telefono",
+                                  danger: _vm.errors.first("step-1.telefono")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.user.telefono,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.user, "telefono", $$v)
+                                  },
+                                  expression: "user.telefono"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-1.telefono"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required|alpha_dash",
+                                    expression: "'required|alpha_dash'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Rut",
+                                  name: "rut",
+                                  danger: _vm.errors.first("step-1.rut")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.user.rut,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.user, "rut", $$v)
+                                  },
+                                  expression: "user.rut"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-1.rut")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Ciudad",
+                                  name: "ciudad",
+                                  danger: _vm.errors.first("step-1.ciudad")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.driver.ciudad,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.driver, "ciudad", $$v)
+                                  },
+                                  expression: "driver.ciudad"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-1.ciudad"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Comuna",
+                                  name: "comuna",
+                                  danger: _vm.errors.first("step-1.comuna")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.driver.comuna,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.driver, "comuna", $$v)
+                                  },
+                                  expression: "driver.comuna"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-1.comuna"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Dirección",
+                                  name: "direccion",
+                                  danger: _vm.errors.first("step-1.direccion")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.driver.direccion,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.driver, "direccion", $$v)
+                                  },
+                                  expression: "driver.direccion"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-1.direccion"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required|numeric",
+                                    expression: "'required|numeric'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Numeración",
+                                  name: "numeracion",
+                                  danger: _vm.errors.first("step-1.numeracion")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.driver.numeracion,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.driver, "numeracion", $$v)
+                                  },
+                                  expression: "driver.numeracion"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-1.numeracion"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-1" },
+                            [
+                              _c(
+                                "vs-select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "validate",
+                                      rawName: "v-validate",
+                                      value: "required",
+                                      expression: "'required'"
+                                    }
+                                  ],
+                                  staticClass: "w-full",
+                                  attrs: { label: "Empresa", name: "empresa" },
+                                  model: {
+                                    value: _vm.driver.empresa_id,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.driver, "empresa_id", $$v)
+                                    },
+                                    expression: "driver.empresa_id"
+                                  }
+                                },
+                                _vm._l(_vm.empresa_choices, function(item) {
+                                  return _c("vs-select-item", {
+                                    key: item.id,
+                                    attrs: {
+                                      value: item.id,
+                                      text: item.razon_social
+                                    }
+                                  })
+                                }),
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.errors.has("step-1.empresa"),
+                                      expression: "errors.has('step-1.empresa')"
+                                    }
+                                  ],
+                                  staticClass: "text-danger text-sm"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.first("step-1.empresa"))
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Licencias",
+                                  name: "clase",
+                                  danger: _vm.errors.first("step-1.clase")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.driver.clase,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.driver, "clase", $$v)
+                                  },
+                                  expression: "driver.clase"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-1.clase")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/6 w-full mt-5" },
+                            [
+                              _c(
+                                "vs-radio",
+                                {
+                                  staticClass: "mt-5",
+                                  attrs: { color: "success", "vs-value": "1" },
+                                  model: {
+                                    value: _vm.user.habilitado,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.user, "habilitado", $$v)
+                                    },
+                                    expression: "user.habilitado"
+                                  }
+                                },
+                                [_vm._v("Activo")]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/6 w-full mt-5" },
+                            [
+                              _c(
+                                "vs-radio",
+                                {
+                                  staticClass: "mt-5",
+                                  attrs: { color: "danger", "vs-value": "0" },
+                                  model: {
+                                    value: _vm.user.habilitado,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.user, "habilitado", $$v)
+                                    },
+                                    expression: "user.habilitado"
+                                  }
+                                },
+                                [_vm._v("Inactivo")]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "tab-content",
+                    {
+                      staticClass: "mb-5",
+                      attrs: {
+                        title: "Datos Movil",
+                        icon: "feather icon-truck",
+                        "before-change": _vm.validateStep2
+                      }
+                    },
+                    [
+                      _c("form", { attrs: { "data-vv-scope": "step-2" } }, [
+                        _c(
+                          "div",
+                          [
+                            _c("vs-divider", { attrs: { color: "primary" } }, [
+                              _c("h5", [_vm._v("Datos Movil")])
+                            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "vx-row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Tipo Vehículo",
+                                  name: "tipo",
+                                  danger: _vm.errors.first("step-2.tipo")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.tipo,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "tipo", $$v)
+                                  },
+                                  expression: "car.tipo"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-2.tipo")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Marca",
+                                  name: "marca",
+                                  danger: _vm.errors.first("step-2.marca")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.marca,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "marca", $$v)
+                                  },
+                                  expression: "car.marca"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-2.marca")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Modelo",
+                                  name: "modelo",
+                                  danger: _vm.errors.first("step-2.modelo")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.modelo,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "modelo", $$v)
+                                  },
+                                  expression: "car.modelo"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-2.modelo"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Año",
+                                  name: "ano",
+                                  danger: _vm.errors.first("step-2.ano")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.ano,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "ano", $$v)
+                                  },
+                                  expression: "car.ano"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-2.ano")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "N° Motor",
+                                  name: "motor",
+                                  danger: _vm.errors.first("step-2.motor")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.motor,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "motor", $$v)
+                                  },
+                                  expression: "car.motor"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-2.motor")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "N° Patente",
+                                  name: "patente",
+                                  danger: _vm.errors.first("step-2.patente")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.patente,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "patente", $$v)
+                                  },
+                                  expression: "car.patente"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-2.patente"))
+                                )
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required",
+                                    expression: "'required'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "Color",
+                                  name: "color",
+                                  danger: _vm.errors.first("step-2.color")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.color,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "color", $$v)
+                                  },
+                                  expression: "car.color"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(_vm._s(_vm.errors.first("step-2.color")))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                            [
+                              _c("vs-input", {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: "required|numeric",
+                                    expression: "'required|numeric'"
+                                  }
+                                ],
+                                staticClass: "w-full",
+                                attrs: {
+                                  "label-placeholder": "N° Asientos",
+                                  name: "asientos",
+                                  danger: _vm.errors.first("step-2.asientos")
+                                    ? true
+                                    : false,
+                                  "val-icon-danger": "clear"
+                                },
+                                model: {
+                                  value: _vm.car.asientos,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.car, "asientos", $$v)
+                                  },
+                                  expression: "car.asientos"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.first("step-2.asientos"))
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
         "vs-table",
         {
           ref: "table",
@@ -45862,378 +47103,6 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
-                    "vs-popup",
-                    {
-                      staticClass: "holamundo",
-                      attrs: {
-                        title: "Documentos Conductor",
-                        active: _vm.popupDocumento
-                      },
-                      on: {
-                        "update:active": function($event) {
-                          _vm.popupDocumento = $event
-                        },
-                        close: function($event) {
-                          return _vm.$close($event)
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "vs-tabs",
-                        {
-                          attrs: {
-                            position: "left",
-                            color: "primary",
-                            alignment: "fixed"
-                          }
-                        },
-                        [
-                          _c(
-                            "vs-tab",
-                            {
-                              attrs: {
-                                label: "Adjuntar",
-                                "icon-pack": "feather",
-                                icon: "icon-upload"
-                              }
-                            },
-                            [
-                              _c("div", { staticClass: "vx-row" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "vx-col md:w-1/2 w-full mt-2"
-                                  },
-                                  [
-                                    _c(
-                                      "vs-select",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "validate",
-                                            rawName: "v-validate",
-                                            value: "required",
-                                            expression: "'required'"
-                                          }
-                                        ],
-                                        staticClass: "w-full",
-                                        attrs: {
-                                          label: "Tipo de Documento",
-                                          name: "tipo_documento"
-                                        },
-                                        model: {
-                                          value: _vm.item.tipo_documento,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.item,
-                                              "tipo_documento",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "item.tipo_documento"
-                                        }
-                                      },
-                                      _vm._l(
-                                        _vm.tipodocumentos_choices,
-                                        function(item) {
-                                          return _c("vs-select-item", {
-                                            key: item.id,
-                                            attrs: {
-                                              value: item.id + "|" + item.name,
-                                              text: item.name
-                                            }
-                                          })
-                                        }
-                                      ),
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "show",
-                                            rawName: "v-show",
-                                            value: _vm.errors.has(
-                                              "tipo_documento"
-                                            ),
-                                            expression:
-                                              "errors.has('tipo_documento')"
-                                          }
-                                        ],
-                                        staticClass: "text-danger text-sm"
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.errors.first("tipo_documento")
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "vx-col md:w-1/2 w-full mt-3"
-                                  },
-                                  [
-                                    _c("flat-pickr", {
-                                      directives: [
-                                        {
-                                          name: "validate",
-                                          rawName: "v-validate",
-                                          value: "required",
-                                          expression: "'required'"
-                                        }
-                                      ],
-                                      staticClass: "w-full select-large mt-5",
-                                      attrs: {
-                                        label: "Fecha de Vencimiento",
-                                        placeholder: "Fecha de Vencimiento",
-                                        name: "fecha_vencimiento"
-                                      },
-                                      model: {
-                                        value: _vm.item.fecha_vencimiento,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.item,
-                                            "fecha_vencimiento",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "item.fecha_vencimiento"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      { staticClass: "text-danger text-sm" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.errors.first(
-                                              "fecha_vencimiento"
-                                            )
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "vx-col md:w-1/2 w-full mt-5"
-                                  },
-                                  [
-                                    _c("input", {
-                                      ref: "fileupload",
-                                      staticClass: "w-full",
-                                      attrs: {
-                                        label: "Documento",
-                                        type: "file",
-                                        name: "file",
-                                        id: "file"
-                                      },
-                                      on: { change: _vm.uploadData }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "text-sm" }, [
-                                      _vm._v(
-                                        "Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF"
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "text-sm" }, [
-                                      _c("i", [_vm._v("Tamaño maximo 2 MB")])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "vx-col md:w-1/2 w-full mt-5"
-                                  },
-                                  [
-                                    _c(
-                                      "vs-button",
-                                      {
-                                        attrs: {
-                                          color: "primary",
-                                          type: "filled"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.upload()
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Adjuntar")]
-                                    )
-                                  ],
-                                  1
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "vx-row" })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-tab",
-                            {
-                              attrs: {
-                                label: "Documentos",
-                                "icon-pack": "feather",
-                                icon: "icon-file-text"
-                              }
-                            },
-                            [
-                              _c(
-                                "vs-table",
-                                {
-                                  attrs: {
-                                    "max-items": "4",
-                                    pagination: "",
-                                    data: _vm.documentos_choices
-                                  },
-                                  scopedSlots: _vm._u([
-                                    {
-                                      key: "default",
-                                      fn: function(ref) {
-                                        var data = ref.data
-                                        return _vm._l(data, function(
-                                          tr,
-                                          indextr
-                                        ) {
-                                          return _c(
-                                            "vs-tr",
-                                            { key: indextr },
-                                            [
-                                              _c("vs-td", [
-                                                _vm._v(
-                                                  "\n                      " +
-                                                    _vm._s(indextr + 1) +
-                                                    "\n                    "
-                                                )
-                                              ]),
-                                              _vm._v(" "),
-                                              _c(
-                                                "vs-td",
-                                                {
-                                                  attrs: {
-                                                    data:
-                                                      data[indextr].documents[0]
-                                                        .name
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                      " +
-                                                      _vm._s(
-                                                        data[indextr]
-                                                          .documents[0].name
-                                                      ) +
-                                                      "\n                    "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "vs-td",
-                                                {
-                                                  attrs: {
-                                                    data: data[indextr].url
-                                                  }
-                                                },
-                                                [
-                                                  _c(
-                                                    "a",
-                                                    {
-                                                      attrs: {
-                                                        rel: "nofollow"
-                                                      },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.downloadDocument(
-                                                            data[indextr]
-                                                              .documents[0].id,
-                                                            data[indextr]
-                                                              .documents[0].name
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [_vm._v("Ver")]
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        })
-                                      }
-                                    }
-                                  ])
-                                },
-                                [
-                                  _c("template", { slot: "header" }, [
-                                    _c("h3", [
-                                      _vm._v(
-                                        "\n                    Documentos Subidos\n                  "
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "template",
-                                    { slot: "thead" },
-                                    [
-                                      _c("vs-th", [
-                                        _vm._v(
-                                          "\n                    Nro\n                  "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("vs-th", [
-                                        _vm._v(
-                                          "\n                    Documento\n                  "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("vs-th", [
-                                        _vm._v(
-                                          "\n                    Link\n                  "
-                                        )
-                                      ])
-                                    ],
-                                    1
-                                  )
-                                ],
-                                2
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
                     "div",
                     {
                       staticClass:
@@ -46267,1235 +47136,6 @@ var render = function() {
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "vs-popup",
-                {
-                  ref: "modal",
-                  staticClass: "holamundo",
-                  attrs: {
-                    title:
-                      _vm.modoEditar == false
-                        ? "AGREGAR CONDUCTOR"
-                        : "ACTUALIZAR CONDUCTOR",
-                    active: _vm.popupActive
-                  },
-                  on: {
-                    "update:active": function($event) {
-                      _vm.popupActive = $event
-                    },
-                    close: function($event) {
-                      return _vm.$close($event)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "mt-5" },
-                    [
-                      _c(
-                        "form-wizard",
-                        {
-                          ref: "wizard",
-                          attrs: {
-                            color: "rgba(var(--vs-primary), 1)",
-                            errorColor: "rgba(var(--vs-danger), 1)",
-                            title:
-                              _vm.modoEditar == false
-                                ? "AGREGAR CONDUCTOR"
-                                : "ACTUALIZAR CONDUCTOR",
-                            subtitle:
-                              _vm.modoEditar == false
-                                ? "Ingrese todos los campos para ingresar el conductor"
-                                : "Modifique los campos que desee actualizar",
-                            finishButtonText:
-                              _vm.modoEditar == false ? "Agregar" : "Actualizar"
-                          }
-                        },
-                        [
-                          _c(
-                            "tab-content",
-                            {
-                              staticClass: "mb-5",
-                              attrs: {
-                                title: "Datos Conductor",
-                                icon: "feather icon-user",
-                                "before-change": _vm.validateStep1
-                              }
-                            },
-                            [
-                              _c(
-                                "form",
-                                { attrs: { "data-vv-scope": "step-1" } },
-                                [
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [_c("h5", [_vm._v("Datos Conductor")])]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Nombres",
-                                            name: "name",
-                                            danger: _vm.errors.first(
-                                              "step-1.name"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.user.name,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.user, "name", $$v)
-                                            },
-                                            expression: "user.name"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-1.name")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Apellidos",
-                                            name: "lastname",
-                                            danger: _vm.errors.first(
-                                              "step-1.lastname"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.user.lastname,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.user,
-                                                "lastname",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "user.lastname"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.lastname"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|email",
-                                              expression: "'required|email'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            type: "Email",
-                                            "label-placeholder": "Email",
-                                            name: "email",
-                                            danger: _vm.errors.first(
-                                              "step-1.email"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.user.email,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.user, "email", $$v)
-                                            },
-                                            expression: "user.email"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-1.email")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|numeric",
-                                              expression: "'required|numeric'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            type: "Telefono",
-                                            "label-placeholder": "Telefono",
-                                            name: "telefono",
-                                            danger: _vm.errors.first(
-                                              "step-1.telefono"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.user.telefono,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.user,
-                                                "telefono",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "user.telefono"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.telefono"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|alpha_dash",
-                                              expression:
-                                                "'required|alpha_dash'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Rut",
-                                            name: "rut",
-                                            danger: _vm.errors.first(
-                                              "step-1.rut"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.user.rut,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.user, "rut", $$v)
-                                            },
-                                            expression: "user.rut"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-1.rut")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Ciudad",
-                                            name: "ciudad",
-                                            danger: _vm.errors.first(
-                                              "step-1.ciudad"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.driver.ciudad,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.driver,
-                                                "ciudad",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "driver.ciudad"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.ciudad"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Comuna",
-                                            name: "comuna",
-                                            danger: _vm.errors.first(
-                                              "step-1.comuna"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.driver.comuna,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.driver,
-                                                "comuna",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "driver.comuna"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.comuna"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Dirección",
-                                            name: "direccion",
-                                            danger: _vm.errors.first(
-                                              "step-1.direccion"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.driver.direccion,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.driver,
-                                                "direccion",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "driver.direccion"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.direccion"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|numeric",
-                                              expression: "'required|numeric'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Numeración",
-                                            name: "numeracion",
-                                            danger: _vm.errors.first(
-                                              "step-1.numeracion"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.driver.numeracion,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.driver,
-                                                "numeracion",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "driver.numeracion"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.numeracion"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-1"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-select",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "validate",
-                                                rawName: "v-validate",
-                                                value: "required",
-                                                expression: "'required'"
-                                              }
-                                            ],
-                                            staticClass: "w-full",
-                                            attrs: {
-                                              label: "Empresa",
-                                              name: "empresa"
-                                            },
-                                            model: {
-                                              value: _vm.driver.empresa_id,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.driver,
-                                                  "empresa_id",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "driver.empresa_id"
-                                            }
-                                          },
-                                          _vm._l(_vm.empresa_choices, function(
-                                            item
-                                          ) {
-                                            return _c("vs-select-item", {
-                                              key: item.id,
-                                              attrs: {
-                                                value: item.id,
-                                                text: item.razon_social
-                                              }
-                                            })
-                                          }),
-                                          1
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            directives: [
-                                              {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.errors.has(
-                                                  "step-1.empresa"
-                                                ),
-                                                expression:
-                                                  "errors.has('step-1.empresa')"
-                                              }
-                                            ],
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-1.empresa"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Licencias",
-                                            name: "clase",
-                                            danger: _vm.errors.first(
-                                              "step-1.clase"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.driver.clase,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.driver, "clase", $$v)
-                                            },
-                                            expression: "driver.clase"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-1.clase")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/6 w-full mt-5"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-radio",
-                                          {
-                                            staticClass: "mt-5",
-                                            attrs: {
-                                              color: "success",
-                                              "vs-value": "1"
-                                            },
-                                            model: {
-                                              value: _vm.user.habilitado,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.user,
-                                                  "habilitado",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "user.habilitado"
-                                            }
-                                          },
-                                          [_vm._v("Activo")]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/6 w-full mt-5"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-radio",
-                                          {
-                                            staticClass: "mt-5",
-                                            attrs: {
-                                              color: "danger",
-                                              "vs-value": "0"
-                                            },
-                                            model: {
-                                              value: _vm.user.habilitado,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.user,
-                                                  "habilitado",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "user.habilitado"
-                                            }
-                                          },
-                                          [_vm._v("Inactivo")]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "tab-content",
-                            {
-                              staticClass: "mb-5",
-                              attrs: {
-                                title: "Datos Movil",
-                                icon: "feather icon-truck",
-                                "before-change": _vm.validateStep2
-                              }
-                            },
-                            [
-                              _c(
-                                "form",
-                                { attrs: { "data-vv-scope": "step-2" } },
-                                [
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [_c("h5", [_vm._v("Datos Movil")])]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Tipo Vehículo",
-                                            name: "tipo",
-                                            danger: _vm.errors.first(
-                                              "step-2.tipo"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.tipo,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "tipo", $$v)
-                                            },
-                                            expression: "car.tipo"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-2.tipo")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Marca",
-                                            name: "marca",
-                                            danger: _vm.errors.first(
-                                              "step-2.marca"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.marca,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "marca", $$v)
-                                            },
-                                            expression: "car.marca"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-2.marca")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Modelo",
-                                            name: "modelo",
-                                            danger: _vm.errors.first(
-                                              "step-2.modelo"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.modelo,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "modelo", $$v)
-                                            },
-                                            expression: "car.modelo"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.modelo"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Año",
-                                            name: "ano",
-                                            danger: _vm.errors.first(
-                                              "step-2.ano"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.ano,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "ano", $$v)
-                                            },
-                                            expression: "car.ano"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-2.ano")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "N° Motor",
-                                            name: "motor",
-                                            danger: _vm.errors.first(
-                                              "step-2.motor"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.motor,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "motor", $$v)
-                                            },
-                                            expression: "car.motor"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-2.motor")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "N° Patente",
-                                            name: "patente",
-                                            danger: _vm.errors.first(
-                                              "step-2.patente"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.patente,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "patente", $$v)
-                                            },
-                                            expression: "car.patente"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.patente"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Color",
-                                            name: "color",
-                                            danger: _vm.errors.first(
-                                              "step-2.color"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.color,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "color", $$v)
-                                            },
-                                            expression: "car.color"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first("step-2.color")
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/2 w-full mt-2"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|numeric",
-                                              expression: "'required|numeric'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "N° Asientos",
-                                            name: "asientos",
-                                            danger: _vm.errors.first(
-                                              "step-2.asientos"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.car.asientos,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.car, "asientos", $$v)
-                                            },
-                                            expression: "car.asientos"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.asientos"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ]
               ),
               _vm._v(" "),
               _c(
