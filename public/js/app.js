@@ -46180,6 +46180,12 @@ var render = function() {
                                         _vm._v(
                                           "\n                    Documento\n                  "
                                         )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("vs-th", [
+                                        _vm._v(
+                                          "\n                    Link\n                  "
+                                        )
                                       ])
                                     ],
                                     1
