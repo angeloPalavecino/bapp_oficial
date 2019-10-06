@@ -37,8 +37,16 @@
           </vs-dropdown>
 
           <!-- DOCUEMTOS -->
-          <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento" @close="$close($event)">            
-            <div class="vx-row">
+          <vs-popup class="holamundo"  title="Documentos Conductor" :active.sync="popupDocumento"
+          @close="$close($event)">   
+
+          <vs-tabs position="left" color="primary" alignment="fixed">
+          <vs-tab label="Adjuntar" icon-pack="feather" icon="icon-upload">
+    
+         
+          <div class="vx-row">
+
+              
               <div class="vx-col md:w-1/2 w-full mt-2">
                 <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="tipo_documento" class="w-full"  >
                   <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
@@ -69,7 +77,52 @@
             </div>  
             <div class="vx-row">
             </div>
+          </vs-tab>
+          <vs-tab label="Documentos" icon-pack="feather" icon="icon-file-text">
+            <vs-table max-items="4" pagination  :data="documents">
+                  <template slot="header">
+                    <h3>
+                      Documentos Subidos
+                    </h3>
+                  </template>
+                  <template slot="thead">
+                    <vs-th>
+                      Nro
+                    </vs-th>
+                    <vs-th>
+                      Documento
+                    </vs-th>
+                    <vs-th>
+                      Link
+                    </vs-th>
+                  </template>
 
+                  <template slot-scope="{data}">
+                    <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                      <vs-td :data="data[indextr].numero">
+                        {{data[indextr].numero}}
+                      </vs-td>
+
+                      <vs-td :data="data[indextr].documento">
+                        {{data[indextr].documento}}
+                      </vs-td>
+
+                      <vs-td :data="data[indextr].ruta">
+                        {{data[indextr].ruta}}
+                      </vs-td>
+
+                    </vs-tr>
+                  </template>
+                </vs-table>
+              
+           
+
+
+
+
+
+          </vs-tab>
+        </vs-tabs>
           </vs-popup>
           <!-- FIN DOCUMENTOS -->
 
@@ -601,9 +654,23 @@ export default {
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
-      tipodocumentos_choices: [],    
-      documentos_choices: [],  
-      aux: 0
+      tipodocumentos_choices: [],      
+      aux: 0,
+      documents:[
+      {
+        "numero": 1,
+        "documento": "Leanne Graham",
+        "link": "Bret",
+       
+      },
+      {
+        "numero": 2,
+        "documento": "Ervin Howell",
+        "link": "Antonette",
+       
+      },
+    
+    ]
     };
   },
   computed: {
