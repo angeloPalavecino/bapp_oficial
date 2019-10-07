@@ -21,7 +21,7 @@
 
       },
       //Actualiza Registros
-    $submitActualizar() {
+    $submitActualizar($name = null) {
       $name = $name == null ? true : $name;
       const thisIns = this;
       const url = thisIns.ruta + this.item.id;

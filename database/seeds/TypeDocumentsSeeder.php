@@ -14,7 +14,7 @@ class TypeDocumentsSeeder extends Seeder
               
         $type_documents = [
             ['id' => 1,'name' => 'Cedula Identidad', 'habilitado' => 1, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
-            ['id' => 2,'name' => 'Cert. Antecedentes Penales', 'habilitado' => 1, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 2,'name' => 'Certificado Antecedentes Penales', 'habilitado' => 1, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
             ['id' => 3,'name' => 'Licencia de Conducir', 'habilitado' => 1, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
            
             ['id' => 4,'name' => 'Padron', 'habilitado' => 1, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
