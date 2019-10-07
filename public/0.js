@@ -2847,7 +2847,10 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "content-area__content" },
+                      {
+                        staticClass: "content-area__content",
+                        attrs: { id: "div-with-loading" }
+                      },
                       [
                         !_vm.hideScrollToTop
                           ? _c(
