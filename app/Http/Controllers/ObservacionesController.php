@@ -51,7 +51,7 @@ class ObservacionesController extends Controller
     public function store(Request $request)
     {
         $validation = $this->validator($request->all());
-
+   
         if ($validation->fails()) {
 
             return response()->json(
@@ -115,7 +115,7 @@ class ObservacionesController extends Controller
     public function update(Request $request, $id)
     {
         $validation = $this->validator($request->all());
-
+        
         if ($validation->fails()) {
 
             return response()->json(

@@ -63,13 +63,13 @@ class EmpresaController extends Controller
         //dd($request->all());
         $datos = $request->all();
         $empresa = $datos[0];
-        $servicioplana = $datos[1];
-        $serviciopasajero = $datos[2];
-        $serviciokm = $datos[3];
-        $responsables = $datos[4];
-        $sucursales = $datos[5];
-        $cicfac = $datos[6];
-        $cicprod = $datos[7];
+        //$servicioplana = $datos[1];
+        //$serviciopasajero = $datos[2];
+        //$serviciokm = $datos[3];
+        $responsables = $datos[1];
+        $sucursales = $datos[2];
+        $cicfac = $datos[3];
+        $cicprod = $datos[4];
         
         //Valida datos empresa
         $validation = $this->validator( $empresa);
@@ -107,16 +107,16 @@ class EmpresaController extends Controller
 
 
         //Agrega Servicio KMS
-        $serviciokm["empresa_id"] =  $emp->id;
-        $tserviciokm = ServiciosKMS::create($serviciokm);
+        //$serviciokm["empresa_id"] =  $emp->id;
+        //$tserviciokm = ServiciosKMS::create($serviciokm);
 
         //Agrega Servicio Pasajeros
-        $serviciopasajero["empresa_id"] =  $emp->id;
-        $tserviciopasajero = ServiciosPasajeros::create($serviciopasajero);
+        //$serviciopasajero["empresa_id"] =  $emp->id;
+        //$tserviciopasajero = ServiciosPasajeros::create($serviciopasajero);
 
         //Agrega Servicio Plana
-        $servicioplana["empresa_id"] =  $emp->id;
-        $tservicioplana = ServiciosPlanas::create($servicioplana);
+        //$servicioplana["empresa_id"] =  $emp->id;
+        //$tservicioplana = ServiciosPlanas::create($servicioplana);
         
         //Agrega Ciclo Produccion
         $cicprod["empresa_id"] =  $emp->id;
@@ -210,13 +210,13 @@ class EmpresaController extends Controller
 
         $datos = $request->all();
         $empresa = $datos[0];
-        $servicioplana = $datos[1];
-        $serviciopasajero = $datos[2];
-        $serviciokm = $datos[3];
-        $responsables = $datos[4];
-        $sucursales = $datos[5];
-        $cicfac = $datos[6];
-        $cicprod = $datos[7];
+        //$servicioplana = $datos[1];
+        //$serviciopasajero = $datos[2];
+        //$serviciokm = $datos[3];
+        $responsables = $datos[1];
+        $sucursales = $datos[2];
+        $cicfac = $datos[3];
+        $cicprod = $datos[4];
 
         $validation = $this->validator($empresa);
 
@@ -240,13 +240,13 @@ class EmpresaController extends Controller
         Ciclofacturacion::where('id', $cicfac['id'])->update($cicfac);
 
         //Actualizar Servicio KMS
-        ServiciosKMS::where('id', $serviciokm['id'])->update($serviciokm);
+        //ServiciosKMS::where('id', $serviciokm['id'])->update($serviciokm);
 
         //Actualizar Servicio Pasajeros
-        ServiciosPasajeros::where('id', $serviciopasajero['id'])->update($serviciopasajero);
+        //ServiciosPasajeros::where('id', $serviciopasajero['id'])->update($serviciopasajero);
 
         //Actualizar Servicio Plana
-        ServiciosPlanas::where('id', $servicioplana['id'])->update($servicioplana);
+        //ServiciosPlanas::where('id', $servicioplana['id'])->update($servicioplana);
         
         //Actualiza Sucursal   
         $auxsuc = array_column($sucursales, 'id');
@@ -411,9 +411,9 @@ class EmpresaController extends Controller
     {
 
         $empresa = Empresa::findOrFail($id);
-        $servicioskms = ServiciosKMS::where('empresa_id', $id)->get();
-        $serviciospasajeros = ServiciosPasajeros::where('empresa_id', $id)->get();
-        $serviciosplanas = ServiciosPlanas::where('empresa_id', $id)->get();
+        //$servicioskms = ServiciosKMS::where('empresa_id', $id)->get();
+        //$serviciospasajeros = ServiciosPasajeros::where('empresa_id', $id)->get();
+        //$serviciosplanas = ServiciosPlanas::where('empresa_id', $id)->get();
         $responsables = Responsable::where('empresa_id', $id)->get();
         $sucursales = Sucursal::where('empresa_id', $id)->get();
         $cicfac = Ciclofacturacion::where('empresa_id', $id)->get();
@@ -422,9 +422,9 @@ class EmpresaController extends Controller
         return response()->json(
             [
                 'status' => 'success',
-                'servicioplana' => $serviciosplanas->toArray(),
-                'serviciopasajero' => $serviciospasajeros->toArray(),
-                'serviciokm' => $servicioskms->toArray(),
+                //'servicioplana' => $serviciosplanas->toArray(),
+                //'serviciopasajero' => $serviciospasajeros->toArray(),
+                //'serviciokm' => $servicioskms->toArray(),
                 'responsables' => $responsables->toArray(),
                 'sucursales' => $sucursales->toArray(),
                 'cicfac' => $cicfac->toArray(),

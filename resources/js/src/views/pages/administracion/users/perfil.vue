@@ -233,13 +233,20 @@ export default {
                 
             })
             .catch(function (error) {
+                var textError;
+                 if(error.response.status == 300) { 
+                 textError = error.response.data.message;
+               }else{
+                 textError = error;
+              }
 
-                thisIns.$vs.notify({
+               thisIns.$vs.notify({
                   title:'Error',
-                  text: error,
+                  text: textError,
                   color:'danger',
                   iconPack: 'feather',
-                  icon:'icon-alert-circle'})
+                  icon:'icon-alert-circle'})         
+
             });
         } else {
         }

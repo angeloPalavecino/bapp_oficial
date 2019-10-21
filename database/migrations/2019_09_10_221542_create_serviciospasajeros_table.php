@@ -15,23 +15,17 @@ class CreateServiciospasajerosTable extends Migration
     {
         Schema::create('servicios_pasajeros', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('empresa_id');
-            $table->decimal('valorfz1', 8, 2);
-            $table->decimal('desdefz1', 8, 2);
-            $table->decimal('hastafz1', 8, 2);
-            $table->decimal('valorfz2', 8, 2);
-            $table->decimal('desdefz2', 8, 2);
-            $table->decimal('hastafz2', 8, 2);
-            $table->decimal('valorfz3', 8, 2);
-            $table->decimal('desdefz3', 8, 2);
-            $table->decimal('hastafz3', 8, 2);
+            $table->integer('num_psj_min');
+            $table->integer('num_psj_max');
+            $table->decimal('fac_rang_min', 9, 2);
+            $table->decimal('fac_rang_max', 9, 2);
+            $table->decimal('valor', 9, 2);
+            $table->decimal('fac_rang_fz1', 9, 2);
+            $table->decimal('valor_fz1', 9, 2);
+            $table->decimal('fac_rang_fz2', 9, 2);
+            $table->decimal('valor_fz2', 9, 2);
             $table->timestamps();
 
-
-            $table->foreign('empresa_id')
-            ->references('id')
-            ->on('empresas')
-            ->onDelete('cascade');
         });
     }
 
@@ -42,6 +36,6 @@ class CreateServiciospasajerosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('serviciospasajeros');
+        Schema::dropIfExists('servicios_pasajeros');
     }
 }

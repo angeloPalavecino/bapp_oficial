@@ -31,6 +31,10 @@ import Observaciones from './views/pages/administracion/observaciones/Observacio
 import ObsInternas from './views/pages/administracion/obsinternas/ObsInternas'
 import Moviles from './views/pages/administracion/moviles/Moviles'
 import TipoDocumentos from './views/pages/administracion/tipodocumentos/TipoDocumentos'
+//Tarifas
+import Pasajeros from './views/pages/administracion/tarifas/pasajeros/Pasajeros'
+import Kms from './views/pages/administracion/tarifas/kms/Kms'
+import Planas from './views/pages/administracion/tarifas/planas/Planas'
 
 
 
@@ -201,10 +205,58 @@ const router = new Router({
             auth: true,
             breadcrumb: [
               { title: 'Home', url: '/' },
-              { title: 'TipoDocumentos'},
+              { title: 'Tipo Documentos'},
               { title: 'Lista de Tipo de Documentos', active: true },
               ],
               pageTitle: 'Lista de tipo de documentos',
+
+          }
+        },
+
+        {
+          path: '/pages/administracion/tarifas/pasajeros/pasajeros',
+          name: 'tarifaspasajeros',
+          component: Pasajeros,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Tarifas Pasajeros'},
+              { title: 'Tarifas de Tarifas Pasajeros', active: true },
+              ],
+              pageTitle: 'Lista de Tarifas pasajeros',
+
+          }
+        },
+
+        {
+          path: '/pages/administracion/tarifas/planas/planas',
+          name: 'tarifasplanas',
+          component: Planas,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Tarifas Planas'},
+              { title: 'Lista de Tarifas Planas', active: true },
+              ],
+              pageTitle: 'Lista de Tarifas Planas',
+
+          }
+        },
+
+        {
+          path: '/pages/administracion/tarifas/kms/kms',
+          name: 'tarifaskms',
+          component: Kms,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Tarifas Kms'},
+              { title: 'Lista de Tarifas Kms', active: true },
+              ],
+              pageTitle: 'Lista de Tarifas Kms',
 
           }
         }

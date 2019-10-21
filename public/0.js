@@ -3485,6 +3485,30 @@ __webpack_require__.r(__webpack_exports__);
   slug: "empresas",
   icon: "GlobeIcon",
   i18n: "GlobeIcon"
+}, {
+  url: null,
+  name: "Tarifas",
+  icon: "DollarSignIcon",
+  i18n: "DollarSignIcon",
+  submenu: [{
+    url: "/pages/administracion/tarifas/pasajeros/pasajeros",
+    name: "Tarifa Pasajero",
+    slug: "tarifapasajero",
+    icon: "DollarSignIcon",
+    i18n: "DollarSignIcon"
+  }, {
+    url: "/pages/administracion/tarifas/planas/planas",
+    name: "Tarifa Plana",
+    slug: "tarifaplana",
+    icon: "DollarSignIcon",
+    i18n: "DollarSignIcon"
+  }, {
+    url: "/pages/administracion/tarifas/kms/kms",
+    name: "Tarifa Kms",
+    slug: "tarifakms",
+    icon: "DollarSignIcon",
+    i18n: "DollarSignIcon"
+  }]
 }]);
 
 /***/ }),

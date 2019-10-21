@@ -282,12 +282,20 @@ export default {
             
           })
           .catch(function (error) {
-            thisIns.$vs.notify({
-              title:'Error',
-              text: error,
-              color:'danger',
-              iconPack: 'feather',
-              icon:'icon-alert-circle'})
+            var textError;
+              if(error.response.status == 300) { 
+                 textError = error.response.data.message;
+               }else{
+                 textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+
           });
       },
     arrayColumn(array, columnName) {

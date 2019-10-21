@@ -2,11 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Models\ServiciosKMS;
+use App\Models\EmpresasHasServKMS;
+use App\Models\Empresa;
+
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ServiciosKMSController extends Controller
 {
+
+    public function validator(array $data){ 
+
+        return Validator::make($data, [
+             'descripcion' => 'required',
+             'cant_psjs' => 'required',
+             'min_servicio' => 'required',
+             'kms' => 'required',
+             'min' => 'required',
+             'bajada_bandera' => 'required',   
+             'porticos' => 'required',   
+         ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +32,19 @@ class ServiciosKMSController extends Controller
      */
     public function index()
     {
-        //
+        $empresas = Empresa::where('id', '>', 1)->get();
+
+        foreach ($empresas as $key => $item) {
+          
+            $item['cantidad'] = EmpresasHasServKMS::where('empresa_id', '=', $item->id)->count();
+             
+         }
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $empresas->toArray(),
+            ], 200);
     }
 
     /**
@@ -35,7 +65,32 @@ class ServiciosKMSController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $this->validator($request->all());
+           
+        if ($validation->fails()) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validation->errors(),
+                ], 300);
+           
+        }
+
+        $inputs = $request->all();
+
+        $servkms = ServiciosKMS::create($inputs);
+
+        EmpresasHasServKMS::create(array(
+            'empresa_id'     => $request->empresa_id,
+            'serv_kms_id'   => $servkms->id
+        ));
+        
+         return response()->json(
+            [
+                'status' => 'success',
+                'item' => $servkms->toArray()
+            ], 200);
     }
 
     /**
@@ -44,11 +99,33 @@ class ServiciosKMSController extends Controller
      * @param  \App\ServiciosKMS  $serviciosKMS
      * @return \Illuminate\Http\Response
      */
-    public function show(ServiciosKMS $serviciosKMS)
+    public function show(ServiciosKMS $serviciosKMS, $id)
     {
-        //
+        $servkms = ServiciosKMS::find($id);
+        
+        return response()->json(
+            [
+                'status' => 'success',
+                'item' => $servkms->toArray()
+            ], 200);
     }
 
+    public function listado($idEmpresa)
+    {
+            
+      
+        //$servplanas = EmpresasHasServPsj::whereHas('serviciospasajeros', function ($query) use ($idEmpresa) {
+        //    $query->where('empresa_id', '=', $idEmpresa);
+        //})->get();
+
+        $servkms = EmpresasHasServKMS::with('servicioskms')->get();
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $servkms->toArray()
+            ], 200);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -67,9 +144,65 @@ class ServiciosKMSController extends Controller
      * @param  \App\ServiciosKMS  $serviciosKMS
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ServiciosKMS $serviciosKMS)
+    public function update(Request $request, $id)
     {
-        //
+        $validation = $this->validator($request->all());
+        
+        if ($validation->fails()) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validation->errors(),
+                ], 300);
+           
+        }
+
+        $servkms = ServiciosKMS::where('id',$id)->first(); 
+
+        //dd($observacion);
+
+        if(!is_null($servkms)){
+    
+        $input = $request->all();
+
+        $descripcion        = $input['descripcion'];
+        $cant_psjs          = $input['cant_psjs'];
+        $min_servicio       = $input['min_servicio'];
+        $kms                = $input['kms'];
+        $min                = $input['min'];
+        $bajada_bandera     = $input['bajada_bandera'];
+        $porticos           = $input['porticos'];
+
+
+        $servkms = ServiciosKMS::where('id', $id)->update(array(
+            'descripcion'             => $descripcion, 
+            'cant_psjs'               => $cant_psjs, 
+            'min_servicio'            => $min_servicio, 
+            'kms'                     => $kms, 
+            'min'                     => $min, 
+            'bajada_bandera'          => $bajada_bandera,
+            'porticos'                => $porticos,
+         ));
+            
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'El registro ha sido actualizado!!'
+                ], 200);
+
+
+        }else{
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El registro no fue encontrado',
+                ], 300);
+
+           
+        }
     }
 
     /**
@@ -78,8 +211,80 @@ class ServiciosKMSController extends Controller
      * @param  \App\ServiciosKMS  $serviciosKMS
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ServiciosKMS $serviciosKMS)
+    public function destroy($id)
     {
-        //
+        try{
+            
+            $servkms = ServiciosKMS::findOrFail($id);
+            
+            if(!is_null($servkms)){
+                 
+                $servkms->delete();
+ 
+                 return response()->json(
+                     [
+                         'status' => 'success',
+                         'message' => 'El registro ha sido eliminada!!'
+                     ], 200);
+             
+             }else{
+         
+                 return response()->json(
+                     [
+                         'status' => 'error',
+                         'message' => 'El registro no existe!!'
+                     ], 300);
+             }
+ 
+ 
+         }catch(ModelNotFoundException $e){
+             
+             return response()->json(
+                 [
+                     'status' => 'error',
+                     'message' => 'El registro no existe!!'
+                 ], 300);
+   
+         }
+    }
+
+    public function borrar(Request $request )
+    {
+      
+        $ids = array_column($request->all(), 'id');
+        
+        try{
+
+            if(count($ids) > 0 ){          
+              
+                ServiciosKMS::destroy($ids);
+                
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'Los registros ha sido eliminados!'
+                    ], 200);
+
+            }else{
+        
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Error al intentar eliminar los registros!'
+                        ], 300);
+            }
+        
+
+        }catch(ModelNotFoundException $e){
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Error al intentar eliminar los registros!'
+                ], 300);
+  
+        }
+
+        
     }
 }

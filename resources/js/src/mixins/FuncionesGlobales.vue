@@ -9,13 +9,23 @@
           .then(function (response) {
               thisIns.items = response.data.items 
           })
+          
           .catch(function (error) {
-            thisIns.$vs.notify({
-              title:'Error',
-              text: error,
-              color:'danger',
-              iconPack: 'feather',
-              icon:'icon-alert-circle'})
+            var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+               icon:'icon-alert-circle'})         
+
+
           });
           
 
@@ -51,13 +61,20 @@
                    
             })
             .catch(function (error) {
+                var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
 
-                thisIns.$vs.notify({
+               thisIns.$vs.notify({
                   title:'Error',
-                  text: error,
+                  text: textError,
                   color:'danger',
                   iconPack: 'feather',
-                  icon:'icon-alert-circle'})
+                  icon:'icon-alert-circle'})         
+
             });
         } else {
         }
@@ -95,13 +112,22 @@
                 
                 
             })
-            .catch(function (error) {              
-                thisIns.$vs.notify({
+            .catch(function (error) {   
+              var textError;
+              if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
                   title:'Error',
-                  text: error,
+                  text: textError,
                   color:'danger',
                   iconPack: 'feather',
-                  icon:'icon-alert-circle'})
+                  icon:'icon-alert-circle'})         
+
+
             });
         } else {
         }
@@ -148,12 +174,20 @@
 
           })
           .catch(function (error) {
-            this.$vs.notify({
-              title:'Error',
-              text: error,
-              color:'danger',
-              iconPack: 'feather',
-              icon:'icon-alert-circle'})
+              var textError;
+              if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+
 
               delete this.ite;
               delete this.ind;
@@ -190,12 +224,20 @@
 
           })
           .catch(function (error) {
-            thisIns.$vs.notify({
-              title:'Error',
-              text: error,
-              color:'danger',
-              iconPack: 'feather',
-              icon:'icon-alert-circle'})       
+           var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+     
           });
 
    
@@ -299,12 +341,20 @@
 
          })
         .catch(function (error) {
-           thisIns.$vs.notify({
-             title:'Error',
-             text: error,
-             color:'danger',
-             iconPack: 'feather',
-             icon:'icon-alert-circle'})
+          var textError;
+            if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+
         });
     },
 
@@ -336,13 +386,20 @@
           })                                      
         })
         .catch(function (error) {
-          thisIns.$vs.notify({
-            title:'Error',
-            text: error,
-            color:'danger',
-            iconPack: 'feather',
-            icon:'icon-alert-circle'
-          })
+          var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+
         });
       } else {
       }

@@ -3703,9 +3703,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.$http.get(url).then(function (response) {
         thisIns.items = response.data.items;
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -3745,9 +3753,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
               icon: 'icon-alert-circle'
             });
           })["catch"](function (error) {
+            var textError;
+
+            if (error.response.status == 300) {
+              textError = error.response.data.message;
+            } else {
+              textError = error;
+            }
+
             thisIns.$vs.notify({
               title: 'Error',
-              text: error,
+              text: textError,
               color: 'danger',
               iconPack: 'feather',
               icon: 'icon-alert-circle'
@@ -3790,9 +3806,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
               icon: 'icon-alert-circle'
             });
           })["catch"](function (error) {
+            var textError;
+
+            if (error.response.status == 300) {
+              textError = error.response.data.message;
+            } else {
+              textError = error;
+            }
+
             thisIns.$vs.notify({
               title: 'Error',
-              text: error,
+              text: textError,
               color: 'danger',
               iconPack: 'feather',
               icon: 'icon-alert-circle'
@@ -3844,9 +3868,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         delete _this3.ite;
         delete _this3.ind;
       })["catch"](function (error) {
-        this.$vs.notify({
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -3887,9 +3919,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           icon: 'icon-alert-circle'
         });
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -3979,9 +4019,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           thisIns.item.imagen = response.data.item.imagen;
         }
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -4022,9 +4070,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             icon: 'icon-alert-circle'
           });
         })["catch"](function (error) {
+          var textError;
+
+          if (error.response.status == 300) {
+            textError = error.response.data.message;
+          } else {
+            textError = error;
+          }
+
           thisIns.$vs.notify({
             title: 'Error',
-            text: error,
+            text: textError,
             color: 'danger',
             iconPack: 'feather',
             icon: 'icon-alert-circle'
@@ -4228,12 +4284,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-var _custom;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
 //
 //
 //
@@ -4775,7 +4825,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var dict = {
-  custom: (_custom = {
+  custom: {
     razon_social: {
       required: 'El nombre es requerido'
     },
@@ -4790,124 +4840,143 @@ var dict = {
     fecha_incorporacion: {
       required: 'La fecha de incorporacion es requerido'
     },
-    servicioplana_desde: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+
+    /*servicioplana_desde:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    servicioplana_hasta: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+     servicioplana_hasta:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    servicioplana_distancia: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+     servicioplana_distancia:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    servicioplana_valormin: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    servicioplana_valormin:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    servicioplana_valorpsjadicional: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    servicioplana_valorpsjadicional:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    servicioplana_fz1: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    servicioplana_fz1:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    servicioplana_fz2: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    servicioplana_fz2:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    servicioplana_fz3: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    servicioplana_fz3:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_valorfz1: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_valorfz1:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_hastafz1: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_hastafz1:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_desdefz1: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_desdefz1:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_valorfz2: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_valorfz2:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_hastafz2: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_hastafz2:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_desdefz2: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_desdefz2:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_valorfz3: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_valorfz3:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_hastafz3: {
-      required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+    serviciopasajero_hastafz3:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
     },
-    serviciopasajero_desdefz3: {
+    serviciopasajero_desdefz3:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },
+     serviciopasajero_desdefz3:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },
+      serviciokms_valor:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },
+      serviciokms_distancia:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },
+      serviciokms_bajabandera:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },
+      serviciokms_valorportico:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },
+      serviciokms_tiempo:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },
+     serviciokms_pasajeros:{
+        required: 'El campo es requerido',
+        decimal: 'Debe ingresar solo numeros'
+    },*/
+    responsable_nombre: {
+      required: 'El nombre es requerido'
+    },
+    responsable_telefono: {
+      required: 'El telefono es requerido',
+      numeric: 'El numero de telefono debe ser valido'
+    },
+    responsable_email: {
+      required: 'El email es requerido',
+      email: 'Ingrese un email valido'
+    },
+    sucursal_nombre: {
+      required: 'El nombre es requerido'
+    },
+    sucursal_direccion: {
+      required: 'La direccion es requerido'
+    },
+    cicprod_tipo: {
+      required: 'El tipo es requerido'
+    },
+    cicprod_desde: {
       required: 'El campo es requerido',
-      decimal: 'Debe ingresar solo numeros'
+      numeric: 'Debe ingresar solo numeros'
+    },
+    cicprod_hasta: {
+      required: 'El campo es requerido',
+      numeric: 'Debe ingresar solo numeros'
+    },
+    cicfac_tipo: {
+      required: 'El tipo es requerido'
+    },
+    cicfac_desde: {
+      required: 'El campo es requerido',
+      numeric: 'Debe ingresar solo numeros'
+    },
+    cicfac_hasta: {
+      required: 'El campo es requerido',
+      numeric: 'Debe ingresar solo numeros'
     }
-  }, _defineProperty(_custom, "serviciopasajero_desdefz3", {
-    required: 'El campo es requerido',
-    decimal: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "serviciokms_valor", {
-    required: 'El campo es requerido',
-    decimal: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "serviciokms_distancia", {
-    required: 'El campo es requerido',
-    decimal: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "serviciokms_bajabandera", {
-    required: 'El campo es requerido',
-    decimal: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "serviciokms_valorportico", {
-    required: 'El campo es requerido',
-    decimal: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "serviciokms_tiempo", {
-    required: 'El campo es requerido',
-    decimal: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "serviciokms_pasajeros", {
-    required: 'El campo es requerido',
-    decimal: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "responsable_nombre", {
-    required: 'El nombre es requerido'
-  }), _defineProperty(_custom, "responsable_telefono", {
-    required: 'El telefono es requerido',
-    numeric: 'El numero de telefono debe ser valido'
-  }), _defineProperty(_custom, "responsable_email", {
-    required: 'El email es requerido',
-    email: 'Ingrese un email valido'
-  }), _defineProperty(_custom, "sucursal_nombre", {
-    required: 'El nombre es requerido'
-  }), _defineProperty(_custom, "sucursal_direccion", {
-    required: 'La direccion es requerido'
-  }), _defineProperty(_custom, "cicprod_tipo", {
-    required: 'El tipo es requerido'
-  }), _defineProperty(_custom, "cicprod_desde", {
-    required: 'El campo es requerido',
-    numeric: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "cicprod_hasta", {
-    required: 'El campo es requerido',
-    numeric: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "cicfac_tipo", {
-    required: 'El tipo es requerido'
-  }), _defineProperty(_custom, "cicfac_desde", {
-    required: 'El campo es requerido',
-    numeric: 'Debe ingresar solo numeros'
-  }), _defineProperty(_custom, "cicfac_hasta", {
-    required: 'El campo es requerido',
-    numeric: 'Debe ingresar solo numeros'
-  }), _custom)
+  }
 }; // register custom messages
 
 vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
@@ -4937,16 +5006,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       exportData: [],
       //autocompletes : [],
       aux: 0,
-      tipoOpciones: [{
-        text: "Por plana",
-        value: "1"
-      }, {
-        text: "Por pasajero",
-        value: "2"
-      }, {
-        text: "Por KM.",
-        value: "3"
-      }],
+
+      /* tipoOpciones: [
+         {text: "Por plana", value:"1"},
+         {text: "Por pasajero", value:"2"},
+         {text: "Por KM.", value:"3"},
+        
+       ],*/
       tipoCicloProduccion: [{
         text: "Por defecto (Mes Completo)",
         value: 31
@@ -4981,13 +5047,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         direccion: "",
         matriz: ""
       }],
-      serviciokm: {
-        pasajeros: 1
+
+      /*serviciokm : { pasajeros:1,},
+      serviciopasajero : {       
       },
-      serviciopasajero: {},
-      servicioplana: {
-        tipo: 1
-      },
+      servicioplana : {
+        tipo: 1,
+      },*/
       ciclofacturacion: {
         inicio: 1,
         fin: 1
@@ -5073,24 +5139,23 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         });
       });
     },
-    validateStep2: function validateStep2() {
+
+    /*validateStep2() {
+        return new Promise((resolve, reject) => {
+            this.$validator.validateAll("step-2").then(result => {
+                if (result) {           
+                    resolve(true)
+                } else {
+                    reject("correct all values");
+                }
+            })
+        })
+    },*/
+    validateStep3: function validateStep3() {
       var _this3 = this;
 
       return new Promise(function (resolve, reject) {
-        _this3.$validator.validateAll("step-2").then(function (result) {
-          if (result) {
-            resolve(true);
-          } else {
-            reject("correct all values");
-          }
-        });
-      });
-    },
-    validateStep3: function validateStep3() {
-      var _this4 = this;
-
-      return new Promise(function (resolve, reject) {
-        _this4.$validator.validateAll("step-3").then(function (result) {
+        _this3.$validator.validateAll("step-3").then(function (result) {
           if (result) {
             resolve(true);
           } else {
@@ -5100,10 +5165,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     validateStep4: function validateStep4() {
-      var _this5 = this;
+      var _this4 = this;
 
       return new Promise(function (resolve, reject) {
-        _this5.$validator.validateAll("step-4").then(function (result) {
+        _this4.$validator.validateAll("step-4").then(function (result) {
           if (result) {
             resolve(true);
           } else {
@@ -5113,19 +5178,19 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     validateStep5: function validateStep5() {
-      var _this6 = this;
+      var _this5 = this;
 
       return new Promise(function (resolve, reject) {
-        _this6.$validator.validateAll("step-5").then(function (result) {
+        _this5.$validator.validateAll("step-5").then(function (result) {
           if (result) {
-            if (_this6.modoEditar == false) {
-              var url = _this6.ruta + 'store';
+            if (_this5.modoEditar == false) {
+              var url = _this5.ruta + 'store';
 
-              _this6.submitRegistros(url);
+              _this5.submitRegistros(url);
             } else {
-              var _url = _this6.ruta + _this6.item.id;
+              var _url = _this5.ruta + _this5.item.id;
 
-              _this6.submitActualizaRegistros(_url);
+              _this5.submitActualizaRegistros(_url);
             }
 
             resolve(true);
@@ -5136,18 +5201,18 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     agregarPopUp: function agregarPopUp() {
-      var _this7 = this;
+      var _this6 = this;
 
       this.initValues();
       this.modoEditar = false;
       this.selected = [];
       setTimeout(function () {
-        _this7.inicializaAutocomplete();
+        _this6.inicializaAutocomplete();
       }, 500);
       this.popupActive = true;
     },
     editar: function editar(item) {
-      var _this8 = this;
+      var _this7 = this;
 
       this.initValues();
       this.modoEditar = true;
@@ -5161,7 +5226,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       this.traeOtrosDatos(item.id);
       this.selected = [];
       setTimeout(function () {
-        _this8.inicializaAutocomplete();
+        _this7.inicializaAutocomplete();
       }, 500);
       this.popupActive = true;
     },
@@ -5186,11 +5251,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
         direccion: "",
         matriz: ""
       }];
-      this.serviciokm = {
-        pasajeros: 1
-      }, this.serviciopasajero = {}, this.servicioplana = {
-        tipo: 1
-      }, this.ciclofacturacion = {
+      /* this.serviciokm = { pasajeros:1,},
+       this.serviciopasajero = {},
+       this.servicioplana = {
+         tipo: 1,
+       },*/
+
+      this.ciclofacturacion = {
         inicio: 1,
         fin: 1
       };
@@ -5204,21 +5271,80 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
     },
     //Enviar Registros
     submitRegistros: function submitRegistros(url) {
-      var _this9 = this;
+      var _this8 = this;
 
       var thisIns = this;
       this.datos = [];
-      this.datos.push(this.item);
-      this.datos.push(this.servicioplana);
-      this.datos.push(this.serviciopasajero);
-      this.datos.push(this.serviciokm);
+      this.datos.push(this.item); //this.datos.push(this.servicioplana);
+      //this.datos.push(this.serviciopasajero);
+      //this.datos.push(this.serviciokm);
+
       this.datos.push(this.responsables);
       this.datos.push(this.sucursales);
       this.datos.push(this.ciclofacturacion);
       this.datos.push(this.cicloproduccion);
       this.$validator.validateAll().then(function (result) {
         if (result) {
-          _this9.$http.post(url, _this9.datos) //this.item
+          _this8.$http.post(url, _this8.datos) //this.item
+          .then(function (res) {
+            _this8.$vs.loading({
+              type: 'radius',
+              scale: 0.6
+            });
+
+            _this8.$refrescaTabla();
+
+            _this8.initValues();
+
+            _this8.modoEditar = false;
+            _this8.popupActive = false;
+            setTimeout(function () {
+              _this8.$vs.loading.close();
+            }, 500);
+            thisIns.$vs.notify({
+              title: 'Exito',
+              text: 'El registro se ha creado con exito!.',
+              color: 'success',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
+            });
+          })["catch"](function (error) {
+            var textError;
+
+            if (error.response.status == 300) {
+              textError = error.response.data.message;
+            } else {
+              textError = error;
+            }
+
+            thisIns.$vs.notify({
+              title: 'Error',
+              text: textError,
+              color: 'danger',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
+            });
+          });
+        } else {}
+      });
+    },
+    //Actuliza Registros
+    submitActualizaRegistros: function submitActualizaRegistros(url) {
+      var _this9 = this;
+
+      var thisIns = this;
+      this.datos = [];
+      this.datos.push(this.item); //this.datos.push(this.servicioplana);
+      //this.datos.push(this.serviciopasajero);
+      //this.datos.push(this.serviciokm);
+
+      this.datos.push(this.responsables);
+      this.datos.push(this.sucursales);
+      this.datos.push(this.ciclofacturacion);
+      this.datos.push(this.cicloproduccion);
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          _this9.$http.put(url, _this9.datos) //this.item
           .then(function (res) {
             _this9.$vs.loading({
               type: 'radius',
@@ -5236,66 +5362,23 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
             }, 500);
             thisIns.$vs.notify({
               title: 'Exito',
-              text: 'El registro se ha creado con exito!.',
-              color: 'success',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle'
-            });
-          })["catch"](function (error) {
-            thisIns.$vs.notify({
-              title: 'Error',
-              text: error,
-              color: 'danger',
-              iconPack: 'feather',
-              icon: 'icon-alert-circle'
-            });
-          });
-        } else {}
-      });
-    },
-    //Actuliza Registros
-    submitActualizaRegistros: function submitActualizaRegistros(url) {
-      var _this10 = this;
-
-      var thisIns = this;
-      this.datos = [];
-      this.datos.push(this.item);
-      this.datos.push(this.servicioplana);
-      this.datos.push(this.serviciopasajero);
-      this.datos.push(this.serviciokm);
-      this.datos.push(this.responsables);
-      this.datos.push(this.sucursales);
-      this.datos.push(this.ciclofacturacion);
-      this.datos.push(this.cicloproduccion);
-      this.$validator.validateAll().then(function (result) {
-        if (result) {
-          _this10.$http.put(url, _this10.datos) //this.item
-          .then(function (res) {
-            _this10.$vs.loading({
-              type: 'radius',
-              scale: 0.6
-            });
-
-            _this10.$refrescaTabla();
-
-            _this10.initValues();
-
-            _this10.modoEditar = false;
-            _this10.popupActive = false;
-            setTimeout(function () {
-              _this10.$vs.loading.close();
-            }, 500);
-            thisIns.$vs.notify({
-              title: 'Exito',
               text: 'El registro se ha actualizado con exito!.',
               color: 'success',
               iconPack: 'feather',
               icon: 'icon-alert-circle'
             });
           })["catch"](function (error) {
+            var textError;
+
+            if (error.response.status == 300) {
+              textError = error.response.data.message;
+            } else {
+              textError = error;
+            }
+
             thisIns.$vs.notify({
               title: 'Error',
-              text: error,
+              text: textError,
               color: 'danger',
               iconPack: 'feather',
               icon: 'icon-alert-circle'
@@ -5305,26 +5388,34 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize('en', dict);
       });
     },
     traeOtrosDatos: function traeOtrosDatos(id) {
-      var _this11 = this;
+      var _this10 = this;
 
       //Carga datos empresa   
       var thisIns = this;
       var url = this.ruta + 'otros/' + this.item.id; //thisIns.treeData = {};
 
       this.$http.get(url).then(function (response) {
-        _this11.servicioplana = response.data.servicioplana[0];
-        _this11.serviciopasajero = response.data.serviciopasajero[0];
-        _this11.serviciokm = response.data.serviciokm[0];
-        _this11.responsables = response.data.responsables;
-        _this11.sucursales = response.data.sucursales;
-        _this11.ciclofacturacion = response.data.cicfac[0];
-        _this11.cicloproduccion = response.data.cicpro[0];
-        response.data.cicfac[0].dias === 0 ? _this11.disabledcicfac = false : _this11.disabledcicfac = true;
-        response.data.cicpro[0].dias === 0 ? _this11.disabledcicpro = false : _this11.disabledcicpro = true;
+        //this.servicioplana = response.data.servicioplana[0]
+        //this.serviciopasajero = response.data.serviciopasajero[0]
+        //this.serviciokm = response.data.serviciokm[0]
+        _this10.responsables = response.data.responsables;
+        _this10.sucursales = response.data.sucursales;
+        _this10.ciclofacturacion = response.data.cicfac[0];
+        _this10.cicloproduccion = response.data.cicpro[0];
+        response.data.cicfac[0].dias === 0 ? _this10.disabledcicfac = false : _this10.disabledcicfac = true;
+        response.data.cicpro[0].dias === 0 ? _this10.disabledcicpro = false : _this10.disabledcicpro = true;
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -5799,9 +5890,17 @@ __webpack_require__.r(__webpack_exports__);
       this.$http.get('empresas/empresas').then(function (response) {
         thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -6565,36 +6664,60 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.$http.get("roles/roles").then(function (response) {
         thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
-          title: "Error",
-          text: error,
-          color: "danger",
-          iconPack: "feather",
-          icon: "icon-alert-circle"
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
         });
       }); //Carga Empresa
 
       this.$http.get("empresas/empresas").then(function (response) {
         thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
-          title: "Error",
-          text: error,
-          color: "danger",
-          iconPack: "feather",
-          icon: "icon-alert-circle"
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
         });
       }); //Charge Type Documents
 
       this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
         thisIns.tipodocumentos_choices = response.data.items;
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
-          title: "Error",
-          text: error,
-          color: "danger",
-          iconPack: "feather",
-          icon: "icon-alert-circle"
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
         });
       });
     },
@@ -7424,9 +7547,17 @@ __webpack_require__.r(__webpack_exports__);
         //thisIns.permisos = response.data.permisos //thisIns.formatData(response.data.users) formatear data
         thisIns.options = response.data.permisos_aux;
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -7457,6 +7588,1831 @@ __webpack_require__.r(__webpack_exports__);
         permisos: []
       };
       this.errors.clear();
+    }
+  },
+  created: function created() {
+    this.$refrescaTabla();
+    this.refrescaOtrosDatos();
+  },
+  mounted: function mounted() {
+    this.isMounted = true;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// For custom error message
+
+var dict = {
+  custom: {
+    descripcion: {
+      required: 'El campo es requerido'
+    },
+    cant_psjs: {
+      required: 'El campo es requerido'
+    },
+    min_servicio: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    kms: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    min: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    bajada_bandera: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    porticos: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    }
+  }
+}; // register custom messages
+
+vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('en', dict);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {},
+  data: function data() {
+    return {
+      ruta: '/tarifas/kms/',
+      selected: [],
+      items: [],
+      itemsPerPage: 4,
+      isMounted: false,
+      ite: "",
+      ind: "",
+      popupActive: false,
+      popupParametros: false,
+      item: {
+        cant_psjs: 1
+      },
+      parametros: [],
+      modoEditar: false,
+      exportData: [],
+      aux: 0,
+      empresa_choices: [],
+      disabledempresas: false
+    };
+  },
+  computed: {
+    currentPage: function currentPage() {
+      if (this.isMounted) {
+        return this.$refs.table.currentx;
+      }
+
+      return 0;
+    }
+  },
+  methods: {
+    editar: function editar(item) {
+      //this.initValues();
+      this.modoEditar = true;
+      this.item.id = item.id;
+      this.item.descripcion = item.servicioskms[0].descripcion;
+      this.item.cant_psjs = item.servicioskms[0].cant_psjs;
+      this.item.min_servicio = item.servicioskms[0].min_servicio;
+      this.item.kms = item.servicioskms[0].kms;
+      this.item.min = item.servicioskms[0].min;
+      this.item.bajada_bandera = item.servicioskms[0].bajada_bandera;
+      this.item.porticos = item.servicioskms[0].porticos;
+      this.item.empresa_id = item.empresa_id;
+      this.disabledempresas = true;
+      this.selected = [];
+      this.popupActive = true;
+    },
+    initValues: function initValues() {
+      if (this.modoEditar == true) {
+        var idEmpresa = this.item.empresa_id;
+        this.selected = [];
+        this.resfrescaDatosListado(idEmpresa);
+      }
+
+      this.item = {
+        cant_psjs: 1,
+        empresa_id: ''
+      };
+      this.errors.clear();
+      this.disabledempresas = false;
+    },
+    listadoParametros: function listadoParametros(tr) {
+      var _this = this;
+
+      this.parametros = [];
+      var idEmpresa = tr.id;
+      this.resfrescaDatosListado(idEmpresa);
+      setTimeout(function () {
+        _this.popupParametros = true;
+      }, 300);
+    },
+    getStatusColor: function getStatusColor(status) {
+      if (status > 0) return "success";
+      if (status == 0) return "danger";
+      return "danger";
+    },
+    resfrescaDatosListado: function resfrescaDatosListado(idEmpresa) {
+      var thisIns = this;
+      var url = thisIns.ruta;
+      this.$http.get(url + 'listado/' + idEmpresa).then(function (response) {
+        thisIns.parametros = response.data.items;
+      })["catch"](function (error) {
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: "Error al traer los parametros",
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    },
+    refrescaOtrosDatos: function refrescaOtrosDatos() {
+      var thisIns = this; //Carga Empresa
+
+      this.$http.get('empresas/empresas').then(function (response) {
+        thisIns.empresa_choices = response.data.items;
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    },
+    accion: function accion(seleccion) {
+      switch (seleccion) {
+        case 1:
+          this.aux = this.selected.length;
+
+          if (this.aux > 0) {
+            this.$vs.dialog({
+              type: 'confirm',
+              color: 'danger',
+              title: "Borrado masivo",
+              text: "Esta seguro que desea eliminar todos lo registros seleccionados?",
+              accept: this.aceptaBorradoMasivo,
+              cancel: this.$cancelarBorradoMasivo
+            });
+          } else {
+            this.$vs.dialog({
+              color: 'danger',
+              title: 'Error',
+              text: 'Debe seleccionar al menos un registro para realizar esta accion.',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
+            });
+          }
+
+          break;
+
+        case 2:
+          //Arreglar datos excel
+          var datos = this.parametros;
+          this.$csvExport(datos);
+          break;
+
+        default:
+          return;
+      }
+    },
+    //Borrado Registro
+    submitEliminar: function submitEliminar(x, index) {
+      this.ite = x;
+      this.ind = index;
+      this.selected = [];
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: "Eliminar registro",
+        text: "Esta seguro que desea eliminar el registro seleccionado?",
+        accept: this.aceptaBorrado,
+        cancel: this.cancelarBorrado
+      });
+    },
+    //Acepta Borrado
+    aceptaBorrado: function aceptaBorrado() {
+      var _this2 = this;
+
+      var thisIns = this;
+      var url = thisIns.ruta + this.ite.id;
+      var idEmpresa = this.ite.empresa_id;
+      this.$http["delete"](url).then(function () {
+        _this2.$vs.loading({
+          type: 'radius',
+          scale: 0.6
+        });
+
+        _this2.$refrescaTabla();
+
+        _this2.selected = [];
+
+        _this2.resfrescaDatosListado(idEmpresa);
+
+        setTimeout(function () {
+          _this2.$vs.loading.close();
+        }, 500);
+
+        _this2.$vs.notify({
+          title: 'Exito',
+          text: 'El registro fue eliminado exitosamente',
+          color: 'success',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+
+        delete _this2.ite;
+        delete _this2.ind;
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+        delete this.ite;
+        delete this.ind;
+      });
+    },
+    //Cancela Borrado
+    cancelarBorrado: function cancelarBorrado() {
+      delete this.ite;
+      delete this.ind;
+      this.selected = [];
+    },
+    //Acepta el borrado masivo
+    aceptaBorradoMasivo: function aceptaBorradoMasivo() {
+      var _this3 = this;
+
+      var thisIns = this;
+      var registrosSeleccionados = this.selected;
+      var url = thisIns.ruta + 'borrar';
+      var idEmpresa = this.ite.empresa_id;
+      this.$http.post(url, registrosSeleccionados).then(function () {
+        thisIns.$vs.loading({
+          type: 'radius',
+          scale: 0.6
+        });
+
+        _this3.$refrescaTabla();
+
+        _this3.selected = [];
+
+        _this3.resfrescaDatosListado(idEmpresa);
+
+        setTimeout(function () {
+          _this3.$vs.loading.close();
+        }, 500);
+        thisIns.$vs.notify({
+          title: 'Exito',
+          text: 'Los registros han sido eliminado exitosamente',
+          color: 'success',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    }
+  },
+  created: function created() {
+    this.$refrescaTabla();
+    this.refrescaOtrosDatos();
+  },
+  mounted: function mounted() {
+    this.isMounted = true;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// For custom error message
+
+var dict = {
+  custom: {
+    num_psj_min: {
+      required: 'El campo es requerido'
+    },
+    num_psj_max: {
+      required: 'El campo es requerido'
+    },
+    fac_rang_min: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    fac_rang_max: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    valor: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    fac_rang_fz1: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    valor_fz1: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    fac_rang_fz2: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    valor_fz2: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    }
+  }
+}; // register custom messages
+
+vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('en', dict);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {},
+  data: function data() {
+    return {
+      ruta: '/tarifas/pasajeros/',
+      selected: [],
+      items: [],
+      itemsPerPage: 4,
+      isMounted: false,
+      ite: "",
+      ind: "",
+      popupActive: false,
+      popupParametros: false,
+      item: {
+        num_psj_min: 1,
+        num_psj_max: 1
+      },
+      parametros: [],
+      modoEditar: false,
+      exportData: [],
+      aux: 0,
+      empresa_choices: [],
+      disabledempresas: false
+    };
+  },
+  computed: {
+    currentPage: function currentPage() {
+      if (this.isMounted) {
+        return this.$refs.table.currentx;
+      }
+
+      return 0;
+    }
+  },
+  methods: {
+    editar: function editar(item) {
+      //this.initValues();
+      this.modoEditar = true;
+      this.item.id = item.id;
+      this.item.num_psj_min = item.serviciospasajeros[0].num_psj_min;
+      this.item.num_psj_max = item.serviciospasajeros[0].num_psj_max;
+      this.item.fac_rang_min = item.serviciospasajeros[0].fac_rang_min;
+      this.item.fac_rang_max = item.serviciospasajeros[0].fac_rang_max;
+      this.item.valor = item.serviciospasajeros[0].valor;
+      this.item.fac_rang_fz1 = item.serviciospasajeros[0].fac_rang_fz1;
+      this.item.valor_fz1 = item.serviciospasajeros[0].valor_fz1;
+      this.item.fac_rang_fz2 = item.serviciospasajeros[0].fac_rang_fz2;
+      this.item.valor_fz2 = item.serviciospasajeros[0].valor_fz2;
+      this.item.empresa_id = item.empresa_id;
+      this.disabledempresas = true;
+      this.selected = [];
+      this.popupActive = true;
+    },
+    initValues: function initValues() {
+      if (this.modoEditar == true) {
+        var idEmpresa = this.item.empresa_id;
+        this.selected = [];
+        this.resfrescaDatosListado(idEmpresa);
+      }
+
+      this.item = {
+        num_psj_min: 1,
+        num_psj_max: 1,
+        empresa_id: ''
+      };
+      this.errors.clear();
+      this.disabledempresas = false;
+    },
+    listadoParametros: function listadoParametros(tr) {
+      var _this = this;
+
+      this.parametros = [];
+      var idEmpresa = tr.id;
+      this.resfrescaDatosListado(idEmpresa);
+      setTimeout(function () {
+        _this.popupParametros = true;
+      }, 300);
+    },
+    getStatusColor: function getStatusColor(status) {
+      if (status > 0) return "success";
+      if (status == 0) return "danger";
+      return "danger";
+    },
+    resfrescaDatosListado: function resfrescaDatosListado(idEmpresa) {
+      var thisIns = this;
+      var url = thisIns.ruta;
+      this.$http.get(url + 'listado/' + idEmpresa).then(function (response) {
+        thisIns.parametros = response.data.items;
+      })["catch"](function (error) {
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: "Error al traer los parametros",
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    },
+    refrescaOtrosDatos: function refrescaOtrosDatos() {
+      var thisIns = this; //Carga Empresa
+
+      this.$http.get('empresas/empresas').then(function (response) {
+        thisIns.empresa_choices = response.data.items;
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    },
+    accion: function accion(seleccion) {
+      switch (seleccion) {
+        case 1:
+          this.aux = this.selected.length;
+
+          if (this.aux > 0) {
+            this.$vs.dialog({
+              type: 'confirm',
+              color: 'danger',
+              title: "Borrado masivo",
+              text: "Esta seguro que desea eliminar todos lo registros seleccionados?",
+              accept: this.aceptaBorradoMasivo,
+              cancel: this.$cancelarBorradoMasivo
+            });
+          } else {
+            this.$vs.dialog({
+              color: 'danger',
+              title: 'Error',
+              text: 'Debe seleccionar al menos un registro para realizar esta accion.',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
+            });
+          }
+
+          break;
+
+        case 2:
+          //Arreglar datos excel
+          var datos = this.parametros;
+          this.$csvExport(datos);
+          break;
+
+        default:
+          return;
+      }
+    },
+    //Borrado Registro
+    submitEliminar: function submitEliminar(x, index) {
+      this.ite = x;
+      this.ind = index;
+      this.selected = [];
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: "Eliminar registro",
+        text: "Esta seguro que desea eliminar el registro seleccionado?",
+        accept: this.aceptaBorrado,
+        cancel: this.cancelarBorrado
+      });
+    },
+    //Acepta Borrado
+    aceptaBorrado: function aceptaBorrado() {
+      var _this2 = this;
+
+      var thisIns = this;
+      var url = thisIns.ruta + this.ite.id;
+      var idEmpresa = this.ite.empresa_id;
+      this.$http["delete"](url).then(function () {
+        _this2.$vs.loading({
+          type: 'radius',
+          scale: 0.6
+        });
+
+        _this2.$refrescaTabla();
+
+        _this2.selected = [];
+
+        _this2.resfrescaDatosListado(idEmpresa);
+
+        setTimeout(function () {
+          _this2.$vs.loading.close();
+        }, 500);
+
+        _this2.$vs.notify({
+          title: 'Exito',
+          text: 'El registro fue eliminado exitosamente',
+          color: 'success',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+
+        delete _this2.ite;
+        delete _this2.ind;
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+        delete this.ite;
+        delete this.ind;
+      });
+    },
+    //Cancela Borrado
+    cancelarBorrado: function cancelarBorrado() {
+      delete this.ite;
+      delete this.ind;
+      this.selected = [];
+    },
+    //Acepta el borrado masivo
+    aceptaBorradoMasivo: function aceptaBorradoMasivo() {
+      var _this3 = this;
+
+      var thisIns = this;
+      var registrosSeleccionados = this.selected;
+      var url = thisIns.ruta + 'borrar';
+      var idEmpresa = this.ite.empresa_id;
+      this.$http.post(url, registrosSeleccionados).then(function () {
+        thisIns.$vs.loading({
+          type: 'radius',
+          scale: 0.6
+        });
+
+        _this3.$refrescaTabla();
+
+        _this3.selected = [];
+
+        _this3.resfrescaDatosListado(idEmpresa);
+
+        setTimeout(function () {
+          _this3.$vs.loading.close();
+        }, 500);
+        thisIns.$vs.notify({
+          title: 'Exito',
+          text: 'Los registros han sido eliminado exitosamente',
+          color: 'success',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    }
+  },
+  created: function created() {
+    this.$refrescaTabla();
+    this.refrescaOtrosDatos();
+  },
+  mounted: function mounted() {
+    this.isMounted = true;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// For custom error message
+
+var dict = {
+  custom: {
+    minima: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    num_psj_min: {
+      required: 'El campo es requerido'
+    },
+    num_psj_max: {
+      required: 'El campo es requerido'
+    },
+    psj_adicional: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    fuera_zona_1: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    },
+    fuera_zona_2: {
+      required: 'El campo es requerido',
+      decimal: 'El valor debe ser numerico'
+    }
+  }
+}; // register custom messages
+
+vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('en', dict);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {},
+  data: function data() {
+    return {
+      ruta: '/tarifas/planas/',
+      selected: [],
+      items: [],
+      itemsPerPage: 4,
+      isMounted: false,
+      ite: "",
+      ind: "",
+      popupActive: false,
+      popupParametros: false,
+      item: {
+        num_psj_min: 1,
+        num_psj_max: 1
+      },
+      parametros: [],
+      modoEditar: false,
+      exportData: [],
+      aux: 0,
+      empresa_choices: [],
+      disabledempresas: false
+    };
+  },
+  computed: {
+    currentPage: function currentPage() {
+      if (this.isMounted) {
+        return this.$refs.table.currentx;
+      }
+
+      return 0;
+    }
+  },
+  methods: {
+    editar: function editar(item) {
+      //this.initValues();
+      this.modoEditar = true;
+      this.item.id = item.id;
+      this.item.minima = item.serviciosplanas[0].minima;
+      this.item.num_psj_min = item.serviciosplanas[0].num_psj_min;
+      this.item.num_psj_max = item.serviciosplanas[0].num_psj_max;
+      this.item.psj_adicional = item.serviciosplanas[0].psj_adicional;
+      this.item.fuera_zona_1 = item.serviciosplanas[0].fuera_zona_1;
+      this.item.fuera_zona_2 = item.serviciosplanas[0].fuera_zona_2;
+      this.item.empresa_id = item.empresa_id;
+      this.disabledempresas = true;
+      this.selected = [];
+      this.popupActive = true;
+    },
+    initValues: function initValues() {
+      if (this.modoEditar == true) {
+        var idEmpresa = this.item.empresa_id;
+        this.selected = [];
+        this.resfrescaDatosListado(idEmpresa);
+      }
+
+      this.item = {
+        num_psj_min: 1,
+        num_psj_max: 1,
+        empresa_id: ''
+      };
+      this.errors.clear();
+      this.disabledempresas = false;
+    },
+    listadoParametros: function listadoParametros(tr) {
+      var _this = this;
+
+      this.parametros = [];
+      var idEmpresa = tr.id;
+      this.resfrescaDatosListado(idEmpresa);
+      setTimeout(function () {
+        _this.popupParametros = true;
+      }, 300);
+    },
+    getStatusColor: function getStatusColor(status) {
+      if (status > 0) return "success";
+      if (status == 0) return "danger";
+      return "danger";
+    },
+    resfrescaDatosListado: function resfrescaDatosListado(idEmpresa) {
+      var thisIns = this;
+      var url = thisIns.ruta;
+      this.$http.get(url + 'listado/' + idEmpresa).then(function (response) {
+        thisIns.parametros = response.data.items;
+      })["catch"](function (error) {
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: "Error al traer los parametros",
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    },
+    refrescaOtrosDatos: function refrescaOtrosDatos() {
+      var thisIns = this; //Carga Empresa
+
+      this.$http.get('empresas/empresas').then(function (response) {
+        thisIns.empresa_choices = response.data.items;
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+    },
+    accion: function accion(seleccion) {
+      switch (seleccion) {
+        case 1:
+          this.aux = this.selected.length;
+
+          if (this.aux > 0) {
+            this.$vs.dialog({
+              type: 'confirm',
+              color: 'danger',
+              title: "Borrado masivo",
+              text: "Esta seguro que desea eliminar todos lo registros seleccionados?",
+              accept: this.aceptaBorradoMasivo,
+              cancel: this.$cancelarBorradoMasivo
+            });
+          } else {
+            this.$vs.dialog({
+              color: 'danger',
+              title: 'Error',
+              text: 'Debe seleccionar al menos un registro para realizar esta accion.',
+              iconPack: 'feather',
+              icon: 'icon-alert-circle'
+            });
+          }
+
+          break;
+
+        case 2:
+          //Arreglar datos excel
+          var datos = this.parametros;
+          this.$csvExport(datos);
+          break;
+
+        default:
+          return;
+      }
+    },
+    //Borrado Registro
+    submitEliminar: function submitEliminar(x, index) {
+      this.ite = x;
+      this.ind = index;
+      this.selected = [];
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: "Eliminar registro",
+        text: "Esta seguro que desea eliminar el registro seleccionado?",
+        accept: this.aceptaBorrado,
+        cancel: this.cancelarBorrado
+      });
+    },
+    //Acepta Borrado
+    aceptaBorrado: function aceptaBorrado() {
+      var _this2 = this;
+
+      var thisIns = this;
+      var url = thisIns.ruta + this.ite.id;
+      var idEmpresa = this.ite.empresa_id;
+      this.$http["delete"](url).then(function () {
+        _this2.$vs.loading({
+          type: 'radius',
+          scale: 0.6
+        });
+
+        _this2.$refrescaTabla();
+
+        _this2.selected = [];
+
+        _this2.resfrescaDatosListado(idEmpresa);
+
+        setTimeout(function () {
+          _this2.$vs.loading.close();
+        }, 500);
+
+        _this2.$vs.notify({
+          title: 'Exito',
+          text: 'El registro fue eliminado exitosamente',
+          color: 'success',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+
+        delete _this2.ite;
+        delete _this2.ind;
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+        delete this.ite;
+        delete this.ind;
+      });
+    },
+    //Cancela Borrado
+    cancelarBorrado: function cancelarBorrado() {
+      delete this.ite;
+      delete this.ind;
+      this.selected = [];
+    },
+    //Acepta el borrado masivo
+    aceptaBorradoMasivo: function aceptaBorradoMasivo() {
+      var _this3 = this;
+
+      var thisIns = this;
+      var registrosSeleccionados = this.selected;
+      var url = thisIns.ruta + 'borrar';
+      var idEmpresa = this.ite.empresa_id;
+      this.$http.post(url, registrosSeleccionados).then(function () {
+        thisIns.$vs.loading({
+          type: 'radius',
+          scale: 0.6
+        });
+
+        _this3.$refrescaTabla();
+
+        _this3.selected = [];
+
+        _this3.resfrescaDatosListado(idEmpresa);
+
+        setTimeout(function () {
+          _this3.$vs.loading.close();
+        }, 500);
+        thisIns.$vs.notify({
+          title: 'Exito',
+          text: 'Los registros han sido eliminado exitosamente',
+          color: 'success',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: textError,
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
     }
   },
   created: function created() {
@@ -7896,9 +9852,17 @@ __webpack_require__.r(__webpack_exports__);
               icon: 'icon-alert-circle'
             });
           })["catch"](function (error) {
+            var textError;
+
+            if (error.response.status == 300) {
+              textError = error.response.data.message;
+            } else {
+              textError = error;
+            }
+
             thisIns.$vs.notify({
               title: 'Error',
-              text: error,
+              text: textError,
               color: 'danger',
               iconPack: 'feather',
               icon: 'icon-alert-circle'
@@ -8301,9 +10265,17 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
       this.$http.get('roles/roles').then(function (response) {
         thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -8313,9 +10285,17 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
       this.$http.get('users/empresas').then(function (response) {
         thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
+        var textError;
+
+        if (error.response.status == 300) {
+          textError = error.response.data.message;
+        } else {
+          textError = error;
+        }
+
         thisIns.$vs.notify({
           title: 'Error',
-          text: error,
+          text: textError,
           color: 'danger',
           iconPack: 'feather',
           icon: 'icon-alert-circle'
@@ -9272,6 +11252,63 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 // module
 exports.push([module.i, ".selectExample {\n  margin: 0px;\n}\n.con-select-example {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 10px;\n}\n.con-select .vs-select {\n  width: 100%;\n  margin: 20px;\n}\n@media (max-width: 550px) {\n.con-select {\n    flex-direction: column;\n}\n.con-select .vs-select {\n    width: 100%;\n}\n}\n.multiselect__tags {\n  border: 1px solid rgba(0, 0, 0, 0.2) !important;\n  font-size: 12px;\n  z-index: 999999 !important;\n}\n.multiselect__single {\n  color: #adadad !important;\n  font-size: 12px !important;\n  z-index: 999999 !important;\n}\n.multiselect__placeholder {\n  color: #adadad !important;\n  z-index: 999999 !important;\n  font-size: 12px !important;\n}\n.multiselect--active {\n  z-index: 999999 !important;\n}\n.multiselect__option {\n  cursor: pointer !important;\n  overflow: hidden !important;\n  z-index: 999999 !important;\n  text-overflow: ellipsis !important;\n  transition: all 0.2s ease;\n  font-size: 12px;\n}\n.permisos .vs-checkbox {\n  justify-content: center !important;\n}\n.permisos th .vs-table-text {\n  justify-content: center !important;\n}\n#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/lib/loader.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 55000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/lib/loader.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 55000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/lib/loader.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 55000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}", ""]);
 
 // exports
 
@@ -17672,6 +19709,96 @@ options.transform = transform
 options.insertInto = undefined;
 
 var update = __webpack_require__(/*! ../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/lib/loader.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../../../node_modules/css-loader!../../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../../../node_modules/sass-loader/lib/loader.js??ref--8-3!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Kms.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/lib/loader.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../../../node_modules/css-loader!../../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../../../node_modules/sass-loader/lib/loader.js??ref--8-3!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Pasajeros.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--8-2!./node_modules/sass-loader/lib/loader.js??ref--8-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../../../node_modules/css-loader!../../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../../../node_modules/sass-loader/lib/loader.js??ref--8-3!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Planas.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -41537,1493 +43664,6 @@ var render = function() {
                               staticClass: "mb-5",
                               attrs: {
                                 title: "Paso 2",
-                                icon: "feather icon-credit-card",
-                                "before-change": _vm.validateStep2
-                              }
-                            },
-                            [
-                              _c(
-                                "form",
-                                { attrs: { "data-vv-scope": "step-2" } },
-                                [
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [
-                                          _c("h5", [
-                                            _vm._v("Servicio por plana")
-                                          ])
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Valor",
-                                            name: "servicioplana_valormin",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.servicioplana_valormin"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.servicioplana.valormin,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.servicioplana,
-                                                "valormin",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "servicioplana.valormin"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.servicioplana_valormin"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Desde",
-                                            name: "servicioplana_desde",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.servicioplana_desde"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.servicioplana.desde,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.servicioplana,
-                                                "desde",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "servicioplana.desde"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.servicioplana_desde"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Hasta",
-                                            name: "servicioplana_hasta",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.servicioplana_hasta"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.servicioplana.hasta,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.servicioplana,
-                                                "hasta",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "servicioplana.hasta"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.servicioplana_hasta"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor psj adicional",
-                                            name:
-                                              "servicioplana_valorpsjadicional",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.servicioplana_valorpsjadicional"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.servicioplana
-                                                .valorpsjadicional,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.servicioplana,
-                                                "valorpsjadicional",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "servicioplana.valorpsjadicional"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.servicioplana_valorpsjadicional"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-6"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-radio",
-                                          {
-                                            staticClass: "mt-1",
-                                            attrs: {
-                                              color: "success",
-                                              "vs-value": "1"
-                                            },
-                                            model: {
-                                              value: _vm.servicioplana.tipo,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.servicioplana,
-                                                  "tipo",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "servicioplana.tipo"
-                                            }
-                                          },
-                                          [_vm._v("Programado")]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-6"
-                                      },
-                                      [
-                                        _c(
-                                          "vs-radio",
-                                          {
-                                            staticClass: "mt-1",
-                                            attrs: {
-                                              color: "danger",
-                                              "vs-value": "0"
-                                            },
-                                            model: {
-                                              value: _vm.servicioplana.tipo,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  _vm.servicioplana,
-                                                  "tipo",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "servicioplana.tipo"
-                                            }
-                                          },
-                                          [_vm._v("Transportado")]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor F.Zona 1",
-                                            name: "servicioplana_fz1",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.servicioplana_fz1"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.servicioplana.fz1,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.servicioplana,
-                                                "fz1",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "servicioplana.fz1"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.servicioplana_fz1"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor F.Zona 2",
-                                            name: "servicioplana_fz2",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.servicioplana_fz2"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.servicioplana.fz2,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.servicioplana,
-                                                "fz2",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "servicioplana.fz2"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.servicioplana_fz2"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor F.Zona 3",
-                                            name: "servicioplana_fz3",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.servicioplana_fz3"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.servicioplana.fz3,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.servicioplana,
-                                                "fz3",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "servicioplana.fz3"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.servicioplana_fz3"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [
-                                          _c("h5", [
-                                            _vm._v("Servicio por pasajero")
-                                          ])
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor F.Zona 1",
-                                            name: "serviciopasajero_valorfz1",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_valorfz1"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.valorfz1,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "valorfz1",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.valorfz1"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_valorfz1"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Desde F.Zona 1",
-                                            name: "serviciopasajero_desdefz1",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_desdefz1"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.desdefz1,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "desdefz1",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.desdefz1"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_desdefz1"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Hasta F.Zona 1",
-                                            name: "serviciopasajero_hastafz1",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_hastafz1"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.hastafz1,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "hastafz1",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.hastafz1"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_hastafz1"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor F.Zona 2",
-                                            name: "serviciopasajero_valorfz2",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_valorfz2"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.valorfz2,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "valorfz2",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.valorfz2"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_valorfz2"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Desde F.Zona 2",
-                                            name: "serviciopasajero_desdefz2",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_desdefz2"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.desdefz2,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "desdefz2",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.desdefz2"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_desdefz2"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Hasta F.Zona 2",
-                                            name: "serviciopasajero_hastafz2",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_hastafz2"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.hastafz2,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "hastafz2",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.hastafz2"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_hastafz2"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor F.Zona 3",
-                                            name: "serviciopasajero_valorfz3",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_valorfz3"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.valorfz3,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "valorfz3",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.valorfz3"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_valorfz3"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Desde F.Zona 3",
-                                            name: "serviciopasajero_desdefz3",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_desdefz3"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.desdefz3,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "desdefz3",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.desdefz3"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_desdefz3"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Hasta F.Zona 3",
-                                            name: "serviciopasajero_hastafz3",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciopasajero_hastafz3"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value:
-                                              _vm.serviciopasajero.hastafz3,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciopasajero,
-                                                "hastafz3",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciopasajero.hastafz3"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciopasajero_hastafz3"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    [
-                                      _c(
-                                        "vs-divider",
-                                        { attrs: { color: "primary" } },
-                                        [_c("h5", [_vm._v("Servicio por KMS")])]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "vx-row" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Valor",
-                                            name: "serviciokms_valor",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciokms_valor"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.serviciokm.valor,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciokm,
-                                                "valor",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "serviciokm.valor"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciokms_valor"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder":
-                                              "Valor portico",
-                                            name: "serviciokms_valorportico",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciokms_valorportico"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.serviciokm.valorportico,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciokm,
-                                                "valorportico",
-                                                $$v
-                                              )
-                                            },
-                                            expression:
-                                              "serviciokm.valorportico"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciokms_valorportico"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Distancia",
-                                            name: "serviciokms_distancia",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciokms_distancia"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.serviciokm.distancia,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciokm,
-                                                "distancia",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "serviciokm.distancia"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciokms_distancia"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input-number", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required",
-                                              expression: "'required'"
-                                            }
-                                          ],
-                                          staticClass: "w-full mt-5",
-                                          attrs: {
-                                            name: "serviciokms_pasajeros",
-                                            min: "1",
-                                            "icon-inc": "expand_less",
-                                            "icon-dec": "expand_more"
-                                          },
-                                          model: {
-                                            value: _vm.serviciokm.pasajeros,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciokm,
-                                                "pasajeros",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "serviciokm.pasajeros"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciokms_pasajeros"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Tiempo",
-                                            name: "serviciokms_tiempo",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciokms_tiempo"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.serviciokm.tiempo,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciokm,
-                                                "tiempo",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "serviciokm.tiempo"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciokms_tiempo"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "vx-col md:w-1/3 w-full mt-1"
-                                      },
-                                      [
-                                        _c("vs-input", {
-                                          directives: [
-                                            {
-                                              name: "validate",
-                                              rawName: "v-validate",
-                                              value: "required|decimal",
-                                              expression: "'required|decimal'"
-                                            }
-                                          ],
-                                          staticClass: "w-full",
-                                          attrs: {
-                                            "label-placeholder": "Baja Bandera",
-                                            name: "serviciokms_bajabandera",
-                                            size: "small",
-                                            danger: _vm.errors.first(
-                                              "step-2.serviciokms_bajabandera"
-                                            )
-                                              ? true
-                                              : false,
-                                            "val-icon-danger": "clear"
-                                          },
-                                          model: {
-                                            value: _vm.serviciokm.bajabandera,
-                                            callback: function($$v) {
-                                              _vm.$set(
-                                                _vm.serviciokm,
-                                                "bajabandera",
-                                                $$v
-                                              )
-                                            },
-                                            expression: "serviciokm.bajabandera"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          {
-                                            staticClass: "text-danger text-sm"
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.errors.first(
-                                                  "step-2.serviciokms_bajabandera"
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ],
-                                      1
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "tab-content",
-                            {
-                              staticClass: "mb-5",
-                              attrs: {
-                                title: "Paso 3",
                                 icon: "feather icon-users",
                                 "before-change": _vm.validateStep3
                               }
@@ -43300,7 +43940,7 @@ var render = function() {
                             {
                               staticClass: "mb-5",
                               attrs: {
-                                title: "Paso 4",
+                                title: "Paso 3",
                                 icon: "feather icon-map-pin",
                                 "before-change": _vm.validateStep4
                               }
@@ -43642,7 +44282,7 @@ var render = function() {
                             {
                               staticClass: "mb-5",
                               attrs: {
-                                title: "Paso 5",
+                                title: "Paso 4",
                                 icon: "feather icon-refresh-cw",
                                 "before-change": _vm.validateStep5
                               }
@@ -49021,6 +49661,3359 @@ var render = function() {
           )
         ],
         2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=template&id=93224466&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=template&id=93224466& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "data-list-container",
+      attrs: { id: "data-list-list-view" }
+    },
+    [
+      _c(
+        "vs-table",
+        {
+          attrs: {
+            pagination: "",
+            "max-items": _vm.itemsPerPage,
+            search: "",
+            data: _vm.items
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(ref) {
+                var data = ref.data
+                return [
+                  _c(
+                    "tbody",
+                    _vm._l(data, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr, attrs: { data: tr } },
+                        [
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-id font-medium" }, [
+                              _vm._v(_vm._s(tr.id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-razon_social" }, [
+                              _vm._v(_vm._s(tr.razon_social))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-rut" }, [
+                              _vm._v(_vm._s(tr.rut))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c(
+                                "vs-chip",
+                                {
+                                  staticClass: "items-cantidad",
+                                  attrs: {
+                                    color: _vm.getStatusColor(tr.cantidad)
+                                  }
+                                },
+                                [_vm._v(_vm._s(tr.cantidad))]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                              },
+                              [
+                                _c(
+                                  "vx-tooltip",
+                                  {
+                                    attrs: {
+                                      color: "primary",
+                                      text: "Parametros"
+                                    }
+                                  },
+                                  [
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-search",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.listadoParametros(tr)
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "flex flex-wrap-reverse items-center flex-grow justify-between",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "flex flex-wrap-reverse items-center" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.$agregarPopUp()
+                        }
+                      }
+                    },
+                    [
+                      _c("feather-icon", {
+                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "vx-tooltip",
+                        {
+                          attrs: { color: "primary", text: "Agregar empresa" }
+                        },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "ml-2 text-base text-primary" },
+                            [_vm._v("Agregar Tarifa")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-dropdown",
+                {
+                  staticClass: "cursor-pointer mb-4 mr-4",
+                  attrs: { "vs-trigger-click": "" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
+                    },
+                    [
+                      _c("span", { staticClass: "mr-2" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.currentPage * _vm.itemsPerPage -
+                              (_vm.itemsPerPage - 1)
+                          ) +
+                            " - " +
+                            _vm._s(
+                              _vm.items.length -
+                                _vm.currentPage * _vm.itemsPerPage >
+                                0
+                                ? _vm.currentPage * _vm.itemsPerPage
+                                : _vm.items.length
+                            ) +
+                            " of " +
+                            _vm._s(_vm.items.length)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("feather-icon", {
+                        attrs: {
+                          icon: "ChevronDownIcon",
+                          svgClasses: "h-4 w-4"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-dropdown-menu",
+                    [
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 4
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("4")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 10
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("10")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 15
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("15")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 20
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("20")])]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "template",
+            { slot: "thead" },
+            [
+              _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                _vm._v("ID")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-razon_social" } }, [
+                _vm._v("Razon Social")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-rut" } }, [
+                _vm._v("RUT")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-cantidad" } }, [
+                _vm._v("Parametros")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                _vm._v("Accion")
+              ])
+            ],
+            1
+          )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          ref: "modal",
+          staticClass: "holamundo",
+          attrs: {
+            title:
+              _vm.modoEditar == false ? "AGREGAR TARIFA" : "ACTUALIZAR TARIFA",
+            active: _vm.popupActive
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            [
+              _c("vs-divider", { attrs: { color: "primary" } }, [
+                _c("h5", [_vm._v("Tarifas KMS")])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("span", { staticClass: " text-sm" }, [_vm._v("Empresa")]),
+                _vm._v(" "),
+                _c(
+                  "vs-select",
+                  {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
+                      }
+                    ],
+                    ref: "empresa",
+                    staticClass: "w-full",
+                    attrs: { name: "empresa", disabled: _vm.disabledempresas },
+                    model: {
+                      value: _vm.item.empresa_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.item, "empresa_id", $$v)
+                      },
+                      expression: "item.empresa_id"
+                    }
+                  },
+                  _vm._l(_vm.empresa_choices, function(item) {
+                    return _c("vs-select-item", {
+                      key: item.id,
+                      attrs: { value: item.id, text: item.razon_social }
+                    })
+                  }),
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("empresa"),
+                        expression: "errors.has('empresa')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("empresa")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-2" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required",
+                      expression: "'required'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Descripcion",
+                    name: "descripcion",
+                    danger: _vm.errors.first("descripcion") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.descripcion,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "descripcion", $$v)
+                    },
+                    expression: "item.descripcion"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("descripcion"),
+                        expression: "errors.has('descripcion')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("descripcion")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-4" },
+              [
+                _c("span", { staticClass: " text-sm" }, [
+                  _vm._v("N° Pasajeros")
+                ]),
+                _vm._v(" "),
+                _c("vs-input-number", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required",
+                      expression: "'required'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    name: "cant_psjs",
+                    min: "1",
+                    "icon-inc": "expand_less",
+                    "icon-dec": "expand_more"
+                  },
+                  model: {
+                    value: _vm.item.cant_psjs,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "cant_psjs", $$v)
+                    },
+                    expression: "item.cant_psjs"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("cant_psjs"),
+                        expression: "errors.has('cant_psjs')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("cant_psjs")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Minima",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "min_servicio",
+                    danger: _vm.errors.first("min_servicio") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.min_servicio,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "min_servicio", $$v)
+                    },
+                    expression: "item.min_servicio"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("min_servicio"),
+                        expression: "errors.has('min_servicio')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("min_servicio")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "KMS",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "kms",
+                    danger: _vm.errors.first("kms") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.kms,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "kms", $$v)
+                    },
+                    expression: "item.kms"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("kms"),
+                        expression: "errors.has('kms')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("kms")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Minuto",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "min",
+                    danger: _vm.errors.first("min") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.min,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "min", $$v)
+                    },
+                    expression: "item.min"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("min"),
+                        expression: "errors.has('min')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("min")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Baja Bandera",
+                    name: "bajada_bandera",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    danger: _vm.errors.first("bajada_bandera") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.bajada_bandera,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "bajada_bandera", $$v)
+                    },
+                    expression: "item.bajada_bandera"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("bajada_bandera"),
+                        expression: "errors.has('bajada_bandera')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("bajada_bandera")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Porticos",
+                    name: "porticos",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    danger: _vm.errors.first("porticos") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.porticos,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "porticos", $$v)
+                    },
+                    expression: "item.porticos"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("porticos"),
+                        expression: "errors.has('porticos')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("porticos")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-2" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "flex flex-wrap items-center justify-center p-6",
+                attrs: { slot: "footer" },
+                slot: "footer"
+              },
+              [
+                _vm.modoEditar == true
+                  ? _c(
+                      "vs-button",
+                      {
+                        staticClass: "mr-3",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.$submitActualizar()
+                          }
+                        }
+                      },
+                      [_vm._v("ACTUALIZAR TARIFA")]
+                    )
+                  : _c(
+                      "vs-button",
+                      {
+                        staticClass: "mr-3",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.$submitAgregar()
+                          }
+                        }
+                      },
+                      [_vm._v("AGREGAR TARIFA")]
+                    ),
+                _vm._v(" "),
+                _c(
+                  "vs-button",
+                  {
+                    ref: "btncancelar",
+                    attrs: { type: "border", color: "danger" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.$cancelarPopUp()
+                      }
+                    }
+                  },
+                  [_vm._v("CANCELAR")]
+                )
+              ],
+              1
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          staticClass: "holamundo",
+          attrs: { title: "Tarifas KMS", active: _vm.popupParametros },
+          on: {
+            "update:active": function($event) {
+              _vm.popupParametros = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "vs-table",
+            {
+              ref: "table",
+              attrs: {
+                multiple: "",
+                pagination: "",
+                search: "",
+                data: _vm.parametros
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return [
+                      _c(
+                        "tbody",
+                        _vm._l(data, function(tr, indextr) {
+                          return _c(
+                            "vs-tr",
+                            { key: indextr, attrs: { data: tr } },
+                            [
+                              _c("vs-td", [
+                                _c(
+                                  "p",
+                                  { staticClass: "items-id font-medium" },
+                                  [_vm._v(_vm._s(tr.servicioskms[0].id))]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-descripcion" }, [
+                                  _vm._v(
+                                    _vm._s(tr.servicioskms[0].descripcion) + " "
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-cant_psjs" }, [
+                                  _vm._v(_vm._s(tr.servicioskms[0].cant_psjs))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-min_servicio" }, [
+                                  _vm._v(
+                                    _vm._s(tr.servicioskms[0].min_servicio)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-kms" }, [
+                                  _vm._v(_vm._s(tr.servicioskms[0].kms))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                  },
+                                  [
+                                    _c(
+                                      "vx-tooltip",
+                                      {
+                                        attrs: {
+                                          color: "primary",
+                                          text: "Editar"
+                                        }
+                                      },
+                                      [
+                                        _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vx-tooltip",
+                                      {
+                                        attrs: {
+                                          color: "primary",
+                                          text: "Eliminar"
+                                        }
+                                      },
+                                      [
+                                        _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        }),
+                        1
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex flex-wrap-reverse items-center flex-grow justify-between",
+                  attrs: { slot: "header" },
+                  slot: "header"
+                },
+                [
+                  _c(
+                    "vs-dropdown",
+                    {
+                      staticClass: "cursor-pointer mr-4 mb-4",
+                      attrs: { "vs-trigger-click": "" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
+                        },
+                        [
+                          _c("span", { staticClass: "mr-2" }, [
+                            _vm._v("Acciones")
+                          ]),
+                          _vm._v(" "),
+                          _c("feather-icon", {
+                            attrs: {
+                              icon: "ChevronDownIcon",
+                              svgClasses: "h-4 w-4"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-menu",
+                        [
+                          _c(
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(1)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Borrar")])]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(2)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Exportar")])]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                    _vm._v("ID")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-descripcion" } }, [
+                    _vm._v("T. Servicio")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-cant_psjs" } }, [
+                    _vm._v("N° Pasajeros")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-min_servicio" } }, [
+                    _vm._v("Minima")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-kms" } }, [
+                    _vm._v("Kms")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                    _vm._v("Accion")
+                  ])
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=template&id=662a1223&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=template&id=662a1223& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "data-list-container",
+      attrs: { id: "data-list-list-view" }
+    },
+    [
+      _c(
+        "vs-table",
+        {
+          attrs: {
+            pagination: "",
+            "max-items": _vm.itemsPerPage,
+            search: "",
+            data: _vm.items
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(ref) {
+                var data = ref.data
+                return [
+                  _c(
+                    "tbody",
+                    _vm._l(data, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr, attrs: { data: tr } },
+                        [
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-id font-medium" }, [
+                              _vm._v(_vm._s(tr.id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-razon_social" }, [
+                              _vm._v(_vm._s(tr.razon_social))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-rut" }, [
+                              _vm._v(_vm._s(tr.rut))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c(
+                                "vs-chip",
+                                {
+                                  staticClass: "items-cantidad",
+                                  attrs: {
+                                    color: _vm.getStatusColor(tr.cantidad)
+                                  }
+                                },
+                                [_vm._v(_vm._s(tr.cantidad))]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                              },
+                              [
+                                _c(
+                                  "vx-tooltip",
+                                  {
+                                    attrs: {
+                                      color: "primary",
+                                      text: "Parametros"
+                                    }
+                                  },
+                                  [
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-search",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.listadoParametros(tr)
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "flex flex-wrap-reverse items-center flex-grow justify-between",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "flex flex-wrap-reverse items-center" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.$agregarPopUp()
+                        }
+                      }
+                    },
+                    [
+                      _c("feather-icon", {
+                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "vx-tooltip",
+                        {
+                          attrs: { color: "primary", text: "Agregar empresa" }
+                        },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "ml-2 text-base text-primary" },
+                            [_vm._v("Agregar Tarifa")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-dropdown",
+                {
+                  staticClass: "cursor-pointer mb-4 mr-4",
+                  attrs: { "vs-trigger-click": "" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
+                    },
+                    [
+                      _c("span", { staticClass: "mr-2" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.currentPage * _vm.itemsPerPage -
+                              (_vm.itemsPerPage - 1)
+                          ) +
+                            " - " +
+                            _vm._s(
+                              _vm.items.length -
+                                _vm.currentPage * _vm.itemsPerPage >
+                                0
+                                ? _vm.currentPage * _vm.itemsPerPage
+                                : _vm.items.length
+                            ) +
+                            " of " +
+                            _vm._s(_vm.items.length)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("feather-icon", {
+                        attrs: {
+                          icon: "ChevronDownIcon",
+                          svgClasses: "h-4 w-4"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-dropdown-menu",
+                    [
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 4
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("4")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 10
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("10")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 15
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("15")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 20
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("20")])]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "template",
+            { slot: "thead" },
+            [
+              _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                _vm._v("ID")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-razon_social" } }, [
+                _vm._v("Razon Social")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-rut" } }, [
+                _vm._v("RUT")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-cantidad" } }, [
+                _vm._v("Parametros")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                _vm._v("Accion")
+              ])
+            ],
+            1
+          )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          ref: "modal",
+          staticClass: "holamundo",
+          attrs: {
+            title:
+              _vm.modoEditar == false ? "AGREGAR TARIFA" : "ACTUALIZAR TARIFA",
+            active: _vm.popupActive
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            [
+              _c("vs-divider", { attrs: { color: "primary" } }, [
+                _c("h5", [_vm._v("Tarifas Pasajeros")])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("span", { staticClass: " text-sm" }, [_vm._v("Empresa")]),
+                _vm._v(" "),
+                _c(
+                  "vs-select",
+                  {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
+                      }
+                    ],
+                    ref: "empresa",
+                    staticClass: "w-full",
+                    attrs: { name: "empresa", disabled: _vm.disabledempresas },
+                    model: {
+                      value: _vm.item.empresa_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.item, "empresa_id", $$v)
+                      },
+                      expression: "item.empresa_id"
+                    }
+                  },
+                  _vm._l(_vm.empresa_choices, function(item) {
+                    return _c("vs-select-item", {
+                      key: item.id,
+                      attrs: { value: item.id, text: item.razon_social }
+                    })
+                  }),
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("empresa"),
+                        expression: "errors.has('empresa')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("empresa")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-2" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-4" },
+              [
+                _c("span", { staticClass: " text-sm" }, [
+                  _vm._v("N° Pasajeros Min.")
+                ]),
+                _vm._v(" "),
+                _c("vs-input-number", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required",
+                      expression: "'required'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    name: "num_psj_min",
+                    min: "1",
+                    "icon-inc": "expand_less",
+                    "icon-dec": "expand_more"
+                  },
+                  model: {
+                    value: _vm.item.num_psj_min,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "num_psj_min", $$v)
+                    },
+                    expression: "item.num_psj_min"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("num_psj_min"),
+                        expression: "errors.has('num_psj_min')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("num_psj_min")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-4" },
+              [
+                _c("span", { staticClass: " text-sm" }, [
+                  _vm._v("N° Pasajeros Max.")
+                ]),
+                _vm._v(" "),
+                _c("vs-input-number", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required",
+                      expression: "'required'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    name: "num_psj_max",
+                    min: "1",
+                    "icon-inc": "expand_less",
+                    "icon-dec": "expand_more"
+                  },
+                  model: {
+                    value: _vm.item.num_psj_max,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "num_psj_max", $$v)
+                    },
+                    expression: "item.num_psj_max"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("num_psj_max"),
+                        expression: "errors.has('num_psj_max')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("num_psj_max")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Factor Rango Min.",
+                    name: "fac_rang_min",
+                    danger: _vm.errors.first("fac_rang_min") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.fac_rang_min,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "fac_rang_min", $$v)
+                    },
+                    expression: "item.fac_rang_min"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("fac_rang_min"),
+                        expression: "errors.has('fac_rang_min')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("fac_rang_min")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Factor Rango Max.",
+                    name: "fac_rang_max",
+                    danger: _vm.errors.first("fac_rang_max") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.fac_rang_max,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "fac_rang_max", $$v)
+                    },
+                    expression: "item.fac_rang_max"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("fac_rang_max"),
+                        expression: "errors.has('fac_rang_max')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("fac_rang_max")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Valor",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "valor",
+                    danger: _vm.errors.first("valor") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.valor,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "valor", $$v)
+                    },
+                    expression: "item.valor"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("valor"),
+                        expression: "errors.has('valor')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("valor")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-2" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Factor Rango Fuera Zona 1",
+                    name: "fac_rang_fz1",
+                    danger: _vm.errors.first("fac_rang_fz1") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.fac_rang_fz1,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "fac_rang_fz1", $$v)
+                    },
+                    expression: "item.fac_rang_fz1"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("fac_rang_fz1"),
+                        expression: "errors.has('fac_rang_fz1')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("fac_rang_fz1")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Valor Fuera Zona 1",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "valor_fz1",
+                    danger: _vm.errors.first("valor_fz1") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.valor_fz1,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "valor_fz1", $$v)
+                    },
+                    expression: "item.valor_fz1"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("valor_fz1"),
+                        expression: "errors.has('valor_fz1')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("valor_fz1")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Factor Rango Fuera Zona 2",
+                    name: "fac_rang_fz2",
+                    danger: _vm.errors.first("fac_rang_fz2") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.fac_rang_fz2,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "fac_rang_fz2", $$v)
+                    },
+                    expression: "item.fac_rang_fz2"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("fac_rang_fz2"),
+                        expression: "errors.has('fac_rang_fz2')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("fac_rang_fz2")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Valor Fuera Zona 2",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "valor_fz2",
+                    danger: _vm.errors.first("valor_fz2") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.valor_fz2,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "valor_fz2", $$v)
+                    },
+                    expression: "item.valor_fz2"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("valor_fz2"),
+                        expression: "errors.has('valor_fz2')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("valor_fz2")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "flex flex-wrap items-center justify-center p-6",
+                attrs: { slot: "footer" },
+                slot: "footer"
+              },
+              [
+                _vm.modoEditar == true
+                  ? _c(
+                      "vs-button",
+                      {
+                        staticClass: "mr-3",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.$submitActualizar()
+                          }
+                        }
+                      },
+                      [_vm._v("ACTUALIZAR TARIFA")]
+                    )
+                  : _c(
+                      "vs-button",
+                      {
+                        staticClass: "mr-3",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.$submitAgregar()
+                          }
+                        }
+                      },
+                      [_vm._v("AGREGAR TARIFA")]
+                    ),
+                _vm._v(" "),
+                _c(
+                  "vs-button",
+                  {
+                    ref: "btncancelar",
+                    attrs: { type: "border", color: "danger" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.$cancelarPopUp()
+                      }
+                    }
+                  },
+                  [_vm._v("CANCELAR")]
+                )
+              ],
+              1
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          staticClass: "holamundo",
+          attrs: { title: "Tarifas Pasajeros", active: _vm.popupParametros },
+          on: {
+            "update:active": function($event) {
+              _vm.popupParametros = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "vs-table",
+            {
+              ref: "table",
+              attrs: {
+                multiple: "",
+                pagination: "",
+                search: "",
+                data: _vm.parametros
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return [
+                      _c(
+                        "tbody",
+                        _vm._l(data, function(tr, indextr) {
+                          return _c(
+                            "vs-tr",
+                            { key: indextr, attrs: { data: tr } },
+                            [
+                              _c("vs-td", [
+                                _c(
+                                  "p",
+                                  { staticClass: "items-id font-medium" },
+                                  [_vm._v(_vm._s(tr.serviciospasajeros[0].id))]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c(
+                                  "p",
+                                  { staticClass: "items-num_pasajeros" },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        tr.serviciospasajeros[0].num_psj_min
+                                      ) +
+                                        " - " +
+                                        _vm._s(
+                                          tr.serviciospasajeros[0].num_psj_max
+                                        )
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-factor" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      tr.serviciospasajeros[0].fac_rang_min
+                                    ) +
+                                      " - " +
+                                      _vm._s(
+                                        tr.serviciospasajeros[0].fac_rang_max
+                                      )
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-valor" }, [
+                                  _vm._v(_vm._s(tr.serviciospasajeros[0].valor))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                  },
+                                  [
+                                    _c(
+                                      "vx-tooltip",
+                                      {
+                                        attrs: {
+                                          color: "primary",
+                                          text: "Editar"
+                                        }
+                                      },
+                                      [
+                                        _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vx-tooltip",
+                                      {
+                                        attrs: {
+                                          color: "primary",
+                                          text: "Eliminar"
+                                        }
+                                      },
+                                      [
+                                        _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        }),
+                        1
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex flex-wrap-reverse items-center flex-grow justify-between",
+                  attrs: { slot: "header" },
+                  slot: "header"
+                },
+                [
+                  _c(
+                    "vs-dropdown",
+                    {
+                      staticClass: "cursor-pointer mr-4 mb-4",
+                      attrs: { "vs-trigger-click": "" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
+                        },
+                        [
+                          _c("span", { staticClass: "mr-2" }, [
+                            _vm._v("Acciones")
+                          ]),
+                          _vm._v(" "),
+                          _c("feather-icon", {
+                            attrs: {
+                              icon: "ChevronDownIcon",
+                              svgClasses: "h-4 w-4"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-menu",
+                        [
+                          _c(
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(1)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Borrar")])]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(2)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Exportar")])]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                    _vm._v("ID")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "vs-th",
+                    { attrs: { "sort-key": "items-num_pasajeros" } },
+                    [_vm._v("N° Pasajeros")]
+                  ),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-factor" } }, [
+                    _vm._v("Factor")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-valor" } }, [
+                    _vm._v("Valor")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                    _vm._v("Accion")
+                  ])
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=template&id=1ce688ee&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=template&id=1ce688ee& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "data-list-container",
+      attrs: { id: "data-list-list-view" }
+    },
+    [
+      _c(
+        "vs-table",
+        {
+          ref: "table",
+          attrs: {
+            pagination: "",
+            "max-items": _vm.itemsPerPage,
+            search: "",
+            data: _vm.items
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(ref) {
+                var data = ref.data
+                return [
+                  _c(
+                    "tbody",
+                    _vm._l(data, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr, attrs: { data: tr } },
+                        [
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-id font-medium" }, [
+                              _vm._v(_vm._s(tr.id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-razon_social" }, [
+                              _vm._v(_vm._s(tr.razon_social))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-rut" }, [
+                              _vm._v(_vm._s(tr.rut))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
+                            [
+                              _c(
+                                "vs-chip",
+                                {
+                                  staticClass: "items-cantidad",
+                                  attrs: {
+                                    color: _vm.getStatusColor(tr.cantidad)
+                                  }
+                                },
+                                [_vm._v(_vm._s(tr.cantidad))]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                              },
+                              [
+                                _c(
+                                  "vx-tooltip",
+                                  {
+                                    attrs: {
+                                      color: "primary",
+                                      text: "Parametros"
+                                    }
+                                  },
+                                  [
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-search",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.listadoParametros(tr)
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "flex flex-wrap-reverse items-center flex-grow justify-between",
+              attrs: { slot: "header" },
+              slot: "header"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "flex flex-wrap-reverse items-center" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.$agregarPopUp()
+                        }
+                      }
+                    },
+                    [
+                      _c("feather-icon", {
+                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "vx-tooltip",
+                        {
+                          attrs: { color: "primary", text: "Agregar empresa" }
+                        },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "ml-2 text-base text-primary" },
+                            [_vm._v("Agregar Tarifa")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-dropdown",
+                {
+                  staticClass: "cursor-pointer mb-4 mr-4",
+                  attrs: { "vs-trigger-click": "" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
+                    },
+                    [
+                      _c("span", { staticClass: "mr-2" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.currentPage * _vm.itemsPerPage -
+                              (_vm.itemsPerPage - 1)
+                          ) +
+                            " - " +
+                            _vm._s(
+                              _vm.items.length -
+                                _vm.currentPage * _vm.itemsPerPage >
+                                0
+                                ? _vm.currentPage * _vm.itemsPerPage
+                                : _vm.items.length
+                            ) +
+                            " of " +
+                            _vm._s(_vm.items.length)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("feather-icon", {
+                        attrs: {
+                          icon: "ChevronDownIcon",
+                          svgClasses: "h-4 w-4"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-dropdown-menu",
+                    [
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 4
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("4")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 10
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("10")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 15
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("15")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 20
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("20")])]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "template",
+            { slot: "thead" },
+            [
+              _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                _vm._v("ID")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-razon_social" } }, [
+                _vm._v("Razon Social")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-rut" } }, [
+                _vm._v("RUT")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-cantidad" } }, [
+                _vm._v("Parametros")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                _vm._v("Accion")
+              ])
+            ],
+            1
+          )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          ref: "modal",
+          staticClass: "holamundo",
+          attrs: {
+            title:
+              _vm.modoEditar == false ? "AGREGAR TARIFA" : "ACTUALIZAR TARIFA",
+            active: _vm.popupActive
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.popupActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            [
+              _c("vs-divider", { attrs: { color: "primary" } }, [
+                _c("h5", [_vm._v("Tarifas Planas")])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "vx-row" }, [
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("span", { staticClass: " text-sm" }, [_vm._v("Empresa")]),
+                _vm._v(" "),
+                _c(
+                  "vs-select",
+                  {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
+                      }
+                    ],
+                    ref: "empresa",
+                    staticClass: "w-full",
+                    attrs: { name: "empresa", disabled: _vm.disabledempresas },
+                    model: {
+                      value: _vm.item.empresa_id,
+                      callback: function($$v) {
+                        _vm.$set(_vm.item, "empresa_id", $$v)
+                      },
+                      expression: "item.empresa_id"
+                    }
+                  },
+                  _vm._l(_vm.empresa_choices, function(item) {
+                    return _c("vs-select-item", {
+                      key: item.id,
+                      attrs: { value: item.id, text: item.razon_social }
+                    })
+                  }),
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("empresa"),
+                        expression: "errors.has('empresa')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("empresa")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-2" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-4" },
+              [
+                _c("span", { staticClass: " text-sm" }, [
+                  _vm._v("N° Pasajeros Min.")
+                ]),
+                _vm._v(" "),
+                _c("vs-input-number", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required",
+                      expression: "'required'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    name: "num_psj_min",
+                    min: "1",
+                    "icon-inc": "expand_less",
+                    "icon-dec": "expand_more"
+                  },
+                  model: {
+                    value: _vm.item.num_psj_min,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "num_psj_min", $$v)
+                    },
+                    expression: "item.num_psj_min"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("num_psj_min"),
+                        expression: "errors.has('num_psj_min')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("num_psj_min")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-4" },
+              [
+                _c("span", { staticClass: " text-sm" }, [
+                  _vm._v("N° Pasajeros Max.")
+                ]),
+                _vm._v(" "),
+                _c("vs-input-number", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required",
+                      expression: "'required'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    name: "num_psj_max",
+                    min: "1",
+                    "icon-inc": "expand_less",
+                    "icon-dec": "expand_more"
+                  },
+                  model: {
+                    value: _vm.item.num_psj_max,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "num_psj_max", $$v)
+                    },
+                    expression: "item.num_psj_max"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("num_psj_max"),
+                        expression: "errors.has('num_psj_max')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("num_psj_max")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Minima",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "minima",
+                    danger: _vm.errors.first("minima") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.minima,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "minima", $$v)
+                    },
+                    expression: "item.minima"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("minima"),
+                        expression: "errors.has('minima')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("minima")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Px Adicional",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "psj_adicional",
+                    danger: _vm.errors.first("psj_adicional") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.psj_adicional,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "psj_adicional", $$v)
+                    },
+                    expression: "item.psj_adicional"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("psj_adicional"),
+                        expression: "errors.has('psj_adicional')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("psj_adicional")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Fuera Zona 1",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    name: "fuera_zona_1",
+                    danger: _vm.errors.first("fuera_zona_1") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.fuera_zona_1,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "fuera_zona_1", $$v)
+                    },
+                    expression: "item.fuera_zona_1"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("fuera_zona_1"),
+                        expression: "errors.has('fuera_zona_1')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("fuera_zona_1")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+              [
+                _c("vs-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|decimal",
+                      expression: "'required|decimal'"
+                    }
+                  ],
+                  staticClass: "w-full",
+                  attrs: {
+                    "label-placeholder": "Fuera Zona 2",
+                    name: "fuera_zona_2",
+                    "icon-pack": "feather",
+                    icon: "icon-dollar-sign",
+                    "icon-no-border": "",
+                    danger: _vm.errors.first("fuera_zona_2") ? true : false,
+                    "val-icon-danger": "clear"
+                  },
+                  model: {
+                    value: _vm.item.fuera_zona_2,
+                    callback: function($$v) {
+                      _vm.$set(_vm.item, "fuera_zona_2", $$v)
+                    },
+                    expression: "item.fuera_zona_2"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("fuera_zona_2"),
+                        expression: "errors.has('fuera_zona_2')"
+                      }
+                    ],
+                    staticClass: "text-danger text-sm"
+                  },
+                  [_vm._v(_vm._s(_vm.errors.first("fuera_zona_2")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "flex flex-wrap items-center justify-center p-6",
+                attrs: { slot: "footer" },
+                slot: "footer"
+              },
+              [
+                _vm.modoEditar == true
+                  ? _c(
+                      "vs-button",
+                      {
+                        staticClass: "mr-3",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.$submitActualizar()
+                          }
+                        }
+                      },
+                      [_vm._v("ACTUALIZAR TARIFA")]
+                    )
+                  : _c(
+                      "vs-button",
+                      {
+                        staticClass: "mr-3",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.$submitAgregar()
+                          }
+                        }
+                      },
+                      [_vm._v("AGREGAR TARIFA")]
+                    ),
+                _vm._v(" "),
+                _c(
+                  "vs-button",
+                  {
+                    ref: "btncancelar",
+                    attrs: { type: "border", color: "danger" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.$cancelarPopUp()
+                      }
+                    }
+                  },
+                  [_vm._v("CANCELAR")]
+                )
+              ],
+              1
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
+          staticClass: "holamundo",
+          attrs: { title: "Tarifas Planas", active: _vm.popupParametros },
+          on: {
+            "update:active": function($event) {
+              _vm.popupParametros = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "vs-table",
+            {
+              ref: "table",
+              attrs: {
+                multiple: "",
+                pagination: "",
+                search: "",
+                data: _vm.parametros
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return [
+                      _c(
+                        "tbody",
+                        _vm._l(data, function(tr, indextr) {
+                          return _c(
+                            "vs-tr",
+                            { key: indextr, attrs: { data: tr } },
+                            [
+                              _c("vs-td", [
+                                _c(
+                                  "p",
+                                  { staticClass: "items-id font-medium" },
+                                  [_vm._v(_vm._s(tr.serviciosplanas[0].id))]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c(
+                                  "p",
+                                  { staticClass: "items-num_pasajeros" },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        tr.serviciosplanas[0].num_psj_min
+                                      ) +
+                                        " - " +
+                                        _vm._s(
+                                          tr.serviciosplanas[0].num_psj_max
+                                        )
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-minima" }, [
+                                  _vm._v(_vm._s(tr.serviciosplanas[0].minima))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c("p", { staticClass: "items-psjadicional" }, [
+                                  _vm._v(
+                                    _vm._s(tr.serviciosplanas[0].psj_adicional)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("vs-td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                  },
+                                  [
+                                    _c(
+                                      "vx-tooltip",
+                                      {
+                                        attrs: {
+                                          color: "primary",
+                                          text: "Editar"
+                                        }
+                                      },
+                                      [
+                                        _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "vx-tooltip",
+                                      {
+                                        attrs: {
+                                          color: "primary",
+                                          text: "Eliminar"
+                                        }
+                                      },
+                                      [
+                                        _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        }),
+                        1
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex flex-wrap-reverse items-center flex-grow justify-between",
+                  attrs: { slot: "header" },
+                  slot: "header"
+                },
+                [
+                  _c(
+                    "vs-dropdown",
+                    {
+                      staticClass: "cursor-pointer mr-4 mb-4",
+                      attrs: { "vs-trigger-click": "" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
+                        },
+                        [
+                          _c("span", { staticClass: "mr-2" }, [
+                            _vm._v("Acciones")
+                          ]),
+                          _vm._v(" "),
+                          _c("feather-icon", {
+                            attrs: {
+                              icon: "ChevronDownIcon",
+                              svgClasses: "h-4 w-4"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-menu",
+                        [
+                          _c(
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(1)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Borrar")])]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(2)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Exportar")])]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                    _vm._v("ID")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "vs-th",
+                    { attrs: { "sort-key": "items-num_pasajeros" } },
+                    [_vm._v("N° Pasajeros")]
+                  ),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-minima" } }, [
+                    _vm._v("Minima")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-psjadicional" } }, [
+                    _vm._v("Px Adicional (Transportado)")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                    _vm._v("Accion")
+                  ])
+                ],
+                1
+              )
+            ],
+            2
+          )
+        ],
+        1
       )
     ],
     1
@@ -80807,7 +84800,7 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/login.png?d814adb752d2d047b8292d6de603025f";
+module.exports = "/images/login.png?38d10f14adc888600d809137b20f045b";
 
 /***/ }),
 
@@ -81841,6 +85834,24 @@ __webpack_require__.r(__webpack_exports__);
     url: '/pages/administracion/moviles/moviles',
     labelIcon: 'TruckIcon',
     highlightAction: false
+  }, {
+    index: 9,
+    label: 'Tarifas Pasajeros',
+    url: '/pages/administracion/tarifas/pasajeros/pasajeros',
+    labelIcon: 'DollarSignIcon',
+    highlightAction: false
+  }, {
+    index: 10,
+    label: 'Tarifas Planas',
+    url: '/pages/administracion/tarifas/planas/planas',
+    labelIcon: 'DollarSignIcon',
+    highlightAction: false
+  }, {
+    index: 11,
+    label: 'Tarifas Kms',
+    url: '/pages/administracion/tarifas/kms/kms',
+    labelIcon: 'DollarSignIcon',
+    highlightAction: false
   }]
 });
 
@@ -82137,6 +86148,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_pages_administracion_obsinternas_ObsInternas__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/pages/administracion/obsinternas/ObsInternas */ "./resources/js/src/views/pages/administracion/obsinternas/ObsInternas.vue");
 /* harmony import */ var _views_pages_administracion_moviles_Moviles__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/pages/administracion/moviles/Moviles */ "./resources/js/src/views/pages/administracion/moviles/Moviles.vue");
 /* harmony import */ var _views_pages_administracion_tipodocumentos_TipoDocumentos__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/pages/administracion/tipodocumentos/TipoDocumentos */ "./resources/js/src/views/pages/administracion/tipodocumentos/TipoDocumentos.vue");
+/* harmony import */ var _views_pages_administracion_tarifas_pasajeros_Pasajeros__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/pages/administracion/tarifas/pasajeros/Pasajeros */ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue");
+/* harmony import */ var _views_pages_administracion_tarifas_kms_Kms__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/pages/administracion/tarifas/kms/Kms */ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue");
+/* harmony import */ var _views_pages_administracion_tarifas_planas_Planas__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./views/pages/administracion/tarifas/planas/Planas */ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue");
 /*=========================================================================================
   File Name: router.js
   Description: Routes for vue-router. Lazy loading is enabled.
@@ -82164,6 +86178,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+ //Tarifas
 
 
 
@@ -82353,12 +86371,63 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
           title: 'Home',
           url: '/'
         }, {
-          title: 'TipoDocumentos'
+          title: 'Tipo Documentos'
         }, {
           title: 'Lista de Tipo de Documentos',
           active: true
         }],
         pageTitle: 'Lista de tipo de documentos'
+      }
+    }, {
+      path: '/pages/administracion/tarifas/pasajeros/pasajeros',
+      name: 'tarifaspasajeros',
+      component: _views_pages_administracion_tarifas_pasajeros_Pasajeros__WEBPACK_IMPORTED_MODULE_14__["default"],
+      meta: {
+        auth: true,
+        breadcrumb: [{
+          title: 'Home',
+          url: '/'
+        }, {
+          title: 'Tarifas Pasajeros'
+        }, {
+          title: 'Tarifas de Tarifas Pasajeros',
+          active: true
+        }],
+        pageTitle: 'Lista de Tarifas pasajeros'
+      }
+    }, {
+      path: '/pages/administracion/tarifas/planas/planas',
+      name: 'tarifasplanas',
+      component: _views_pages_administracion_tarifas_planas_Planas__WEBPACK_IMPORTED_MODULE_16__["default"],
+      meta: {
+        auth: true,
+        breadcrumb: [{
+          title: 'Home',
+          url: '/'
+        }, {
+          title: 'Tarifas Planas'
+        }, {
+          title: 'Lista de Tarifas Planas',
+          active: true
+        }],
+        pageTitle: 'Lista de Tarifas Planas'
+      }
+    }, {
+      path: '/pages/administracion/tarifas/kms/kms',
+      name: 'tarifaskms',
+      component: _views_pages_administracion_tarifas_kms_Kms__WEBPACK_IMPORTED_MODULE_15__["default"],
+      meta: {
+        auth: true,
+        breadcrumb: [{
+          title: 'Home',
+          url: '/'
+        }, {
+          title: 'Tarifas Kms'
+        }, {
+          title: 'Lista de Tarifas Kms',
+          active: true
+        }],
+        pageTitle: 'Lista de Tarifas Kms'
       }
     }]
   }, // =============================================================================
@@ -83412,6 +87481,267 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_template_id_4c81e800___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_template_id_4c81e800___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Kms_vue_vue_type_template_id_93224466___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Kms.vue?vue&type=template&id=93224466& */ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=template&id=93224466&");
+/* harmony import */ var _Kms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Kms.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Kms_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Kms.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Kms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Kms_vue_vue_type_template_id_93224466___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Kms_vue_vue_type_template_id_93224466___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Kms.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/style-loader!../../../../../../../../node_modules/css-loader!../../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../../../node_modules/sass-loader/lib/loader.js??ref--8-3!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Kms.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=template&id=93224466&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=template&id=93224466& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_template_id_93224466___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Kms.vue?vue&type=template&id=93224466& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/kms/Kms.vue?vue&type=template&id=93224466&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_template_id_93224466___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kms_vue_vue_type_template_id_93224466___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Pasajeros_vue_vue_type_template_id_662a1223___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Pasajeros.vue?vue&type=template&id=662a1223& */ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=template&id=662a1223&");
+/* harmony import */ var _Pasajeros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pasajeros.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Pasajeros_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Pasajeros.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Pasajeros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Pasajeros_vue_vue_type_template_id_662a1223___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Pasajeros_vue_vue_type_template_id_662a1223___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Pasajeros.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss&":
+/*!***********************************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss& ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/style-loader!../../../../../../../../node_modules/css-loader!../../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../../../node_modules/sass-loader/lib/loader.js??ref--8-3!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Pasajeros.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=template&id=662a1223&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=template&id=662a1223& ***!
+  \********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_template_id_662a1223___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Pasajeros.vue?vue&type=template&id=662a1223& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/pasajeros/Pasajeros.vue?vue&type=template&id=662a1223&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_template_id_662a1223___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pasajeros_vue_vue_type_template_id_662a1223___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Planas_vue_vue_type_template_id_1ce688ee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Planas.vue?vue&type=template&id=1ce688ee& */ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=template&id=1ce688ee&");
+/* harmony import */ var _Planas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Planas.vue?vue&type=script&lang=js& */ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Planas_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Planas.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Planas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Planas_vue_vue_type_template_id_1ce688ee___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Planas_vue_vue_type_template_id_1ce688ee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Planas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss& ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/style-loader!../../../../../../../../node_modules/css-loader!../../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../../node_modules/postcss-loader/src??ref--8-2!../../../../../../../../node_modules/sass-loader/lib/loader.js??ref--8-3!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Planas.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_2_node_modules_sass_loader_lib_loader_js_ref_8_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=template&id=1ce688ee&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=template&id=1ce688ee& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_template_id_1ce688ee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Planas.vue?vue&type=template&id=1ce688ee& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/views/pages/administracion/tarifas/planas/Planas.vue?vue&type=template&id=1ce688ee&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_template_id_1ce688ee___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Planas_vue_vue_type_template_id_1ce688ee___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

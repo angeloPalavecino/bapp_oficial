@@ -715,13 +715,18 @@ export default {
           thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-          thisIns.$vs.notify({
-            title: "Error",
-            text: error,
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
+            var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'}) 
         });
       //Carga Empresa
       this.$http
@@ -730,13 +735,20 @@ export default {
           thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-          thisIns.$vs.notify({
-            title: "Error",
-            text: error,
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
+          var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+
         });
       
       //Charge Type Documents
@@ -746,13 +758,20 @@ export default {
           thisIns.tipodocumentos_choices = response.data.items;
         })
         .catch(function(error) {
-          thisIns.$vs.notify({
-            title: "Error",
-            text: error,
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
+           var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})  
+
         });   
            
     },

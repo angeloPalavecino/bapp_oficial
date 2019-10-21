@@ -278,7 +278,7 @@ Route::prefix('v1')->group(function () {
     //TIPO DOCUMENTOS
     Route::prefix('tipodocumentos')->group(function () {
         Route::middleware('auth:api')->group(function () {
-      // MOVILES
+      // TIPO DOCUMENTOS
           Route::get('tipodocumentos', 'TipoDocumentosController@index');
           Route::get('tipodocumentos/create', 'TipoDocumentosController@create');
           Route::get('tipodocumentos/{id}', 'TipoDocumentosController@show');
@@ -290,4 +290,45 @@ Route::prefix('v1')->group(function () {
      
          });
   });    
+
+    //TARIFAS
+    Route::prefix('tarifas')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+
+        // Servicio Pasajeros
+        Route::get('pasajeros', 'ServiciosPasajerosController@index');
+        Route::get('pasajeros/listado/{id}', 'ServiciosPasajerosController@listado');
+        Route::get('pasajeros/create', 'ServiciosPasajerosController@create');
+        Route::get('pasajeros/{id}', 'ServiciosPasajerosController@show');
+        Route::delete('pasajeros/{id}', 'ServiciosPasajerosController@destroy');
+        Route::post('pasajeros/borrar', 'ServiciosPasajerosController@borrar');
+        Route::put('pasajeros/{id}', 'ServiciosPasajerosController@update');
+        Route::post('pasajeros/store', 'ServiciosPasajerosController@store');
+        Route::get('pasajeros/{id}/edit', 'ServiciosPasajerosController@edit');
+
+        // Servicio KMS
+        Route::get('kms', 'ServiciosKMSController@index');
+        Route::get('kms/listado/{id}', 'ServiciosKMSController@listado');
+        Route::get('kms/create', 'ServiciosKMSController@create');
+        Route::get('kms/{id}', 'ServiciosKMSController@show');
+        Route::delete('kms/{id}', 'ServiciosKMSController@destroy');
+        Route::post('kms/borrar', 'ServiciosKMSController@borrar');
+        Route::put('kms/{id}', 'ServiciosKMSController@update');
+        Route::post('kms/store', 'ServiciosKMSController@store');
+        Route::get('kms/{id}/edit', 'ServiciosKMSController@edit');
+
+        // Servicio Plana
+        Route::get('planas', 'ServiciosPlanasController@index');
+        Route::get('planas/listado/{id}', 'ServiciosPlanasController@listado');
+        Route::get('planas/create', 'ServiciosPlanasController@create');
+        Route::get('planas/{id}', 'ServiciosPlanasController@show');
+        Route::delete('planas/{id}', 'ServiciosPlanasController@destroy');
+        Route::post('planas/borrar', 'ServiciosPlanasController@borrar');
+        Route::put('planas/{id}', 'ServiciosPlanasController@update');
+        Route::post('planas/store', 'ServiciosPlanasController@store');
+        Route::get('planas/{id}/edit', 'ServiciosPlanasController@edit');
+     
+         });
+  }); 
+
 });

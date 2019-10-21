@@ -105,7 +105,7 @@
           </form>
         </tab-content>
         
-        <!-- tab 2 content -->
+        <!-- tab 2 content 
         <tab-content title="Paso 2" class="mb-5" icon="feather icon-credit-card" :before-change="validateStep2">
           <form data-vv-scope="step-2">
           <div>
@@ -264,9 +264,7 @@
                  name="serviciokms_pasajeros" v-validate="'required'"  min="1" 
                  icon-inc="expand_less" icon-dec="expand_more" />
 
-               <!-- <vs-input label-placeholder="Pasajeros" v-model="serviciokm.pasajeros" class="w-full" name="serviciokms_pasajeros" 
-                v-validate="'required|decimal'"  size="small"
-              :danger="(errors.first('step-2.serviciokms_pasajeros') ? true : false)" val-icon-danger="clear" />-->
+    
 
                 <span class="text-danger text-sm" >{{ errors.first('step-2.serviciokms_pasajeros') }}</span>
               </div>
@@ -286,10 +284,10 @@
           </div>
    
           </form>
-        </tab-content>
+        </tab-content>-->
 
         <!-- tab 3 content -->
-        <tab-content title="Paso 3" class="mb-5" icon="feather icon-users" :before-change="validateStep3">
+        <tab-content title="Paso 2" class="mb-5" icon="feather icon-users" :before-change="validateStep3">
           <form data-vv-scope="step-3">
           <div>
                <vs-divider color="primary" ><h5>Responsables</h5></vs-divider>
@@ -324,7 +322,7 @@
           </form>
         </tab-content>
         <!-- tab 4 content -->
-         <tab-content title="Paso 4" class="mb-5" icon="feather icon-map-pin" :before-change="validateStep4">
+         <tab-content title="Paso 3" class="mb-5" icon="feather icon-map-pin" :before-change="validateStep4">
           <form data-vv-scope="step-4">
           <div>
                <vs-divider color="primary" ><h5>Sucursales</h5></vs-divider>
@@ -378,7 +376,7 @@
           </form>
         </tab-content>
           <!-- tab 5 content -->
-         <tab-content title="Paso 5" class="mb-5" icon="feather icon-refresh-cw" :before-change="validateStep5">
+         <tab-content title="Paso 4" class="mb-5" icon="feather icon-refresh-cw" :before-change="validateStep5">
           <form data-vv-scope="step-5">
                <div class="vx-row" >
                 <div class="vx-col md:w-1/2 w-full mt-2">
@@ -558,7 +556,7 @@ const dict = {
         fecha_incorporacion: {
             required: 'La fecha de incorporacion es requerido',
         },
-        servicioplana_desde:{
+        /*servicioplana_desde:{
             required: 'El campo es requerido',
             decimal: 'Debe ingresar solo numeros'
         },
@@ -654,7 +652,7 @@ const dict = {
          serviciokms_pasajeros:{
             required: 'El campo es requerido',
             decimal: 'Debe ingresar solo numeros'
-        },
+        },*/
          responsable_nombre: {
             required: 'El nombre es requerido'
         },
@@ -726,12 +724,12 @@ export default {
       exportData : [],
       //autocompletes : [],
       aux: 0,
-      tipoOpciones: [
+     /* tipoOpciones: [
         {text: "Por plana", value:"1"},
         {text: "Por pasajero", value:"2"},
         {text: "Por KM.", value:"3"},
        
-      ],
+      ],*/
       tipoCicloProduccion: [
         {text: "Por defecto (Mes Completo)", value: 31},
         {text: "Personalizado", value: 0},       
@@ -759,12 +757,12 @@ export default {
             matriz: "",
         }],
 
-      serviciokm : { pasajeros:1,},
+      /*serviciokm : { pasajeros:1,},
       serviciopasajero : {       
       },
       servicioplana : {
         tipo: 1,
-      },
+      },*/
 
       ciclofacturacion : { 
           inicio:1,
@@ -851,7 +849,7 @@ export default {
                 })
             })
         },
-        validateStep2() {
+        /*validateStep2() {
             return new Promise((resolve, reject) => {
                 this.$validator.validateAll("step-2").then(result => {
                     if (result) {           
@@ -861,7 +859,7 @@ export default {
                     }
                 })
             })
-        },
+        },*/
          validateStep3() {
             return new Promise((resolve, reject) => {
                 this.$validator.validateAll("step-3").then(result => {
@@ -954,11 +952,11 @@ export default {
             direccion: "",
             matriz: "",
         }];
-      this.serviciokm = { pasajeros:1,},
+     /* this.serviciokm = { pasajeros:1,},
       this.serviciopasajero = {},
       this.servicioplana = {
         tipo: 1,
-      },
+      },*/
       this.ciclofacturacion = {
         inicio:1,
           fin:1,
@@ -980,9 +978,9 @@ export default {
       const thisIns = this;
       this.datos = [];
       this.datos.push(this.item);
-      this.datos.push(this.servicioplana);
-      this.datos.push(this.serviciopasajero);
-      this.datos.push(this.serviciokm);
+      //this.datos.push(this.servicioplana);
+      //this.datos.push(this.serviciopasajero);
+      //this.datos.push(this.serviciokm);
       this.datos.push(this.responsables);
       this.datos.push(this.sucursales);
       this.datos.push(this.ciclofacturacion);
@@ -1013,13 +1011,20 @@ export default {
                 
             })
             .catch(function (error) {
+                var textError;
+              if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
 
-                thisIns.$vs.notify({
+               thisIns.$vs.notify({
                   title:'Error',
-                  text: error,
+                  text: textError,
                   color:'danger',
                   iconPack: 'feather',
-                  icon:'icon-alert-circle'})
+                  icon:'icon-alert-circle'})         
+
             });
         } else {
         }
@@ -1031,9 +1036,9 @@ export default {
       const thisIns = this;
       this.datos = [];
       this.datos.push(this.item);
-      this.datos.push(this.servicioplana);
-      this.datos.push(this.serviciopasajero);
-      this.datos.push(this.serviciokm);
+      //this.datos.push(this.servicioplana);
+     //this.datos.push(this.serviciopasajero);
+      //this.datos.push(this.serviciokm);
       this.datos.push(this.responsables);
       this.datos.push(this.sucursales);
       this.datos.push(this.ciclofacturacion);
@@ -1064,13 +1069,20 @@ export default {
                 
             })
             .catch(function (error) {
+                var textError;
+            if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
 
-                thisIns.$vs.notify({
+               thisIns.$vs.notify({
                   title:'Error',
-                  text: error,
+                  text: textError,
                   color:'danger',
                   iconPack: 'feather',
-                  icon:'icon-alert-circle'})
+                  icon:'icon-alert-circle'})         
+
             });
         } else {
         }
@@ -1084,9 +1096,9 @@ export default {
         this.$http.get(url)
           .then((response) =>{
             
-             this.servicioplana = response.data.servicioplana[0]
-             this.serviciopasajero = response.data.serviciopasajero[0]
-             this.serviciokm = response.data.serviciokm[0]
+             //this.servicioplana = response.data.servicioplana[0]
+             //this.serviciopasajero = response.data.serviciopasajero[0]
+             //this.serviciokm = response.data.serviciokm[0]
              this.responsables = response.data.responsables
              this.sucursales = response.data.sucursales
              this.ciclofacturacion = response.data.cicfac[0]
@@ -1096,12 +1108,20 @@ export default {
              
           })
           .catch(function (error) {
-            thisIns.$vs.notify({
-              title:'Error',
-              text: error,
-              color:'danger',
-              iconPack: 'feather',
-              icon:'icon-alert-circle'})
+            var textError;
+              if(error.response.status == 300) { 
+                 textError = error.response.data.message;
+               }else{
+                 textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+
           });
       },
     inicializaAutocomplete(){
