@@ -15,23 +15,14 @@ class CreateServiciosplanasTable extends Migration
     {
         Schema::create('servicios_planas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('empresa_id');
-            $table->decimal('desde', 8, 2);
-            $table->decimal('hasta', 8, 2);
-            $table->decimal('valormin', 8, 2);
-            $table->decimal('valorpsjadicional', 8, 2);
-            $table->tinyInteger('tipo');
-            $table->decimal('fz1', 8, 2);
-            $table->decimal('fz2', 8, 2);
-            $table->decimal('fz3', 8, 2);
+            $table->decimal('minima', 9, 2);
+            $table->integer('num_psj_min');
+            $table->integer('num_psj_max');
+            $table->decimal('psj_adicional', 9, 2);
+            $table->decimal('fuera_zona_1', 9, 2);
+            $table->decimal('fuera_zona_2', 9, 2);
             $table->timestamps();
 
-
-
-            $table->foreign('empresa_id')
-            ->references('id')
-            ->on('empresas')
-            ->onDelete('cascade');
         });
     }
 
@@ -42,6 +33,6 @@ class CreateServiciosplanasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('serviciosplanas');
+        Schema::dropIfExists('servicios_planas');
     }
 }

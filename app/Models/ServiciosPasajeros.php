@@ -8,7 +8,8 @@ class ServiciosPasajeros extends Model
 {
     //
     protected $fillable = [
-        'empresa_id', 'valorfz1' ,'desdefz1', 'hastafz1', 'valorfz2' ,'desdefz2', 'hastafz2', 'valorfz3' ,'desdefz3', 'hastafz3',
+        'num_psj_min', 'num_psj_max' ,'fac_rang_min', 'fac_rang_max', 'valor' ,'fac_rang_fz1', 
+        'valor_fz1', 'fac_rang_fz2' ,'valor_fz2'
     ];
     
 }

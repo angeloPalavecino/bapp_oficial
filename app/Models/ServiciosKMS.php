@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class ServiciosKMS extends Model
 {
     protected $fillable = [
-        'empresa_id', 'valor' ,'valorportico', 'distancia', 'tiempo' ,'bajabandera','pasajeros'
+        'descripcion', 'cant_psjs' ,'min_servicio', 'kms', 'min' ,'bajada_bandera','porticos'
     ];
 }

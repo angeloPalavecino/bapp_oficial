@@ -15,20 +15,14 @@ class CreateServicioskmsTable extends Migration
     {
         Schema::create('servicios_k_m_s_s', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('empresa_id');
-            $table->decimal('valor', 8, 2);
-            $table->decimal('valorportico', 8, 2);
-            $table->decimal('distancia', 8, 2);
-            $table->integer('tiempo');
-            $table->integer('pasajeros');
-            $table->decimal('bajabandera', 8, 2);
+            $table->string('descripcion');
+            $table->integer('cant_psjs');
+            $table->decimal('min_servicio', 9, 2);
+            $table->decimal('kms', 9, 2);
+            $table->decimal('min', 9, 2);
+            $table->decimal('bajada_bandera', 9, 2);            
+            $table->decimal('porticos', 9, 2);
             $table->timestamps();
-
-
-            $table->foreign('empresa_id')
-            ->references('id')
-            ->on('empresas')
-            ->onDelete('cascade');
 
         });
     }
@@ -40,6 +34,6 @@ class CreateServicioskmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicioskms');
+        Schema::dropIfExists('servicios_k_m_s_s');
     }
 }

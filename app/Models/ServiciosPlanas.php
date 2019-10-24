@@ -8,6 +8,7 @@ class ServiciosPlanas extends Model
 {
     //
     protected $fillable = [
-        'empresa_id', 'desde' ,'hasta', 'valormin', 'valorpsjadicional' ,'tipo', 'fz1', 'fz2' ,'fz3',
+        'minima', 'num_psj_min' ,'num_psj_max', 'psj_adicional', 'fuera_zona_1' ,'fuera_zona_2'
     ];
+
 }

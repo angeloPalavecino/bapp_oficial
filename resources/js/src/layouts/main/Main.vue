@@ -63,7 +63,7 @@
                             </vs-dropdown>-->
                         </div>
                         </transition>
-                        <div class="content-area__content">
+                        <div class="content-area__content" id="div-with-loading">
                             <back-to-top bottom="5%" visibleoffset="500" v-if="!hideScrollToTop">
                                 <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg" />
                             </back-to-top>

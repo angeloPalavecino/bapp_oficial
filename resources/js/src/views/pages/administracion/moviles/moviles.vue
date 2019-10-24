@@ -31,8 +31,10 @@
                   id="file"
                   @change = "uploadData"  
                   ref="fileupload"
+                  accept="application/pdf,application/msword,application/image/png,image/jpeg"           
                 />
-                <span class="text-sm" >Fomatos permitidos: JPG - PNG - DOC - DOCX - PDF</span>
+                <span class="text-sm" >Fomatos permitidos: JPG - PNG - DOC - PDF</span>
+                <br/>
                 <span class="text-sm" ><i>Tamaño maximo 2 MB</i></span>
               
               </div>
@@ -72,7 +74,7 @@
                         <vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
                       </vs-td>                  
                       <vs-td :data="data[indextrdoc].url">
-                        <a rel="nofollow" @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)">Descargar</a>                        
+                        <a style="cursor: pointer;" rel="nofollow" @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)">Descargar</a>                        
                       </vs-td>
 
                     </vs-tr>
@@ -713,13 +715,18 @@ export default {
           thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-          thisIns.$vs.notify({
-            title: "Error",
-            text: error,
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
+            var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'}) 
         });
       //Carga Empresa
       this.$http
@@ -728,13 +735,20 @@ export default {
           thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-          thisIns.$vs.notify({
-            title: "Error",
-            text: error,
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
+          var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})         
+
         });
       
       //Charge Type Documents
@@ -744,13 +758,20 @@ export default {
           thisIns.tipodocumentos_choices = response.data.items;
         })
         .catch(function(error) {
-          thisIns.$vs.notify({
-            title: "Error",
-            text: error,
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
+           var textError;
+           if(error.response.status == 300) { 
+                textError = error.response.data.message;
+               }else{
+                textError = error;
+              }
+
+               thisIns.$vs.notify({
+                  title:'Error',
+                  text: textError,
+                  color:'danger',
+                  iconPack: 'feather',
+                  icon:'icon-alert-circle'})  
+
         });   
            
     },
@@ -848,7 +869,8 @@ export default {
     upload($name = null){
       $name = $name == null ? true : $name;
        this.$validator.validateAll($name).then(result =>{
-        if (result) {          
+        if (result) {       
+          
           const formData = new FormData();     
           formData.append('file', (this.item.file));
           formData.append('tipo_documento_id', (this.item.tipo_documento.split("|")[0])); 
@@ -856,6 +878,7 @@ export default {
           formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
           formData.append('driver_id', (this.dataItem.cars[0].driver_id));
           formData.append('rut', (this.dataItem.rut));
+
           this.$upload(formData);
                      
         } else {
@@ -868,8 +891,8 @@ export default {
       const tipo = e.target.files[0].type;
       const size = e.target.files[0].size;
      if(tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || 
-      tipo == "application/pdf" || tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
-        
+      tipo == "application/pdf" ){
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if(size <= 2000000){ //2097152
             
             this.item.file = e.target.files[0];
