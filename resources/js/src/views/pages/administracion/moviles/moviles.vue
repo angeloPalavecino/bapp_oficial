@@ -911,6 +911,7 @@ export default {
       //var download = await this.$http.get('driver/driver/document/' + id);
       //console.log(download);
       this.$http.get('driver/driver/document/'+id, {responseType: 'blob'}).then(response => {
+            console.log(response);
             var a = document.createElement('a');
             var url = window.URL.createObjectURL(response.data);
             a.href = url;
