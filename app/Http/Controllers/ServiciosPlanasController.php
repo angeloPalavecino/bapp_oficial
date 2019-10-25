@@ -112,7 +112,7 @@ class ServiciosPlanasController extends Controller
 
     public function listado($idEmpresa)
     {
-        $servplanas = EmpresasHasServPlanas::with('serviciosplanas')->get();
+        $servplanas = EmpresasHasServPlanas::with('serviciosplanas')->where('empresa_id', $idEmpresa)->get();
         
         return response()->json(
             [
