@@ -6857,6 +6857,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.$http.get('driver/driver/document/' + id, {
         responseType: 'blob'
       }).then(function (response) {
+        console.log(response);
         var a = document.createElement('a');
         var url = window.URL.createObjectURL(response.data);
         a.href = url;
