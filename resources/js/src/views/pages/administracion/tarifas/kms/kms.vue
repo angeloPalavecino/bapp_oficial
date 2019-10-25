@@ -3,7 +3,7 @@
 
   
 
-    <vs-table pagination :max-items="itemsPerPage" search :data="items">
+    <vs-table ref="table" pagination :max-items="itemsPerPage" search :data="items">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -189,7 +189,7 @@
           <vs-popup class="holamundo"  title="Tarifas KMS" :active.sync="popupParametros"
           @close="$close($event)">   
 
-    <vs-table ref="table" multiple v-model="selected" pagination search :data="parametros">
+    <vs-table ref="tablepar" multiple v-model="selected" pagination search :data="parametros">
        <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
           <!-- ACTION - DROPDOWN -->
           <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
@@ -231,7 +231,7 @@
       </template>
 
         <template slot-scope="{data}">
-          <tbody>
+       
             <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
               <vs-td>
@@ -271,7 +271,7 @@
                  </div>
             </vs-td>
             </vs-tr>
-          </tbody>
+   
         </template>
     </vs-table>
           </vs-popup>
@@ -347,6 +347,7 @@ export default {
     currentPage() {
       if(this.isMounted) {
         return this.$refs.table.currentx
+        return this.$refs.tablepar.currentx
       }
       return 0
     },
