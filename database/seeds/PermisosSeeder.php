@@ -76,6 +76,30 @@ class PermisosSeeder extends Seeder
             ['id' => 55,'name' => 'fuerazona.destroy', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
             ['id' => 56,'name' => 'fuerazona.edit', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
     
+            ['id' => 57,'name' => 'servpasajeros.store', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 58,'name' => 'servpasajeros.create', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 59,'name' => 'servpasajeros.index', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 60,'name' => 'servpasajeros.update', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 61,'name' => 'servpasajeros.show', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 62,'name' => 'servpasajeros.destroy', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 63,'name' => 'servpasajeros.edit', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+    
+            ['id' => 64,'name' => 'servkms.store', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 65,'name' => 'servkms.create', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 66,'name' => 'servkms.index', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 67,'name' => 'servkms.update', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 68,'name' => 'servkms.show', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 69,'name' => 'servkms.destroy', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 70,'name' => 'servkms.edit', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+    
+            ['id' => 71,'name' => 'servplanas.store', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 72,'name' => 'servplanas.create', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 73,'name' => 'servplanas.index', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 74,'name' => 'servplanas.update', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 75,'name' => 'servplanas.show', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 76,'name' => 'servplanas.destroy', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 77,'name' => 'servplanas.edit', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+    
 
         ];
 
