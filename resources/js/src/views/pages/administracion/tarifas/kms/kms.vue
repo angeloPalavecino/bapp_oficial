@@ -89,7 +89,7 @@
     </vs-table>
     
      <!-- POP UP -->
-        <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR TARIFA' : 'ACTUALIZAR TARIFA')" 
+        <vs-popup class="popuptarifa"  ref="modal" :title="(modoEditar == false ? 'AGREGAR TARIFA' : 'ACTUALIZAR TARIFA')" 
          :active.sync="popupActive">
         <div>
                 <vs-divider color="primary"><h5>Tarifas KMS</h5></vs-divider>
@@ -695,10 +695,14 @@ export default {
 }
 
 .con-vs-dropdown--menu {
-    z-index: 55000 !important;
+    z-index: 58000 !important;
 }
 
 .con-vs-dialog {
     z-index: 56005 !important;
+}
+
+.popuptarifa {
+    z-index: 57005 !important;
 }
 </style>
