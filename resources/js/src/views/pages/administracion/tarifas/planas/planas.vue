@@ -90,7 +90,7 @@
     
      <!-- POP UP -->
         <vs-popup class="popuptarifa"  ref="modal" :title="(modoEditar == false ? 'AGREGAR TARIFA' : 'ACTUALIZAR TARIFA')" 
-         :active.sync="popupActive">
+         :active.sync="popupActive"  @close="$close($event)">
         <div>
                 <vs-divider color="primary"><h5>Tarifas Planas</h5></vs-divider>
               </div>
