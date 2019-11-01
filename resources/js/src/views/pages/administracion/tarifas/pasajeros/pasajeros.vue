@@ -1,96 +1,86 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
 
-  
+     <!-- PASAJEROS -->
+          <vs-popup class="holamundo"  title="Tarifas Pasajeros" :active.sync="popupParametros"
+          @close="$close($event)">    
+    
+    <vs-table ref="tablepar" multiple v-model="selected" pagination search :data="parametros">
+         <template slot="header">
+                   <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
+            <div
+              class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
+            >
+              <span class="mr-2">Acciones</span>
+              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
+            </div>
 
-    <vs-table pagination :max-items="itemsPerPage" search :data="items">
-
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-
-        <div class="flex flex-wrap-reverse items-center">
-
-          <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
-          text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
-              <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <vx-tooltip color="primary" text="Agregar empresa">
-              <span class="ml-2 text-base text-primary">Agregar Tarifa</span>
-              </vx-tooltip>
-          </div>
-       </div>
- 
-        <!-- ITEMS PER PAGE -->
-        <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4">
-          <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ items.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : items.length }} of {{ items.length }}</span>
-            <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-          </div>
-          <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
-          <vs-dropdown-menu>
-
-            <vs-dropdown-item @click="itemsPerPage=4">
-              <span>4</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="itemsPerPage=10">
-              <span>10</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="itemsPerPage=15">
-              <span>15</span>
-            </vs-dropdown-item>
-            <vs-dropdown-item @click="itemsPerPage=20">
-              <span>20</span>
-            </vs-dropdown-item>
-          </vs-dropdown-menu>
-        </vs-dropdown>
-      </div>
+            <vs-dropdown-menu>
+              <vs-dropdown-item @click.prevent="accion(1)">
+                <span>Borrar</span>
+              </vs-dropdown-item>
+              <vs-dropdown-item @click.prevent="accion(2)">
+                <span>Exportar</span>
+              </vs-dropdown-item>
+              <!--<vs-dropdown-item @click.prevent="accion(3)">
+                <span>Imprimir</span>
+              </vs-dropdown-item>
+               <vs-dropdown-item>
+                <span>Another Action</span>
+              </vs-dropdown-item>-->
+            </vs-dropdown-menu>
+          </vs-dropdown>
+       </template>
 
       <template slot="thead">
         <vs-th sort-key="items-id">ID</vs-th>
-        <vs-th sort-key="items-razon_social">Razon Social</vs-th>
-        <vs-th sort-key="items-rut">RUT</vs-th>
-        <vs-th sort-key="items-cantidad">Parametros</vs-th>
-       <!--  <vs-th sort-key="users-created_at">Creado</vs-th>
-        <vs-th sort-key="users-updated_at">Actualizado</vs-th>-->
+        <vs-th sort-key="items-num-pasajeros">N° Pasajeros</vs-th>
+        <vs-th sort-key="items-factor">Factor</vs-th>
+        <vs-th sort-key="items-valor">Valor</vs-th>
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
         <template slot-scope="{data}">
-          <tbody>
-            
+ 
             <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
               <vs-td>
-                <p class="items-id font-medium">{{ tr.id }}</p>
+                <p class="items-id font-medium">{{ tr.serviciospasajeros[0].id }}</p>
               </vs-td>
 
               <vs-td>
-                <p class="items-razon_social">{{ tr.razon_social }}</p>
+                <p class="items-num-pasajeros">{{ tr.serviciospasajeros[0].num_psj_min }} - {{ tr.serviciospasajeros[0].num_psj_max }}</p>
+              </vs-td>
+                <vs-td>
+                <p class="items-factor">{{ tr.serviciospasajeros[0].fac_rang_min }} - {{ tr.serviciospasajeros[0].fac_rang_max }}</p>
+              </vs-td>
+                <vs-td>
+                <p class="items-valor">{{ tr.serviciospasajeros[0].valor }}</p>
               </vs-td>
               <vs-td>
-                <p class="items-rut">{{ tr.rut }}</p>
-              </vs-td>
-              <vs-td>
-                <vs-chip :color="getStatusColor(tr.cantidad)" class="items-cantidad">{{ tr.cantidad  }}</vs-chip>
-              </vs-td>
-              
-              <vs-td>
-             
-                <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
-                      <vx-tooltip color="primary" text="Parametros">
-                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-search" size="small" class="ml-3" @click="listadoParametros(tr)"></vs-button>
+                   <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
+                      <vx-tooltip color="primary" text="Editar">
+                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
                        </vx-tooltip>
-                   </div>
-
+                      <vx-tooltip color="primary" text="Eliminar">
+                       <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="submitEliminar(tr, indextr)"></vs-button>
+                       </vx-tooltip>
+                 </div>
             </vs-td>
             </vs-tr>
-     
-          </tbody>
+       
         </template>
     </vs-table>
-    
-     <!-- POP UP -->
-        <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR TARIFA' : 'ACTUALIZAR TARIFA')" 
-         :active.sync="popupActive">
+         
+            
+
+       
+          </vs-popup>
+          <!-- FIN PASAJEROS -->
+
+           <!-- POP UP -->
+        <vs-popup class="popuptarifa"  ref="modal" :title="(modoEditar == false ? 'AGREGAR TARIFA' : 'ACTUALIZAR TARIFA')" 
+         :active.sync="popupActive"  @close="$close($event)">
         <div>
                 <vs-divider color="primary"><h5>Tarifas Pasajeros</h5></vs-divider>
               </div>
@@ -176,98 +166,94 @@
                 
         </vs-popup>
         <!-- POP UP -->
-              <!-- PASAJEROS -->
-          <vs-popup class="holamundo"  title="Tarifas Pasajeros" :active.sync="popupParametros"
-          @close="$close($event)">   
-    
-    <vs-table ref="table" multiple v-model="selected" pagination search :data="parametros">
-       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
-            <div
-              class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
-            >
-              <span class="mr-2">Acciones</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
 
-            <vs-dropdown-menu>
-              <vs-dropdown-item @click.prevent="accion(1)">
-                <span>Borrar</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click.prevent="accion(2)">
-                <span>Exportar</span>
-              </vs-dropdown-item>
-              <!--<vs-dropdown-item @click.prevent="accion(3)">
-                <span>Imprimir</span>
-              </vs-dropdown-item>
-               <vs-dropdown-item>
-                <span>Another Action</span>
-              </vs-dropdown-item>-->
-            </vs-dropdown-menu>
-          </vs-dropdown>
-         </div>
+    <vs-table ref="table" pagination :max-items="itemsPerPage" search :data="items">
+
+      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
+
+        <div class="flex flex-wrap-reverse items-center">
+
+          <!-- ADD NEW -->
+          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
+          text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
+              <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
+              <vx-tooltip color="primary" text="Agregar empresa">
+              <span class="ml-2 text-base text-primary">Agregar Tarifa</span>
+              </vx-tooltip>
+          </div>
+       </div>
+ 
+        <!-- ITEMS PER PAGE -->
+        <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4">
+          <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
+            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ items.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : items.length }} of {{ items.length }}</span>
+            <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
+          </div>
+          <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
+          <vs-dropdown-menu>
+
+            <vs-dropdown-item @click="itemsPerPage=4">
+              <span>4</span>
+            </vs-dropdown-item>
+            <vs-dropdown-item @click="itemsPerPage=10">
+              <span>10</span>
+            </vs-dropdown-item>
+            <vs-dropdown-item @click="itemsPerPage=15">
+              <span>15</span>
+            </vs-dropdown-item>
+            <vs-dropdown-item @click="itemsPerPage=20">
+              <span>20</span>
+            </vs-dropdown-item>
+          </vs-dropdown-menu>
+        </vs-dropdown>
+      </div>
+
       <template slot="thead">
         <vs-th sort-key="items-id">ID</vs-th>
-        <vs-th sort-key="items-num_pasajeros">N° Pasajeros</vs-th>
-        <vs-th sort-key="items-factor">Factor</vs-th>
-        <vs-th sort-key="items-valor">Valor</vs-th>
-      <!--  <vs-th sort-key="items-fac_rang_fz1">Factor F. Zona 1</vs-th>
-        <vs-th sort-key="items-valor_fz1">Valor F. Zona 1</vs-th>
-        <vs-th sort-key="items-fac_rang_fz2">Factor F. Zona 2</vs-th>
-        <vs-th sort-key="items-valor_fz2">Valor F. Zona 2</vs-th>-->
+        <vs-th sort-key="items-razon_social">Razon Social</vs-th>
+        <vs-th sort-key="items-rut">RUT</vs-th>
+        <vs-th sort-key="items-cantidad">Parametros</vs-th>
+       <!--  <vs-th sort-key="users-created_at">Creado</vs-th>
+        <vs-th sort-key="users-updated_at">Actualizado</vs-th>-->
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
         <template slot-scope="{data}">
           <tbody>
+            
             <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
               <vs-td>
-                <p class="items-id font-medium">{{ tr.serviciospasajeros[0].id }}</p>
+                <p class="items-id font-medium">{{ tr.id }}</p>
               </vs-td>
 
               <vs-td>
-                <p class="items-num_pasajeros">{{ tr.serviciospasajeros[0].num_psj_min }} - {{ tr.serviciospasajeros[0].num_psj_max }}</p>
+                <p class="items-razon_social">{{ tr.razon_social }}</p>
               </vs-td>
-                <vs-td>
-                <p class="items-factor">{{ tr.serviciospasajeros[0].fac_rang_min }} - {{ tr.serviciospasajeros[0].fac_rang_max }}</p>
-              </vs-td>
-                <vs-td>
-                <p class="items-valor">{{ tr.serviciospasajeros[0].valor }}</p>
-              </vs-td>
-            <!--    <vs-td>
-                <p class="items-fac_rang_fz1">{{ tr.serviciospasajeros[0].fac_rang_fz1 }}</p>
-              </vs-td>
-                <vs-td>
-                <p class="items-valor_fz1">{{ tr.serviciospasajeros[0].valor_fz1 }}</p>
-              </vs-td>
-                <vs-td>
-                <p class="items-fac_rang_fz2">{{ tr.serviciospasajeros[0].fac_rang_fz2 }}</p>
-              </vs-td>
-                <vs-td>
-                <p class="items-valor_fz2">{{ tr.serviciospasajeros[0].valor_fz2 }}</p>
-              </vs-td>-->
               <vs-td>
-                   <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
-                      <vx-tooltip color="primary" text="Editar">
-                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
+                <p class="items-rut">{{ tr.rut }}</p>
+              </vs-td>
+              <vs-td>
+                <vs-chip :color="getStatusColor(tr.cantidad)" class="items-cantidad">{{ tr.cantidad  }}</vs-chip>
+              </vs-td>
+              
+              <vs-td>
+             
+                <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
+                      <vx-tooltip color="primary" text="Parametros">
+                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-search" size="small" class="ml-3" @click="listadoParametros(tr)"></vs-button>
                        </vx-tooltip>
-                      <vx-tooltip color="primary" text="Eliminar">
-                       <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="submitEliminar(tr, indextr)"></vs-button>
-                       </vx-tooltip>
-                 </div>
+                   </div>
+
             </vs-td>
             </vs-tr>
+     
           </tbody>
         </template>
     </vs-table>
-         
-            
-
-       
-          </vs-popup>
-          <!-- FIN PASAJEROS -->
+    
+    
+           
 
 
 
@@ -348,6 +334,7 @@ export default {
     currentPage() {
       if(this.isMounted) {
         return this.$refs.table.currentx
+        return this.$refs.tablepar.currentx
       }
       return 0
     },
@@ -698,10 +685,16 @@ export default {
 }
 
 .con-vs-dropdown--menu {
-    z-index: 55000 !important;
+    z-index: 58000 !important;
 }
 
 .con-vs-dialog {
     z-index: 56005 !important;
 }
+
+.popuptarifa {
+    z-index: 57005 !important;
+}
+
+
 </style>

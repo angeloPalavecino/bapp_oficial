@@ -7957,6 +7957,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('en', dict);
     currentPage: function currentPage() {
       if (this.isMounted) {
         return this.$refs.table.currentx;
+        return this.$refs.tablepar.currentx;
       }
 
       return 0;
@@ -8486,20 +8487,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 // For custom error message
 
 var dict = {
@@ -8571,6 +8558,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('en', dict);
     currentPage: function currentPage() {
       if (this.isMounted) {
         return this.$refs.table.currentx;
+        return this.$refs.tablepar.currentx;
       }
 
       return 0;
@@ -9107,9 +9095,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 // For custom error message
 
 var dict = {
@@ -9169,6 +9154,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('en', dict);
     currentPage: function currentPage() {
       if (this.isMounted) {
         return this.$refs.table.currentx;
+        return this.$refs.tablepar.currentx;
       }
 
       return 0;
@@ -11271,7 +11257,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../../node_
 
 
 // module
-exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 55000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}", ""]);
+exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 58000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}\n.popuptarifa {\n  z-index: 57005 !important;\n}", ""]);
 
 // exports
 
@@ -11290,7 +11276,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../../node_
 
 
 // module
-exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 55000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}", ""]);
+exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 58000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}\n.popuptarifa {\n  z-index: 57005 !important;\n}", ""]);
 
 // exports
 
@@ -11309,7 +11295,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../../node_
 
 
 // module
-exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 55000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}", ""]);
+exports.push([module.i, "#data-list-list-view .vs-con-table .vs-table--header {\n  display: flex;\n  flex-wrap: wrap-reverse;\n  margin-left: 1.5rem;\n  margin-right: 1.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header > span {\n  display: flex;\n  flex-grow: 1;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search {\n  padding-top: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input {\n  padding: 0.9rem 2.5rem;\n  font-size: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table--header .vs-table--search .vs-table--search-input:focus + i {\n  left: 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table {\n  border-collapse: separate;\n  border-spacing: 0 1.3rem;\n  padding: 0 1rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr {\n  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);\n}\n#data-list-list-view .vs-con-table .vs-table tr td {\n  padding: 20px;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:first-child {\n  border-top-left-radius: 0.5rem;\n  border-bottom-left-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td:last-child {\n  border-top-right-radius: 0.5rem;\n  border-bottom-right-radius: 0.5rem;\n}\n#data-list-list-view .vs-con-table .vs-table tr td.td-check {\n  padding: 20px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th {\n  padding-top: 0;\n  padding-bottom: 0;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th .vs-table-text {\n  text-transform: uppercase;\n  font-weight: 600;\n}\n#data-list-list-view .vs-con-table .vs-table--thead th.td-check {\n  padding: 0 15px !important;\n}\n#data-list-list-view .vs-con-table .vs-table--thead tr {\n  background: none;\n  box-shadow: none;\n}\n#data-list-list-view .vs-con-table .vs-table--pagination {\n  justify-content: center;\n}\n.vs-popup {\n  width: 830px !important;\n}\n.con-vs-dropdown--menu {\n  z-index: 58000 !important;\n}\n.con-vs-dialog {\n  z-index: 56005 !important;\n}\n.popuptarifa {\n  z-index: 57005 !important;\n}", ""]);
 
 // exports
 
@@ -49699,6 +49685,7 @@ var render = function() {
       _c(
         "vs-table",
         {
+          ref: "table",
           attrs: {
             pagination: "",
             "max-items": _vm.itemsPerPage,
@@ -49990,7 +49977,7 @@ var render = function() {
         "vs-popup",
         {
           ref: "modal",
-          staticClass: "holamundo",
+          staticClass: "popuptarifa",
           attrs: {
             title:
               _vm.modoEditar == false ? "AGREGAR TARIFA" : "ACTUALIZAR TARIFA",
@@ -49999,6 +49986,9 @@ var render = function() {
           on: {
             "update:active": function($event) {
               _vm.popupActive = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
             }
           }
         },
@@ -50504,7 +50494,7 @@ var render = function() {
           _c(
             "vs-table",
             {
-              ref: "table",
+              ref: "tablepar",
               attrs: {
                 multiple: "",
                 pagination: "",
@@ -50516,129 +50506,113 @@ var render = function() {
                   key: "default",
                   fn: function(ref) {
                     var data = ref.data
-                    return [
-                      _c(
-                        "tbody",
-                        _vm._l(data, function(tr, indextr) {
-                          return _c(
-                            "vs-tr",
-                            { key: indextr, attrs: { data: tr } },
-                            [
-                              _c("vs-td", [
+                    return _vm._l(data, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr, attrs: { data: tr } },
+                        [
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-id font-medium" }, [
+                              _vm._v(_vm._s(tr.servicioskms[0].id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-descripcion" }, [
+                              _vm._v(
+                                _vm._s(tr.servicioskms[0].descripcion) + " "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-cant_psjs" }, [
+                              _vm._v(_vm._s(tr.servicioskms[0].cant_psjs))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-min_servicio" }, [
+                              _vm._v(_vm._s(tr.servicioskms[0].min_servicio))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-kms" }, [
+                              _vm._v(_vm._s(tr.servicioskms[0].kms))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                              },
+                              [
                                 _c(
-                                  "p",
-                                  { staticClass: "items-id font-medium" },
-                                  [_vm._v(_vm._s(tr.servicioskms[0].id))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-descripcion" }, [
-                                  _vm._v(
-                                    _vm._s(tr.servicioskms[0].descripcion) + " "
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-cant_psjs" }, [
-                                  _vm._v(_vm._s(tr.servicioskms[0].cant_psjs))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-min_servicio" }, [
-                                  _vm._v(
-                                    _vm._s(tr.servicioskms[0].min_servicio)
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-kms" }, [
-                                  _vm._v(_vm._s(tr.servicioskms[0].kms))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c(
-                                  "div",
+                                  "vx-tooltip",
                                   {
-                                    staticClass:
-                                      "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                    attrs: { color: "primary", text: "Editar" }
                                   },
                                   [
-                                    _c(
-                                      "vx-tooltip",
-                                      {
-                                        attrs: {
-                                          color: "primary",
-                                          text: "Editar"
-                                        }
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
                                       },
-                                      [
-                                        _c("vs-button", {
-                                          staticClass: "ml-3",
-                                          attrs: {
-                                            radius: "",
-                                            color: "primary",
-                                            type: "border",
-                                            "icon-pack": "feather",
-                                            icon: "icon-edit-2",
-                                            size: "small"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.editar(tr)
-                                            }
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vx-tooltip",
-                                      {
-                                        attrs: {
-                                          color: "primary",
-                                          text: "Eliminar"
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
                                         }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vx-tooltip",
+                                  {
+                                    attrs: {
+                                      color: "primary",
+                                      text: "Eliminar"
+                                    }
+                                  },
+                                  [
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
                                       },
-                                      [
-                                        _c("vs-button", {
-                                          staticClass: "ml-3",
-                                          attrs: {
-                                            radius: "",
-                                            color: "primary",
-                                            type: "border",
-                                            "icon-pack": "feather",
-                                            icon: "icon-trash",
-                                            size: "small"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.submitEliminar(
-                                                tr,
-                                                indextr
-                                              )
-                                            }
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.submitEliminar(tr, indextr)
+                                        }
+                                      }
+                                    })
                                   ],
                                   1
                                 )
-                              ])
-                            ],
-                            1
-                          )
-                        }),
+                              ],
+                              1
+                            )
+                          ])
+                        ],
                         1
                       )
-                    ]
+                    })
                   }
                 }
               ]),
@@ -50796,61 +50770,71 @@ var render = function() {
     },
     [
       _c(
-        "vs-table",
+        "vs-popup",
         {
-          attrs: {
-            pagination: "",
-            "max-items": _vm.itemsPerPage,
-            search: "",
-            data: _vm.items
-          },
-          scopedSlots: _vm._u([
+          staticClass: "holamundo",
+          attrs: { title: "Tarifas Pasajeros", active: _vm.popupParametros },
+          on: {
+            "update:active": function($event) {
+              _vm.popupParametros = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "vs-table",
             {
-              key: "default",
-              fn: function(ref) {
-                var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
+              ref: "tablepar",
+              attrs: {
+                multiple: "",
+                pagination: "",
+                search: "",
+                data: _vm.parametros
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return _vm._l(data, function(tr, indextr) {
                       return _c(
                         "vs-tr",
                         { key: indextr, attrs: { data: tr } },
                         [
                           _c("vs-td", [
                             _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
+                              _vm._v(_vm._s(tr.serviciospasajeros[0].id))
                             ])
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
-                            _c("p", { staticClass: "items-razon_social" }, [
-                              _vm._v(_vm._s(tr.razon_social))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-rut" }, [
-                              _vm._v(_vm._s(tr.rut))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _c(
-                                "vs-chip",
-                                {
-                                  staticClass: "items-cantidad",
-                                  attrs: {
-                                    color: _vm.getStatusColor(tr.cantidad)
-                                  }
-                                },
-                                [_vm._v(_vm._s(tr.cantidad))]
+                            _c("p", { staticClass: "items-num-pasajeros" }, [
+                              _vm._v(
+                                _vm._s(tr.serviciospasajeros[0].num_psj_min) +
+                                  " - " +
+                                  _vm._s(tr.serviciospasajeros[0].num_psj_max)
                               )
-                            ],
-                            1
-                          ),
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-factor" }, [
+                              _vm._v(
+                                _vm._s(tr.serviciospasajeros[0].fac_rang_min) +
+                                  " - " +
+                                  _vm._s(tr.serviciospasajeros[0].fac_rang_max)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-valor" }, [
+                              _vm._v(_vm._s(tr.serviciospasajeros[0].valor))
+                            ])
+                          ]),
                           _vm._v(" "),
                           _c("vs-td", [
                             _c(
@@ -50863,9 +50847,35 @@ var render = function() {
                                 _c(
                                   "vx-tooltip",
                                   {
+                                    attrs: { color: "primary", text: "Editar" }
+                                  },
+                                  [
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vx-tooltip",
+                                  {
                                     attrs: {
                                       color: "primary",
-                                      text: "Parametros"
+                                      text: "Eliminar"
                                     }
                                   },
                                   [
@@ -50876,12 +50886,12 @@ var render = function() {
                                         color: "primary",
                                         type: "border",
                                         "icon-pack": "feather",
-                                        icon: "icon-search",
+                                        icon: "icon-trash",
                                         size: "small"
                                       },
                                       on: {
                                         click: function($event) {
-                                          return _vm.listadoParametros(tr)
+                                          return _vm.submitEliminar(tr, indextr)
                                         }
                                       }
                                     })
@@ -50895,201 +50905,129 @@ var render = function() {
                         ],
                         1
                       )
-                    }),
-                    1
-                  )
-                ]
+                    })
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
               }
-            }
-          ])
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass:
-                "flex flex-wrap-reverse items-center flex-grow justify-between",
-              attrs: { slot: "header" },
-              slot: "header"
             },
             [
               _c(
-                "div",
-                { staticClass: "flex flex-wrap-reverse items-center" },
+                "template",
+                { slot: "header" },
                 [
                   _c(
-                    "div",
+                    "vs-dropdown",
                     {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
+                      staticClass: "cursor-pointer mr-4 mb-4",
+                      attrs: { "vs-trigger-click": "" }
                     },
                     [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
                       _c(
-                        "vx-tooltip",
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar empresa" }
+                          staticClass:
+                            "p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
                         },
                         [
+                          _c("span", { staticClass: "mr-2" }, [
+                            _vm._v("Acciones")
+                          ]),
+                          _vm._v(" "),
+                          _c("feather-icon", {
+                            attrs: {
+                              icon: "ChevronDownIcon",
+                              svgClasses: "h-4 w-4"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-menu",
+                        [
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Tarifa")]
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(1)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Borrar")])]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "vs-dropdown-item",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.accion(2)
+                                }
+                              }
+                            },
+                            [_c("span", [_vm._v("Exportar")])]
                           )
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "vs-dropdown",
-                {
-                  staticClass: "cursor-pointer mb-4 mr-4",
-                  attrs: { "vs-trigger-click": "" }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
-                    },
-                    [
-                      _c("span", { staticClass: "mr-2" }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm.currentPage * _vm.itemsPerPage -
-                              (_vm.itemsPerPage - 1)
-                          ) +
-                            " - " +
-                            _vm._s(
-                              _vm.items.length -
-                                _vm.currentPage * _vm.itemsPerPage >
-                                0
-                                ? _vm.currentPage * _vm.itemsPerPage
-                                : _vm.items.length
-                            ) +
-                            " of " +
-                            _vm._s(_vm.items.length)
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("feather-icon", {
-                        attrs: {
-                          icon: "ChevronDownIcon",
-                          svgClasses: "h-4 w-4"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "vs-dropdown-menu",
-                    [
-                      _c(
-                        "vs-dropdown-item",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 4
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("4")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-dropdown-item",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 10
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("10")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-dropdown-item",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 15
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("15")])]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "vs-dropdown-item",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.itemsPerPage = 20
-                            }
-                          }
-                        },
-                        [_c("span", [_vm._v("20")])]
+                        ],
+                        1
                       )
                     ],
                     1
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "thead" },
+                [
+                  _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                    _vm._v("ID")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "vs-th",
+                    { attrs: { "sort-key": "items-num-pasajeros" } },
+                    [_vm._v("N° Pasajeros")]
+                  ),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-factor" } }, [
+                    _vm._v("Factor")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-valor" } }, [
+                    _vm._v("Valor")
+                  ]),
+                  _vm._v(" "),
+                  _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                    _vm._v("Accion")
+                  ])
+                ],
+                1
               )
             ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "template",
-            { slot: "thead" },
-            [
-              _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
-                _vm._v("ID")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-razon_social" } }, [
-                _vm._v("Razon Social")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-rut" } }, [
-                _vm._v("RUT")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-cantidad" } }, [
-                _vm._v("Parametros")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
-                _vm._v("Accion")
-              ])
-            ],
-            1
+            2
           )
         ],
-        2
+        1
       ),
       _vm._v(" "),
       _c(
         "vs-popup",
         {
           ref: "modal",
-          staticClass: "holamundo",
+          staticClass: "popuptarifa",
           attrs: {
             title:
               _vm.modoEditar == false ? "AGREGAR TARIFA" : "ACTUALIZAR TARIFA",
@@ -51098,6 +51036,9 @@ var render = function() {
           on: {
             "update:active": function($event) {
               _vm.popupActive = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
             }
           }
         },
@@ -51680,288 +51621,294 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "vs-popup",
+        "vs-table",
         {
-          staticClass: "holamundo",
-          attrs: { title: "Tarifas Pasajeros", active: _vm.popupParametros },
-          on: {
-            "update:active": function($event) {
-              _vm.popupParametros = $event
-            },
-            close: function($event) {
-              return _vm.$close($event)
-            }
-          }
-        },
-        [
-          _c(
-            "vs-table",
+          ref: "table",
+          attrs: {
+            pagination: "",
+            "max-items": _vm.itemsPerPage,
+            search: "",
+            data: _vm.items
+          },
+          scopedSlots: _vm._u([
             {
-              ref: "table",
-              attrs: {
-                multiple: "",
-                pagination: "",
-                search: "",
-                data: _vm.parametros
-              },
-              scopedSlots: _vm._u([
-                {
-                  key: "default",
-                  fn: function(ref) {
-                    var data = ref.data
-                    return [
-                      _c(
-                        "tbody",
-                        _vm._l(data, function(tr, indextr) {
-                          return _c(
-                            "vs-tr",
-                            { key: indextr, attrs: { data: tr } },
+              key: "default",
+              fn: function(ref) {
+                var data = ref.data
+                return [
+                  _c(
+                    "tbody",
+                    _vm._l(data, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr, attrs: { data: tr } },
+                        [
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-id font-medium" }, [
+                              _vm._v(_vm._s(tr.id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-razon_social" }, [
+                              _vm._v(_vm._s(tr.razon_social))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-rut" }, [
+                              _vm._v(_vm._s(tr.rut))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "vs-td",
                             [
-                              _c("vs-td", [
+                              _c(
+                                "vs-chip",
+                                {
+                                  staticClass: "items-cantidad",
+                                  attrs: {
+                                    color: _vm.getStatusColor(tr.cantidad)
+                                  }
+                                },
+                                [_vm._v(_vm._s(tr.cantidad))]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                              },
+                              [
                                 _c(
-                                  "p",
-                                  { staticClass: "items-id font-medium" },
-                                  [_vm._v(_vm._s(tr.serviciospasajeros[0].id))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c(
-                                  "p",
-                                  { staticClass: "items-num_pasajeros" },
-                                  [
-                                    _vm._v(
-                                      _vm._s(
-                                        tr.serviciospasajeros[0].num_psj_min
-                                      ) +
-                                        " - " +
-                                        _vm._s(
-                                          tr.serviciospasajeros[0].num_psj_max
-                                        )
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-factor" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      tr.serviciospasajeros[0].fac_rang_min
-                                    ) +
-                                      " - " +
-                                      _vm._s(
-                                        tr.serviciospasajeros[0].fac_rang_max
-                                      )
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-valor" }, [
-                                  _vm._v(_vm._s(tr.serviciospasajeros[0].valor))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c(
-                                  "div",
+                                  "vx-tooltip",
                                   {
-                                    staticClass:
-                                      "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                    attrs: {
+                                      color: "primary",
+                                      text: "Parametros"
+                                    }
                                   },
                                   [
-                                    _c(
-                                      "vx-tooltip",
-                                      {
-                                        attrs: {
-                                          color: "primary",
-                                          text: "Editar"
-                                        }
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-search",
+                                        size: "small"
                                       },
-                                      [
-                                        _c("vs-button", {
-                                          staticClass: "ml-3",
-                                          attrs: {
-                                            radius: "",
-                                            color: "primary",
-                                            type: "border",
-                                            "icon-pack": "feather",
-                                            icon: "icon-edit-2",
-                                            size: "small"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.editar(tr)
-                                            }
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vx-tooltip",
-                                      {
-                                        attrs: {
-                                          color: "primary",
-                                          text: "Eliminar"
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.listadoParametros(tr)
                                         }
-                                      },
-                                      [
-                                        _c("vs-button", {
-                                          staticClass: "ml-3",
-                                          attrs: {
-                                            radius: "",
-                                            color: "primary",
-                                            type: "border",
-                                            "icon-pack": "feather",
-                                            icon: "icon-trash",
-                                            size: "small"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.submitEliminar(
-                                                tr,
-                                                indextr
-                                              )
-                                            }
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                      }
+                                    })
                                   ],
                                   1
                                 )
-                              ])
-                            ],
-                            1
-                          )
-                        }),
+                              ],
+                              1
+                            )
+                          ])
+                        ],
                         1
                       )
-                    ]
-                  }
-                }
-              ]),
-              model: {
-                value: _vm.selected,
-                callback: function($$v) {
-                  _vm.selected = $$v
-                },
-                expression: "selected"
+                    }),
+                    1
+                  )
+                ]
               }
+            }
+          ])
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "flex flex-wrap-reverse items-center flex-grow justify-between",
+              attrs: { slot: "header" },
+              slot: "header"
             },
             [
               _c(
                 "div",
+                { staticClass: "flex flex-wrap-reverse items-center" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.$agregarPopUp()
+                        }
+                      }
+                    },
+                    [
+                      _c("feather-icon", {
+                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "vx-tooltip",
+                        {
+                          attrs: { color: "primary", text: "Agregar empresa" }
+                        },
+                        [
+                          _c(
+                            "span",
+                            { staticClass: "ml-2 text-base text-primary" },
+                            [_vm._v("Agregar Tarifa")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-dropdown",
                 {
-                  staticClass:
-                    "flex flex-wrap-reverse items-center flex-grow justify-between",
-                  attrs: { slot: "header" },
-                  slot: "header"
+                  staticClass: "cursor-pointer mb-4 mr-4",
+                  attrs: { "vs-trigger-click": "" }
                 },
                 [
                   _c(
-                    "vs-dropdown",
+                    "div",
                     {
-                      staticClass: "cursor-pointer mr-4 mb-4",
-                      attrs: { "vs-trigger-click": "" }
+                      staticClass:
+                        "p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium"
                     },
                     [
+                      _c("span", { staticClass: "mr-2" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.currentPage * _vm.itemsPerPage -
+                              (_vm.itemsPerPage - 1)
+                          ) +
+                            " - " +
+                            _vm._s(
+                              _vm.items.length -
+                                _vm.currentPage * _vm.itemsPerPage >
+                                0
+                                ? _vm.currentPage * _vm.itemsPerPage
+                                : _vm.items.length
+                            ) +
+                            " of " +
+                            _vm._s(_vm.items.length)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("feather-icon", {
+                        attrs: {
+                          icon: "ChevronDownIcon",
+                          svgClasses: "h-4 w-4"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "vs-dropdown-menu",
+                    [
                       _c(
-                        "div",
+                        "vs-dropdown-item",
                         {
-                          staticClass:
-                            "p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32"
-                        },
-                        [
-                          _c("span", { staticClass: "mr-2" }, [
-                            _vm._v("Acciones")
-                          ]),
-                          _vm._v(" "),
-                          _c("feather-icon", {
-                            attrs: {
-                              icon: "ChevronDownIcon",
-                              svgClasses: "h-4 w-4"
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 4
                             }
-                          })
-                        ],
-                        1
+                          }
+                        },
+                        [_c("span", [_vm._v("4")])]
                       ),
                       _vm._v(" "),
                       _c(
-                        "vs-dropdown-menu",
-                        [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.accion(2)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Exportar")])]
-                          )
-                        ],
-                        1
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 10
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("10")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 15
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("15")])]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "vs-dropdown-item",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.itemsPerPage = 20
+                            }
+                          }
+                        },
+                        [_c("span", [_vm._v("20")])]
                       )
                     ],
                     1
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "template",
-                { slot: "thead" },
-                [
-                  _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
-                    _vm._v("ID")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "vs-th",
-                    { attrs: { "sort-key": "items-num_pasajeros" } },
-                    [_vm._v("N° Pasajeros")]
-                  ),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "items-factor" } }, [
-                    _vm._v("Factor")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "items-valor" } }, [
-                    _vm._v("Valor")
-                  ]),
-                  _vm._v(" "),
-                  _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
-                    _vm._v("Accion")
-                  ])
-                ],
-                1
               )
             ],
-            2
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "template",
+            { slot: "thead" },
+            [
+              _c("vs-th", { attrs: { "sort-key": "items-id" } }, [
+                _vm._v("ID")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-razon_social" } }, [
+                _vm._v("Razon Social")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-rut" } }, [
+                _vm._v("RUT")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-cantidad" } }, [
+                _vm._v("Parametros")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
+                _vm._v("Accion")
+              ])
+            ],
+            1
           )
         ],
-        1
+        2
       )
     ],
     1
@@ -52291,7 +52238,7 @@ var render = function() {
         "vs-popup",
         {
           ref: "modal",
-          staticClass: "holamundo",
+          staticClass: "popuptarifa",
           attrs: {
             title:
               _vm.modoEditar == false ? "AGREGAR TARIFA" : "ACTUALIZAR TARIFA",
@@ -52300,6 +52247,9 @@ var render = function() {
           on: {
             "update:active": function($event) {
               _vm.popupActive = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
             }
           }
         },
@@ -52756,7 +52706,7 @@ var render = function() {
           _c(
             "vs-table",
             {
-              ref: "table",
+              ref: "tablepar",
               attrs: {
                 multiple: "",
                 pagination: "",
@@ -52768,133 +52718,111 @@ var render = function() {
                   key: "default",
                   fn: function(ref) {
                     var data = ref.data
-                    return [
-                      _c(
-                        "tbody",
-                        _vm._l(data, function(tr, indextr) {
-                          return _c(
-                            "vs-tr",
-                            { key: indextr, attrs: { data: tr } },
-                            [
-                              _c("vs-td", [
+                    return _vm._l(data, function(tr, indextr) {
+                      return _c(
+                        "vs-tr",
+                        { key: indextr, attrs: { data: tr } },
+                        [
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-id font-medium" }, [
+                              _vm._v(_vm._s(tr.serviciosplanas[0].id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-num_pasajeros" }, [
+                              _vm._v(
+                                _vm._s(tr.serviciosplanas[0].num_psj_min) +
+                                  " - " +
+                                  _vm._s(tr.serviciosplanas[0].num_psj_max)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-minima" }, [
+                              _vm._v(_vm._s(tr.serviciosplanas[0].minima))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-psjadicional" }, [
+                              _vm._v(
+                                _vm._s(tr.serviciosplanas[0].psj_adicional)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                              },
+                              [
                                 _c(
-                                  "p",
-                                  { staticClass: "items-id font-medium" },
-                                  [_vm._v(_vm._s(tr.serviciosplanas[0].id))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c(
-                                  "p",
-                                  { staticClass: "items-num_pasajeros" },
-                                  [
-                                    _vm._v(
-                                      _vm._s(
-                                        tr.serviciosplanas[0].num_psj_min
-                                      ) +
-                                        " - " +
-                                        _vm._s(
-                                          tr.serviciosplanas[0].num_psj_max
-                                        )
-                                    )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-minima" }, [
-                                  _vm._v(_vm._s(tr.serviciosplanas[0].minima))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c("p", { staticClass: "items-psjadicional" }, [
-                                  _vm._v(
-                                    _vm._s(tr.serviciosplanas[0].psj_adicional)
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("vs-td", [
-                                _c(
-                                  "div",
+                                  "vx-tooltip",
                                   {
-                                    staticClass:
-                                      "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                    attrs: { color: "primary", text: "Editar" }
                                   },
                                   [
-                                    _c(
-                                      "vx-tooltip",
-                                      {
-                                        attrs: {
-                                          color: "primary",
-                                          text: "Editar"
-                                        }
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
                                       },
-                                      [
-                                        _c("vs-button", {
-                                          staticClass: "ml-3",
-                                          attrs: {
-                                            radius: "",
-                                            color: "primary",
-                                            type: "border",
-                                            "icon-pack": "feather",
-                                            icon: "icon-edit-2",
-                                            size: "small"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.editar(tr)
-                                            }
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "vx-tooltip",
-                                      {
-                                        attrs: {
-                                          color: "primary",
-                                          text: "Eliminar"
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
                                         }
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "vx-tooltip",
+                                  {
+                                    attrs: {
+                                      color: "primary",
+                                      text: "Eliminar"
+                                    }
+                                  },
+                                  [
+                                    _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
                                       },
-                                      [
-                                        _c("vs-button", {
-                                          staticClass: "ml-3",
-                                          attrs: {
-                                            radius: "",
-                                            color: "primary",
-                                            type: "border",
-                                            "icon-pack": "feather",
-                                            icon: "icon-trash",
-                                            size: "small"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.submitEliminar(
-                                                tr,
-                                                indextr
-                                              )
-                                            }
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.submitEliminar(tr, indextr)
+                                        }
+                                      }
+                                    })
                                   ],
                                   1
                                 )
-                              ])
-                            ],
-                            1
-                          )
-                        }),
+                              ],
+                              1
+                            )
+                          ])
+                        ],
                         1
                       )
-                    ]
+                    })
                   }
                 }
               ]),

@@ -3,7 +3,7 @@
 
   
 
-    <vs-table pagination :max-items="itemsPerPage" search :data="items">
+    <vs-table ref="table" pagination :max-items="itemsPerPage" search :data="items">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -89,8 +89,8 @@
     </vs-table>
     
      <!-- POP UP -->
-        <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR TARIFA' : 'ACTUALIZAR TARIFA')" 
-         :active.sync="popupActive">
+        <vs-popup class="popuptarifa"  ref="modal" :title="(modoEditar == false ? 'AGREGAR TARIFA' : 'ACTUALIZAR TARIFA')" 
+         :active.sync="popupActive"  @close="$close($event)">
         <div>
                 <vs-divider color="primary"><h5>Tarifas KMS</h5></vs-divider>
               </div>
@@ -189,7 +189,7 @@
           <vs-popup class="holamundo"  title="Tarifas KMS" :active.sync="popupParametros"
           @close="$close($event)">   
 
-    <vs-table ref="table" multiple v-model="selected" pagination search :data="parametros">
+    <vs-table ref="tablepar" multiple v-model="selected" pagination search :data="parametros">
        <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
           <!-- ACTION - DROPDOWN -->
           <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
@@ -231,7 +231,7 @@
       </template>
 
         <template slot-scope="{data}">
-          <tbody>
+       
             <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
               <vs-td>
@@ -271,7 +271,7 @@
                  </div>
             </vs-td>
             </vs-tr>
-          </tbody>
+   
         </template>
     </vs-table>
           </vs-popup>
@@ -347,6 +347,7 @@ export default {
     currentPage() {
       if(this.isMounted) {
         return this.$refs.table.currentx
+        return this.$refs.tablepar.currentx
       }
       return 0
     },
@@ -694,10 +695,14 @@ export default {
 }
 
 .con-vs-dropdown--menu {
-    z-index: 55000 !important;
+    z-index: 58000 !important;
 }
 
 .con-vs-dialog {
     z-index: 56005 !important;
+}
+
+.popuptarifa {
+    z-index: 57005 !important;
 }
 </style>

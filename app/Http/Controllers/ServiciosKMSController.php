@@ -113,12 +113,7 @@ class ServiciosKMSController extends Controller
     public function listado($idEmpresa)
     {
             
-      
-        //$servplanas = EmpresasHasServPsj::whereHas('serviciospasajeros', function ($query) use ($idEmpresa) {
-        //    $query->where('empresa_id', '=', $idEmpresa);
-        //})->get();
-
-        $servkms = EmpresasHasServKMS::with('servicioskms')->get();
+        $servkms = EmpresasHasServKMS::with('servicioskms')->where('empresa_id', $idEmpresa)->get();
 
         return response()->json(
             [
