@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmpresahasserpasajerosTable extends Migration
+class CreateDrivershascarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,22 @@ class CreateEmpresahasserpasajerosTable extends Migration
      */
     public function up()
     {
-        Schema::create('empresas_has_serv_psjs', function (Blueprint $table) {
+        Schema::create('drivers_has_cars', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('empresa_id');
-            $table->unsignedBigInteger('serv_psj_id');
+            $table->unsignedBigInteger('driver_id');
+            $table->unsignedBigInteger('car_id');
+            $table->boolean('habilitado');
             $table->timestamps();
 
-            $table->foreign('empresa_id')
+            $table->foreign('driver_id')
             ->references('id')
-            ->on('empresas');
+            ->on('drivers');
 
-            $table->foreign('serv_psj_id')
+            $table->foreign('car_id')
             ->references('id')
-            ->on('servicios_pasajeros')
-            ->onDelete('cascade');
-
-
+            ->on('cars');
         });
+       
     }
 
     /**
@@ -39,6 +38,6 @@ class CreateEmpresahasserpasajerosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empresas_has_serv_psjs');
+        Schema::dropIfExists('drivershascars');
     }
 }
