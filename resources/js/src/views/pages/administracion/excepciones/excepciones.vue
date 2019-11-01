@@ -164,6 +164,7 @@ export default {
       ruta:'/excepciones/excepciones/',
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",

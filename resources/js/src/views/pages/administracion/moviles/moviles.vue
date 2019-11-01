@@ -637,6 +637,7 @@ export default {
       ruta: "/driver/driver/",
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite: "",
@@ -715,18 +716,8 @@ export default {
           thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-            var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'}) 
+           
+              this.$msjError(error);  
         });
       //Carga Empresa
       this.$http
@@ -735,19 +726,8 @@ export default {
           thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-          var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+          
+              this.$msjError(error);           
 
         });
       
@@ -758,19 +738,8 @@ export default {
           thisIns.tipodocumentos_choices = response.data.items;
         })
         .catch(function(error) {
-           var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})  
+           
+              this.$msjError(error);  
 
         });   
            

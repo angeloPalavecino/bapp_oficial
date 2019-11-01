@@ -47,10 +47,11 @@
 				</div>
 
 				<div class="bookmark-container">
-					<feather-icon icon="StarIcon" :svgClasses="['stoke-current text-warning', {'text-white': navbarColor != '#fff'}]" class="cursor-pointer p-2" @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown" />
+                   <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search ml-4"></feather-icon>
+				<!--	<feather-icon icon="StarIcon" :svgClasses="['stoke-current text-warning', {'text-white': navbarColor != '#fff'}]" class="cursor-pointer p-2" @click.stop="showBookmarkPagesDropdown = !showBookmarkPagesDropdown" />
                     <div v-click-outside="outside" class="absolute bookmark-list w-1/3 xl:w-1/4 mt-4" v-if="showBookmarkPagesDropdown">
 					<vx-auto-suggest :autoFocus="true" :data="navbarSearchAndPinList" @selected="selected" @actionClicked="actionClicked" inputClassses="w-full" show-action show-pinned background-overlay></vx-auto-suggest>
-					</div>
+					</div>-->
 				</div>
 			</template>
 
@@ -64,7 +65,7 @@
                     <feather-icon icon="XIcon" class="px-4 cursor-pointer h-full close-search-icon" @click="showFullSearch = false"></feather-icon>
                 </div>
             </div>
-            <feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search ml-4"></feather-icon>
+            <!--<feather-icon icon="SearchIcon" @click="showFullSearch = true" class="cursor-pointer navbar-fuzzy-search ml-4"></feather-icon>-->
 
 			<!-- NOTIFICATIONS 
 			<vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer ml-4">
@@ -113,7 +114,7 @@
 			</vs-dropdown>-->
 
 			<!-- USER META -->
-			<div class="the-navbar__user-meta flex items-center">
+			<div class="the-navbar__user-meta flex items-center" style="border-left: groove; padding-left: 10px;">
 				<div class="text-right leading-tight hidden sm:block">
 					<p class="font-semibold">{{ item.name }} {{ item.lastname  }}</p>
 					<small>{{ item.email }}</small>

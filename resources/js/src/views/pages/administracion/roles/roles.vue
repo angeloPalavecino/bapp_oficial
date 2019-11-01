@@ -72,7 +72,7 @@
                   <br/>
                 <label class="typo__label" style="font-size: 12px;">Permisos</label>
                   <br/><br/> 
-                <vs-table :data="options" pagination   max-items="7" class="permisos">
+                <vs-table :data="options" pagination   max-items="10" class="permisos">
 
                       <template slot="thead">
                         <vs-th>Modulo</vs-th>
@@ -245,6 +245,7 @@ export default {
       ruta:'/roles/roles/',
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",
@@ -282,19 +283,8 @@ export default {
             
           })
           .catch(function (error) {
-            var textError;
-              if(error.response.status == 300) { 
-                 textError = error.response.data.message;
-               }else{
-                 textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+           
+              this.$msjError(error);          
 
           });
       },
@@ -399,6 +389,10 @@ export default {
       th .vs-table-text {
         justify-content: center !important;
   }
+
+  td {
+    padding: 5px !important;
+}
 }
 #data-list-list-view {
   .vs-con-table {

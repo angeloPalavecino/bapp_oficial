@@ -8,24 +8,11 @@
         this.$http.get(url)
           .then(function (response) {
               thisIns.items = response.data.items 
+              thisIns.itemsOriginal = response.data.items 
           })
           
           .catch(function (error) {
-            var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-               icon:'icon-alert-circle'})         
-
-
+            this.$msjError(error);    
           });
           
 
@@ -61,19 +48,7 @@
                    
             })
             .catch(function (error) {
-                var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+               this.$msjError(error);            
 
             });
         } else {
@@ -113,20 +88,7 @@
                 
             })
             .catch(function (error) {   
-              var textError;
-              if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
-
+              this.$msjError(error);    
 
             });
         } else {
@@ -174,20 +136,7 @@
 
           })
           .catch(function (error) {
-              var textError;
-              if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
-
+              this.$msjError(error);    
 
               delete this.ite;
               delete this.ind;
@@ -224,19 +173,7 @@
 
           })
           .catch(function (error) {
-           var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+              this.$msjError(error);        
      
           });
 
@@ -323,6 +260,28 @@
     $close(event,con){
       this.selected = [];
     },
+    //Filtra Tabla
+    $filtrar(campo,valor){
+      
+      var dataBase = this.itemsOriginal;
+      var filterx = null;
+      
+      if(valor === null) {
+        
+        filterx = dataBase;
+
+      }else {
+
+        filterx = dataBase.filter(function (tr) {
+        if(tr[campo] === valor){
+          return tr;
+        }
+      });
+      }
+      
+      this.items = filterx;
+      
+    },
 
      //Carga datos perfil
     $cargarDatosPerfil(){
@@ -341,19 +300,7 @@
 
          })
         .catch(function (error) {
-          var textError;
-            if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+          this.$msjError(error);          
 
         });
     },
@@ -386,24 +333,28 @@
           })                                      
         })
         .catch(function (error) {
-          var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
-
+           this.$msjError(error);           
         });
       } else {
       }
     },
+    //Envia mensaje error
+    $msjError(error){
+        const thisIns = this;
+        var textError;
+        if(error.response.status == 300) { 
+              textError = error.response.data.message;
+          }else{
+              textError = error;
+        }
+
+          thisIns.$vs.notify({
+              title:'Error',
+              text: textError,
+              color:'danger',
+              iconPack: 'feather',
+              icon:'icon-alert-circle'})  
+    }
 
     
       

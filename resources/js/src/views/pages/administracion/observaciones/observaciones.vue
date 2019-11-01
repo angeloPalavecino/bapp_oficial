@@ -135,6 +135,7 @@ export default {
       ruta:'/observaciones/observaciones/',
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",

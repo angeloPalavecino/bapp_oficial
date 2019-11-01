@@ -151,7 +151,28 @@
         </vs-popup>
         <!-- POP UP -->
 
-        <!-- ITEMS PER PAGE -->
+       <div class="drowoptions" >  
+       <!-- FILTRO -->
+        <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4">
+          <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
+            <span class="mr-2">Ver | Estado</span>
+            <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
+          </div>
+          <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
+          <vs-dropdown-menu>
+               <vs-dropdown-item @click.prevent="$filtrar('habilitado', null)">
+                <span>Todos</span>
+              </vs-dropdown-item>
+               <vs-dropdown-item @click.prevent="$filtrar('habilitado', 1)">
+                <span>Activo</span>
+              </vs-dropdown-item>
+              <vs-dropdown-item @click.prevent="$filtrar('habilitado', 0)">
+                <span>Inactivo</span>
+              </vs-dropdown-item>
+          </vs-dropdown-menu>
+        </vs-dropdown>
+
+          <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
             <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ items.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : items.length }} of {{ items.length }}</span>
@@ -174,6 +195,10 @@
             </vs-dropdown-item>
           </vs-dropdown-menu>
         </vs-dropdown>
+
+
+      </div>
+
       </div>
 
       <template slot="thead">
@@ -298,6 +323,7 @@ export default {
       ruta:'/users/users/',
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",
@@ -370,19 +396,8 @@ export default {
             thisIns.roles_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })
           .catch(function (error) {
-            var textError;
-             if(error.response.status == 300) { 
-                 textError = error.response.data.message;
-               }else{
-                 textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+            
+            this.$msjError(error);            
 
           });
         //Carga Empresa
@@ -391,19 +406,8 @@ export default {
             thisIns.empresa_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })
           .catch(function (error) {
-            var textError;
-             if(error.response.status == 300) { 
-                 textError = error.response.data.message;
-               }else{
-                 textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+            
+            this.$msjError(error);          
 
           });
       },
@@ -528,6 +532,11 @@ export default {
       justify-content: center;
     }
   }
+}
+
+.drowoptions{
+align-items: left !important;
+
 }
 
 </style>

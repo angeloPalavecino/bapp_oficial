@@ -178,7 +178,7 @@
           <vs-popup class="holamundo"  title="Tarifas Planas" :active.sync="popupParametros"
           @close="$close($event)">   
 
-    <vs-table ref="tablepar" multiple v-model="selected" pagination search :data="parametros">
+    <vs-table ref="tablepar" multiple v-model="selected" pagination search :data="parametros" class="tablaParametros">
        <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
           <!-- ACTION - DROPDOWN -->
           <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
@@ -206,10 +206,10 @@
           </vs-dropdown>
          </div>
       <template slot="thead">
-        <vs-th sort-key="items-id">ID</vs-th>
-        <vs-th sort-key="items-num_pasajeros">N° Pasajeros</vs-th>
-        <vs-th sort-key="items-minima">Minima</vs-th>
-        <vs-th sort-key="items-psjadicional">Px Adicional (Transportado)</vs-th>
+        <vs-th>ID</vs-th>
+        <vs-th>N° Pasajeros</vs-th>
+        <vs-th>Minima</vs-th>
+        <vs-th>Px Adicional (Transportado)</vs-th>
        
       <!--<vs-th sort-key="items-fuera_zona_1">F. Zona 1</vs-th>
         <vs-th sort-key="items-fuera_zona_2">F. Zona 2</vs-th>-->
@@ -240,7 +240,7 @@
               </vs-td>-->
                
               <vs-td>
-                   <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
+                   <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0" style="justify-content: center;">
                       <vx-tooltip color="primary" text="Editar">
                       <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
                        </vx-tooltip>
@@ -303,6 +303,7 @@ export default {
       ruta:'/tarifas/planas/',
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",
@@ -406,19 +407,8 @@ export default {
             thisIns.empresa_choices = response.data.items 
           })
           .catch(function (error) {
-              var textError;
-             if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
 
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+              this.$msjError(error);            
 
           });
       },
@@ -505,19 +495,8 @@ export default {
 
           })
           .catch(function (error) {
-              var textError;
-              if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
 
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+              this.$msjError(error);          
 
 
               delete this.ite;
@@ -558,19 +537,8 @@ export default {
 
           })
           .catch(function (error) {
-           var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+           
+              this.$msjError(error);      
      
           });
 
@@ -682,6 +650,17 @@ export default {
 
 .popuptarifa {
     z-index: 57005 !important;
+}
+
+
+.tablaParametros {
+   th .vs-table-text {
+        justify-content: center !important;
+  }
+
+  tr {
+    text-align: center;
+  };
 }
 
 

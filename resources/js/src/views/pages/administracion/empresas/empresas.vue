@@ -710,6 +710,7 @@ export default {
       selected: [],
       datos: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",
@@ -1011,19 +1012,8 @@ export default {
                 
             })
             .catch(function (error) {
-                var textError;
-              if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+                
+              this.$msjError(error);        
 
             });
         } else {
@@ -1069,19 +1059,8 @@ export default {
                 
             })
             .catch(function (error) {
-                var textError;
-            if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+                
+              this.$msjError(error);          
 
             });
         } else {
@@ -1108,19 +1087,8 @@ export default {
              
           })
           .catch(function (error) {
-            var textError;
-              if(error.response.status == 300) { 
-                 textError = error.response.data.message;
-               }else{
-                 textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+            
+              this.$msjError(error);           
 
           });
       },

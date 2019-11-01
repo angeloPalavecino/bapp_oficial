@@ -10,17 +10,19 @@
 
 <template>
     <div class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center" id="page-login">
-        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-4/5 sm:m-0 m-4">
             <vx-card>
                 <div slot="no-body" class="full-page-bg-color">
                     <div class="vx-row no-gutter justify-center items-center">
                         <div class="vx-col hidden lg:block lg:w-1/2">
-                            <img src="@assets/images/pages/login.png" alt="login" class="mx-auto">
+                            <img src="@assets/images/pages/login_540x375.png" alt="login" class="mx-auto">
                         </div>
                         <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
                             <div class="p-8">
                                 <div class="vx-card__title mb-8">
-                                    <h4 class="mb-4">Login</h4>
+                                  <img src="@assets/images/logo/Bapp(Imagotipo)-color.png" alt="logo" class="mr-4" width="140">
+
+                                        <br/>
                                     <p>Bienvenido, inicie sesión con cuenta.</p>
                                 </div>
                                 <div v-if="has_error && !success">
