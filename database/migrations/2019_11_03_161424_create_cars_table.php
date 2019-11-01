@@ -16,7 +16,6 @@ class CreateCarsTable extends Migration
         Schema::create('cars', function (Blueprint $table) {
            
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('driver_id');
             $table->string('tipo');
             $table->string('marca');
             $table->string('modelo');
@@ -25,14 +24,9 @@ class CreateCarsTable extends Migration
             $table->string('patente');
             $table->string('color');
             $table->string('asientos');
-           /* $table->string('padron');
-            $table->string('permiso');
-            $table->dateTime('permiso_fin')->nullable();
-            $table->string('revision');
-            $table->dateTime('revision_fin')->nullable();
-            $table->string('mtt');
-            $table->dateTime('mtt_fin')->nullable();
-            */
+            $table->string('numero_movil');
+
+
             $table->boolean('habilitado');
             $table->timestamps();
             
