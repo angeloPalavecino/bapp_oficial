@@ -19,7 +19,6 @@ class CreateEmpresahasserpasajerosTable extends Migration
             $table->unsignedBigInteger('serv_psj_id');
             $table->timestamps();
 
-
             $table->foreign('empresa_id')
             ->references('id')
             ->on('empresas');

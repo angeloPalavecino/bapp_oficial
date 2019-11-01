@@ -121,7 +121,7 @@ class ServiciosPasajerosController extends Controller
         //    $query->where('empresa_id', '=', $idEmpresa);
         //})->get();
 
-        $servpsjs = EmpresasHasServPsj::with('serviciospasajeros')->get();
+        $servpsjs = EmpresasHasServPsj::with('serviciospasajeros')->where()->get();
 
         return response()->json(
             [
