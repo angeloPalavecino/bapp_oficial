@@ -79,6 +79,25 @@
                 </div>
                 <span class="text-danger text-sm" v-show="errors.has('direccion')" >{{ errors.first('direccion') }}</span>
                 </div>
+                 <div class="vx-row">
+                   <div class="vx-col md:w-1/4 w-full mt-1">
+                        <div class="p-2 mt-4 rounded-lg cursor-pointer flex items-center justify-between font-small text-base 
+                    text-primary border border-solid border-primary" @click="agregarMarker()" > <!-- @click="addNewDataSidebar = true" -->
+                        <feather-icon icon="MapPinIcon" svgClasses="h-4 w-4" />
+                        <span class="ml-2 text-base text-primary">MARCAR EN MAPA</span>
+                    </div>
+                   </div>
+                   <div class="vx-col md:w-3/4 w-full mt-1">
+                <div class="mt-5">
+                  <gmap-map :center="center" :zoom="zoom" style="width: 100%; height: 350px">
+                      <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
+                          {{infoContent}}
+                      </gmap-info-window>
+                      <gmap-marker :position="marker.position"  :clickable="true" @click="toggleInfoWindow(marker,0)"></gmap-marker>
+                  </gmap-map>
+                </div>
+                </div>
+                </div>
 
 
             <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
@@ -125,7 +144,7 @@
       </template>
 
         <template slot-scope="{data}">
-          <tbody>
+           
             <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
               <vs-td>
@@ -149,7 +168,7 @@
                  </div>
             </vs-td>
             </vs-tr>
-          </tbody>
+         
         </template>
     </vs-table>
   </div>
@@ -175,6 +194,19 @@ export default {
       exportData : [],
       aux: 0,
 
+      center: { lat: -33.4533624, lng: -70.6642131 },
+      zoom: 11,
+      infoContent: '',
+      infoWindowPos: null,
+      infoWinOpen: false,
+      currentMidx: null,
+      //optional: offset infowindow so it visually sits nicely on top of our marker
+      infoOptions: {
+      pixelOffset: { width: 0, height: -35 }
+      },
+      marker: {},
+     
+
     }
   },
   computed: {
@@ -186,6 +218,33 @@ export default {
     },
   },
   methods: {
+     toggleInfoWindow: function(marker, idx) {
+            this.infoWindowPos = marker.position;
+            this.infoContent = marker.infoText;
+            //check if its the same marker that was selected if yes toggle
+            if (this.currentMidx == idx) {
+                this.infoWinOpen = !this.infoWinOpen;
+            }
+            //if different marker set infowindow to open and reset current marker index
+            else {
+                this.infoWinOpen = true;
+                this.currentMidx = idx;
+            }
+        },
+         agregarMarker: function() {
+
+           const lat = this.autocomplete.getPlace().geometry.location.lat();
+           const lng = this.autocomplete.getPlace().geometry.location.lng();
+           const direccion = this.autocomplete.getPlace().formatted_address;
+           
+           this.marker = {
+                 position: { lat: lat, lng: lng }, 
+                 infoText: direccion,
+            };
+            this.center = { lat: lat, lng: lng }; 
+            this.zoom = 15;
+          
+        },
    asignaDireccion() {
      //console.log(this.autocomplete.getPlace().formatted_address);
      this.item.direccion = this.autocomplete.getPlace().formatted_address;
@@ -205,6 +264,10 @@ export default {
 
       this.item = {};
       this.errors.clear();
+
+      this.center = { lat: -33.4533624, lng: -70.6642131 };
+      this.zoom =  11;
+      this.marker = {}
 
     },
   },

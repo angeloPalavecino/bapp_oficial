@@ -61,6 +61,16 @@ Vue.use(VueAuth, auth)
 import { VueHammer } from 'vue2-hammer'
 Vue.use(VueHammer)
 
+// Google Maps
+import * as VueGoogleMaps from 'vue2-google-maps'
+Vue.use(VueGoogleMaps, {
+    load: {
+        // Add your API key here
+        key: 'AIzaSyCk6Qet4uRb2EaiEoBgw-eOXedRMUuoudA',
+        libraries: 'places,drawing', // This is required if you use the Auto complete plug-in
+    },
+})
+
 // PrismJS
 import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css'
