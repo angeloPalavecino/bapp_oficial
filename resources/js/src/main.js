@@ -68,6 +68,7 @@ Vue.use(VueGoogleMaps, {
         // Add your API key here
         key: 'AIzaSyCk6Qet4uRb2EaiEoBgw-eOXedRMUuoudA',
         libraries: 'places,drawing', // This is required if you use the Auto complete plug-in
+        region: 'cl',
     },
 })
 
