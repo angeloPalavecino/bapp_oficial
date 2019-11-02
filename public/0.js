@@ -407,6 +407,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -1946,56 +1947,14 @@ var render = function() {
                     { staticClass: "bookmark-container" },
                     [
                       _c("feather-icon", {
-                        staticClass: "cursor-pointer p-2",
-                        attrs: {
-                          icon: "StarIcon",
-                          svgClasses: [
-                            "stoke-current text-warning",
-                            { "text-white": _vm.navbarColor != "#fff" }
-                          ]
-                        },
+                        staticClass: "cursor-pointer navbar-fuzzy-search ml-4",
+                        attrs: { icon: "SearchIcon" },
                         on: {
                           click: function($event) {
-                            $event.stopPropagation()
-                            _vm.showBookmarkPagesDropdown = !_vm.showBookmarkPagesDropdown
+                            _vm.showFullSearch = true
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.showBookmarkPagesDropdown
-                        ? _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "click-outside",
-                                  rawName: "v-click-outside",
-                                  value: _vm.outside,
-                                  expression: "outside"
-                                }
-                              ],
-                              staticClass:
-                                "absolute bookmark-list w-1/3 xl:w-1/4 mt-4"
-                            },
-                            [
-                              _c("vx-auto-suggest", {
-                                attrs: {
-                                  autoFocus: true,
-                                  data: _vm.navbarSearchAndPinList,
-                                  inputClassses: "w-full",
-                                  "show-action": "",
-                                  "show-pinned": "",
-                                  "background-overlay": ""
-                                },
-                                on: {
-                                  selected: _vm.selected,
-                                  actionClicked: _vm.actionClicked
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e()
+                      })
                     ],
                     1
                   )
@@ -2061,19 +2020,12 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("feather-icon", {
-              staticClass: "cursor-pointer navbar-fuzzy-search ml-4",
-              attrs: { icon: "SearchIcon" },
-              on: {
-                click: function($event) {
-                  _vm.showFullSearch = true
-                }
-              }
-            }),
-            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "the-navbar__user-meta flex items-center" },
+              {
+                staticClass: "the-navbar__user-meta flex items-center",
+                staticStyle: { "border-left": "groove", "padding-left": "10px" }
+              },
               [
                 _c(
                   "div",
@@ -3487,7 +3439,7 @@ __webpack_require__.r(__webpack_exports__);
   i18n: "GlobeIcon"
 }, {
   url: null,
-  name: "Tarifas",
+  name: "Tarifario",
   icon: "DollarSignIcon",
   i18n: "DollarSignIcon",
   submenu: [{

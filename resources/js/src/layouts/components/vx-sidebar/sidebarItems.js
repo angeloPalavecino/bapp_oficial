@@ -95,7 +95,7 @@ export default [
   },
   {
     url: null,
-    name: "Tarifario",
+    name: "Tarifario", 
     icon: "DollarSignIcon",
     i18n: "DollarSignIcon",
     submenu: [
