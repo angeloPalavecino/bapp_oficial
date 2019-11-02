@@ -15,7 +15,7 @@
                 <div slot="no-body" class="full-page-bg-color">
                     <div class="vx-row no-gutter justify-center items-center">
                         <div class="vx-col hidden lg:block lg:w-1/2">
-                            <img src="@assets/images/pages/login_540x375.png" alt="login" class="mx-auto">
+                            <img src="@assets/images/pages/login_540x433.png" alt="login" class="mx-auto">
                         </div>
                         <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
                             <div class="p-8">
@@ -29,6 +29,9 @@
                                   <span class="text-danger text-sm" v-if="error == 'login_error'">Error de validacion.</span>
                                   <span class="text-danger text-sm" v-else>Error, Incapaz de conectarse con estas credenciales.</span>
                                 </div>
+                                <div v-else>
+                                   <br/>
+                                </div>
                                 <br/>
                                 <vs-input
                                     v-validate="'required|email|min:3'"
@@ -39,8 +42,9 @@
                                     label-placeholder="Email"
                                     v-model="email"
                                     class="w-full no-icon-border"/>
-                                <span class="text-danger text-sm">{{ errors.first('email') }}</span>
-
+                                <span class="text-danger text-sm" v-if="errors.first('email')">{{ errors.first('email') }}</span>
+                                 <span class="text-danger text-sm" v-else>&nbsp </span>
+                               
                                 <vs-input
                                     data-vv-validate-on="blur"
                                     v-validate="'required|min:6|max:10'"
@@ -51,7 +55,8 @@
                                     label-placeholder="Password"
                                     v-model="password"
                                     class="w-full mt-6 no-icon-border" />
-                                <span class="text-danger text-sm">{{ errors.first('password') }}</span>
+                                <span class="text-danger text-sm" v-if="errors.first('password')">{{ errors.first('password') }}</span>
+                                <span class="text-danger text-sm" v-else>&nbsp </span>
 
                                 <div class="flex flex-wrap justify-between my-5">
                                     <vs-checkbox v-model="checkbox_remember_me" class="mb-3" icon-pack="feather" icon="icon-check" >Recordarme</vs-checkbox>

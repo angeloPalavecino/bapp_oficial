@@ -573,7 +573,7 @@ const dict = {
     },
     email: {
       required: "El email es requerido",
-      email: "Ingrese un emil valido"
+      email: "Ingrese un email valido"
     },
     telefono: {
       required: "El telefono es requerido",
