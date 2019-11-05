@@ -408,7 +408,7 @@ export default {
           })
           .catch(function (error) {
 
-              this.$msjError(error);            
+              thisIns.$msjError(error);            
 
           });
       },
@@ -496,11 +496,11 @@ export default {
           })
           .catch(function (error) {
 
-              this.$msjError(error);          
+              thisIns.$msjError(error);          
 
 
-              delete this.ite;
-              delete this.ind;
+              delete thisIns.ite;
+              delete thisIns.ind;
           });
      },
       //Cancela Borrado
@@ -538,7 +538,7 @@ export default {
           })
           .catch(function (error) {
            
-              this.$msjError(error);      
+              thisIns.$msjError(error);      
      
           });
 

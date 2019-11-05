@@ -12,7 +12,7 @@
           })
           
           .catch(function (error) {
-            this.$msjError(error);    
+            thisIns.$msjError(error);    
           });
           
 
@@ -48,7 +48,7 @@
                    
             })
             .catch(function (error) {
-               this.$msjError(error);            
+               thisIns.$msjError(error);            
 
             });
         } else {
@@ -88,7 +88,7 @@
                 
             })
             .catch(function (error) {   
-              this.$msjError(error);    
+              thisIns.$msjError(error);    
 
             });
         } else {
@@ -136,10 +136,11 @@
 
           })
           .catch(function (error) {
-              this.$msjError(error);    
 
-              delete this.ite;
-              delete this.ind;
+              thisIns.$msjError(error);    
+
+              delete thisIns.ite;
+              delete thisIns.ind;
           });
      },
       //Cancela Borrado
@@ -173,7 +174,7 @@
 
           })
           .catch(function (error) {
-              this.$msjError(error);        
+              thisIns.$msjError(error);        
      
           });
 
@@ -300,7 +301,7 @@
 
          })
         .catch(function (error) {
-          this.$msjError(error);          
+          thisIns.$msjError(error);          
 
         });
     },
@@ -333,7 +334,7 @@
           })                                      
         })
         .catch(function (error) {
-           this.$msjError(error);           
+           thisIns.$msjError(error);           
         });
       } else {
       }

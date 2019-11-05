@@ -717,7 +717,7 @@ export default {
         })
         .catch(function(error) {
            
-              this.$msjError(error);  
+              thisIns.$msjError(error);  
         });
       //Carga Empresa
       this.$http
@@ -727,7 +727,7 @@ export default {
         })
         .catch(function(error) {
           
-              this.$msjError(error);           
+              thisIns.$msjError(error);           
 
         });
       
@@ -739,7 +739,7 @@ export default {
         })
         .catch(function(error) {
            
-              this.$msjError(error);  
+              thisIns.$msjError(error);  
 
         });   
            

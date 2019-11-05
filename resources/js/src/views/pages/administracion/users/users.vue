@@ -397,7 +397,7 @@ export default {
           })
           .catch(function (error) {
             
-            this.$msjError(error);            
+            thisIns.$msjError(error);            
 
           });
         //Carga Empresa
@@ -407,7 +407,7 @@ export default {
           })
           .catch(function (error) {
             
-            this.$msjError(error);          
+            thisIns.$msjError(error);          
 
           });
       },

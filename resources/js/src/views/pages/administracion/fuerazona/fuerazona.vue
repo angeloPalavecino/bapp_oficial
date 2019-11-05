@@ -203,7 +203,7 @@ export default {
           })
           .catch(function (error) {
             
-              this.$msjError(error);         
+              thisIns.$msjError(error);         
 
           });
       },

@@ -1013,7 +1013,7 @@ export default {
             })
             .catch(function (error) {
                 
-              this.$msjError(error);        
+              thisIns.$msjError(error);        
 
             });
         } else {
@@ -1060,7 +1060,7 @@ export default {
             })
             .catch(function (error) {
                 
-              this.$msjError(error);          
+              thisIns.$msjError(error);          
 
             });
         } else {
@@ -1088,7 +1088,7 @@ export default {
           })
           .catch(function (error) {
             
-              this.$msjError(error);           
+              thisIns.$msjError(error);           
 
           });
       },

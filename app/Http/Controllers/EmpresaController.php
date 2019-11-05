@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\Empresa;
-use App\Models\ServiciosKMS;
-use App\Models\ServiciosPasajeros;
-use App\Models\ServiciosPlanas;
 use App\Models\Responsable;
 use App\Models\Sucursal;
 use App\Models\Ciclofacturacion;
 use App\Models\Cicloproduccion;
+
+use App\Models\ServiciosPasajeros;
+use App\Models\ServiciosPlanas;
+use App\Models\ServiciosKMS;
+
+use App\Models\EmpresasHasServKMS;
+use App\Models\EmpresasHasServPlanas;
+use App\Models\EmpresasHasServPsj;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -105,19 +110,7 @@ class EmpresaController extends Controller
               )
          );
 
-
-        //Agrega Servicio KMS
-        //$serviciokm["empresa_id"] =  $emp->id;
-        //$tserviciokm = ServiciosKMS::create($serviciokm);
-
-        //Agrega Servicio Pasajeros
-        //$serviciopasajero["empresa_id"] =  $emp->id;
-        //$tserviciopasajero = ServiciosPasajeros::create($serviciopasajero);
-
-        //Agrega Servicio Plana
-        //$servicioplana["empresa_id"] =  $emp->id;
-        //$tservicioplana = ServiciosPlanas::create($servicioplana);
-        
+     
         //Agrega Ciclo Produccion
         $cicprod["empresa_id"] =  $emp->id;
         $tcicprod = Cicloproduccion::create($cicprod);
@@ -239,16 +232,7 @@ class EmpresaController extends Controller
         //Actualizar Ciclo Facturacion
         Ciclofacturacion::where('id', $cicfac['id'])->update($cicfac);
 
-        //Actualizar Servicio KMS
-        //ServiciosKMS::where('id', $serviciokm['id'])->update($serviciokm);
-
-        //Actualizar Servicio Pasajeros
-        //ServiciosPasajeros::where('id', $serviciopasajero['id'])->update($serviciopasajero);
-
-        //Actualizar Servicio Plana
-        //ServiciosPlanas::where('id', $servicioplana['id'])->update($servicioplana);
-        
-        //Actualiza Sucursal   
+         //Actualiza Sucursal   
         $auxsuc = array_column($sucursales, 'id');
         Sucursal::whereNotIn('id', $auxsuc)->delete();
         foreach ($sucursales as $keysuc => $itemsuc) {    
@@ -333,11 +317,25 @@ class EmpresaController extends Controller
         try{
           
             $empresa = Empresa::findOrFail($id);
-             
+
+            $servpsjs = EmpresasHasServPsj::where('empresa_id', $id)->get();
+            $servplanas = EmpresasHasServPlanas::where('empresa_id', $id)->get();
+            $servkms = EmpresasHasServKMS::where('empresa_id', $id)->get();
+
+            $idsservpsjs = array_column($servpsjs->toArray(), 'serv_psj_id'); 
+            $idsservplanas = array_column($servplanas->toArray(), 'serv_planas_id'); 
+            $idsservkms = array_column($servkms->toArray(), 'serv_kms_id'); 
+
+                         
             if(!is_null($empresa)){
                  
-                 $empresa->delete();
+               
+                ServiciosPasajeros::destroy($idsservpsjs);
+                ServiciosPlanas::destroy($idsservplanas);
+                ServiciosKMS::destroy($idsservkms);
  
+                $empresa->delete();
+          
                  return response()->json(
                      [
                          'status' => 'success',
@@ -371,10 +369,22 @@ class EmpresaController extends Controller
       
         
         $ids = array_column($request->all(), 'id');
+
+        $servpsjs = EmpresasHasServPsj::whereIn('empresa_id', $ids)->get();
+        $servplanas = EmpresasHasServPlanas::whereIn('empresa_id', $ids)->get();
+        $servkms = EmpresasHasServKMS::whereIn('empresa_id', $ids)->get();
+
+        $idsservpsjs = array_column($servpsjs->toArray(), 'serv_psj_id'); 
+        $idsservplanas = array_column($servplanas->toArray(), 'serv_planas_id'); 
+        $idsservkms = array_column($servkms->toArray(), 'serv_kms_id'); 
         
         try{
 
-            if(count($ids) > 0 ){          
+            if(count($ids) > 0 ){       
+                
+                ServiciosPasajeros::destroy($idsservpsjs);
+                ServiciosPlanas::destroy($idsservplanas);
+                ServiciosKMS::destroy($idsservkms);
                 
                 Empresa::destroy($ids);
                 
@@ -411,9 +421,6 @@ class EmpresaController extends Controller
     {
 
         $empresa = Empresa::findOrFail($id);
-        //$servicioskms = ServiciosKMS::where('empresa_id', $id)->get();
-        //$serviciospasajeros = ServiciosPasajeros::where('empresa_id', $id)->get();
-        //$serviciosplanas = ServiciosPlanas::where('empresa_id', $id)->get();
         $responsables = Responsable::where('empresa_id', $id)->get();
         $sucursales = Sucursal::where('empresa_id', $id)->get();
         $cicfac = Ciclofacturacion::where('empresa_id', $id)->get();
@@ -422,9 +429,6 @@ class EmpresaController extends Controller
         return response()->json(
             [
                 'status' => 'success',
-                //'servicioplana' => $serviciosplanas->toArray(),
-                //'serviciopasajero' => $serviciospasajeros->toArray(),
-                //'serviciokm' => $servicioskms->toArray(),
                 'responsables' => $responsables->toArray(),
                 'sucursales' => $sucursales->toArray(),
                 'cicfac' => $cicfac->toArray(),
