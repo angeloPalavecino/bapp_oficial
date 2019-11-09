@@ -119,7 +119,7 @@
           
                 <vs-chip :color="getStatusColorMovil(item.moviles.length)" class="items-status-moviles mt-2">{{ item.moviles.length > 0 ? item.moviles.length : 0  }}</vs-chip>
                   <div class="mt-2">
-                    <span style="font-size: 13px;" >&nbsp Moviles seleccionados</span>
+                    <span style="font-size: 13px;" >  Moviles seleccionados</span>
                     <vs-input v-validate="(item.roles == 2 ? 'min_value:1' : '')" type="hidden" name="moviles" v-model="movilescount"/>
                     <span class="text-danger text-sm">{{ errors.first('step-2.moviles') }}</span>
                   </div>
