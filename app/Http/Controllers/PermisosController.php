@@ -94,6 +94,15 @@ class PermisosController extends Controller
             case "update":
                 return "Actualizar";
                 break;
+            case "servpasajeros":
+                return "Tarifa Pasajeros";
+                break;
+            case "servkms":
+                return "Tarifa KMS";
+                break;
+            case "servplanas":
+                return "Tarifa Plana";
+                break;
             default:
                 return ucwords($nombre);
                 break;

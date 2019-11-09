@@ -57,7 +57,8 @@ Route::prefix('v1')->group(function () {
             Route::get('perfil', 'UserController@perfil');
             Route::post('cambiarpass', 'UserController@cambiarpass');
             Route::get('empresas', 'UserController@empresas');
-
+            Route::get('cars/{id}', 'UserController@cars');
+            
         });
     });
     //ROLES
@@ -272,6 +273,7 @@ Route::prefix('v1')->group(function () {
             Route::post('driver/upload', 'DriverController@upload');
             Route::get('driver/documents/{id}', 'DriverController@documents');
             Route::get('driver/document/{id}', 'DriverController@document');
+            Route::get('cars', 'DriverController@cars');
         });
     });
 

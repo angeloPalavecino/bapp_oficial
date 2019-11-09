@@ -22,7 +22,8 @@ class CreateUsershascarsTable extends Migration
 
             $table->foreign('user_id')
             ->references('id')
-            ->on('users');
+            ->on('users')
+            ->onDelete('cascade');
 
             $table->foreign('car_id')
             ->references('id')
@@ -30,10 +31,10 @@ class CreateUsershascarsTable extends Migration
         });
        
         
-        Schema::create('usershascars', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-        });
+        //Schema::create('usershascars', function (Blueprint $table) {
+        //    $table->bigIncrements('id');
+        //    $table->timestamps();
+        //});
     }
 
     /**
@@ -43,6 +44,6 @@ class CreateUsershascarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usershascars');
+        Schema::dropIfExists('users_has_cars');
     }
 }

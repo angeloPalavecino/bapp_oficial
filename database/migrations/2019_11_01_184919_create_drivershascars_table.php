@@ -38,6 +38,6 @@ class CreateDrivershascarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('drivershascars');
+        Schema::dropIfExists('drivers_has_cars');
     }
 }

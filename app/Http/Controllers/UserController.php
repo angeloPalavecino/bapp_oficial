@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\User;
+use App\Models\UsersHasCars;
+use App\Models\Car;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -55,9 +57,8 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        //dd(Auth::user()->getAllPermissions());
-
-        $validation = $this->validator($request->all());
+       
+       $validation = $this->validator($request->all());
 
         if ($validation->fails()) {
 
@@ -93,9 +94,24 @@ class UserController extends Controller
                  //'imagen'       => $imagen
               )
          );
-        
+
          //Actualiza Roles
          $user->assignRole($request->get('roles'));
+
+         //Agrega Moviles conductor
+         if($request->get('roles') == 2) {
+            $moviles = $request->get('moviles');
+
+            foreach ($moviles as $movil) {
+                UsersHasCars::create(
+                    array(
+                            'user_id'       => $user['id'],
+                            'car_id'        => $movil['id'],
+                            'habilitado'    => 1,    
+                         )
+                    );
+            }
+         }
 
          return response()->json(
             [
@@ -252,6 +268,25 @@ class UserController extends Controller
             //$user->roles()->sync($request->get('roles'));
             $usuario->syncRoles($request->get('roles'));
 
+
+            //Actualiza Moviles conductor
+            UsersHasCars::where('user_id', $id)->delete();
+            
+            if($request->get('roles') == 2) {
+
+                $moviles = $request->get('moviles');
+
+                foreach ($moviles as $movil) {
+                    UsersHasCars::create(
+                        array(
+                                'user_id'       => $id,
+                                'car_id'        => $movil['id'],
+                                'habilitado'    => 1,    
+                            )
+                        );
+                }
+            }
+
             return response()->json(
                 [
                     'status' => 'success',
@@ -275,7 +310,7 @@ class UserController extends Controller
 
     public function perfil(Request $request)
     {
-        $user = User::with('roles')->where('id',Auth::user()->id)->get()->toArray(); 
+        $user = User::with('roles')->where('id', Auth::user()->id)->get()->toArray(); 
         
         $user[0]['name'] = ucwords($user[0]['name']);
         $user[0]['lastname'] = ucwords($user[0]['lastname'] );
@@ -332,6 +367,20 @@ class UserController extends Controller
               [
                   'status' => 'success',
                   'items' => $empresas->toArray(),
+              ], 200);
+    }
+
+    public function cars($id)
+    {
+        $usercars = UsersHasCars::where('user_id', $id)->get(); 
+        $ids = array_column($usercars->toArray() , 'car_id');
+       
+        $cars = Car::select('id', 'numero_movil','patente')->whereIn('id', $ids)->get();
+        
+          return response()->json(
+              [
+                  'status' => 'success',
+                  'items' => $cars->toArray(),
               ], 200);
     }
 
