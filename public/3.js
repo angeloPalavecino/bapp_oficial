@@ -1,1 +1,80 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{54:function(t,e){t.exports="/images/404.png?0a38972b4083f43522258cbe550a3cb7"},93:function(t,e,s){"use strict";s.r(e);var a=s(1),i=Object(a.a)({},function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("div",{staticClass:"h-screen flex w-full bg-img"},[a("div",{staticClass:"vx-col flex items-center justify-center flex-col sm:w-1/2 md:w-3/5 lg:w-3/4 xl:w-1/2 mx-auto text-center"},[a("img",{staticClass:"mx-auto mb-4 max-w-full",attrs:{src:s(54),alt:"graphic-404"}}),t._v(" "),a("h1",{staticClass:"sm:mx-0 mx-4 mb-12 text-5xl d-theme-heading-color"},[t._v("404 - Error al ingresar a esta pagina!")]),t._v(" "),a("p",{staticClass:"sm:mx-0 mx-4 mb-4 sm:mb-16 d-theme-text-inverse"},[t._v("1.- Usted no esta autorizado para ver esta pagina.")]),t._v(" "),a("p",{staticClass:"sm:mx-0 mx-4 mb-4 sm:mb-16 d-theme-text-inverse"},[t._v("2.- La pagina no existe o no se encuentra disponible.")]),t._v(" "),a("vs-button",{attrs:{size:"large",to:"/"}},[t._v("Volver al inicio")])],1)])},[],!1,null,null,null);e.default=i.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/full-page/FullPage.vue?vue&type=template&id=7ab36c6f&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/layouts/full-page/FullPage.vue?vue&type=template&id=7ab36c6f& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "layout--full-page" }, [_c("router-view")], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/src/layouts/full-page/FullPage.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/src/layouts/full-page/FullPage.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FullPage_vue_vue_type_template_id_7ab36c6f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FullPage.vue?vue&type=template&id=7ab36c6f& */ "./resources/js/src/layouts/full-page/FullPage.vue?vue&type=template&id=7ab36c6f&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _FullPage_vue_vue_type_template_id_7ab36c6f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FullPage_vue_vue_type_template_id_7ab36c6f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/src/layouts/full-page/FullPage.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/src/layouts/full-page/FullPage.vue?vue&type=template&id=7ab36c6f&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/src/layouts/full-page/FullPage.vue?vue&type=template&id=7ab36c6f& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullPage_vue_vue_type_template_id_7ab36c6f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./FullPage.vue?vue&type=template&id=7ab36c6f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/src/layouts/full-page/FullPage.vue?vue&type=template&id=7ab36c6f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullPage_vue_vue_type_template_id_7ab36c6f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullPage_vue_vue_type_template_id_7ab36c6f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);
