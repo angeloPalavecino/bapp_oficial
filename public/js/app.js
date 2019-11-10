@@ -5905,9 +5905,886 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/src/views/pages/administracion/moviles/Moviles.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\resources\\js\\src\\views\\pages\\administracion\\moviles\\Moviles.vue: Unexpected token (684:0)\n\n\u001b[0m \u001b[90m 682 | \u001b[39m        })\u001b[0m\n\u001b[0m \u001b[90m 683 | \u001b[39m        \u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(\u001b[36mfunction\u001b[39m(error) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 684 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 685 | \u001b[39m          \u001b[36mvar\u001b[39m textError\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 686 | \u001b[39m          \u001b[36mif\u001b[39m (error\u001b[33m.\u001b[39mresponse\u001b[33m.\u001b[39mstatus \u001b[33m==\u001b[39m \u001b[35m300\u001b[39m) {\u001b[0m\n\u001b[0m \u001b[90m 687 | \u001b[39m            textError \u001b[33m=\u001b[39m error\u001b[33m.\u001b[39mresponse\u001b[33m.\u001b[39mdata\u001b[33m.\u001b[39mmessage\u001b[33m;\u001b[39m\u001b[0m\n    at Parser.raise (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:6325:17)\n    at Parser.unexpected (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:7642:16)\n    at Parser.parseExprAtom (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8841:20)\n    at Parser.parseExprSubscripts (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8412:23)\n    at Parser.parseMaybeUnary (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8392:21)\n    at Parser.parseExprOps (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8267:23)\n    at Parser.parseMaybeConditional (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8240:23)\n    at Parser.parseMaybeAssign (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8187:21)\n    at Parser.parseExpression (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8135:23)\n    at Parser.parseStatementContent (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:9958:23)\n    at Parser.parseStatement (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:10405:25)\n    at Parser.parseBlockBody (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:10392:10)\n    at Parser.parseBlock (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:10376:10)\n    at Parser.parseFunctionBody (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:9424:24)\n    at Parser.parseFunctionBodyAndFinish (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:9394:10)\n    at withTopicForbiddingContext (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:10535:12)\n    at Parser.withTopicForbiddingContext (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:9702:14)\n    at Parser.parseFunction (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:10534:10)\n    at Parser.parseFunctionExpression (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8877:17)\n    at Parser.parseExprAtom (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8790:21)\n    at Parser.parseExprSubscripts (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8412:23)\n    at Parser.parseMaybeUnary (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8392:21)\n    at Parser.parseExprOps (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8267:23)\n    at Parser.parseMaybeConditional (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8240:23)\n    at Parser.parseMaybeAssign (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8187:21)\n    at Parser.parseExprListItem (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:9491:18)\n    at Parser.parseCallExpressionArguments (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8621:22)\n    at Parser.parseSubscript (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8514:29)\n    at Parser.parseSubscripts (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8433:19)\n    at Parser.parseExprSubscripts (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8422:17)\n    at Parser.parseMaybeUnary (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8392:21)\n    at Parser.parseExprOps (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8267:23)\n    at Parser.parseMaybeConditional (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8240:23)\n    at Parser.parseMaybeAssign (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8187:21)\n    at Parser.parseExpression (D:\\xampp\\htdocs\\desarrollos\\bapp_oficial\\node_modules\\@babel\\parser\\lib\\index.js:8135:23)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-form-wizard */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.js");
+/* harmony import */ var vue_form_wizard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-form-wizard/dist/vue-form-wizard.min.css */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.min.css");
+/* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+ // For custom error message
+
+
+var dict = {
+  custom: {
+    name: {
+      required: "El nombre es requerido",
+      alpha: "El nombre solo puede contener letras"
+    },
+    lastname: {
+      required: "El apellido es requerido",
+      alpha: "El apellido solo puede contener letras"
+    },
+    rut: {
+      required: "El rut es requerido",
+      alpha_dash: "Ingrese un rut valido"
+    },
+    ciudad: {
+      required: "La ciudad es requerida",
+      email: "Ingrese una ciudad valida"
+    },
+    comuna: {
+      required: "La comuna es requerida",
+      email: "Ingrese una comuna valida"
+    },
+    direccion: {
+      required: "La dirección es requerida",
+      email: "Ingrese una dirección valida"
+    },
+    numeracion: {
+      required: "La numeración es requerida",
+      numeric: "Ingrese una numeración valida"
+    },
+    empresa: {
+      required: "La empresa es requerida"
+    },
+    email: {
+      required: "El email es requerido",
+      email: "Ingrese un email valido"
+    },
+    telefono: {
+      required: "El telefono es requerido",
+      numeric: "El numero de telefono debe ser valido"
+    },
+    tipo: {
+      required: "El tipo es requerido"
+    },
+    tipoDocumento: {
+      required: "El tipo de documento es requerido"
+    },
+    marca: {
+      required: "La marca es requerida"
+    },
+    modelo: {
+      required: "El modelo es requerido"
+    },
+    ano: {
+      required: "El ano es requerido"
+    },
+    motor: {
+      required: "El motor es requerido"
+    },
+    patente: {
+      required: "La patente es requerida"
+    },
+    color: {
+      required: "El color es requerido"
+    },
+    asientos: {
+      required: "Los asientos son requerido",
+      numeric: "La cantidad de asientos debe ser numerico"
+    },
+    clase: {
+      required: "La clase es requerida"
+    },
+    tipo_documento: {
+      required: "El tipo de documento es requerido"
+    },
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida"
+    },
+    documents: {
+      required: "El documento es requerido"
+    }
+  }
+}; // register custom messages
+
+vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    FormWizard: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["FormWizard"],
+    TabContent: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["TabContent"],
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
+  data: function data() {
+    return {
+      ruta: "/driver/driver/",
+      selected: [],
+      items: [],
+      itemsOriginal: [],
+      itemsPerPage: 4,
+      isMounted: false,
+      ite: "",
+      ind: "",
+      popupActive: false,
+      popupDocumento: false,
+      popupDueno: false,
+      item: {},
+      driver: {},
+      car: {},
+      user: {
+        habilitado: 1,
+        dueno: 0
+      },
+      dueno: null,
+      modoEditar: false,
+      exportData: [],
+      empresa_choices: [],
+      tipodocumentos_choices: [],
+      aux: 0,
+      documentos_choices: []
+    };
+  },
+  computed: {
+    currentPage: function currentPage() {
+      if (this.isMounted) {
+        return this.$refs.table.currentx;
+      }
+
+      return 0;
+    }
+  },
+  methods: {
+    validateStep1: function validateStep1() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _this.$validator.validateAll("step-1").then(function (result) {
+          if (result) {
+            _this.item.driver = _this.driver;
+            _this.item.user = _this.user;
+            _this.item.car = _this.car; // if (this.modoEditar == false) {
+            //   this.$submitAgregar("step-2");
+            // } else {
+            //   this.$submitActualizar("step-2");
+            // }
+            // resolve(true);
+          } else {
+            reject("correct all values");
+          }
+        });
+      });
+    },
+    validateStep2: function validateStep2() {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this2.$validator.validateAll("step-2").then(function (result) {
+          if (result) {
+            _this2.item.driver = _this2.driver;
+            _this2.item.user = _this2.user;
+            _this2.item.car = _this2.car;
+
+            if (_this2.modoEditar == false) {
+              _this2.$submitAgregar("step-2");
+            } else {
+              _this2.$submitActualizar("step-2");
+            }
+
+            resolve(true);
+          } else {
+            reject("correct all values");
+          }
+        });
+      });
+    },
+    getStatusColor: function getStatusColor(fecha) {
+      var factual = new Date();
+      var fvencimiento = new Date(fecha);
+      if (fvencimiento.getTime() >= factual.getTime()) return "success";
+      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
+      return "danger";
+    },
+    refrescaOtrosDatos: function refrescaOtrosDatos() {
+      //Carga Roles
+      var thisIns = this;
+      this.$http.get("roles/roles").then(function (response) {
+        thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
+      })["catch"](function (error) {
+        thisIns.$msjError(error);
+      }); //Carga Empresa
+
+      this.$http.get("empresas/empresas").then(function (response) {
+        thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
+      })["catch"](function (error) {
+        thisIns.$msjError(error);
+        thisIns.$vs.notify({
+          title: "Error",
+          text: textError,
+          color: "danger",
+          iconPack: "feather",
+          icon: "icon-alert-circle"
+        });
+      }); //Charge Type Documents
+
+      this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
+        thisIns.tipodocumentos_choices = response.data.items;
+      })["catch"](function (error) {
+        thisIns.$msjError(error);
+        thisIns.$vs.notify({
+          title: "Error",
+          text: textError,
+          color: "danger",
+          iconPack: "feather",
+          icon: "icon-alert-circle"
+        });
+      });
+    },
+    editar: function editar(item) {
+      //console.log(item);
+      this.initValues();
+      this.modoEditar = true;
+      this.user.email = item.email;
+      this.user.name = item.name;
+      this.user.lastname = item.lastname;
+      this.user.rut = item.rut;
+      this.user.telefono = item.telefono;
+      this.user.habilitado = item.habilitado;
+      this.user.dueno = item.dueno;
+      this.driver.ciudad = item.ciudad;
+      this.driver.comuna = item.comuna;
+      this.driver.direccion = item.direccion;
+      this.driver.numeracion = item.numeracion;
+      this.driver.empresa_id = item.empresa_id;
+      this.driver.clase = item.clase;
+      this.car.tipo = item.cars[0].tipo;
+      this.car.asientos = item.cars[0].asientos;
+      this.car.color = item.cars[0].color;
+      this.car.marca = item.cars[0].marca;
+      this.car.modelo = item.cars[0].modelo;
+      this.car.motor = item.cars[0].motor;
+      this.car.patente = item.cars[0].patente;
+      this.car.ano = item.cars[0].ano;
+      this.car.id = item.cars[0].id;
+      this.user.id = item.id;
+      this.popupActive = true;
+    },
+    initValues: function initValues() {
+      //this.$refs.wizard.navigateToTab(0);
+      this.item = {};
+      this.car = {};
+      this.user = {
+        habilitado: 1,
+        dueno: 0
+      };
+      this.driver = {};
+      this.errors.clear();
+      this.$refs.wizard.reset(); //this.modoEditar = false;
+    },
+    initUpload: function initUpload(item) {
+      var _this3 = this;
+
+      var thisIns = this;
+      this.documentos_choices = [];
+      this.item.tipo_documento = "";
+      this.item.fecha_vencimiento = "";
+      this.item.file = "";
+      this.item.filename = ""; //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+
+      var myElement = document.querySelector(".line-vs-tabs");
+      myElement.style.width = "95px";
+      myElement.style.left = "0px";
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+      this.errors.clear();
+      this.$http.get("driver/driver/documents/" + item.id).then(function (response) {
+        thisIns.documentos_choices = response.data.items;
+      })["catch"](function (error) {
+        thisIns.$vs.notify({
+          title: "Error",
+          text: "Error al traer los documentos",
+          color: "danger",
+          iconPack: "feather",
+          icon: "icon-alert-circle"
+        });
+      });
+      setTimeout(function () {
+        _this3.popupDocumento = true;
+        _this3.dataItem = item;
+        thisIns.$refs.fileupload.value = "";
+      }, 300);
+    },
+    upload: function upload() {
+      var _this4 = this;
+
+      var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      $name = $name == null ? true : $name;
+      this.$validator.validateAll($name).then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append("file", _this4.item.file);
+          formData.append("tipo_documento_id", _this4.item.tipo_documento.split("|")[0]);
+          formData.append("tipo_documento", _this4.item.tipo_documento.split("|")[1]);
+          formData.append("fecha_vencimiento", _this4.item.fecha_vencimiento);
+          formData.append("driver_id", _this4.dataItem.cars[0].driver_id);
+          formData.append("rut", _this4.dataItem.rut);
+
+          _this4.$upload(formData);
+        } else {}
+      });
+    },
+    uploadData: function uploadData(e) {
+      var tipo = e.target.files[0].type;
+      var size = e.target.files[0].size;
+
+      if (tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || tipo == "application/pdf") {
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        if (size <= 2000000) {
+          //2097152
+          this.item.file = e.target.files[0];
+          this.item.filename = e.target.files[0].name;
+        } else {
+          this.$refs.fileupload.value = ""; //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
+
+          this.$vs.notify({
+            title: "Error",
+            text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+        }
+      } else {
+        this.$refs.fileupload.value = ""; //const input = this.$refs.fileupload;
+        //input.type = 'text';
+        //input.type = 'file';
+
+        this.$vs.notify({
+          title: "Error",
+          text: "El archivo no tiene el formato correcto",
+          color: "danger",
+          iconPack: "feather",
+          icon: "icon-alert-circle"
+        });
+      }
+    },
+    downloadDocument: function downloadDocument(id, name) {
+      //var download = await this.$http.get('driver/driver/document/' + id);
+      //console.log(download);
+      this.$http.get("driver/driver/document/" + id, {
+        responseType: "blob"
+      }).then(function (response) {
+        console.log(response);
+        var a = document.createElement("a");
+        var url = window.URL.createObjectURL(response.data);
+        a.href = url;
+        a.download = name;
+        document.body.append(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }, function (response) {
+        console.warn("error from download_contract");
+        console.log(response); // Manage errors
+      });
+    }
+  },
+  created: function created() {
+    this.$refrescaTabla();
+    this.refrescaOtrosDatos();
+  },
+  mounted: function mounted() {
+    this.isMounted = true;
+  }
+});
 
 /***/ }),
 
