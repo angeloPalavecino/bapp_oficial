@@ -435,4 +435,15 @@ class EmpresaController extends Controller
                 'cicpro' => $cicpro->toArray(),
             ], 200);
     }
+
+    public function empresas()
+    {
+        $empresas = Empresa::all();
+         
+          return response()->json(
+              [
+                  'status' => 'success',
+                  'items' => $empresas->toArray(),
+              ], 200);
+    }
 }

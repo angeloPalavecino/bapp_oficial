@@ -358,18 +358,6 @@ class UserController extends Controller
             ], 200);
     }
 
-
-    public function empresas()
-    {
-        $empresas = Empresa::all();
-         
-          return response()->json(
-              [
-                  'status' => 'success',
-                  'items' => $empresas->toArray(),
-              ], 200);
-    }
-
     public function cars($id)
     {
         $usercars = UsersHasCars::where('user_id', $id)->get(); 
