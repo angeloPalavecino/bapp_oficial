@@ -466,4 +466,16 @@ class DriverController extends Controller
         return response()->download(storage_path($document->url), $document->name);
     }
 
+    public function cars()
+    {
+       
+        $cars = Car::select('id', 'numero_movil','patente')->get();
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $cars->toArray(),
+            ], 200);    
+    }
+
 }

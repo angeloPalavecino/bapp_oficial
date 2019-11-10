@@ -22,6 +22,7 @@ class CreateEmpresahasserpasajerosTable extends Migration
             $table->foreign('empresa_id')
             ->references('id')
             ->on('empresas');
+            //->onDelete('cascade');
 
             $table->foreign('serv_psj_id')
             ->references('id')

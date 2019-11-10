@@ -5,7 +5,7 @@
           <vs-popup class="holamundo"  title="Tarifas Pasajeros" :active.sync="popupParametros"
           @close="$close($event)">    
     
-    <vs-table ref="tablepar" multiple v-model="selected" pagination search :data="parametros">
+    <vs-table ref="tablepar" multiple v-model="selected" pagination search :data="parametros" class="tablaParametros">
          <template slot="header">
                    <vs-dropdown vs-trigger-click class="cursor-pointer mr-4 mb-4">
             <div
@@ -33,11 +33,12 @@
        </template>
 
       <template slot="thead">
-        <vs-th sort-key="items-id">ID</vs-th>
-        <vs-th sort-key="items-num-pasajeros">N° Pasajeros</vs-th>
-        <vs-th sort-key="items-factor">Factor</vs-th>
-        <vs-th sort-key="items-valor">Valor</vs-th>
-        <vs-th sort-key="items-accion">Accion</vs-th>
+        <vs-th >ID</vs-th>
+        <vs-th >N° Pasajeros</vs-th>
+        <vs-th >Factor</vs-th>
+        <vs-th >Factor Promedio</vs-th>
+        <vs-th >Valor</vs-th>
+        <vs-th >Accion</vs-th>
       </template>
 
         <template slot-scope="{data}">
@@ -51,14 +52,18 @@
               <vs-td>
                 <p class="items-num-pasajeros">{{ tr.serviciospasajeros[0].num_psj_min }} - {{ tr.serviciospasajeros[0].num_psj_max }}</p>
               </vs-td>
-                <vs-td>
+               <vs-td>
                 <p class="items-factor">{{ tr.serviciospasajeros[0].fac_rang_min }} - {{ tr.serviciospasajeros[0].fac_rang_max }}</p>
               </vs-td>
+               <vs-td>
+                <p class="items-factor-promedio">{{ getFactorPromedio(tr.serviciospasajeros[0].fac_rang_min,tr.serviciospasajeros[0].fac_rang_max) }}</p>
+              </vs-td>
+             
                 <vs-td>
                 <p class="items-valor">{{ tr.serviciospasajeros[0].valor }}</p>
               </vs-td>
               <vs-td>
-                   <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
+                   <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0" style="justify-content: center;">
                       <vx-tooltip color="primary" text="Editar">
                       <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
                        </vx-tooltip>
@@ -311,6 +316,7 @@ export default {
       ruta:'/tarifas/pasajeros/',
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",
@@ -392,6 +398,17 @@ export default {
       if(status == 0) return "danger"
       return "danger"
     },
+      getFactorPromedio(min,max) {
+        var fmin = parseFloat(min);
+        var fmax = parseFloat(max);
+        var total = 0;
+
+      if(fmin > 0 && fmax > 0){
+          total = (fmin + fmax)/2;
+      }
+
+      return total.toFixed(2);
+    },
     resfrescaDatosListado(idEmpresa){
        const thisIns = this; 
        const url = thisIns.ruta;
@@ -417,19 +434,8 @@ export default {
             thisIns.empresa_choices = response.data.items 
           })
           .catch(function (error) {
-              var textError;
-             if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+             
+              thisIns.$msjError(error);          
 
           });
       },
@@ -516,23 +522,12 @@ export default {
 
           })
           .catch(function (error) {
-              var textError;
-              if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+              
+              thisIns.$msjError(error);        
 
 
-              delete this.ite;
-              delete this.ind;
+              delete thisIns.ite;
+              delete thisIns.ind;
           });
      },
       //Cancela Borrado
@@ -570,19 +565,8 @@ export default {
 
           })
           .catch(function (error) {
-           var textError;
-           if(error.response.status == 300) { 
-                textError = error.response.data.message;
-               }else{
-                textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+           
+              thisIns.$msjError(error);          
      
           });
 
@@ -696,5 +680,14 @@ export default {
     z-index: 57005 !important;
 }
 
+.tablaParametros {
+   th .vs-table-text {
+        justify-content: center !important;
+  }
+
+  tr {
+    text-align: center;
+  };
+}
 
 </style>

@@ -1,50 +1,41 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
 
-  
+         <!-- MOVILES -->
+   <vs-popup class="holamundo"  ref="modalMoviles" title="Moviles" :active.sync="popupMoviles">    
+     
+        <vs-table ref="tablemoviles" max-items="10" @input="handleSelectedMoviles" multiple v-model="item.moviles" pagination search :data="moviles_choices">
+           <template slot="header">
+                    <h3>
+                      Moviles
+                    </h3>
+            </template>
+          <template slot="thead">
+            <vs-th >ID</vs-th>
+            <vs-th >N° Movil</vs-th>
+            <vs-th >Patente</vs-th>
+          </template>
+          <template slot-scope="{data}">
+            <tbody>
+                <vs-tr :data="trmov" :key="indextrmov" v-for="(trmov, indextrmov) in data">
+                  <vs-td>
+                    <p>{{ trmov.id }}</p>
+                  </vs-td>
+                  <vs-td>
+                    <p>{{ trmov.numero_movil }}</p>
+                  </vs-td>
+                  <vs-td>
+                    <p>{{ trmov.patente }}</p>
+                  </vs-td>             
+                </vs-tr>  
+            </tbody> 
+            </template>
+        </vs-table>
+    
+    </vs-popup>
+          <!-- FIN MOVILES -->
 
-    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="items">
-
-      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
-
-        <div class="flex flex-wrap-reverse items-center">
-
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click  class="cursor-pointer mr-4 mb-4">
-
-            <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32">
-              <span class="mr-2">Acciones</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
-
-            <vs-dropdown-menu >
-              <vs-dropdown-item @click.prevent="$accion(1)">
-                <span>Borrar</span>
-              </vs-dropdown-item>
-              <vs-dropdown-item @click.prevent="$accion(2)">
-                <span>Exportar</span>
-              </vs-dropdown-item>
-              <!--<vs-dropdown-item @click.prevent="accion(3)">
-                <span>Imprimir</span>
-              </vs-dropdown-item>
-               <vs-dropdown-item>
-                <span>Another Action</span>
-              </vs-dropdown-item>-->
-            </vs-dropdown-menu>
-          </vs-dropdown>
-
-
-          <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
-          text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
-              <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <vx-tooltip color="primary" text="Agregar usuario">
-              <span class="ml-2 text-base text-primary">Agregar Usuario</span>
-              </vx-tooltip>
-          </div>
-        </div>
-
-        <!-- POP UP -->
+              <!-- POP UP -->
         <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR USUARIO' : 'ACTUALIZAR USUARIO')" 
          :active.sync="popupActive"   @close="$close($event)">
         <div class="mt-5">
@@ -105,12 +96,34 @@
               <span class="text-danger text-sm" v-show="errors.has('step-2.empresa')">{{ errors.first('step-2.empresa') }}</span>
           
              </div>
-            <div class="vx-col md:w-1/2 w-full mt-2">
-                    <vs-input label-placeholder="Telefono" v-model="item.telefono" class="w-full" name="telefono" v-validate="'required|numeric'" 
+            <div class="vx-col md:w-1/2 w-full mt-3">
+                    <vs-input label-placeholder="Telefono" v-model="item.telefono" class="w-full" name="telefono" 
+                    v-validate="'required|numeric'" 
               :danger="(errors.first('step-2.telefono') ? true : false)" val-icon-danger="clear"/>
               <span class="text-danger text-sm">{{ errors.first('step-2.telefono') }}</span>
              </div>
-            <div class="vx-col md:w-1/2 w-full mt-2">
+            <div class="vx-col md:w-auto w-full mt-3" >
+            <div  v-show="item.roles === 2">
+            <span style="font-size: 12px;">Moviles</span>
+           <!--  <vs-button radius color="primary" type="border" icon-pack="feather" :disabled="(item.roles === 2 ? false : true)" 
+              icon="icon-truck" size="medium" @click="listadoMoviles()"></vs-button>-->
+
+               <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
+          text-primary border border-solid border-primary" @click="listadoMoviles"  > <!-- @click="addNewDataSidebar = true" -->
+              <feather-icon icon="TruckIcon" svgClasses="h-4 w-4" />
+              </div>
+          </div>
+            </div>
+
+            <div class="vx-col md:w-1/3  w-full mt-8" v-show="item.roles === 2">
+          
+                <vs-chip :color="getStatusColorMovil(item.moviles.length)" class="items-status-moviles mt-2">{{ item.moviles.length > 0 ? item.moviles.length : 0  }}</vs-chip>
+                  <div class="mt-2">
+                    <span style="font-size: 13px;" >  Moviles seleccionados</span>
+                    <vs-input v-validate="(item.roles == 2 ? 'min_value:1' : '')" type="hidden" name="moviles" v-model="movilescount"/>
+                    <span class="text-danger text-sm">{{ errors.first('step-2.moviles') }}</span>
+                  </div>
+        
             </div>
             <div class="vx-col md:w-1/2 w-full mt-2">
                   <vs-input type="password" v-validate="(modoEditar == false ? 'required|min:8' : 'min:8')" ref="password" label-placeholder="Password" name="password" 
@@ -150,8 +163,71 @@
                 
         </vs-popup>
         <!-- POP UP -->
+  
 
-        <!-- ITEMS PER PAGE -->
+    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="items">
+
+      <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
+
+        <div class="flex flex-wrap-reverse items-center">
+
+          <!-- ACTION - DROPDOWN -->
+          <vs-dropdown vs-trigger-click  class="cursor-pointer mr-4 mb-4">
+
+            <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32">
+              <span class="mr-2">Acciones</span>
+              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
+            </div>
+
+            <vs-dropdown-menu >
+              <vs-dropdown-item @click.prevent="$accion(1)">
+                <span>Borrar</span>
+              </vs-dropdown-item>
+              <vs-dropdown-item @click.prevent="$accion(2)">
+                <span>Exportar</span>
+              </vs-dropdown-item>
+              <!--<vs-dropdown-item @click.prevent="accion(3)">
+                <span>Imprimir</span>
+              </vs-dropdown-item>
+               <vs-dropdown-item>
+                <span>Another Action</span>
+              </vs-dropdown-item>-->
+            </vs-dropdown-menu>
+          </vs-dropdown>
+
+
+          <!-- ADD NEW -->
+          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
+          text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
+              <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
+              <vx-tooltip color="primary" text="Agregar usuario">
+              <span class="ml-2 text-base text-primary">Agregar Usuario</span>
+              </vx-tooltip>
+          </div>
+        </div>
+
+       <div class="drowoptions" >  
+       <!-- FILTRO -->
+        <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4">
+          <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
+            <span class="mr-2">Ver | Estado</span>
+            <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
+          </div>
+          <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
+          <vs-dropdown-menu>
+               <vs-dropdown-item @click.prevent="$filtrar('habilitado', null)">
+                <span>Todos</span>
+              </vs-dropdown-item>
+               <vs-dropdown-item @click.prevent="$filtrar('habilitado', 1)">
+                <span>Activo</span>
+              </vs-dropdown-item>
+              <vs-dropdown-item @click.prevent="$filtrar('habilitado', 0)">
+                <span>Inactivo</span>
+              </vs-dropdown-item>
+          </vs-dropdown-menu>
+        </vs-dropdown>
+
+          <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
             <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ items.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : items.length }} of {{ items.length }}</span>
@@ -174,6 +250,10 @@
             </vs-dropdown-item>
           </vs-dropdown-menu>
         </vs-dropdown>
+
+
+      </div>
+
       </div>
 
       <template slot="thead">
@@ -281,6 +361,9 @@ const dict = {
             required: 'Debe ingresar la confirmacion de la password',
             min: "La confirmacion de la password debe tener minimo 8 caracteres",
             confirmed: "Las password debe ser iguales"
+        },
+        moviles: {
+            min_value: "Debe seleccionar al menos 1 movil",
         }
     }
 };
@@ -298,20 +381,24 @@ export default {
       ruta:'/users/users/',
       selected: [],
       items: [],
+      itemsOriginal: [],
       itemsPerPage: 4,
       isMounted: false,
       ite : "",
       ind : "",
       popupActive: false,
+      popupMoviles: false, 
       item : {
         habilitado:1,
-
+        moviles: []
       },
       modoEditar: false,      
       roles_choices: [],
       empresa_choices: [],
+      moviles_choices : [],
       exportData : [],
-      aux: 0,
+      aux: 0,    
+      movilescount:0, 
 
     }
   },
@@ -319,6 +406,7 @@ export default {
     currentPage() {
       if(this.isMounted) {
         return this.$refs.table.currentx
+        return this.$refs.tablemoviles.currentx        
       }
       return 0
     },
@@ -327,6 +415,10 @@ export default {
     setSelected(value) {
             if(value <= 2){
              this.item.empresa_id = 1;
+              if(value != 2 ){//&& this.modoEditar == false
+                this.item.moviles = [];
+                this.movilescount = 0;
+              }  
            }
     },
     validateStep1() {
@@ -362,6 +454,19 @@ export default {
       if(status == 0) return "danger"
       return "danger"
     },
+     getStatusColorMovil(status) {
+      if(status > 0) return "success"
+      if(status == 0) return "danger"
+      return "danger"
+    },
+     listadoMoviles() {
+       setTimeout(() => {
+                this.popupMoviles = true;
+      }, 300);
+    },
+    handleSelectedMoviles(tr) {
+      this.movilescount = this.item.moviles.length;
+    },
      refrescaOtrosDatos() {
         //Carga Roles   
         const thisIns = this; 
@@ -370,19 +475,8 @@ export default {
             thisIns.roles_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })
           .catch(function (error) {
-            var textError;
-             if(error.response.status == 300) { 
-                 textError = error.response.data.message;
-               }else{
-                 textError = error;
-              }
-
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+            
+            thisIns.$msjError(error);            
 
           });
         //Carga Empresa
@@ -391,26 +485,27 @@ export default {
             thisIns.empresa_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })
           .catch(function (error) {
-            var textError;
-             if(error.response.status == 300) { 
-                 textError = error.response.data.message;
-               }else{
-                 textError = error;
-              }
+            
+            thisIns.$msjError(error);          
 
-               thisIns.$vs.notify({
-                  title:'Error',
-                  text: textError,
-                  color:'danger',
-                  iconPack: 'feather',
-                  icon:'icon-alert-circle'})         
+          });
+
+          //Carga Moviles
+          this.$http.get('/driver/cars')
+          .then(function (response) {
+            thisIns.moviles_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
+            
+          })
+          .catch(function (error) {
+            
+            thisIns.$msjError(error);          
 
           });
       },
     editar(item){      
+      const thisIns = this; 
       this.initValues();
       this.modoEditar = true; 
-      //console.log(item.roles[0].id);
       this.item.empresa_id = item.empresa_id;
       this.item.email = item.email;
       this.item.name = item.name;
@@ -420,9 +515,34 @@ export default {
       this.item.habilitado = item.habilitado;
       this.item.roles = item.roles[0].id;
       this.item.id = item.id;
-      //this.usuario = item;
-      this.selected = [];
-      this.popupActive=true;
+    
+      //Carga Moviles usuario
+          this.$http.get('/users/cars/' + item.id)
+          .then(function (response) {
+
+            var aux = thisIns.moviles_choices;
+            response.data.items.forEach(function(element) {
+              
+              thisIns.item.moviles.push(aux.find(x => x.id === element.id));
+              
+            });
+
+            thisIns.movilescount = thisIns.item.moviles.length;
+            //thisIns.item.moviles = response.data.items;
+          
+          })
+          .catch(function (error) {
+            
+            thisIns.$msjError(error);          
+
+          });
+      
+      //this.selected = [];
+
+      setTimeout(() => {
+          this.popupActive=true;
+      }, 500);
+      
     },
 
     initValues() {
@@ -430,7 +550,9 @@ export default {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
         habilitado:1,
+        moviles: [],
       };
+      this.movilescount = 0;
       this.item.roles = '';
       this.item.empresa_id = '';
       this.errors.clear();
@@ -528,6 +650,11 @@ export default {
       justify-content: center;
     }
   }
+}
+
+.drowoptions{
+align-items: left !important;
+
 }
 
 </style>

@@ -10,22 +10,27 @@
 
 <template>
     <div class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center" id="page-login">
-        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
+        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-4/5 sm:m-0 m-4">
             <vx-card>
                 <div slot="no-body" class="full-page-bg-color">
                     <div class="vx-row no-gutter justify-center items-center">
                         <div class="vx-col hidden lg:block lg:w-1/2">
-                            <img src="@assets/images/pages/login.png" alt="login" class="mx-auto">
+                            <img src="@assets/images/pages/login_540x433.png" alt="login" class="mx-auto">
                         </div>
                         <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
                             <div class="p-8">
                                 <div class="vx-card__title mb-8">
-                                    <h4 class="mb-4">Login</h4>
+                                  <img src="@assets/images/logo/Bapp(Imagotipo)-color.png" alt="logo" class="mr-4" width="140">
+
+                                        <br/>
                                     <p>Bienvenido, inicie sesión con cuenta.</p>
                                 </div>
                                 <div v-if="has_error && !success">
                                   <span class="text-danger text-sm" v-if="error == 'login_error'">Error de validacion.</span>
                                   <span class="text-danger text-sm" v-else>Error, Incapaz de conectarse con estas credenciales.</span>
+                                </div>
+                                <div v-else>
+                                   <br/>
                                 </div>
                                 <br/>
                                 <vs-input
@@ -37,8 +42,9 @@
                                     label-placeholder="Email"
                                     v-model="email"
                                     class="w-full no-icon-border"/>
-                                <span class="text-danger text-sm">{{ errors.first('email') }}</span>
-
+                                <span class="text-danger text-sm" v-if="errors.first('email')">{{ errors.first('email') }}</span>
+                                 <span class="text-danger text-sm" v-else>&nbsp </span>
+                               
                                 <vs-input
                                     data-vv-validate-on="blur"
                                     v-validate="'required|min:6|max:10'"
@@ -49,7 +55,8 @@
                                     label-placeholder="Password"
                                     v-model="password"
                                     class="w-full mt-6 no-icon-border" />
-                                <span class="text-danger text-sm">{{ errors.first('password') }}</span>
+                                <span class="text-danger text-sm" v-if="errors.first('password')">{{ errors.first('password') }}</span>
+                                <span class="text-danger text-sm" v-else>&nbsp </span>
 
                                 <div class="flex flex-wrap justify-between my-5">
                                     <vs-checkbox v-model="checkbox_remember_me" class="mb-3" icon-pack="feather" icon="icon-check" >Recordarme</vs-checkbox>

@@ -11,6 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Permission;
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\UsersHasCars;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -24,7 +25,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'empresa_id' , 'lastname' ,'rut', 'email', 'password', 'telefono', 'habilitado', 'imagen',
+        'id','name', 'empresa_id' , 'lastname' ,'rut', 'email', 'password', 'telefono', 'habilitado', 'imagen',
     ];
 
     /**
@@ -66,4 +67,9 @@ class User extends Authenticatable implements JWTSubject
           }
           return $permissions;
       }
+
+    public function cars()
+    {
+      return $this->hasMany(UsersHasCars::class, 'user_id', 'id');
+    }
 }
