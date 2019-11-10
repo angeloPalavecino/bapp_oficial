@@ -241,7 +241,7 @@
                 </div>
                 <div class="vx-col md:w-1/2 w-full mt-1">
                   <vs-select
-                    v-model="driver.empresa_id"
+                    v-model="user.empresa_id"
                     label="Empresa"
                     name="empresa"
                     class="w-full"
@@ -298,9 +298,9 @@
                 <div class="vx-col md:w-1/2 w-full mt-5">
                   <ul class="demo-alignment">
                     <li>
-                      <vs-checkbox v-model="user.dueno" vs-value="0">Conductor Dueño</vs-checkbox>
+                      <vs-checkbox v-model="driver.conductor" vs-value="0">Conductor Dueño</vs-checkbox>
                     </li>
-                    <li class="op-block">{{ user.dueno==0?&apos;No&apos;:"Si" }}</li>
+                    <li class="op-block">{{ driver.conductor==0?&apos;No&apos;:"Si" }}</li>
                   </ul>
                 </div>
               </div>
@@ -600,13 +600,13 @@ export default {
       popupDocumento: false,
       popupDueno: false,
       item: {},
-      driver: {},
+      driver: {
+        conductor: 0
+      },
       car: {},
       user: {
         habilitado: 1,
-        dueno: 0
       },
-      dueno: null,
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
@@ -630,14 +630,14 @@ export default {
           if (result) {
             this.item.driver = this.driver;
             this.item.user = this.user;
-            this.item.car = this.car;
-
-            // if (this.modoEditar == false) {
-            //   this.$submitAgregar("step-2");
-            // } else {
-            //   this.$submitActualizar("step-2");
-            // }
-            // resolve(true);
+            //this.item.car = this.car;
+            console.log(this.item);
+            if (this.modoEditar == false) {
+              this.$submitAgregar("step-1");
+            } else {
+              this.$submitActualizar("step-1");
+            }
+            resolve(true);
           } else {
             reject("correct all values");
           }
@@ -732,14 +732,16 @@ export default {
       this.user.rut = item.rut;
       this.user.telefono = item.telefono;
       this.user.habilitado = item.habilitado;
-      this.user.dueno = item.dueno;
+      this.user.empresa_id = item.empresa_id;
+
 
       this.driver.ciudad = item.ciudad;
       this.driver.comuna = item.comuna;
       this.driver.direccion = item.direccion;
       this.driver.numeracion = item.numeracion;
-      this.driver.empresa_id = item.empresa_id;
       this.driver.clase = item.clase;
+      this.driver.conductor = item.conductor;
+
 
       this.car.tipo = item.cars[0].tipo;
       this.car.asientos = item.cars[0].asientos;
@@ -761,7 +763,6 @@ export default {
       this.car = {};
       this.user = {
         habilitado: 1,
-        dueno: 0
       };
       this.driver = {};
       this.errors.clear();

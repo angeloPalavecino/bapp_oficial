@@ -6514,13 +6514,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       popupDocumento: false,
       popupDueno: false,
       item: {},
-      driver: {},
+      driver: {
+        conductor: 0
+      },
       car: {},
       user: {
-        habilitado: 1,
-        dueno: 0
+        habilitado: 1
       },
-      dueno: null,
       modoEditar: false,
       exportData: [],
       empresa_choices: [],
@@ -6546,13 +6546,17 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
         _this.$validator.validateAll("step-1").then(function (result) {
           if (result) {
             _this.item.driver = _this.driver;
-            _this.item.user = _this.user;
-            _this.item.car = _this.car; // if (this.modoEditar == false) {
-            //   this.$submitAgregar("step-2");
-            // } else {
-            //   this.$submitActualizar("step-2");
-            // }
-            // resolve(true);
+            _this.item.user = _this.user; //this.item.car = this.car;
+
+            console.log(_this.item);
+
+            if (_this.modoEditar == false) {
+              _this.$submitAgregar("step-1");
+            } else {
+              _this.$submitActualizar("step-1");
+            }
+
+            resolve(true);
           } else {
             reject("correct all values");
           }
@@ -6634,13 +6638,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.user.rut = item.rut;
       this.user.telefono = item.telefono;
       this.user.habilitado = item.habilitado;
-      this.user.dueno = item.dueno;
+      this.user.empresa_id = item.empresa_id;
       this.driver.ciudad = item.ciudad;
       this.driver.comuna = item.comuna;
       this.driver.direccion = item.direccion;
       this.driver.numeracion = item.numeracion;
-      this.driver.empresa_id = item.empresa_id;
       this.driver.clase = item.clase;
+      this.driver.conductor = item.conductor;
       this.car.tipo = item.cars[0].tipo;
       this.car.asientos = item.cars[0].asientos;
       this.car.color = item.cars[0].color;
@@ -6658,8 +6662,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_3__["Validator"].localize("en", dict);
       this.item = {};
       this.car = {};
       this.user = {
-        habilitado: 1,
-        dueno: 0
+        habilitado: 1
       };
       this.driver = {};
       this.errors.clear();
@@ -47140,15 +47143,11 @@ var render = function() {
                                         name: "empresa"
                                       },
                                       model: {
-                                        value: _vm.driver.empresa_id,
+                                        value: _vm.user.empresa_id,
                                         callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.driver,
-                                            "empresa_id",
-                                            $$v
-                                          )
+                                          _vm.$set(_vm.user, "empresa_id", $$v)
                                         },
-                                        expression: "driver.empresa_id"
+                                        expression: "user.empresa_id"
                                       }
                                     },
                                     _vm._l(_vm.empresa_choices, function(item) {
@@ -47296,11 +47295,15 @@ var render = function() {
                                           {
                                             attrs: { "vs-value": "0" },
                                             model: {
-                                              value: _vm.user.dueno,
+                                              value: _vm.driver.conductor,
                                               callback: function($$v) {
-                                                _vm.$set(_vm.user, "dueno", $$v)
+                                                _vm.$set(
+                                                  _vm.driver,
+                                                  "conductor",
+                                                  $$v
+                                                )
                                               },
-                                              expression: "user.dueno"
+                                              expression: "driver.conductor"
                                             }
                                           },
                                           [_vm._v("Conductor Dueño")]
@@ -47312,7 +47315,9 @@ var render = function() {
                                     _c("li", { staticClass: "op-block" }, [
                                       _vm._v(
                                         _vm._s(
-                                          _vm.user.dueno == 0 ? "No" : "Si"
+                                          _vm.driver.conductor == 0
+                                            ? "No"
+                                            : "Si"
                                         )
                                       )
                                     ])

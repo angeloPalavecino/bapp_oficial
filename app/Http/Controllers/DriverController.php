@@ -38,7 +38,6 @@ class DriverController extends Controller
     public function validatorDriver(array $data){ 
 
         return Validator::make($data, [
-            'user_id' => 'required',
             'name' => 'required',
             'lastname' => 'required',
             'rut' => 'required',
@@ -106,14 +105,27 @@ class DriverController extends Controller
         //User
         $dataUser = $request->all()['user'];
         $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
-        $dataCar = $request->all()['car'];
+                
+        // $dataCar = $request->all()['car'];
 
         //$dataUser['habilitado'] = 1;
-        $dataUser['empresa_id'] = 1;
+        //$dataUser['empresa_id'] = 1;
         $rut = substr($dataUser['rut'], 0, -1);
         $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
 
+        $existe_usuario_user = User::where('rut', $rut)->first();
+        $existe_usuario_driver = Driver::where('rut', $rut)->first();
         $existe_email = User::where('email', $dataUser['email'])->first();
+        
+        if($existe_usuario_user != null && $existe_usuario_driver != null)
+        {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El usuario se encuentra registrado',
+                ], 300);
+        }
+        
         if($existe_email != null)
         {
             return response()->json(
@@ -133,6 +145,7 @@ class DriverController extends Controller
                 ], 300);
            
         }
+        
         $existe_usuario = User::where('rut', $dataUser['rut'])->first();
         if($existe_usuario != null)
         {            
@@ -156,7 +169,6 @@ class DriverController extends Controller
 
         //Driver
         $dataDriver['habilitado'] = $dataUser['habilitado'];//1;
-        $dataDriver['user_id'] = $idUser;
         $validationDriver = $this->validatorDriver($dataDriver);
 
         
@@ -177,8 +189,7 @@ class DriverController extends Controller
                 [
                     'status' => 'error',
                     'message' => 'Conductor ya existe',
-                ], 300);
-           
+                ], 300);           
         }
         $returnDriver = Driver::create($dataDriver);
 
@@ -192,37 +203,37 @@ class DriverController extends Controller
                 ], 300);
         }
 
-        //Car 
-        $dataCar['driver_id'] = $idDriver;
-        //$dataCar['habilitado'] = 1;
-        $dataCar['habilitado'] = $dataUser['habilitado'];
+        // //Car 
+        // $dataCar['driver_id'] = $idDriver;
+        // //$dataCar['habilitado'] = 1;
+        // $dataCar['habilitado'] = $dataUser['habilitado'];
 
-        $validationCar = $this->validatorCar($dataCar);
+        // $validationCar = $this->validatorCar($dataCar);
 
-        if ($validationCar->fails()) {
+        // if ($validationCar->fails()) {
 
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => $validationCar->errors(),
-                ], 300);
+        //     return response()->json(
+        //         [
+        //             'status' => 'error',
+        //             'message' => $validationCar->errors(),
+        //         ], 300);
            
-        }
+        // }
 
-        $returnCar = Car::create($dataCar);
+        // $returnCar = Car::create($dataCar);
 
-        $idCar = $returnCar->id;
+        // $idCar = $returnCar->id;
 
-        if ($idCar < 1) {
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'Problemas al ingresar el Movil',
-                ], 300);
-        }
+        // if ($idCar < 1) {
+        //     return response()->json(
+        //         [
+        //             'status' => 'error',
+        //             'message' => 'Problemas al ingresar el Movil',
+        //         ], 300);
+        // }
         
         
-     }
+    }
          
     /**
      * Display the specified resource.
