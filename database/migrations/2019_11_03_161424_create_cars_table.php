@@ -30,11 +30,6 @@ class CreateCarsTable extends Migration
             $table->boolean('habilitado');
             $table->timestamps();
             
-            $table->foreign('driver_id')
-            ->references('id')
-            ->on('drivers')
-            ->onDelete('cascade');
-
         });
     }
 

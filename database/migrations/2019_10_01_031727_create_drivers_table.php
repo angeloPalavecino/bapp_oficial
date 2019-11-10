@@ -25,7 +25,7 @@ class CreateDriversTable extends Migration
             $table->integer('numeracion');
             $table->string('email')->unique();
             $table->string('clase');
-            $table->boolean('dueño');
+            $table->boolean('dueno');
             $table->boolean('conductor');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('telefono');

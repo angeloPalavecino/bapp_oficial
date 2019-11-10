@@ -276,7 +276,7 @@
       this.initValues();
       this.modoEditar = false; 
       this.selected = [];
-      this.popupActive=true;
+      this.popupActive=true; 
       
     },
     //Acciones masivas
