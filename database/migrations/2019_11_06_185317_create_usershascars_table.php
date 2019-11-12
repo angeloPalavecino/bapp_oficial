@@ -27,7 +27,8 @@ class CreateUsershascarsTable extends Migration
 
             $table->foreign('car_id')
             ->references('id')
-            ->on('cars');
+            ->on('cars')
+            ->onDelete('cascade');
         });
        
         

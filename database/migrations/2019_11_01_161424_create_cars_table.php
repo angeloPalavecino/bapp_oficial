@@ -32,8 +32,7 @@ class CreateCarsTable extends Migration
 
             $table->foreign('empresa_id')
             ->references('id')
-            ->on('empresas')
-            ->onDelete('cascade');
+            ->on('empresas');
                         
         });
     }

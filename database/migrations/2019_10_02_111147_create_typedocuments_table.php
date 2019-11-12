@@ -16,6 +16,7 @@ class CreateTypedocumentsTable extends Migration
         Schema::create('type_documents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->tinyint('tipo');
             $table->boolean('habilitado');
             $table->timestamps();
         });
