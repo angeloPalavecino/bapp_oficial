@@ -95,8 +95,8 @@
       :active.sync="popupActive"
       @close="$close($event)"
     >
-      <div class="mt-5">
-          <div class="p-5">
+      <div class="mt-1">
+          <div class="p-2">
               <div>
                 <vs-divider color="primary"><h5>Moviles</h5></vs-divider>
               </div>
@@ -108,6 +108,12 @@
                         <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in driver_choices"  />
                      </vs-select>
                       <span class="text-danger">{{ errors.first('asociados') }}</span>
+                    </div>
+                   <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-select v-model="item.empresa_id" label="Empresa" name="empresas" class="w-full" v-validate="'required'" >
+                        <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
+                      </vs-select>
+                      <span class="text-danger text-sm" v-show="errors.has('empresas')">{{ errors.first('empresas') }}</span>          
                     </div>
                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -217,27 +223,17 @@
                       />
                       <span class="text-danger">{{ errors.first('asientos') }}</span>
                     </div>
-                    <div class="vx-col md:w-1 w-full">
-                    <div class="demo-alignment">
-                      <span>Habilitado:</span>
-                      <div class="flex">
-                        <!--<vs-checkbox v-model="usuario.habilitado" name="habilitado">Habilitado</vs-checkbox>-->
-                        <ul class="centerx">
-                        <li>
-                          <vs-radio color="success" v-model="item.habilitado" vs-value="1" >Activo</vs-radio>
-                        </li>
-                        <li>
-                          <vs-radio color="danger" v-model="item.habilitado" vs-value="0" >Inactivo</vs-radio>
-                        </li>
-                        </ul>
-                      </div>
+                   <div class="vx-col md:w-1/6 w-full mt-5">
+                    <vs-radio color="success" class="mt-5"  v-model="item.habilitado" vs-value="1" >Activo</vs-radio>
                     </div>
+                     <div class="vx-col md:w-1/6 w-full mt-5">
+                    <vs-radio color="danger" class="mt-5" v-model="item.habilitado" vs-value="0" >Inactivo</vs-radio>
                     </div>
                   </div>
 
 
      
-            <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
+            <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
               <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR MOVIL</vs-button>
               <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR MOVIL</vs-button>
               
@@ -292,7 +288,7 @@
           >
             <!-- @click="addNewDataSidebar = true" -->
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <vx-tooltip color="primary" text="Agregar conductor">
+            <vx-tooltip color="primary" text="Agregar Movil">
               <span class="ml-2 text-base text-primary">Agregar Movil</span>
             </vx-tooltip>
           </div>
@@ -439,7 +435,13 @@ const dict = {
     numero_movil: {
       required: "Los asientos son requerido",
       numeric: "La cantidad de asientos debe ser numerico"
-    }
+    },
+    asociados: {
+      required: "El asociado es requerido"
+    },
+    empresas: {
+      required: "La empresa es requerida"
+    },
   }
 };
 
@@ -467,6 +469,8 @@ export default {
       modoEditar: false,
       exportData: [],
       driver_choices: [],
+      empresa_choices: [],
+
       tipodocumentos_choices: [],      
       aux: 0,
       documentos_choices: [],
@@ -508,7 +512,17 @@ export default {
         })
         .catch(function(error) {
           thisIns.$msjError(error);    
-        });  
+        });
+        
+    //Carga Empresas
+      this.$http
+        .get("empresas/empresas")
+        .then(function(response) {
+          thisIns.empresa_choices = response.data.items;
+        })
+        .catch(function(error) {
+          thisIns.$msjError(error);    
+        });
 
     },
     editar(item) {
@@ -527,6 +541,7 @@ export default {
       this.item.numero_movil = item.numero_movil;
       this.item.id = item.id;
       this.item.driver_id = item.driver_id;
+      this.item.empresa_id = item.empresa_id;
 
       this.popupActive = true;
     },

@@ -1,312 +1,167 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
-    <!-- DOCUEMTOS -->
-    <vs-popup
-      class="holamundo"
-      title="Documentos Conductor"
-      :active.sync="popupDocumento"
-      @close="$close($event)"
-    >
-      <vs-tabs color="primary" ref="tabdocs">
-        <vs-tab label="Adjuntar" icon-pack="feather" icon="icon-upload">
-          <div class="vx-row">
-            <div class="vx-col md:w-1/2 w-full mt-2">
-              <vs-select
-                v-model="item.tipo_documento"
-                v-validate="'required'"
-                label="Tipo de Documento"
-                name="tipo_documento"
-                class="w-full"
-              >
-                <vs-select-item
-                  :key="item.id"
-                  :value="item.id+'|'+item.name"
-                  :text="item.name"
-                  v-for="item in tipodocumentos_choices"
-                />
-              </vs-select>
-              <span
-                class="text-danger text-sm"
-                v-show="errors.has('tipo_documento')"
-              >{{ errors.first('tipo_documento') }}</span>
-            </div>
-            <div class="vx-col md:w-1/2 w-full mt-3">
-              <flat-pickr
-                v-model="item.fecha_vencimiento"
-                v-validate="'required'"
-                label="Fecha de Vencimiento"
-                class="w-full select-large mt-5"
-                placeholder="Fecha de Vencimiento"
-                name="fecha_vencimiento"
-              />
-              <span class="text-danger text-sm">{{ errors.first('fecha_vencimiento') }}</span>
-            </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <input
-                label="Documento"
-                type="file"
-                class="w-full"
-                name="file"
-                id="file"
-                @change="uploadData"
-                ref="fileupload"
-                accept="application/pdf, application/msword, application/image/png, image/jpeg"
-              />
-              <span class="text-sm">Fomatos permitidos: JPG - PNG - DOC - PDF</span>
-              <br />
-              <span class="text-sm">
-                <i>Tamaño maximo 2 MB</i>
-              </span>
-            </div>
-            <div class="vx-col md:w-1/2 w-full mt-5">
-              <vs-button @click="upload()" color="primary" type="filled">Adjuntar</vs-button>
-            </div>
-          </div>
-          <div class="vx-row"></div>
-        </vs-tab>
-        <vs-tab label="Documentos" icon-pack="feather" icon="icon-file-text">
-          <vs-table max-items="4" pagination :data="documentos_choices" ref="tabladoc">
-            <template slot="header">
-              <h3>Documentos Subidos</h3>
-            </template>
-            <template slot="thead">
-              <vs-th colspan="2">Documento</vs-th>
-              <vs-th>Vencimiento</vs-th>
-              <vs-th>Descarga</vs-th>
-            </template>
-
-            <template slot-scope="{data}">
-              <vs-tr :key="indextrdoc" v-for="(trdoc, indextrdoc) in data">
-                <vs-td colspan="2">{{ trdoc.documents[0].name.split(/[.,\/-]/)[1] }}</vs-td>
-                <vs-td>
-                  <vs-chip
-                    :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)"
-                  >{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
-                </vs-td>
-                <vs-td :data="data[indextrdoc].url">
-                  <a
-                    style="cursor: pointer;"
-                    rel="nofollow"
-                    @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)"
-                  >Descargar</a>
-                </vs-td>
-              </vs-tr>
-            </template>
-          </vs-table>
-        </vs-tab>
-      </vs-tabs>
-    </vs-popup>
-    <!-- FIN DOCUMENTOS -->
-
+  
     <!-- POP UP -->
     <vs-popup
       class="holamundo"
       ref="modal"
-      :title="(modoEditar == false ? 'AGREGAR DUEÑO' : 'ACTUALIZAR DUEÑO')"
+      :title="(modoEditar == false ? 'AGREGAR ASOCIADO' : 'ACTUALIZAR ASOCIADO')"
       :active.sync="popupActive"
       @close="$close($event)"
     >
-      <div class="mt-5">
-        <form-wizard
-          color="rgba(var(--vs-primary), 1)"
-          errorColor="rgba(var(--vs-danger), 1)"
-          :title="(modoEditar == false ? 'AGREGAR DUEÑO' : 'ACTUALIZAR DUEÑO')"
-          :subtitle="(modoEditar == false ? 'Ingrese todos los campos para ingresar el dueño' : 'Modifique los campos que desee actualizar')"
-          :finishButtonText="(modoEditar == false ? 'Agregar' : 'Actualizar')"
-          ref="wizard"
-        >
-          <!-- tab 1 content -->
-          <tab-content
-            title="Datos Conductor"
-            class="mb-5"
-            icon="feather icon-user"
-            :before-change="validateStep1"
-          >
-            <form v-if="true" data-vv-scope="step-1">
+      <div class="mt-1">
+          <div class="p-2">
               <div>
-                <vs-divider color="primary">
-                  <h5>Datos Dueño</h5>
-                </vs-divider>
-              </div>
-              <div class="vx-row">
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Rut"
-                    v-model="user.rut"
-                    class="w-full"
-                    name="rut"
-                    v-validate="'required|alpha_dash'"
-                    :danger="(errors.first('step-1.rut') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.rut') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Nombres"
-                    v-model="user.name"
-                    class="w-full"
-                    name="name"
-                    v-validate="'required'"
-                    :danger="(errors.first('step-1.name') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.name') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Apellidos"
-                    v-model="user.lastname"
-                    class="w-full"
-                    name="lastname"
-                    v-validate="'required'"
-                    :danger="(errors.first('step-1.lastname') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.lastname') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    type="Email"
-                    label-placeholder="Email"
-                    v-model="user.email"
-                    class="w-full"
-                    name="email"
-                    v-validate="'required|email'"
-                    :danger="(errors.first('step-1.email') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.email') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    type="Telefono"
-                    label-placeholder="Telefono"
-                    v-model="user.telefono"
-                    class="w-full"
-                    name="telefono"
-                    v-validate="'required|numeric'"
-                    :danger="(errors.first('step-1.telefono') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.telefono') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Ciudad"
-                    v-model="driver.ciudad"
-                    class="w-full"
-                    name="ciudad"
-                    v-validate="'required'"
-                    :danger="(errors.first('step-1.ciudad') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.ciudad') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Comuna"
-                    v-model="driver.comuna"
-                    class="w-full"
-                    name="comuna"
-                    v-validate="'required'"
-                    :danger="(errors.first('step-1.comuna') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.comuna') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Dirección"
-                    v-model="driver.direccion"
-                    class="w-full"
-                    name="direccion"
-                    v-validate="'required'"
-                    :danger="(errors.first('step-1.direccion') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.direccion') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Numeración"
-                    v-model="driver.numeracion"
-                    class="w-full"
-                    name="numeracion"
-                    v-validate="'required|numeric'"
-                    :danger="(errors.first('step-1.numeracion') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.numeracion') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-1">
-                  <vs-select
-                    v-model="user.empresa_id"
-                    label="Empresa"
-                    name="empresa"
-                    class="w-full"
-                    v-validate="'required'"
-                  >
-                    <vs-select-item
-                      :key="item.id"
-                      :value="item.id"
-                      :text="item.razon_social"
-                      v-for="item in empresa_choices"
-                    />
-                  </vs-select>
-                  <span
-                    class="text-danger text-sm"
-                    v-show="errors.has('step-1.empresa')"
-                  >{{ errors.first('step-1.empresa') }}</span>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-input
-                    label-placeholder="Licencias"
-                    v-model="driver.clase"
-                    class="w-full"
-                    name="clase"
-                    v-validate="'required'"
-                    :danger="(errors.first('step-1.clase') ? true : false)"
-                    val-icon-danger="clear"
-                  />
-                  <span class="text-danger">{{ errors.first('step-1.clase') }}</span>
-                </div>
-                <!-- <div class="vx-col md:w-1/2 w-full mt-2">
-                  <vs-checkbox 
-                    label-placeholder="Licencias"
-                    color="success" 
-                    label="Empresa"
-                    v-model="checkBox2">Success
-                  </vs-checkbox>
-                </div>-->
-                <div class="vx-col md:w-1/6 w-full mt-5">
-                  <vs-radio
-                    color="success"
-                    class="mt-5"
-                    v-model="user.habilitado"
-                    vs-value="1"
-                  >Activo</vs-radio>
-                </div>
-                <div class="vx-col md:w-1/6 w-full mt-5">
-                  <vs-radio
-                    color="danger"
-                    class="mt-5"
-                    v-model="user.habilitado"
-                    vs-value="0"
-                  >Inactivo</vs-radio>
-                </div>
-                <div class="vx-col md:w-1/2 w-full mt-5">
-                  <ul class="demo-alignment">
-                    <li>
-                      <vs-checkbox v-model="driver.conductor" vs-value="0">Conductor Dueño</vs-checkbox>
-                    </li>
-                    <li class="op-block">{{ driver.conductor==0?&apos;No&apos;:"Si" }}</li>
-                  </ul>
-                </div>
-              </div>
-            </form>
-          </tab-content>
-        </form-wizard>
+                <vs-divider color="primary"><h5>Asociado</h5></vs-divider>
+              </div>  
+                <div class="vx-row">
+                   <div class="vx-col md:w-auto mt-2">
+                      <vs-checkbox name="conductor"  icon-pack="feather" icon="icon-check" v-model="item.conductor">Conductor</vs-checkbox>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Nombres"
+                        v-model="item.name"
+                        class="w-full"
+                        name="name"
+                        v-validate="'required'"
+                        :danger="(errors.first('name') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('name') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Apellidos"
+                        v-model="item.lastname"
+                        class="w-full"
+                        name="lastname"
+                        v-validate="'required'"
+                        :danger="(errors.first('lastname') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('lastname') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        type="Email"
+                        label-placeholder="Email"
+                        v-model="item.email"
+                        class="w-full"
+                        name="email"
+                        v-validate="'required|email'"
+                        :danger="(errors.first('email') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('email') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        type="Telefono"
+                        label-placeholder="Telefono"
+                        v-model="item.telefono"
+                        class="w-full"
+                        name="telefono"
+                        v-validate="'required|numeric'"
+                        :danger="(errors.first('telefono') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('telefono') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Rut"
+                        v-model="item.rut"
+                        class="w-full"
+                        name="rut"
+                        v-validate="'required|alpha_dash'"
+                        :danger="(errors.first('rut') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('rut') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Ciudad"
+                        v-model="item.ciudad"
+                        class="w-full"
+                        name="ciudad"
+                        v-validate="'required'"
+                        :danger="(errors.first('ciudad') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('ciudad') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Comuna"
+                        v-model="item.comuna"
+                        class="w-full"
+                        name="comuna"
+                        v-validate="'required'"
+                        :danger="(errors.first('comuna') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('comuna') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Dirección"
+                        v-model="item.direccion"
+                        class="w-full"
+                        name="direccion"
+                        v-validate="'required'"
+                        :danger="(errors.first('direccion') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('direccion') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Numeración"
+                        v-model="item.numeracion"
+                        class="w-full"
+                        name="numeracion"
+                        v-validate="'required|numeric'"
+                        :danger="(errors.first('numeracion') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('numeracion') }}</span>
+                    </div>
+                    <div class="vx-col md:w-1/2 w-full mt-2">
+                      <vs-input
+                        label-placeholder="Licencias"
+                        v-model="item.clase"
+                        class="w-full"
+                        name="clase"
+                        v-validate="'required'"
+                        :danger="(errors.first('clase') ? true : false)"
+                        val-icon-danger="clear"
+                      />
+                      <span class="text-danger">{{ errors.first('clase') }}</span>
+                    </div>
+                   
+                    
+                     <div class="vx-col md:w-1/6 w-full mt-2">
+                    <vs-radio color="success" class="mt-5"  v-model="item.habilitado" vs-value="1" >Activo</vs-radio>
+                    </div>
+                     <div class="vx-col md:w-1/6 w-full mt-2">
+                    <vs-radio color="danger" class="mt-5" v-model="item.habilitado" vs-value="0" >Inactivo</vs-radio>
+                    </div>
+                  </div>
+
+
+     
+            <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
+              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR ASOCIADO</vs-button>
+              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR ASOCIADO</vs-button>
+              
+           
+              <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
+            </div>
+            </div>
       </div>
     </vs-popup>
     <!-- POP UP -->
@@ -354,30 +209,11 @@
           >
             <!-- @click="addNewDataSidebar = true" -->
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <vx-tooltip color="primary" text="Agregar conductor">
-              <span class="ml-2 text-base text-primary">Agregar Dueño</span>
+            <vx-tooltip color="primary" text="Agregar asociado">
+              <span class="ml-2 text-base text-primary">Agregar Asociado</span>
             </vx-tooltip>
           </div>
-          <div
-            class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
-            @click="$agregarPopUp()"
-          >
-            <!-- @click="addNewDataSidebar = true" -->
-            <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <vx-tooltip color="primary" text="Agregar conductor">
-              <span class="ml-2 text-base text-primary">Agregar Movil</span>
-            </vx-tooltip>
-          </div>
-          <div
-            class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
-            @click="$agregarPopUp()"
-          >
-            <!-- @click="addNewDataSidebar = true" -->
-            <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <vx-tooltip color="primary" text="Agregar conductor">
-              <span class="ml-2 text-base text-primary">Agregar Conductor</span>
-            </vx-tooltip>
-          </div>
+
         </div>
 
         <!-- ITEMS PER PAGE -->
@@ -410,9 +246,12 @@
 
       <template slot="thead">
         <vs-th sort-key="items-id">ID</vs-th>
-        <vs-th sort-key="items-name">Nombre</vs-th>
-        <vs-th sort-key="items-lastname">Apellido</vs-th>
-        <vs-th sort-key="items-email">Email</vs-th>
+        <vs-th sort-key="items-nombre">Nombre</vs-th>
+        <vs-th sort-key="items-apellido">Apellido</vs-th>
+        <vs-th sort-key="items-rut">Rut</vs-th>
+        <vs-th sort-key="items-telefono">Telefono</vs-th>
+        <vs-th sort-key="items-moviles">Moviles</vs-th>
+        <vs-th sort-key="items-conductores">Conductores</vs-th>
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
@@ -422,23 +261,24 @@
             <vs-td>
               <p class="items-id font-medium">{{ tr.id }}</p>
             </vs-td>
-
             <vs-td>
-              <p class="items-name">{{ tr.name }}</p>
+              <p class="items-nombre">{{ tr.nombre }}</p>
             </vs-td>
             <vs-td>
-              <p class="items-lastname">{{ tr.lastname }}</p>
+              <p class="items-apellido">{{ tr.apellido }}</p>
             </vs-td>
             <vs-td>
-              <p class="items-email">{{ tr.email }}</p>
+              <p class="items-rut">{{ tr.rut }}</p>
             </vs-td>
-            <!--  <vs-td>
-                <p class="users-created_at">{{ tr.created_at }}</p>
-              </vs-td>
-
-              <vs-td>
-                <p class="users-updated_at">{{ tr.updated_at }}</p>
-            </vs-td>-->
+             <vs-td>
+                <p class="items-telefono">{{ tr.telefono }}</p>
+            </vs-td>
+            <vs-td>
+                <vs-chip :color="getStatusColorMoviles(tr.cars[0].length)" class="items-moviles">{{ tr.cars[0].length  }}</vs-chip>
+            </vs-td>
+             <vs-td>
+                <vs-chip :color="getStatusColorConductores(tr.drivers[0].length)" class="items-conductores">{{ tr.drivers[0].length  }}</vs-chip>
+            </vs-td>
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
@@ -465,18 +305,6 @@
                     @click="$submitEliminar(tr, indextr)"
                   ></vs-button>
                 </vx-tooltip>
-                <vx-tooltip color="primary" text="Documentos">
-                  <vs-button
-                    radius
-                    color="primary"
-                    type="border"
-                    icon-pack="feather"
-                    icon="icon-file"
-                    size="small"
-                    class="ml-3"
-                    @click="initUpload(tr)"
-                  ></vs-button>
-                </vx-tooltip>
               </div>
             </vs-td>
           </vs-tr>
@@ -487,10 +315,6 @@
 </template>
 
 <script>
-import { FormWizard, TabContent } from "vue-form-wizard";
-import "vue-form-wizard/dist/vue-form-wizard.min.css";
-import flatPickr from "vue-flatpickr-component";
-
 // For custom error message
 import { Validator } from "vee-validate";
 const dict = {
@@ -523,56 +347,16 @@ const dict = {
       required: "La numeración es requerida",
       numeric: "Ingrese una numeración valida"
     },
-    empresa: {
-      required: "La empresa es requerida"
-    },
     email: {
       required: "El email es requerido",
-      email: "Ingrese un email valido"
+      email: "Ingrese un emil valido"
     },
     telefono: {
       required: "El telefono es requerido",
       numeric: "El numero de telefono debe ser valido"
     },
-    tipo: {
-      required: "El tipo es requerido"
-    },
-    tipoDocumento: {
-      required: "El tipo de documento es requerido"
-    },
-    marca: {
-      required: "La marca es requerida"
-    },
-    modelo: {
-      required: "El modelo es requerido"
-    },
-    ano: {
-      required: "El ano es requerido"
-    },
-    motor: {
-      required: "El motor es requerido"
-    },
-    patente: {
-      required: "La patente es requerida"
-    },
-    color: {
-      required: "El color es requerido"
-    },
-    asientos: {
-      required: "Los asientos son requerido",
-      numeric: "La cantidad de asientos debe ser numerico"
-    },
-    clase: {
-      required: "La clase es requerida"
-    },
-    tipo_documento: {
-      required: "El tipo de documento es requerido"
-    },
-    fecha_vencimiento: {
-      required: "La fecha de vencimiento es requerida"
-    },
-    documents: {
-      required: "El documento es requerido"
+     clase: {
+      required: "La clase es requerida",
     }
   }
 };
@@ -582,13 +366,10 @@ Validator.localize("en", dict);
 
 export default {
   components: {
-    FormWizard,
-    TabContent,
-    flatPickr
   },
   data() {
     return {
-      ruta: "/driver/driver/",
+      ruta: "/driver/moviles/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -597,22 +378,13 @@ export default {
       ite: "",
       ind: "",
       popupActive: false,
-      popupDocumento: false,
-      popupDueno: false,
-      item: {},
-      driver: {
-        conductor: 0
-      },
-      car: {},
-      user: {
+      popupDocumento: false,  
+      item: {
         habilitado: 1,
+        conductor: false,
       },
       modoEditar: false,
       exportData: [],
-      empresa_choices: [],
-      tipodocumentos_choices: [],
-      aux: 0,
-      documentos_choices: []
     };
   },
   computed: {
@@ -624,275 +396,48 @@ export default {
     }
   },
   methods: {
-    validateStep1() {
-      return new Promise((resolve, reject) => {
-        this.$validator.validateAll("step-1").then(result => {
-          if (result) {
-            this.item.driver = this.driver;
-            this.item.user = this.user;
-            //this.item.car = this.car;
-            console.log(this.item);
-            if (this.modoEditar == false) {
-              this.$submitAgregar("step-1");
-            } else {
-              this.$submitActualizar("step-1");
-            }
-            resolve(true);
-          } else {
-            reject("correct all values");
-          }
-        });
-      });
+    getStatusColorMoviles(cantidad) {
+      if(cantidad > 0) return "success"
+      if(cantidad == 0) return "danger"
+      return "danger"
     },
-    validateStep2() {
-      return new Promise((resolve, reject) => {
-        this.$validator.validateAll("step-2").then(result => {
-          if (result) {
-            this.item.driver = this.driver;
-            this.item.user = this.user;
-            this.item.car = this.car;
-
-            if (this.modoEditar == false) {
-              this.$submitAgregar("step-2");
-            } else {
-              this.$submitActualizar("step-2");
-            }
-
-            resolve(true);
-          } else {
-            reject("correct all values");
-          }
-        });
-      });
-    },
-    getStatusColor(fecha) {
-      var factual = new Date();
-      var fvencimiento = new Date(fecha);
-      if (fvencimiento.getTime() >= factual.getTime()) return "success";
-      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
-      return "danger";
-    },
-    refrescaOtrosDatos() {
-      //Carga Roles
-      const thisIns = this;
-      this.$http
-        .get("roles/roles")
-        .then(function(response) {
-          thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
-        })
-        .catch(function(error) {
-           
-              thisIns.$msjError(error);  
-        });
-      //Carga Empresa
-      this.$http
-        .get("empresas/empresas")
-        .then(function(response) {
-          thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
-        })
-        .catch(function(error) {
-          
-              thisIns.$msjError(error);           
-
-        });
-
-      //Charge Type Documents
-      this.$http
-        .get("tipodocumentos/tipodocumentos")
-        .then(function(response) {
-          thisIns.tipodocumentos_choices = response.data.items;
-        })
-        .catch(function(error) {
-           
-              thisIns.$msjError(error);  
-        });
+    getStatusColorConductores(cantidad) {
+      if(cantidad > 0) return "success"
+      if(cantidad == 0) return "danger"
+      return "danger"
     },
     editar(item) {
-      //console.log(item);
+     
       this.initValues();
       this.modoEditar = true;
-      this.user.email = item.email;
-      this.user.name = item.name;
-      this.user.lastname = item.lastname;
-      this.user.rut = item.rut;
-      this.user.telefono = item.telefono;
-      this.user.habilitado = item.habilitado;
-      this.user.empresa_id = item.empresa_id;
 
-
-      this.driver.ciudad = item.ciudad;
-      this.driver.comuna = item.comuna;
-      this.driver.direccion = item.direccion;
-      this.driver.numeracion = item.numeracion;
-      this.driver.clase = item.clase;
-      this.driver.conductor = item.conductor;
-
-
-      this.car.tipo = item.cars[0].tipo;
-      this.car.asientos = item.cars[0].asientos;
-      this.car.color = item.cars[0].color;
-      this.car.marca = item.cars[0].marca;
-      this.car.modelo = item.cars[0].modelo;
-      this.car.motor = item.cars[0].motor;
-      this.car.patente = item.cars[0].patente;
-      this.car.ano = item.cars[0].ano;
-      this.car.id = item.cars[0].id;
-
-      this.user.id = item.id;
+      this.item.email = item.email;
+      this.item.name = item.name;
+      this.item.lastname = item.lastname;
+      this.item.rut = item.rut;
+      this.item.telefono = item.telefono;
+      this.item.habilitado = item.habilitado;
+      this.item.ciudad = item.ciudad;
+      this.item.comuna = item.comuna;
+      this.item.direccion = item.direccion;
+      this.item.numeracion = item.numeracion;
+      this.item.clase = item.clase;
+      this.item.conductor = item.conductor;
 
       this.popupActive = true;
     },
     initValues() {
       //this.$refs.wizard.navigateToTab(0);
-      this.item = {};
-      this.car = {};
-      this.user = {
+      this.item = {
         habilitado: 1,
+        conductor: false,
       };
-      this.driver = {};
       this.errors.clear();
-      this.$refs.wizard.reset();
       //this.modoEditar = false;
     },
-    initUpload(item) {
-      const thisIns = this;
-
-      this.documentos_choices = [];
-
-      this.item.tipo_documento = "";
-      this.item.fecha_vencimiento = "";
-      this.item.file = "";
-      this.item.filename = "";
-
-      //const input = this.$refs.fileupload;
-      //input.type = 'file';
-      //input.type = 'text';
-      let myElement = document.querySelector(".line-vs-tabs");
-      myElement.style.width = "95px";
-      myElement.style.left = "0px";
-
-      this.$refs.tabdocs.activeChild(0);
-      this.$refs.tabdocs.changePositionLine(0);
-
-      this.errors.clear();
-
-      this.$http
-        .get("driver/driver/documents/" + item.id)
-        .then(function(response) {
-          thisIns.documentos_choices = response.data.items;
-        })
-        .catch(function(error) {
-          thisIns.$vs.notify({
-            title: "Error",
-            text: "Error al traer los documentos",
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
-        });
-
-      setTimeout(() => {
-        this.popupDocumento = true;
-        this.dataItem = item;
-        thisIns.$refs.fileupload.value = "";
-      }, 300);
-    },
-
-    upload($name = null) {
-      $name = $name == null ? true : $name;
-      this.$validator.validateAll($name).then(result => {
-        if (result) {
-          const formData = new FormData();
-          formData.append("file", this.item.file);
-          formData.append(
-            "tipo_documento_id",
-            this.item.tipo_documento.split("|")[0]
-          );
-          formData.append(
-            "tipo_documento",
-            this.item.tipo_documento.split("|")[1]
-          );
-          formData.append("fecha_vencimiento", this.item.fecha_vencimiento);
-          formData.append("driver_id", this.dataItem.cars[0].driver_id);
-          formData.append("rut", this.dataItem.rut);
-
-          this.$upload(formData);
-        } else {
-        }
-      });
-    },
-    uploadData(e) {
-      const tipo = e.target.files[0].type;
-      const size = e.target.files[0].size;
-      if (
-        tipo == "image/png" ||
-        tipo == "image/jpeg" ||
-        tipo == "application/msword" ||
-        tipo == "application/pdf"
-      ) {
-        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        if (size <= 2000000) {
-          //2097152
-
-          this.item.file = e.target.files[0];
-          this.item.filename = e.target.files[0].name;
-        } else {
-          this.$refs.fileupload.value = "";
-          //const input = this.$refs.fileupload;
-          //input.type = 'text';
-          //input.type = 'file';
-
-          this.$vs.notify({
-            title: "Error",
-            text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
-            color: "danger",
-            iconPack: "feather",
-            icon: "icon-alert-circle"
-          });
-        }
-      } else {
-        this.$refs.fileupload.value = "";
-        //const input = this.$refs.fileupload;
-        //input.type = 'text';
-        //input.type = 'file';
-
-        this.$vs.notify({
-          title: "Error",
-          text: "El archivo no tiene el formato correcto",
-          color: "danger",
-          iconPack: "feather",
-          icon: "icon-alert-circle"
-        });
-      }
-    },
-    downloadDocument(id, name) {
-      //var download = await this.$http.get('driver/driver/document/' + id);
-      //console.log(download);
-      this.$http
-        .get("driver/driver/document/" + id, { responseType: "blob" })
-        .then(
-          response => {
-            console.log(response);
-            var a = document.createElement("a");
-            var url = window.URL.createObjectURL(response.data);
-            a.href = url;
-            a.download = name;
-            document.body.append(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
-          },
-          response => {
-            console.warn("error from download_contract");
-            console.log(response);
-            // Manage errors
-          }
-        );
-    }
   },
   created() {
     this.$refrescaTabla();
-    this.refrescaOtrosDatos();
   },
   mounted() {
     this.isMounted = true;

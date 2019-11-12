@@ -94,12 +94,19 @@
       :active.sync="popupActive"
       @close="$close($event)"
     >
-      <div class="mt-5">
-          <div class="p-5">
+      <div class="mt-1">
+          <div class="p-2">
               <div>
                 <vs-divider color="primary"><h5>Conductores</h5></vs-divider>
               </div>  
                 <div class="vx-row">
+                   <div class="vx-col md:w-1/2 w-full mt-1">
+                      <vs-select v-model="item.driver_id" label="Asociados" name="asociados" class="w-full" v-validate="'required'" 
+                      >
+                        <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in driver_choices"  />
+                     </vs-select>
+                      <span class="text-danger">{{ errors.first('asociados') }}</span>
+                    </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Nombres"
@@ -232,7 +239,7 @@
 
 
      
-            <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
+            <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
               <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR CONDUCTOR</vs-button>
               <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR CONDUCTOR</vs-button>
               
@@ -447,6 +454,9 @@ const dict = {
     },
      clase: {
       required: "La clase es requerida",
+    },
+    asociados: {
+      required: "El asociado es requerido"
     }
   }
 };
