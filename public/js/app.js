@@ -3750,11 +3750,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var _this2 = this;
 
       var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      console.log(this.item);
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + 'store';
       this.$validator.validateAll($name).then(function (result) {
         if (result) {
+          angelo;
+
           _this2.$http.post(url, _this2.item) //this.item
           .then(function (res) {
             _this2.$vs.loading({
@@ -7902,7 +7905,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
   components: {},
   data: function data() {
     return {
-      ruta: "/driver/moviles/",
+      ruta: "/driver/driver/",
       selected: [],
       items: [],
       itemsOriginal: [],

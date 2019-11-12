@@ -451,7 +451,7 @@ export default {
   },
   data() {
     return {
-      ruta: "/driver/moviles/",
+      ruta: "/driver/driver/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -488,7 +488,7 @@ export default {
       if (fvencimiento.getTime() <= factual.getTime()) return "danger";
       return "danger";
     },
-     refrescaOtrosDatos() {
+    refrescaOtrosDatos() {
       //Carga Asociados
       const thisIns  = this;
       this.$http
@@ -584,7 +584,6 @@ export default {
 
       
     },
-
     upload($name = null){
       $name = $name == null ? true : $name;
        this.$validator.validateAll($name).then(result =>{

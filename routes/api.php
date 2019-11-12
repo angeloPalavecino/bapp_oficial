@@ -256,7 +256,7 @@ Route::prefix('v1')->group(function () {
 
 
        });
-    });
+    }); 
 
     //MOVILES
     Route::prefix('driver')->group(function () {
