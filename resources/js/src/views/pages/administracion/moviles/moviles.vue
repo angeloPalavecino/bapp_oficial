@@ -13,14 +13,15 @@
 
               
               <div class="vx-col md:w-1/2 w-full mt-2">
-                <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="tipo_documento" class="w-full"  >
+                <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="documentos.tipo_documento" class="w-full"  >
                   <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
                 </vs-select>
-                <span class="text-danger text-sm" v-show="errors.has('tipo_documento')">{{ errors.first('tipo_documento') }}</span> 
+                <span class="text-danger text-sm" v-show="errors.has('documentos.tipo_documento')">{{ errors.first('documentos.tipo_documento') }}</span> 
               </div>
               <div class="vx-col md:w-1/2 w-full mt-3">
-                <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
-                <span class="text-danger text-sm" >{{ errors.first('fecha_vencimiento') }}</span>                         
+                <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" 
+                placeholder="Fecha de Vencimiento" name="documentos.fecha_vencimiento"  />
+                <span class="text-danger text-sm" >{{ errors.first('documentos.fecha_vencimiento') }}</span>                         
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
                <input
@@ -107,13 +108,13 @@
                       >
                         <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in driver_choices"  />
                      </vs-select>
-                      <span class="text-danger">{{ errors.first('movil.asociados') }}</span>
+                      <span class="text-danger">{{ errors.first('asociados') }}</span>
                     </div>
                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-select v-model="item.empresa_id" label="Empresa" name="empresas" class="w-full" v-validate="'required'" >
                         <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
                       </vs-select>
-                      <span class="text-danger text-sm" v-show="errors.has('movil.empresas')">{{ errors.first('movil.empresas') }}</span>          
+                      <span class="text-danger text-sm" v-show="errors.has('empresas')">{{ errors.first('empresas') }}</span>          
                     </div>
                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -121,11 +122,11 @@
                         v-model="item.numero_movil"
                         class="w-full"
                         name="numero_movil"
-                        v-validate="'required'"
-                        :danger="(errors.first('movil.numero_movil') ? true : false)"
+                        v-validate="'required|numeric'"
+                        :danger="(errors.first('numero_movil') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.numero_movil') }}</span>
+                      <span class="text-danger">{{ errors.first('numero_movil') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -134,10 +135,10 @@
                         class="w-full"
                         name="tipo"
                         v-validate="'required'"
-                        :danger="(errors.first('movil.tipo') ? true : false)"
+                        :danger="(errors.first('tipo') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('tipo') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -146,10 +147,10 @@
                         class="w-full"
                         name="marca"
                         v-validate="'required'"
-                        :danger="(errors.first('movil.marca') ? true : false)"
+                        :danger="(errors.first('marca') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.marca') }}</span>
+                      <span class="text-danger">{{ errors.first('marca') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -158,10 +159,10 @@
                         class="w-full"
                         name="modelo"
                         v-validate="'required'"
-                        :danger="(errors.first('movil.modelo') ? true : false)"
+                        :danger="(errors.first('modelo') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.modelo') }}</span>
+                      <span class="text-danger">{{ errors.first('modelo') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -169,11 +170,11 @@
                         v-model="item.ano"
                         class="w-full"
                         name="ano"
-                        v-validate="'required'"
-                        :danger="(errors.first('movil.ano') ? true : false)"
+                        v-validate="'required|numeric'"
+                        :danger="(errors.first('ano') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.ano') }}</span>
+                      <span class="text-danger">{{ errors.first('ano') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -181,11 +182,11 @@
                         v-model="item.motor"
                         class="w-full"
                         name="motor"
-                        v-validate="'required'"
-                        :danger="(errors.first('movil.motor') ? true : false)"
+                        v-validate="'required|numeric'"
+                        :danger="(errors.first('motor') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.motor') }}</span>
+                      <span class="text-danger">{{ errors.first('motor') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -194,10 +195,10 @@
                         class="w-full"
                         name="patente"
                         v-validate="'required'"
-                        :danger="(errors.first('movil.patente') ? true : false)"
+                        :danger="(errors.first('patente') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.patente') }}</span>
+                      <span class="text-danger">{{ errors.first('patente') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -206,22 +207,17 @@
                         class="w-full"
                         name="color"
                         v-validate="'required'"
-                        :danger="(errors.first('movil.color') ? true : false)"
+                        :danger="(errors.first('color') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('movil.color') }}</span>
+                      <span class="text-danger">{{ errors.first('color') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
-                      <vs-input
-                        label-placeholder="N° Asientos"
-                        v-model="item.asientos"
-                        class="w-full"
-                        name="asientos"
-                        v-validate="'required|numeric'"
-                        :danger="(errors.first('movil.asientos') ? true : false)"
-                        val-icon-danger="clear"
-                      />
-                      <span class="text-danger">{{ errors.first('movil.asientos') }}</span>
+                      <span class=" text-sm" >N° Asientos</span>
+                      <vs-input-number v-model="item.asientos" 
+                        name="asientos" v-validate="'required'"  min="1" 
+                        icon-inc="expand_less" icon-dec="expand_more" />
+
                     </div>
                    <div class="vx-col md:w-1/6 w-full mt-5">
                     <vs-radio color="success" class="mt-5"  v-model="item.habilitado" vs-value="1" >Activo</vs-radio>
@@ -234,8 +230,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar('movil')" >ACTUALIZAR MOVIL</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar('movil')">AGREGAR MOVIL</vs-button>
+              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR MOVIL</vs-button>
+              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR MOVIL</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -334,7 +330,7 @@
       </template>
 
       <template slot-scope="{data}">
-        <tbody>
+       
           <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
             <vs-td>
               <p class="items-id font-medium">{{ tr.id }}</p>
@@ -396,7 +392,7 @@
               </div>
             </vs-td>
           </vs-tr>
-        </tbody>
+      
       </template>
     </vs-table>
   </div>
@@ -405,6 +401,7 @@
 <script>
 // For custom error message
 import { Validator } from "vee-validate";
+import flatPickr from 'vue-flatpickr-component';
 const dict = {
   custom: {
     tipo: {
@@ -413,35 +410,36 @@ const dict = {
     marca: {
       required: "La marca es requerida"
     },
-    // modelo: {
-    //   required: "El modelo es requerido"
-    // },
-    // ano: {
-    //   required: "El ano es requerido"
-    // },
-    // motor: {
-    //   required: "El motor es requerido"
-    // },
-    // patente: {
-    //   required: "La patente es requerida"
-    // },
-    // color: {
-    //   required: "El color es requerido"
-    // },
-    // asientos: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // numero_movil: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // asociados: {
-    //   required: "El asociado es requerido"
-    // },
-    // empresas: {
-    //   required: "La empresa es requerida"
-    // },
+     modelo: {
+       required: "El modelo es requerido"
+     },
+     ano: {
+       required: "El año es requerido",
+       numeric: "El año debe ser numerico"
+     },
+     motor: {
+       required: "El motor es requerido",
+       numeric: "El n° de motor debe ser numerico"
+     },
+     patente: {
+       required: "La patente es requerida"
+     },
+     color: {
+       required: "El color es requerido"
+     },
+     asientos: {
+       required: "Los asientos son requerido",
+     },
+     numero_movil: {
+       required: "Los asientos son requerido",
+       numeric: "El n° de movil debe ser numerico"
+     },
+     asociados: {
+       required: "El asociado es requerido"
+     },
+     empresas: {
+       required: "La empresa es requerida"
+     },
   }
 };
 
@@ -450,6 +448,7 @@ Validator.localize("en", dict);
 
 export default {
   components: {
+    flatPickr
   },
   data() {
     return {
@@ -465,6 +464,7 @@ export default {
       popupDocumento: false,  
       item: {
         habilitado: 1,
+        asientos: 1,
       },
       modoEditar: false,
       exportData: [],
@@ -548,6 +548,7 @@ export default {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
         habilitado: 1,
+        asientos: 1,
       };
       this.errors.clear();
       //this.modoEditar = false;

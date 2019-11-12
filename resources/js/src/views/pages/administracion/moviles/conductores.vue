@@ -14,14 +14,15 @@
 
               
               <div class="vx-col md:w-1/2 w-full mt-2">
-                <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="tipo_documento" class="w-full"  >
+                <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="documentos.tipo_documento" class="w-full"  >
                   <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
                 </vs-select>
-                <span class="text-danger text-sm" v-show="errors.has('tipo_documento')">{{ errors.first('tipo_documento') }}</span> 
+                <span class="text-danger text-sm" v-show="errors.has('documentos.tipo_documento')">{{ errors.first('documentos.tipo_documento') }}</span> 
               </div>
               <div class="vx-col md:w-1/2 w-full mt-3">
-                <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
-                <span class="text-danger text-sm" >{{ errors.first('fecha_vencimiento') }}</span>                         
+                <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" 
+                class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="documentos.fecha_vencimiento"  />
+                <span class="text-danger text-sm" >{{ errors.first('documentos.fecha_vencimiento') }}</span>                         
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
                <input
@@ -343,7 +344,6 @@
       </template>
 
       <template slot-scope="{data}">
-        <tbody>
           <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
             <vs-td>
               <p class="items-id font-medium">{{ tr.id }}</p>
@@ -398,7 +398,7 @@
                     color="primary"
                     type="border"
                     icon-pack="feather"
-                    icon="icon-file"
+                    icon="icon-file" 
                     size="small"
                     class="ml-3"
                     @click="initUpload(tr)"
@@ -407,7 +407,6 @@
               </div>
             </vs-td>
           </vs-tr>
-        </tbody>
       </template>
     </vs-table>
   </div>
@@ -415,7 +414,9 @@
 
 <script>
 // For custom error message
+import flatPickr from 'vue-flatpickr-component';
 import { Validator } from "vee-validate";
+
 const dict = {
   custom: {
     name: {
@@ -468,6 +469,7 @@ Validator.localize("en", dict);
 
 export default {
   components: {
+    flatPickr
   },
   data() {
     return {

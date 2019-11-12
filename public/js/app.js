@@ -3753,12 +3753,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + 'store';
-      console.log(url);
-      console.log(this.item);
-      console.log($name);
       this.$validator.validateAll($name).then(function (result) {
-        console.log(result);
-
         if (result) {
           _this2.$http.post(url, _this2.item) //this.item
           .then(function (res) {
@@ -6229,8 +6224,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 // For custom error message
 
 var dict = {
@@ -6369,8 +6362,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-//
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 //
 //
 //
@@ -6787,6 +6781,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 // For custom error message
 
+
 var dict = {
   custom: {
     name: {
@@ -6834,9 +6829,11 @@ var dict = {
   }
 }; // register custom messages
 
-vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
+  components: {
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   data: function data() {
     return {
       ruta: "/driver/moviles/",
@@ -7048,10 +7045,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-//
-//
-//
-//
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -7454,6 +7449,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 // For custom error message
 
+
 var dict = {
   custom: {
     tipo: {
@@ -7461,42 +7457,45 @@ var dict = {
     },
     marca: {
       required: "La marca es requerida"
-    } // modelo: {
-    //   required: "El modelo es requerido"
-    // },
-    // ano: {
-    //   required: "El ano es requerido"
-    // },
-    // motor: {
-    //   required: "El motor es requerido"
-    // },
-    // patente: {
-    //   required: "La patente es requerida"
-    // },
-    // color: {
-    //   required: "El color es requerido"
-    // },
-    // asientos: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // numero_movil: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // asociados: {
-    //   required: "El asociado es requerido"
-    // },
-    // empresas: {
-    //   required: "La empresa es requerida"
-    // },
-
+    },
+    modelo: {
+      required: "El modelo es requerido"
+    },
+    ano: {
+      required: "El año es requerido",
+      numeric: "El año debe ser numerico"
+    },
+    motor: {
+      required: "El motor es requerido",
+      numeric: "El n° de motor debe ser numerico"
+    },
+    patente: {
+      required: "La patente es requerida"
+    },
+    color: {
+      required: "El color es requerido"
+    },
+    asientos: {
+      required: "Los asientos son requerido"
+    },
+    numero_movil: {
+      required: "Los asientos son requerido",
+      numeric: "El n° de movil debe ser numerico"
+    },
+    asociados: {
+      required: "El asociado es requerido"
+    },
+    empresas: {
+      required: "La empresa es requerida"
+    }
   }
 }; // register custom messages
 
 vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
+  components: {
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
   data: function data() {
     return {
       ruta: "/car/car/",
@@ -7510,7 +7509,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       popupActive: false,
       popupDocumento: false,
       item: {
-        habilitado: 1
+        habilitado: 1,
+        asientos: 1
       },
       modoEditar: false,
       exportData: [],
@@ -7578,7 +7578,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     initValues: function initValues() {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
-        habilitado: 1
+        habilitado: 1,
+        asientos: 1
       };
       this.errors.clear(); //this.modoEditar = false;
     },
@@ -47928,120 +47929,104 @@ var render = function() {
               key: "default",
               fn: function(ref) {
                 var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr, attrs: { data: tr } },
-                        [
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-nombre" }, [
-                              _vm._v(_vm._s(tr.name))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-apellido" }, [
-                              _vm._v(_vm._s(tr.lastname))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-rut" }, [
-                              _vm._v(_vm._s(tr.rut))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-telefono" }, [
-                              _vm._v(_vm._s(tr.telefono))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
+                return _vm._l(data, function(tr, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: tr } },
+                    [
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-id font-medium" }, [
+                          _vm._v(_vm._s(tr.id))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-nombre" }, [
+                          _vm._v(_vm._s(tr.name))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-apellido" }, [
+                          _vm._v(_vm._s(tr.lastname))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-rut" }, [
+                          _vm._v(_vm._s(tr.rut))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-telefono" }, [
+                          _vm._v(_vm._s(tr.telefono))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                          },
+                          [
                             _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
-                              },
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: { color: "primary", text: "Editar" }
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-edit-2",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Eliminar"
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editar(tr)
                                     }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Eliminar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-trash",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$submitEliminar(tr, indextr)
+                                    }
+                                  }
+                                })
                               ],
                               1
                             )
-                          ])
-                        ],
-                        1
-                      )
-                    }),
+                          ],
+                          1
+                        )
+                      ])
+                    ],
                     1
                   )
-                ]
+                })
               }
             }
           ]),
@@ -48383,7 +48368,7 @@ var render = function() {
                             staticClass: "w-full",
                             attrs: {
                               label: "Tipo de Documento",
-                              name: "tipo_documento"
+                              name: "documentos.tipo_documento"
                             },
                             model: {
                               value: _vm.item.tipo_documento,
@@ -48412,13 +48397,22 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.errors.has("tipo_documento"),
-                                expression: "errors.has('tipo_documento')"
+                                value: _vm.errors.has(
+                                  "documentos.tipo_documento"
+                                ),
+                                expression:
+                                  "errors.has('documentos.tipo_documento')"
                               }
                             ],
                             staticClass: "text-danger text-sm"
                           },
-                          [_vm._v(_vm._s(_vm.errors.first("tipo_documento")))]
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.errors.first("documentos.tipo_documento")
+                              )
+                            )
+                          ]
                         )
                       ],
                       1
@@ -48441,7 +48435,7 @@ var render = function() {
                           attrs: {
                             label: "Fecha de Vencimiento",
                             placeholder: "Fecha de Vencimiento",
-                            name: "fecha_vencimiento"
+                            name: "documentos.fecha_vencimiento"
                           },
                           model: {
                             value: _vm.item.fecha_vencimiento,
@@ -48453,7 +48447,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "text-danger text-sm" }, [
-                          _vm._v(_vm._s(_vm.errors.first("fecha_vencimiento")))
+                          _vm._v(
+                            _vm._s(
+                              _vm.errors.first("documentos.fecha_vencimiento")
+                            )
+                          )
                         ])
                       ],
                       1
@@ -49217,165 +49215,146 @@ var render = function() {
               key: "default",
               fn: function(ref) {
                 var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr, attrs: { data: tr } },
-                        [
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-nombre" }, [
-                              _vm._v(_vm._s(tr.nombre))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-apellido" }, [
-                              _vm._v(_vm._s(tr.apellido))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-rut" }, [
-                              _vm._v(_vm._s(tr.rut))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-email" }, [
-                              _vm._v(_vm._s(tr.email))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-telefono" }, [
-                              _vm._v(_vm._s(tr.telefono))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-asociado" }, [
-                              _vm._v(
-                                _vm._s(tr.drivers[0].name) +
-                                  " " +
-                                  _vm._s(tr.drivers[0].apellido)
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
+                return _vm._l(data, function(tr, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: tr } },
+                    [
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-id font-medium" }, [
+                          _vm._v(_vm._s(tr.id))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-nombre" }, [
+                          _vm._v(_vm._s(tr.nombre))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-apellido" }, [
+                          _vm._v(_vm._s(tr.apellido))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-rut" }, [
+                          _vm._v(_vm._s(tr.rut))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-email" }, [
+                          _vm._v(_vm._s(tr.email))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-telefono" }, [
+                          _vm._v(_vm._s(tr.telefono))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-asociado" }, [
+                          _vm._v(
+                            _vm._s(tr.drivers[0].name) +
+                              " " +
+                              _vm._s(tr.drivers[0].apellido)
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                          },
+                          [
                             _c(
-                              "div",
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Editar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-edit-2",
+                                    size: "small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editar(tr)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Eliminar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-trash",
+                                    size: "small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$submitEliminar(tr, indextr)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
                               {
-                                staticClass:
-                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                attrs: { color: "primary", text: "Documentos" }
                               },
                               [
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: { color: "primary", text: "Editar" }
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-file",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Eliminar"
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.initUpload(tr)
                                     }
-                                  },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Documentos"
-                                    }
-                                  },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-file",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.initUpload(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
+                                  }
+                                })
                               ],
                               1
                             )
-                          ])
-                        ],
-                        1
-                      )
-                    }),
+                          ],
+                          1
+                        )
+                      ])
+                    ],
                     1
                   )
-                ]
+                })
               }
             }
           ]),
@@ -49725,7 +49704,7 @@ var render = function() {
                             staticClass: "w-full",
                             attrs: {
                               label: "Tipo de Documento",
-                              name: "tipo_documento"
+                              name: "documentos.tipo_documento"
                             },
                             model: {
                               value: _vm.item.tipo_documento,
@@ -49754,13 +49733,22 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.errors.has("tipo_documento"),
-                                expression: "errors.has('tipo_documento')"
+                                value: _vm.errors.has(
+                                  "documentos.tipo_documento"
+                                ),
+                                expression:
+                                  "errors.has('documentos.tipo_documento')"
                               }
                             ],
                             staticClass: "text-danger text-sm"
                           },
-                          [_vm._v(_vm._s(_vm.errors.first("tipo_documento")))]
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.errors.first("documentos.tipo_documento")
+                              )
+                            )
+                          ]
                         )
                       ],
                       1
@@ -49783,7 +49771,7 @@ var render = function() {
                           attrs: {
                             label: "Fecha de Vencimiento",
                             placeholder: "Fecha de Vencimiento",
-                            name: "fecha_vencimiento"
+                            name: "documentos.fecha_vencimiento"
                           },
                           model: {
                             value: _vm.item.fecha_vencimiento,
@@ -49795,7 +49783,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "text-danger text-sm" }, [
-                          _vm._v(_vm._s(_vm.errors.first("fecha_vencimiento")))
+                          _vm._v(
+                            _vm._s(
+                              _vm.errors.first("documentos.fecha_vencimiento")
+                            )
+                          )
                         ])
                       ],
                       1
@@ -50065,7 +50057,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.asociados")))
+                      _vm._v(_vm._s(_vm.errors.first("asociados")))
                     ])
                   ],
                   1
@@ -50112,13 +50104,13 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.errors.has("movil.empresas"),
-                            expression: "errors.has('movil.empresas')"
+                            value: _vm.errors.has("empresas"),
+                            expression: "errors.has('empresas')"
                           }
                         ],
                         staticClass: "text-danger text-sm"
                       },
-                      [_vm._v(_vm._s(_vm.errors.first("movil.empresas")))]
+                      [_vm._v(_vm._s(_vm.errors.first("empresas")))]
                     )
                   ],
                   1
@@ -50133,17 +50125,15 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
+                          value: "required|numeric",
+                          expression: "'required|numeric'"
                         }
                       ],
                       staticClass: "w-full",
                       attrs: {
                         "label-placeholder": "N° Movil",
                         name: "numero_movil",
-                        danger: _vm.errors.first("movil.numero_movil")
-                          ? true
-                          : false,
+                        danger: _vm.errors.first("numero_movil") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50156,7 +50146,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.numero_movil")))
+                      _vm._v(_vm._s(_vm.errors.first("numero_movil")))
                     ])
                   ],
                   1
@@ -50179,7 +50169,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Tipo Vehículo",
                         name: "tipo",
-                        danger: _vm.errors.first("movil.tipo") ? true : false,
+                        danger: _vm.errors.first("tipo") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50192,7 +50182,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.tipo")))
+                      _vm._v(_vm._s(_vm.errors.first("tipo")))
                     ])
                   ],
                   1
@@ -50215,7 +50205,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Marca",
                         name: "marca",
-                        danger: _vm.errors.first("movil.marca") ? true : false,
+                        danger: _vm.errors.first("marca") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50228,7 +50218,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.marca")))
+                      _vm._v(_vm._s(_vm.errors.first("marca")))
                     ])
                   ],
                   1
@@ -50251,7 +50241,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Modelo",
                         name: "modelo",
-                        danger: _vm.errors.first("movil.modelo") ? true : false,
+                        danger: _vm.errors.first("modelo") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50264,7 +50254,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.modelo")))
+                      _vm._v(_vm._s(_vm.errors.first("modelo")))
                     ])
                   ],
                   1
@@ -50279,15 +50269,15 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
+                          value: "required|numeric",
+                          expression: "'required|numeric'"
                         }
                       ],
                       staticClass: "w-full",
                       attrs: {
                         "label-placeholder": "Año",
                         name: "ano",
-                        danger: _vm.errors.first("movil.ano") ? true : false,
+                        danger: _vm.errors.first("ano") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50300,7 +50290,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.ano")))
+                      _vm._v(_vm._s(_vm.errors.first("ano")))
                     ])
                   ],
                   1
@@ -50315,15 +50305,15 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
+                          value: "required|numeric",
+                          expression: "'required|numeric'"
                         }
                       ],
                       staticClass: "w-full",
                       attrs: {
                         "label-placeholder": "N° Motor",
                         name: "motor",
-                        danger: _vm.errors.first("movil.motor") ? true : false,
+                        danger: _vm.errors.first("motor") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50336,7 +50326,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.motor")))
+                      _vm._v(_vm._s(_vm.errors.first("motor")))
                     ])
                   ],
                   1
@@ -50359,9 +50349,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "N° Patente",
                         name: "patente",
-                        danger: _vm.errors.first("movil.patente")
-                          ? true
-                          : false,
+                        danger: _vm.errors.first("patente") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50374,7 +50362,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.patente")))
+                      _vm._v(_vm._s(_vm.errors.first("patente")))
                     ])
                   ],
                   1
@@ -50397,7 +50385,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Color",
                         name: "color",
-                        danger: _vm.errors.first("movil.color") ? true : false,
+                        danger: _vm.errors.first("color") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50410,7 +50398,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.color")))
+                      _vm._v(_vm._s(_vm.errors.first("color")))
                     ])
                   ],
                   1
@@ -50420,23 +50408,24 @@ var render = function() {
                   "div",
                   { staticClass: "vx-col md:w-1/2 w-full mt-2" },
                   [
-                    _c("vs-input", {
+                    _c("span", { staticClass: " text-sm" }, [
+                      _vm._v("N° Asientos")
+                    ]),
+                    _vm._v(" "),
+                    _c("vs-input-number", {
                       directives: [
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required|numeric",
-                          expression: "'required|numeric'"
+                          value: "required",
+                          expression: "'required'"
                         }
                       ],
-                      staticClass: "w-full",
                       attrs: {
-                        "label-placeholder": "N° Asientos",
                         name: "asientos",
-                        danger: _vm.errors.first("movil.asientos")
-                          ? true
-                          : false,
-                        "val-icon-danger": "clear"
+                        min: "1",
+                        "icon-inc": "expand_less",
+                        "icon-dec": "expand_more"
                       },
                       model: {
                         value: _vm.item.asientos,
@@ -50445,11 +50434,7 @@ var render = function() {
                         },
                         expression: "item.asientos"
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("movil.asientos")))
-                    ])
+                    })
                   ],
                   1
                 ),
@@ -50518,7 +50503,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitActualizar("movil")
+                              return _vm.$submitActualizar()
                             }
                           }
                         },
@@ -50531,7 +50516,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitAgregar("movil")
+                              return _vm.$submitAgregar()
                             }
                           }
                         },
@@ -50576,120 +50561,104 @@ var render = function() {
               key: "default",
               fn: function(ref) {
                 var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr, attrs: { data: tr } },
-                        [
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-movil" }, [
-                              _vm._v(_vm._s(tr.numero_movil))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-patente" }, [
-                              _vm._v(_vm._s(tr.patente))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-tipo" }, [
-                              _vm._v(_vm._s(tr.tipo))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-asientos" }, [
-                              _vm._v(_vm._s(tr.asientos))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
+                return _vm._l(data, function(tr, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: tr } },
+                    [
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-id font-medium" }, [
+                          _vm._v(_vm._s(tr.id))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-movil" }, [
+                          _vm._v(_vm._s(tr.numero_movil))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-patente" }, [
+                          _vm._v(_vm._s(tr.patente))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-tipo" }, [
+                          _vm._v(_vm._s(tr.tipo))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-asientos" }, [
+                          _vm._v(_vm._s(tr.asientos))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                          },
+                          [
                             _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
-                              },
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: { color: "primary", text: "Editar" }
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-edit-2",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Eliminar"
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editar(tr)
                                     }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Eliminar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-trash",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$submitEliminar(tr, indextr)
+                                    }
+                                  }
+                                })
                               ],
                               1
                             )
-                          ])
-                        ],
-                        1
-                      )
-                    }),
+                          ],
+                          1
+                        )
+                      ])
+                    ],
                     1
                   )
-                ]
+                })
               }
             }
           ]),
