@@ -480,7 +480,7 @@ export default {
 
           });
         //Carga Empresa
-          this.$http.get('empresas/empresas')
+          this.$http.get('empresas/listemp')
           .then(function (response) {
             thisIns.empresa_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })
@@ -491,7 +491,7 @@ export default {
           });
 
           //Carga Moviles
-          this.$http.get('/driver/cars')
+          this.$http.get('driver/cars')
           .then(function (response) {
             thisIns.moviles_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
             

@@ -10859,13 +10859,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
         thisIns.$msjError(error);
       }); //Carga Empresa
 
-      this.$http.get('empresas/empresas').then(function (response) {
+      this.$http.get('empresas/listemp').then(function (response) {
         thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$msjError(error);
       }); //Carga Moviles
 
-      this.$http.get('/driver/cars').then(function (response) {
+      this.$http.get('driver/cars').then(function (response) {
         thisIns.moviles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$msjError(error);

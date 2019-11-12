@@ -133,7 +133,7 @@ Route::prefix('v1')->group(function () {
             Route::post('empresas/store', 'EmpresaController@store');
             Route::get('empresas/{id}/edit', 'EmpresaController@edit');
             Route::get('empresas/otros/{id}', 'EmpresaController@otros');
-
+            Route::get('listemp', 'EmpresaController@listemp');
 
        });
     });
@@ -236,23 +236,6 @@ Route::prefix('v1')->group(function () {
             Route::put('sucursal/{id}', 'SucursalController@update');
             Route::post('sucursal/store', 'SucursalController@store');
             Route::get('sucursal/{id}/edit', 'SucursalController@edit');
-
-
-       });
-    });
-
-    //TIPO SERVICIO
-    Route::prefix('tiposervicio')->group(function () {
-        Route::middleware('auth:api')->group(function () {
-            // Tipo Servicio
-            Route::get('tiposervicio', 'TiposervicioController@index');
-            Route::get('tiposervicio/create', 'TiposervicioController@create');
-            Route::get('tiposervicio/{id}', 'TiposervicioController@show');
-            Route::delete('tiposervicio/{id}', 'TiposervicioController@destroy');
-            Route::post('tiposervicio/borrar', 'TiposervicioController@borrar');
-            Route::put('tiposervicio/{id}', 'TiposervicioController@update');
-            Route::post('tiposervicio/store', 'TiposervicioController@store');
-            Route::get('tiposervicio/{id}/edit', 'TiposervicioController@edit');
 
 
        });
