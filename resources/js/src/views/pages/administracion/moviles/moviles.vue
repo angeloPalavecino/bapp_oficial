@@ -329,7 +329,7 @@
         <vs-th sort-key="items-patente">Patente</vs-th>
         <vs-th sort-key="items-tipo">Tipo</vs-th>
         <vs-th sort-key="items-asientos">N° Asientos</vs-th>
-        <vs-th sort-key="items-asociado">Asociado</vs-th>
+        <!-- <vs-th sort-key="items-asociado">Asociado</vs-th> -->
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
@@ -352,9 +352,9 @@
             <vs-td>
                 <p class="items-asientos">{{ tr.asientos }}</p>
             </vs-td>
-            <vs-td>
+            <!-- <vs-td>
                 <p class="items-asociado">{{ tr.drivers[0].name  }} {{ tr.drivers[0].apellido }}</p>
-            </vs-td>
+            </vs-td> -->
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
@@ -381,7 +381,7 @@
                     @click="$submitEliminar(tr, indextr)"
                   ></vs-button>
                 </vx-tooltip>
-                <vx-tooltip color="primary" text="Documentos">
+                <!-- <vx-tooltip color="primary" text="Documentos">
                   <vs-button
                     radius
                     color="primary"
@@ -392,7 +392,7 @@
                     class="ml-3"
                     @click="initUpload(tr)"
                   ></vs-button>
-                </vx-tooltip>
+                </vx-tooltip> -->
               </div>
             </vs-td>
           </vs-tr>
@@ -410,38 +410,38 @@ const dict = {
     tipo: {
       required: "El tipo es requerido"
     },
-   marca: {
+    marca: {
       required: "La marca es requerida"
     },
-    modelo: {
-      required: "El modelo es requerido"
-    },
-    ano: {
-      required: "El ano es requerido"
-    },
-    motor: {
-      required: "El motor es requerido"
-    },
-    patente: {
-      required: "La patente es requerida"
-    },
-    color: {
-      required: "El color es requerido"
-    },
-    asientos: {
-      required: "Los asientos son requerido",
-      numeric: "La cantidad de asientos debe ser numerico"
-    },
-    numero_movil: {
-      required: "Los asientos son requerido",
-      numeric: "La cantidad de asientos debe ser numerico"
-    },
-    asociados: {
-      required: "El asociado es requerido"
-    },
-    empresas: {
-      required: "La empresa es requerida"
-    },
+    // modelo: {
+    //   required: "El modelo es requerido"
+    // },
+    // ano: {
+    //   required: "El ano es requerido"
+    // },
+    // motor: {
+    //   required: "El motor es requerido"
+    // },
+    // patente: {
+    //   required: "La patente es requerida"
+    // },
+    // color: {
+    //   required: "El color es requerido"
+    // },
+    // asientos: {
+    //   required: "Los asientos son requerido",
+    //   numeric: "La cantidad de asientos debe ser numerico"
+    // },
+    // numero_movil: {
+    //   required: "Los asientos son requerido",
+    //   numeric: "La cantidad de asientos debe ser numerico"
+    // },
+    // asociados: {
+    //   required: "El asociado es requerido"
+    // },
+    // empresas: {
+    //   required: "La empresa es requerida"
+    // },
   }
 };
 
@@ -453,7 +453,7 @@ export default {
   },
   data() {
     return {
-      ruta: "/driver/driver/",
+      ruta: "/car/car/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -516,7 +516,7 @@ export default {
         
     //Carga Empresas
       this.$http
-        .get("empresas/empresas")
+        .get("empresas/empresas/")
         .then(function(response) {
           thisIns.empresa_choices = response.data.items;
         })
@@ -540,7 +540,6 @@ export default {
       this.item.ano = item.ano;
       this.item.numero_movil = item.numero_movil;
       this.item.id = item.id;
-      this.item.driver_id = item.driver_id;
       this.item.empresa_id = item.empresa_id;
 
       this.popupActive = true;
