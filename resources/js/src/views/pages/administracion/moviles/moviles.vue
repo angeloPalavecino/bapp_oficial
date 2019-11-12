@@ -107,13 +107,13 @@
                       >
                         <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in driver_choices"  />
                      </vs-select>
-                      <span class="text-danger">{{ errors.first('asociados') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.asociados') }}</span>
                     </div>
                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-select v-model="item.empresa_id" label="Empresa" name="empresas" class="w-full" v-validate="'required'" >
                         <vs-select-item :key="item.id" :value="item.id" :text="item.razon_social" v-for="item in empresa_choices"  />
                       </vs-select>
-                      <span class="text-danger text-sm" v-show="errors.has('empresas')">{{ errors.first('empresas') }}</span>          
+                      <span class="text-danger text-sm" v-show="errors.has('movil.empresas')">{{ errors.first('movil.empresas') }}</span>          
                     </div>
                    <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -122,10 +122,10 @@
                         class="w-full"
                         name="numero_movil"
                         v-validate="'required'"
-                        :danger="(errors.first('numero_movil') ? true : false)"
+                        :danger="(errors.first('movil.numero_movil') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('numero_movil') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.numero_movil') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -134,10 +134,10 @@
                         class="w-full"
                         name="tipo"
                         v-validate="'required'"
-                        :danger="(errors.first('tipo') ? true : false)"
+                        :danger="(errors.first('movil.tipo') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('tipo') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.tipo') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -146,10 +146,10 @@
                         class="w-full"
                         name="marca"
                         v-validate="'required'"
-                        :danger="(errors.first('marca') ? true : false)"
+                        :danger="(errors.first('movil.marca') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('marca') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.marca') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -158,10 +158,10 @@
                         class="w-full"
                         name="modelo"
                         v-validate="'required'"
-                        :danger="(errors.first('modelo') ? true : false)"
+                        :danger="(errors.first('movil.modelo') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('modelo') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.modelo') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -170,10 +170,10 @@
                         class="w-full"
                         name="ano"
                         v-validate="'required'"
-                        :danger="(errors.first('ano') ? true : false)"
+                        :danger="(errors.first('movil.ano') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('ano') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.ano') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -182,10 +182,10 @@
                         class="w-full"
                         name="motor"
                         v-validate="'required'"
-                        :danger="(errors.first('motor') ? true : false)"
+                        :danger="(errors.first('movil.motor') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('motor') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.motor') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -194,10 +194,10 @@
                         class="w-full"
                         name="patente"
                         v-validate="'required'"
-                        :danger="(errors.first('patente') ? true : false)"
+                        :danger="(errors.first('movil.patente') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('patente') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.patente') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -206,10 +206,10 @@
                         class="w-full"
                         name="color"
                         v-validate="'required'"
-                        :danger="(errors.first('color') ? true : false)"
+                        :danger="(errors.first('movil.color') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('color') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.color') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -218,10 +218,10 @@
                         class="w-full"
                         name="asientos"
                         v-validate="'required|numeric'"
-                        :danger="(errors.first('asientos') ? true : false)"
+                        :danger="(errors.first('movil.asientos') ? true : false)"
                         val-icon-danger="clear"
                       />
-                      <span class="text-danger">{{ errors.first('asientos') }}</span>
+                      <span class="text-danger">{{ errors.first('movil.asientos') }}</span>
                     </div>
                    <div class="vx-col md:w-1/6 w-full mt-5">
                     <vs-radio color="success" class="mt-5"  v-model="item.habilitado" vs-value="1" >Activo</vs-radio>
@@ -234,8 +234,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR MOVIL</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR MOVIL</vs-button>
+              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar('movil')" >ACTUALIZAR MOVIL</vs-button>
+              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar('movil')">AGREGAR MOVIL</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>

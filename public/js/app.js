@@ -50065,7 +50065,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("asociados")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.asociados")))
                     ])
                   ],
                   1
@@ -50112,13 +50112,13 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.errors.has("empresas"),
-                            expression: "errors.has('empresas')"
+                            value: _vm.errors.has("movil.empresas"),
+                            expression: "errors.has('movil.empresas')"
                           }
                         ],
                         staticClass: "text-danger text-sm"
                       },
-                      [_vm._v(_vm._s(_vm.errors.first("empresas")))]
+                      [_vm._v(_vm._s(_vm.errors.first("movil.empresas")))]
                     )
                   ],
                   1
@@ -50141,7 +50141,9 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "N° Movil",
                         name: "numero_movil",
-                        danger: _vm.errors.first("numero_movil") ? true : false,
+                        danger: _vm.errors.first("movil.numero_movil")
+                          ? true
+                          : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50154,7 +50156,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("numero_movil")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.numero_movil")))
                     ])
                   ],
                   1
@@ -50177,7 +50179,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Tipo Vehículo",
                         name: "tipo",
-                        danger: _vm.errors.first("tipo") ? true : false,
+                        danger: _vm.errors.first("movil.tipo") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50190,7 +50192,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("tipo")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.tipo")))
                     ])
                   ],
                   1
@@ -50213,7 +50215,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Marca",
                         name: "marca",
-                        danger: _vm.errors.first("marca") ? true : false,
+                        danger: _vm.errors.first("movil.marca") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50226,7 +50228,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("marca")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.marca")))
                     ])
                   ],
                   1
@@ -50249,7 +50251,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Modelo",
                         name: "modelo",
-                        danger: _vm.errors.first("modelo") ? true : false,
+                        danger: _vm.errors.first("movil.modelo") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50262,7 +50264,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("modelo")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.modelo")))
                     ])
                   ],
                   1
@@ -50285,7 +50287,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Año",
                         name: "ano",
-                        danger: _vm.errors.first("ano") ? true : false,
+                        danger: _vm.errors.first("movil.ano") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50298,7 +50300,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("ano")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.ano")))
                     ])
                   ],
                   1
@@ -50321,7 +50323,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "N° Motor",
                         name: "motor",
-                        danger: _vm.errors.first("motor") ? true : false,
+                        danger: _vm.errors.first("movil.motor") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50334,7 +50336,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("motor")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.motor")))
                     ])
                   ],
                   1
@@ -50357,7 +50359,9 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "N° Patente",
                         name: "patente",
-                        danger: _vm.errors.first("patente") ? true : false,
+                        danger: _vm.errors.first("movil.patente")
+                          ? true
+                          : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50370,7 +50374,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("patente")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.patente")))
                     ])
                   ],
                   1
@@ -50393,7 +50397,7 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "Color",
                         name: "color",
-                        danger: _vm.errors.first("color") ? true : false,
+                        danger: _vm.errors.first("movil.color") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50406,7 +50410,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("color")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.color")))
                     ])
                   ],
                   1
@@ -50429,7 +50433,9 @@ var render = function() {
                       attrs: {
                         "label-placeholder": "N° Asientos",
                         name: "asientos",
-                        danger: _vm.errors.first("asientos") ? true : false,
+                        danger: _vm.errors.first("movil.asientos")
+                          ? true
+                          : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
@@ -50442,7 +50448,7 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("asientos")))
+                      _vm._v(_vm._s(_vm.errors.first("movil.asientos")))
                     ])
                   ],
                   1
@@ -50512,7 +50518,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitActualizar()
+                              return _vm.$submitActualizar("movil")
                             }
                           }
                         },
@@ -50525,7 +50531,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitAgregar()
+                              return _vm.$submitAgregar("movil")
                             }
                           }
                         },
