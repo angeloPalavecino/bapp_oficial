@@ -489,17 +489,5 @@ class DriverController extends Controller
                 'items' => $cars->toArray(),
             ], 200);    
     }
-    //Moviles para vista por moviles
-    public function moviles()
-    {
-       
-        $cars = Car::all();
-
-        return response()->json(
-            [
-                'status' => 'success',
-                'items' => $cars->toArray(),
-            ], 200);    
-    }
 
 }
