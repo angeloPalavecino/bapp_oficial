@@ -480,7 +480,7 @@ export default {
 
           });
         //Carga Empresa
-          this.$http.get('users/empresas')
+          this.$http.get('empresas/empresas')
           .then(function (response) {
             thisIns.empresa_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
           })

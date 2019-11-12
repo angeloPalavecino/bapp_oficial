@@ -3426,11 +3426,29 @@ __webpack_require__.r(__webpack_exports__);
     i18n: "MapIcon"
   }]
 }, {
-  url: "/pages/administracion/moviles/moviles",
+  url: null,
   name: "Config. Baptner",
-  slug: "moviles",
   icon: "TruckIcon",
-  i18n: "TruckIcon"
+  i18n: "TruckIcon",
+  submenu: [{
+    url: "/pages/administracion/moviles/asociados",
+    name: "Asociados",
+    slug: "moviles",
+    icon: "TruckIcon",
+    i18n: "TruckIcon"
+  }, {
+    url: "/pages/administracion/moviles/moviles",
+    name: "Moviles",
+    slug: "moviles",
+    icon: "TruckIcon",
+    i18n: "TruckIcon"
+  }, {
+    url: "/pages/administracion/moviles/conductores",
+    name: "Conductores",
+    slug: "conductores",
+    icon: "TruckIcon",
+    i18n: "TruckIcon"
+  }]
 }, {
   url: "/pages/administracion/empresas/empresas",
   name: "Config. Cuenta",

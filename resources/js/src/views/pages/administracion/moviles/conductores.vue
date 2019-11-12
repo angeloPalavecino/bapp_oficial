@@ -5,14 +5,14 @@
     <vs-popup
       class="holamundo"
       ref="modal"
-      :title="(modoEditar == false ? 'AGREGAR MOVIL' : 'ACTUALIZAR MOVIL')"
+      :title="(modoEditar == false ? 'AGREGAR CONDUCTOR' : 'ACTUALIZAR CONDUCTOR')"
       :active.sync="popupActive"
       @close="$close($event)"
     >
       <div class="mt-5">
           <div class="p-5">
               <div>
-                <vs-divider color="primary"><h5>Moviles</h5></vs-divider>
+                <vs-divider color="primary"><h5>Conductores</h5></vs-divider>
               </div>
             
                <div class="vx-row">
@@ -152,8 +152,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR MOVIL</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR MOVIL</vs-button>
+              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR CONDUCTOR</vs-button>
+              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR CONDUCTOR</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -207,7 +207,7 @@
             <!-- @click="addNewDataSidebar = true" -->
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
             <vx-tooltip color="primary" text="Agregar conductor">
-              <span class="ml-2 text-base text-primary">Agregar Movil</span>
+              <span class="ml-2 text-base text-primary">Agregar Conductor</span>
             </vx-tooltip>
           </div>
 

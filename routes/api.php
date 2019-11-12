@@ -274,6 +274,7 @@ Route::prefix('v1')->group(function () {
             Route::get('driver/documents/{id}', 'DriverController@documents');
             Route::get('driver/document/{id}', 'DriverController@document');
             Route::get('cars', 'DriverController@cars');
+            Route::get('moviles', 'DriverController@moviles');
         });
     });
 
