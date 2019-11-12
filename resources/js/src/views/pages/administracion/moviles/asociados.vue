@@ -250,8 +250,8 @@
         <vs-th sort-key="items-apellido">Apellido</vs-th>
         <vs-th sort-key="items-rut">Rut</vs-th>
         <vs-th sort-key="items-telefono">Telefono</vs-th>
-        <vs-th sort-key="items-moviles">Moviles</vs-th>
-        <vs-th sort-key="items-conductores">Conductores</vs-th>
+        <!-- <vs-th sort-key="items-moviles">Moviles</vs-th>
+        <vs-th sort-key="items-conductores">Conductores</vs-th> -->
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
@@ -262,10 +262,10 @@
               <p class="items-id font-medium">{{ tr.id }}</p>
             </vs-td>
             <vs-td>
-              <p class="items-nombre">{{ tr.nombre }}</p>
+              <p class="items-nombre">{{ tr.name }}</p>
             </vs-td>
             <vs-td>
-              <p class="items-apellido">{{ tr.apellido }}</p>
+              <p class="items-apellido">{{ tr.lastname }}</p>
             </vs-td>
             <vs-td>
               <p class="items-rut">{{ tr.rut }}</p>
@@ -273,12 +273,12 @@
              <vs-td>
                 <p class="items-telefono">{{ tr.telefono }}</p>
             </vs-td>
-            <vs-td>
+            <!-- <vs-td>
                 <vs-chip :color="getStatusColorMoviles(tr.cars[0].length)" class="items-moviles">{{ tr.cars[0].length  }}</vs-chip>
             </vs-td>
              <vs-td>
                 <vs-chip :color="getStatusColorConductores(tr.drivers[0].length)" class="items-conductores">{{ tr.drivers[0].length  }}</vs-chip>
-            </vs-td>
+            </vs-td> -->
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
@@ -369,7 +369,7 @@ export default {
   },
   data() {
     return {
-      ruta: "/driver/moviles/",
+      ruta: "/driver/driver/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -382,6 +382,7 @@ export default {
       item: {
         habilitado: 1,
         conductor: false,
+        dueno: true,
       },
       modoEditar: false,
       exportData: [],
@@ -410,7 +411,7 @@ export default {
      
       this.initValues();
       this.modoEditar = true;
-
+      this.item.id = item.id;
       this.item.email = item.email;
       this.item.name = item.name;
       this.item.lastname = item.lastname;
@@ -423,6 +424,7 @@ export default {
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
       this.item.conductor = item.conductor;
+      this.item.dueno = item.dueno;
 
       this.popupActive = true;
     },
@@ -431,6 +433,7 @@ export default {
       this.item = {
         habilitado: 1,
         conductor: false,
+        dueno: true
       };
       this.errors.clear();
       //this.modoEditar = false;

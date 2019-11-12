@@ -3,9 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Car;
+
 
 class CarController extends Controller
 {
+    
+    public function validatorCar(array $data){ 
+
+        return Validator::make($data, [
+            'tipo' => 'required',
+            'marca' => 'required',
+            'modelo' => 'required',
+            'ano' => 'required|numeric',
+            'motor' => 'required', 
+            'patente' => 'required',
+            'habilitado' => 'required',
+            'color' => 'required',
+            'asientos' => 'required|numeric',
+         ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +31,12 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        $car = Car::all();
+       return response()->json(
+        [
+            'status' => 'success',
+            'items' => $car->toArray(),
+        ], 200); 
     }
 
     /**
@@ -34,7 +57,8 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd(121212);
+        dd($request->all());
     }
 
     /**

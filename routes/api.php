@@ -56,7 +56,6 @@ Route::prefix('v1')->group(function () {
             Route::get('users/{id}/edit', 'UserController@edit');
             Route::get('perfil', 'UserController@perfil');
             Route::post('cambiarpass', 'UserController@cambiarpass');
-            Route::get('empresas', 'UserController@empresas');
             Route::get('cars/{id}', 'UserController@cars');
             
         });
@@ -241,6 +240,26 @@ Route::prefix('v1')->group(function () {
        });
     });
 
+<<<<<<< HEAD
+=======
+    //TIPO SERVICIO
+    Route::prefix('tiposervicio')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+            // Tipo Servicio
+            Route::get('tiposervicio', 'TiposervicioController@index');
+            Route::get('tiposervicio/create', 'TiposervicioController@create');
+            Route::get('tiposervicio/{id}', 'TiposervicioController@show');
+            Route::delete('tiposervicio/{id}', 'TiposervicioController@destroy');
+            Route::post('tiposervicio/borrar', 'TiposervicioController@borrar');
+            Route::put('tiposervicio/{id}', 'TiposervicioController@update');
+            Route::post('tiposervicio/store', 'TiposervicioController@store');
+            Route::get('tiposervicio/{id}/edit', 'TiposervicioController@edit');
+
+
+       });
+    }); 
+
+>>>>>>> fec23dba699bbbd11b6879d7aad801501cf77241
     //MOVILES
     Route::prefix('driver')->group(function () {
         Route::middleware('auth:api')->group(function () {
@@ -258,6 +277,26 @@ Route::prefix('v1')->group(function () {
             Route::get('driver/document/{id}', 'DriverController@document');
             Route::get('cars', 'DriverController@cars');
             Route::get('moviles', 'DriverController@moviles');
+        });
+    });
+
+    //CAR
+    Route::prefix('car')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+        // CAR
+            Route::get('car', 'CarController@index');
+            Route::get('car/create', 'CarController@create');
+            Route::get('car/{id}', 'CarController@show');
+            Route::delete('car/{id}', 'CarController@destroy');
+            Route::post('car/borrar', 'CarController@borrar');
+            Route::put('car/{id}', 'CarController@update');
+            Route::post('car/store', 'CarController@store');
+            Route::get('car/{id}/edit', 'CarController@edit');
+            // Route::post('car/upload', 'CarController@upload');
+            // Route::get('car/documents/{id}', 'CarController@documents');
+            // Route::get('car/document/{id}', 'CarController@document');
+            // Route::get('cars', 'CarController@cars');
+            // Route::get('moviles', 'DriverController@moviles');
         });
     });
 
