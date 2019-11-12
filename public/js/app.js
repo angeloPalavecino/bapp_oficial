@@ -6400,10 +6400,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
  // For custom error message
@@ -47306,7 +47302,44 @@ var render = function() {
                                               expression: "driver.conductor"
                                             }
                                           },
-                                          [_vm._v("Conductor Dueño")]
+                                          [_vm._v("Dueño")]
+                                        )
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c("li", { staticClass: "op-block" }, [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.driver.conductor == 0
+                                            ? "No"
+                                            : "Si"
+                                        )
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("ul", { staticClass: "demo-alignment" }, [
+                                    _c(
+                                      "li",
+                                      [
+                                        _c(
+                                          "vs-checkbox",
+                                          {
+                                            attrs: { "vs-value": "0" },
+                                            model: {
+                                              value: _vm.driver.conductor,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.driver,
+                                                  "conductor",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "driver.conductor"
+                                            }
+                                          },
+                                          [_vm._v("Conductor")]
                                         )
                                       ],
                                       1
@@ -47604,7 +47637,7 @@ var render = function() {
                           _c(
                             "span",
                             { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Dueño")]
+                            [_vm._v("Agregar Dueño / Conductor")]
                           )
                         ]
                       )
@@ -47638,39 +47671,6 @@ var render = function() {
                             "span",
                             { staticClass: "ml-2 text-base text-primary" },
                             [_vm._v("Agregar Movil")]
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
-                        {
-                          attrs: { color: "primary", text: "Agregar conductor" }
-                        },
-                        [
-                          _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Conductor")]
                           )
                         ]
                       )

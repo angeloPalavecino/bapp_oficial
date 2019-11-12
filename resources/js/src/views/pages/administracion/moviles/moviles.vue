@@ -298,7 +298,13 @@
                 <div class="vx-col md:w-1/2 w-full mt-5">
                   <ul class="demo-alignment">
                     <li>
-                      <vs-checkbox v-model="driver.conductor" vs-value="0">Conductor Dueño</vs-checkbox>
+                      <vs-checkbox v-model="driver.conductor" vs-value="0">Dueño</vs-checkbox>
+                    </li>
+                    <li class="op-block">{{ driver.conductor==0?&apos;No&apos;:"Si" }}</li>
+                  </ul>
+                  <ul class="demo-alignment">
+                    <li>
+                      <vs-checkbox v-model="driver.conductor" vs-value="0">Conductor</vs-checkbox>
                     </li>
                     <li class="op-block">{{ driver.conductor==0?&apos;No&apos;:"Si" }}</li>
                   </ul>
@@ -355,7 +361,7 @@
             <!-- @click="addNewDataSidebar = true" -->
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
             <vx-tooltip color="primary" text="Agregar conductor">
-              <span class="ml-2 text-base text-primary">Agregar Dueño</span>
+              <span class="ml-2 text-base text-primary">Agregar Dueño / Conductor</span>
             </vx-tooltip>
           </div>
           <div
@@ -366,16 +372,6 @@
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
             <vx-tooltip color="primary" text="Agregar conductor">
               <span class="ml-2 text-base text-primary">Agregar Movil</span>
-            </vx-tooltip>
-          </div>
-          <div
-            class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
-            @click="$agregarPopUp()"
-          >
-            <!-- @click="addNewDataSidebar = true" -->
-            <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <vx-tooltip color="primary" text="Agregar conductor">
-              <span class="ml-2 text-base text-primary">Agregar Conductor</span>
             </vx-tooltip>
           </div>
         </div>
@@ -605,7 +601,7 @@ export default {
       },
       car: {},
       user: {
-        habilitado: 1,
+        habilitado: 1
       },
       modoEditar: false,
       exportData: [],
@@ -681,8 +677,7 @@ export default {
           thisIns.roles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-           
-              thisIns.$msjError(error);  
+          thisIns.$msjError(error);
         });
       //Carga Empresa
       this.$http
@@ -691,8 +686,7 @@ export default {
           thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
         .catch(function(error) {
-          
-              thisIns.$msjError(error);           
+          thisIns.$msjError(error);
 
           thisIns.$vs.notify({
             title: "Error",
@@ -710,8 +704,7 @@ export default {
           thisIns.tipodocumentos_choices = response.data.items;
         })
         .catch(function(error) {
-           
-              thisIns.$msjError(error);  
+          thisIns.$msjError(error);
 
           thisIns.$vs.notify({
             title: "Error",
@@ -734,14 +727,12 @@ export default {
       this.user.habilitado = item.habilitado;
       this.user.empresa_id = item.empresa_id;
 
-
       this.driver.ciudad = item.ciudad;
       this.driver.comuna = item.comuna;
       this.driver.direccion = item.direccion;
       this.driver.numeracion = item.numeracion;
       this.driver.clase = item.clase;
       this.driver.conductor = item.conductor;
-
 
       this.car.tipo = item.cars[0].tipo;
       this.car.asientos = item.cars[0].asientos;
@@ -762,7 +753,7 @@ export default {
       this.item = {};
       this.car = {};
       this.user = {
-        habilitado: 1,
+        habilitado: 1
       };
       this.driver = {};
       this.errors.clear();
