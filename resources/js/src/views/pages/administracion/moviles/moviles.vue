@@ -1,5 +1,91 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
+  
+      <!-- DOCUMENTOS -->
+          <vs-popup class="holamundo"  title="Documentos Moviles" :active.sync="popupDocumento"
+          @close="$close($event)">   
+         
+          <vs-tabs color="primary" ref="tabdocs" >
+          <vs-tab label="Adjuntar"  icon-pack="feather" icon="icon-upload">
+    
+         
+          <div class="vx-row">
+
+              
+              <div class="vx-col md:w-1/2 w-full mt-2">
+                <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="tipo_documento" class="w-full"  >
+                  <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
+                </vs-select>
+                <span class="text-danger text-sm" v-show="errors.has('tipo_documento')">{{ errors.first('tipo_documento') }}</span> 
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-3">
+                <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
+                <span class="text-danger text-sm" >{{ errors.first('fecha_vencimiento') }}</span>                         
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+               <input
+                  label="Documento"
+                  type="file"
+                  class="w-full"
+                  name="file"
+                  id="file"
+                  @change = "uploadData"  
+                  ref="fileupload"
+                  accept="application/pdf,application/msword,application/image/png,image/jpeg"           
+                />
+                <span class="text-sm" >Fomatos permitidos: JPG - PNG - DOC - PDF</span>
+                <br/>
+                <span class="text-sm" ><i>Tamaño maximo 2 MB</i></span>
+              
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+                <vs-button @click="upload()" color="primary" type="filled">Adjuntar</vs-button>
+              </div>
+            </div>  
+            <div class="vx-row">
+            </div>
+          </vs-tab>
+          <vs-tab label="Documentos" icon-pack="feather" icon="icon-file-text">
+
+            <vs-table max-items="4" pagination  :data="documentos_choices" ref="tabladoc">
+                  <template slot="header">
+                    <h3>
+                      Documentos Subidos
+                    </h3>
+                  </template>
+                  <template slot="thead">
+                    <vs-th colspan="2">
+                       Documento
+                    </vs-th>
+                    <vs-th>
+                       Vencimiento
+                    </vs-th>
+                    <vs-th>
+                      Descarga
+                    </vs-th>                                     
+                  </template>
+
+                  <template slot-scope="{data}">
+                    <vs-tr :key="indextrdoc" v-for="(trdoc, indextrdoc) in data" >
+                      <vs-td colspan="2">
+                        {{ trdoc.documents[0].name.split(/[.,\/-]/)[1] }}
+                      </vs-td>
+                      <vs-td>
+                        <vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
+                      </vs-td>                  
+                      <vs-td :data="data[indextrdoc].url">
+                        <a style="cursor: pointer;" rel="nofollow" @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)">Descargar</a>                        
+                      </vs-td>
+
+                    </vs-tr>
+                  </template>
+                </vs-table>
+
+          </vs-tab>
+        </vs-tabs>
+          </vs-popup>
+          <!-- FIN DOCUMENTOS -->
+
 
     <!-- POP UP -->
     <vs-popup
@@ -247,6 +333,7 @@
         <vs-th sort-key="items-patente">Patente</vs-th>
         <vs-th sort-key="items-tipo">Tipo</vs-th>
         <vs-th sort-key="items-asientos">N° Asientos</vs-th>
+        <vs-th sort-key="items-asociado">Asociado</vs-th>
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
@@ -268,6 +355,9 @@
             </vs-td>
             <vs-td>
                 <p class="items-asientos">{{ tr.asientos }}</p>
+            </vs-td>
+            <vs-td>
+                <p class="items-asociado">{{ tr.drivers[0].name  }} {{ tr.drivers[0].apellido }}</p>
             </vs-td>
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
@@ -370,12 +460,16 @@ export default {
       ite: "",
       ind: "",
       popupActive: false,
+      popupDocumento: false,  
       item: {
         habilitado: 1,
       },
       modoEditar: false,
       exportData: [],
       driver_choices: [],
+      tipodocumentos_choices: [],      
+      aux: 0,
+      documentos_choices: [],
     };
   },
   computed: {
@@ -387,8 +481,15 @@ export default {
     }
   },
   methods: {
+    getStatusColor(fecha) {
+      var factual = new Date();
+      var fvencimiento = new Date(fecha);  
+      if (fvencimiento.getTime() >= factual.getTime()) return "success";
+      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
+      return "danger";
+    },
      refrescaOtrosDatos() {
-      //Carga Conductores
+      //Carga Asociados
       const thisIns  = this;
       this.$http
         .get("driver/driver")
@@ -399,6 +500,15 @@ export default {
           
          thisIns.$msjError(error);           
         });
+      //Carga Tipos de documentos
+      this.$http
+        .get("tipodocumentos/tipodocumentos")
+        .then(function(response) {
+          thisIns.tipodocumentos_choices = response.data.items;
+        })
+        .catch(function(error) {
+          thisIns.$msjError(error);    
+        });  
 
     },
     editar(item) {
@@ -428,6 +538,136 @@ export default {
       this.errors.clear();
       //this.modoEditar = false;
     },
+    initUpload(item) {   
+      const thisIns = this; 
+
+      this.documentos_choices = [];
+      
+      this.item.tipo_documento = "";
+      this.item.fecha_vencimiento = ""; 
+      this.item.file = ""; 
+      this.item.filename = ""; 
+      
+      //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+      let myElement = document.querySelector(".line-vs-tabs");
+      myElement.style.width = "95px";
+      myElement.style.left = "0px";
+
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+
+      this.errors.clear(); 
+      
+      this.$http.get('driver/driver/documents/' + item.id)
+          .then(function (response) {
+            thisIns.documentos_choices = response.data.items;            
+          })
+          .catch(function (error) {
+            thisIns.$vs.notify({
+              title:'Error',
+              text: "Error al traer los documentos",
+              color:'danger',
+              iconPack: 'feather',
+              icon:'icon-alert-circle'})
+      });      
+
+       setTimeout(() => {
+                
+                this.popupDocumento = true;
+                this.dataItem = item;   
+                thisIns.$refs.fileupload.value = '';
+
+                }, 300);
+
+
+      
+    },
+
+    upload($name = null){
+      $name = $name == null ? true : $name;
+       this.$validator.validateAll($name).then(result =>{
+        if (result) {       
+          
+          const formData = new FormData();     
+          formData.append('file', (this.item.file));
+          formData.append('tipo_documento_id', (this.item.tipo_documento.split("|")[0])); 
+          formData.append('tipo_documento', (this.item.tipo_documento.split("|")[1])); 
+          formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
+          formData.append('driver_id', (this.dataItem.cars[0].driver_id));
+          formData.append('rut', (this.dataItem.rut));
+
+          this.$upload(formData);
+                     
+        } else {
+        }
+      })
+      
+    },
+    uploadData(e) {
+      
+      const tipo = e.target.files[0].type;
+      const size = e.target.files[0].size;
+     if(tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || 
+      tipo == "application/pdf" ){
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        if(size <= 2000000){ //2097152
+            
+            this.item.file = e.target.files[0];
+            this.item.filename = e.target.files[0].name;
+            
+            }else{
+              this.$refs.fileupload.value = ''
+              //const input = this.$refs.fileupload;
+              //input.type = 'text';
+              //input.type = 'file';
+
+            this.$vs.notify({
+                title: "Error",
+                text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
+                color: "danger",
+                iconPack: "feather",
+                icon: "icon-alert-circle"
+            });
+
+
+          }
+      }else{
+          this.$refs.fileupload.value = '';
+          //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
+
+          this.$vs.notify({
+            title: "Error",
+            text: "El archivo no tiene el formato correcto",
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+
+      }
+    },
+    downloadDocument(id, name){
+      //var download = await this.$http.get('driver/driver/document/' + id);
+      //console.log(download);
+      this.$http.get('driver/driver/document/'+id, {responseType: 'blob'}).then(response => {
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(response.data);
+            a.href = url;
+            a.download = name;
+            document.body.append(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+      }, response => {
+        console.warn('error from download_contract');
+        console.log(response);
+        // Manage errors
+        }
+      );
+    }, 
   },
   created() {
     this.$refrescaTabla();

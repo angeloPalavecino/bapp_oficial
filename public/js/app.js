@@ -7105,38 +7105,136 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // For custom error message
 
 var dict = {
   custom: {
-    tipo: {
-      required: "El tipo es requerido"
+    name: {
+      required: "El nombre es requerido",
+      alpha: "El nombre solo puede contener letras"
     },
-    marca: {
-      required: "La marca es requerida"
+    lastname: {
+      required: "El apellido es requerido",
+      alpha: "El apellido solo puede contener letras"
     },
-    modelo: {
-      required: "El modelo es requerido"
+    rut: {
+      required: "El rut es requerido",
+      alpha_dash: "Ingrese un rut valido"
     },
-    ano: {
-      required: "El ano es requerido"
+    ciudad: {
+      required: "La ciudad es requerida",
+      email: "Ingrese una ciudad valida"
     },
-    motor: {
-      required: "El motor es requerido"
+    comuna: {
+      required: "La comuna es requerida",
+      email: "Ingrese una comuna valida"
     },
-    patente: {
-      required: "La patente es requerida"
+    direccion: {
+      required: "La dirección es requerida",
+      email: "Ingrese una dirección valida"
     },
-    color: {
-      required: "El color es requerido"
+    numeracion: {
+      required: "La numeración es requerida",
+      numeric: "Ingrese una numeración valida"
     },
-    asientos: {
-      required: "Los asientos son requerido",
-      numeric: "La cantidad de asientos debe ser numerico"
+    email: {
+      required: "El email es requerido",
+      email: "Ingrese un emil valido"
     },
-    numero_movil: {
-      required: "Los asientos son requerido",
-      numeric: "La cantidad de asientos debe ser numerico"
+    telefono: {
+      required: "El telefono es requerido",
+      numeric: "El numero de telefono debe ser valido"
+    },
+    clase: {
+      required: "La clase es requerida"
     }
   }
 }; // register custom messages
@@ -7155,12 +7253,16 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       ite: "",
       ind: "",
       popupActive: false,
+      popupDocumento: false,
       item: {
         habilitado: 1
       },
       modoEditar: false,
       exportData: [],
-      driver_choices: []
+      driver_choices: [],
+      tipodocumentos_choices: [],
+      aux: 0,
+      documentos_choices: []
     };
   },
   computed: {
@@ -7173,11 +7275,24 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     }
   },
   methods: {
+    getStatusColor: function getStatusColor(fecha) {
+      var factual = new Date();
+      var fvencimiento = new Date(fecha);
+      if (fvencimiento.getTime() >= factual.getTime()) return "success";
+      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
+      return "danger";
+    },
     refrescaOtrosDatos: function refrescaOtrosDatos() {
-      //Carga Conductores
+      //Carga Asociados
       var thisIns = this;
       this.$http.get("driver/driver").then(function (response) {
         thisIns.driver_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
+      })["catch"](function (error) {
+        thisIns.$msjError(error);
+      }); //Carga Tipos de documentos
+
+      this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
+        thisIns.tipodocumentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$msjError(error);
       });
@@ -7185,16 +7300,17 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     editar: function editar(item) {
       this.initValues();
       this.modoEditar = true;
-      this.item.tipo = item.tipo;
-      this.item.asientos = item.asientos;
-      this.item.color = item.color;
-      this.item.marca = item.marca;
-      this.item.modelo = item.modelo;
-      this.item.motor = item.motor;
-      this.item.patente = item.patente;
-      this.item.ano = item.ano;
-      this.item.numero_movil = item.numero_movil;
-      this.item.id = item.id;
+      this.item.email = item.email;
+      this.item.name = item.name;
+      this.item.lastname = item.lastname;
+      this.item.rut = item.rut;
+      this.item.telefono = item.telefono;
+      this.item.habilitado = item.habilitado;
+      this.item.ciudad = item.ciudad;
+      this.item.comuna = item.comuna;
+      this.item.direccion = item.direccion;
+      this.item.numeracion = item.numeracion;
+      this.item.clase = item.clase;
       this.item.driver_id = item.driver_id;
       this.popupActive = true;
     },
@@ -7204,6 +7320,116 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         habilitado: 1
       };
       this.errors.clear(); //this.modoEditar = false;
+    },
+    initUpload: function initUpload(item) {
+      var _this = this;
+
+      var thisIns = this;
+      this.documentos_choices = [];
+      this.item.tipo_documento = "";
+      this.item.fecha_vencimiento = "";
+      this.item.file = "";
+      this.item.filename = ""; //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+
+      var myElement = document.querySelector(".line-vs-tabs");
+      myElement.style.width = "95px";
+      myElement.style.left = "0px";
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+      this.errors.clear();
+      this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
+        thisIns.documentos_choices = response.data.items;
+      })["catch"](function (error) {
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: "Error al traer los documentos",
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+      setTimeout(function () {
+        _this.popupDocumento = true;
+        _this.dataItem = item;
+        thisIns.$refs.fileupload.value = '';
+      }, 300);
+    },
+    upload: function upload() {
+      var _this2 = this;
+
+      var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      $name = $name == null ? true : $name;
+      this.$validator.validateAll($name).then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append('file', _this2.item.file);
+          formData.append('tipo_documento_id', _this2.item.tipo_documento.split("|")[0]);
+          formData.append('tipo_documento', _this2.item.tipo_documento.split("|")[1]);
+          formData.append('fecha_vencimiento', _this2.item.fecha_vencimiento);
+          formData.append('driver_id', _this2.dataItem.cars[0].driver_id);
+          formData.append('rut', _this2.dataItem.rut);
+
+          _this2.$upload(formData);
+        } else {}
+      });
+    },
+    uploadData: function uploadData(e) {
+      var tipo = e.target.files[0].type;
+      var size = e.target.files[0].size;
+
+      if (tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || tipo == "application/pdf") {
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        if (size <= 2000000) {
+          //2097152
+          this.item.file = e.target.files[0];
+          this.item.filename = e.target.files[0].name;
+        } else {
+          this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
+
+          this.$vs.notify({
+            title: "Error",
+            text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+        }
+      } else {
+        this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+        //input.type = 'text';
+        //input.type = 'file';
+
+        this.$vs.notify({
+          title: "Error",
+          text: "El archivo no tiene el formato correcto",
+          color: "danger",
+          iconPack: "feather",
+          icon: "icon-alert-circle"
+        });
+      }
+    },
+    downloadDocument: function downloadDocument(id, name) {
+      //var download = await this.$http.get('driver/driver/document/' + id);
+      //console.log(download);
+      this.$http.get('driver/driver/document/' + id, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var a = document.createElement('a');
+        var url = window.URL.createObjectURL(response.data);
+        a.href = url;
+        a.download = name;
+        document.body.append(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }, function (response) {
+        console.warn('error from download_contract');
+        console.log(response); // Manage errors
+      });
     }
   },
   created: function created() {
@@ -7545,6 +7771,96 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // For custom error message
 
 var dict = {
@@ -7595,12 +7911,16 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       ite: "",
       ind: "",
       popupActive: false,
+      popupDocumento: false,
       item: {
         habilitado: 1
       },
       modoEditar: false,
       exportData: [],
-      driver_choices: []
+      driver_choices: [],
+      tipodocumentos_choices: [],
+      aux: 0,
+      documentos_choices: []
     };
   },
   computed: {
@@ -7613,11 +7933,24 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     }
   },
   methods: {
+    getStatusColor: function getStatusColor(fecha) {
+      var factual = new Date();
+      var fvencimiento = new Date(fecha);
+      if (fvencimiento.getTime() >= factual.getTime()) return "success";
+      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
+      return "danger";
+    },
     refrescaOtrosDatos: function refrescaOtrosDatos() {
-      //Carga Conductores
+      //Carga Asociados
       var thisIns = this;
       this.$http.get("driver/driver").then(function (response) {
         thisIns.driver_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
+      })["catch"](function (error) {
+        thisIns.$msjError(error);
+      }); //Carga Tipos de documentos
+
+      this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
+        thisIns.tipodocumentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$msjError(error);
       });
@@ -7644,6 +7977,116 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         habilitado: 1
       };
       this.errors.clear(); //this.modoEditar = false;
+    },
+    initUpload: function initUpload(item) {
+      var _this = this;
+
+      var thisIns = this;
+      this.documentos_choices = [];
+      this.item.tipo_documento = "";
+      this.item.fecha_vencimiento = "";
+      this.item.file = "";
+      this.item.filename = ""; //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+
+      var myElement = document.querySelector(".line-vs-tabs");
+      myElement.style.width = "95px";
+      myElement.style.left = "0px";
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+      this.errors.clear();
+      this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
+        thisIns.documentos_choices = response.data.items;
+      })["catch"](function (error) {
+        thisIns.$vs.notify({
+          title: 'Error',
+          text: "Error al traer los documentos",
+          color: 'danger',
+          iconPack: 'feather',
+          icon: 'icon-alert-circle'
+        });
+      });
+      setTimeout(function () {
+        _this.popupDocumento = true;
+        _this.dataItem = item;
+        thisIns.$refs.fileupload.value = '';
+      }, 300);
+    },
+    upload: function upload() {
+      var _this2 = this;
+
+      var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      $name = $name == null ? true : $name;
+      this.$validator.validateAll($name).then(function (result) {
+        if (result) {
+          var formData = new FormData();
+          formData.append('file', _this2.item.file);
+          formData.append('tipo_documento_id', _this2.item.tipo_documento.split("|")[0]);
+          formData.append('tipo_documento', _this2.item.tipo_documento.split("|")[1]);
+          formData.append('fecha_vencimiento', _this2.item.fecha_vencimiento);
+          formData.append('driver_id', _this2.dataItem.cars[0].driver_id);
+          formData.append('rut', _this2.dataItem.rut);
+
+          _this2.$upload(formData);
+        } else {}
+      });
+    },
+    uploadData: function uploadData(e) {
+      var tipo = e.target.files[0].type;
+      var size = e.target.files[0].size;
+
+      if (tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || tipo == "application/pdf") {
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        if (size <= 2000000) {
+          //2097152
+          this.item.file = e.target.files[0];
+          this.item.filename = e.target.files[0].name;
+        } else {
+          this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
+
+          this.$vs.notify({
+            title: "Error",
+            text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+        }
+      } else {
+        this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
+        //input.type = 'text';
+        //input.type = 'file';
+
+        this.$vs.notify({
+          title: "Error",
+          text: "El archivo no tiene el formato correcto",
+          color: "danger",
+          iconPack: "feather",
+          icon: "icon-alert-circle"
+        });
+      }
+    },
+    downloadDocument: function downloadDocument(id, name) {
+      //var download = await this.$http.get('driver/driver/document/' + id);
+      //console.log(download);
+      this.$http.get('driver/driver/document/' + id, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var a = document.createElement('a');
+        var url = window.URL.createObjectURL(response.data);
+        a.href = url;
+        a.download = name;
+        document.body.append(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }, function (response) {
+        console.warn('error from download_contract');
+        console.log(response); // Manage errors
+      });
     }
   },
   created: function created() {
@@ -48813,6 +49256,326 @@ var render = function() {
       _c(
         "vs-popup",
         {
+          staticClass: "holamundo",
+          attrs: { title: "Documentos Conductor", active: _vm.popupDocumento },
+          on: {
+            "update:active": function($event) {
+              _vm.popupDocumento = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "vs-tabs",
+            { ref: "tabdocs", attrs: { color: "primary" } },
+            [
+              _c(
+                "vs-tab",
+                {
+                  attrs: {
+                    label: "Adjuntar",
+                    "icon-pack": "feather",
+                    icon: "icon-upload"
+                  }
+                },
+                [
+                  _c("div", { staticClass: "vx-row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                      [
+                        _c(
+                          "vs-select",
+                          {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            staticClass: "w-full",
+                            attrs: {
+                              label: "Tipo de Documento",
+                              name: "tipo_documento"
+                            },
+                            model: {
+                              value: _vm.item.tipo_documento,
+                              callback: function($$v) {
+                                _vm.$set(_vm.item, "tipo_documento", $$v)
+                              },
+                              expression: "item.tipo_documento"
+                            }
+                          },
+                          _vm._l(_vm.tipodocumentos_choices, function(item) {
+                            return _c("vs-select-item", {
+                              key: item.id,
+                              attrs: {
+                                value: item.id + "|" + item.name,
+                                text: item.name
+                              }
+                            })
+                          }),
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.errors.has("tipo_documento"),
+                                expression: "errors.has('tipo_documento')"
+                              }
+                            ],
+                            staticClass: "text-danger text-sm"
+                          },
+                          [_vm._v(_vm._s(_vm.errors.first("tipo_documento")))]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-3" },
+                      [
+                        _c("flat-pickr", {
+                          directives: [
+                            {
+                              name: "validate",
+                              rawName: "v-validate",
+                              value: "required",
+                              expression: "'required'"
+                            }
+                          ],
+                          staticClass: "w-full select-large mt-5",
+                          attrs: {
+                            label: "Fecha de Vencimiento",
+                            placeholder: "Fecha de Vencimiento",
+                            name: "fecha_vencimiento"
+                          },
+                          model: {
+                            value: _vm.item.fecha_vencimiento,
+                            callback: function($$v) {
+                              _vm.$set(_vm.item, "fecha_vencimiento", $$v)
+                            },
+                            expression: "item.fecha_vencimiento"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-danger text-sm" }, [
+                          _vm._v(_vm._s(_vm.errors.first("fecha_vencimiento")))
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-5" }, [
+                      _c("input", {
+                        ref: "fileupload",
+                        staticClass: "w-full",
+                        attrs: {
+                          label: "Documento",
+                          type: "file",
+                          name: "file",
+                          id: "file",
+                          accept:
+                            "application/pdf,application/msword,application/image/png,image/jpeg"
+                        },
+                        on: { change: _vm.uploadData }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-sm" }, [
+                        _vm._v("Fomatos permitidos: JPG - PNG - DOC - PDF")
+                      ]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-sm" }, [
+                        _c("i", [_vm._v("Tamaño maximo 2 MB")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+                      [
+                        _c(
+                          "vs-button",
+                          {
+                            attrs: { color: "primary", type: "filled" },
+                            on: {
+                              click: function($event) {
+                                return _vm.upload()
+                              }
+                            }
+                          },
+                          [_vm._v("Adjuntar")]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "vx-row" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-tab",
+                {
+                  attrs: {
+                    label: "Documentos",
+                    "icon-pack": "feather",
+                    icon: "icon-file-text"
+                  }
+                },
+                [
+                  _c(
+                    "vs-table",
+                    {
+                      ref: "tabladoc",
+                      attrs: {
+                        "max-items": "4",
+                        pagination: "",
+                        data: _vm.documentos_choices
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(ref) {
+                            var data = ref.data
+                            return _vm._l(data, function(trdoc, indextrdoc) {
+                              return _c(
+                                "vs-tr",
+                                { key: indextrdoc },
+                                [
+                                  _c("vs-td", { attrs: { colspan: "2" } }, [
+                                    _vm._v(
+                                      "\n                      " +
+                                        _vm._s(
+                                          trdoc.documents[0].name.split(
+                                            /[.,\/-]/
+                                          )[1]
+                                        ) +
+                                        "\n                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    [
+                                      _c(
+                                        "vs-chip",
+                                        {
+                                          attrs: {
+                                            color: _vm.getStatusColor(
+                                              trdoc.documents[0]
+                                                .fecha_vencimiento
+                                            )
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              trdoc.documents[0]
+                                                .fecha_vencimiento
+                                            )
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    { attrs: { data: data[indextrdoc].url } },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticStyle: { cursor: "pointer" },
+                                          attrs: { rel: "nofollow" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.downloadDocument(
+                                                data[indextrdoc].documents[0]
+                                                  .id,
+                                                data[indextrdoc].documents[0]
+                                                  .name
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Descargar")]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            })
+                          }
+                        }
+                      ])
+                    },
+                    [
+                      _c("template", { slot: "header" }, [
+                        _c("h3", [
+                          _vm._v(
+                            "\n                    Documentos Subidos\n                  "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "template",
+                        { slot: "thead" },
+                        [
+                          _c("vs-th", { attrs: { colspan: "2" } }, [
+                            _vm._v(
+                              "\n                     Documento\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-th", [
+                            _vm._v(
+                              "\n                     Vencimiento\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-th", [
+                            _vm._v(
+                              "\n                    Descarga\n                  "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "vs-popup",
+        {
           ref: "modal",
           staticClass: "holamundo",
           attrs: {
@@ -48849,38 +49612,33 @@ var render = function() {
                   "div",
                   { staticClass: "vx-col md:w-1/2 w-full mt-2" },
                   [
-                    _c(
-                      "vs-select",
-                      {
-                        directives: [
-                          {
-                            name: "validate",
-                            rawName: "v-validate",
-                            value: "required",
-                            expression: "'required'"
-                          }
-                        ],
-                        staticClass: "w-full",
-                        attrs: { label: "Asociados", name: "asociados" },
-                        model: {
-                          value: _vm.item.driver_id,
-                          callback: function($$v) {
-                            _vm.$set(_vm.item, "driver_id", $$v)
-                          },
-                          expression: "item.driver_id"
+                    _c("vs-input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
                         }
+                      ],
+                      staticClass: "w-full",
+                      attrs: {
+                        "label-placeholder": "Nombres",
+                        name: "name",
+                        danger: _vm.errors.first("name") ? true : false,
+                        "val-icon-danger": "clear"
                       },
-                      _vm._l(_vm.driver_choices, function(item) {
-                        return _c("vs-select-item", {
-                          key: item.id,
-                          attrs: { value: item.id, text: item.name }
-                        })
-                      }),
-                      1
-                    ),
+                      model: {
+                        value: _vm.item.name,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "name", $$v)
+                        },
+                        expression: "item.name"
+                      }
+                    }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("asociados")))
+                      _vm._v(_vm._s(_vm.errors.first("name")))
                     ])
                   ],
                   1
@@ -48901,22 +49659,22 @@ var render = function() {
                       ],
                       staticClass: "w-full",
                       attrs: {
-                        "label-placeholder": "N° Movil",
-                        name: "numero_movil",
-                        danger: _vm.errors.first("numero_movil") ? true : false,
+                        "label-placeholder": "Apellidos",
+                        name: "lastname",
+                        danger: _vm.errors.first("lastname") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
-                        value: _vm.item.numero_movil,
+                        value: _vm.item.lastname,
                         callback: function($$v) {
-                          _vm.$set(_vm.item, "numero_movil", $$v)
+                          _vm.$set(_vm.item, "lastname", $$v)
                         },
-                        expression: "item.numero_movil"
+                        expression: "item.lastname"
                       }
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("numero_movil")))
+                      _vm._v(_vm._s(_vm.errors.first("lastname")))
                     ])
                   ],
                   1
@@ -48931,244 +49689,29 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
+                          value: "required|email",
+                          expression: "'required|email'"
                         }
                       ],
                       staticClass: "w-full",
                       attrs: {
-                        "label-placeholder": "Tipo Vehículo",
-                        name: "tipo",
-                        danger: _vm.errors.first("tipo") ? true : false,
+                        type: "Email",
+                        "label-placeholder": "Email",
+                        name: "email",
+                        danger: _vm.errors.first("email") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
-                        value: _vm.item.tipo,
+                        value: _vm.item.email,
                         callback: function($$v) {
-                          _vm.$set(_vm.item, "tipo", $$v)
+                          _vm.$set(_vm.item, "email", $$v)
                         },
-                        expression: "item.tipo"
+                        expression: "item.email"
                       }
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("tipo")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
-                  [
-                    _c("vs-input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      staticClass: "w-full",
-                      attrs: {
-                        "label-placeholder": "Marca",
-                        name: "marca",
-                        danger: _vm.errors.first("marca") ? true : false,
-                        "val-icon-danger": "clear"
-                      },
-                      model: {
-                        value: _vm.item.marca,
-                        callback: function($$v) {
-                          _vm.$set(_vm.item, "marca", $$v)
-                        },
-                        expression: "item.marca"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("marca")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
-                  [
-                    _c("vs-input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      staticClass: "w-full",
-                      attrs: {
-                        "label-placeholder": "Modelo",
-                        name: "modelo",
-                        danger: _vm.errors.first("modelo") ? true : false,
-                        "val-icon-danger": "clear"
-                      },
-                      model: {
-                        value: _vm.item.modelo,
-                        callback: function($$v) {
-                          _vm.$set(_vm.item, "modelo", $$v)
-                        },
-                        expression: "item.modelo"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("modelo")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
-                  [
-                    _c("vs-input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      staticClass: "w-full",
-                      attrs: {
-                        "label-placeholder": "Año",
-                        name: "ano",
-                        danger: _vm.errors.first("ano") ? true : false,
-                        "val-icon-danger": "clear"
-                      },
-                      model: {
-                        value: _vm.item.ano,
-                        callback: function($$v) {
-                          _vm.$set(_vm.item, "ano", $$v)
-                        },
-                        expression: "item.ano"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("ano")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
-                  [
-                    _c("vs-input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      staticClass: "w-full",
-                      attrs: {
-                        "label-placeholder": "N° Motor",
-                        name: "motor",
-                        danger: _vm.errors.first("motor") ? true : false,
-                        "val-icon-danger": "clear"
-                      },
-                      model: {
-                        value: _vm.item.motor,
-                        callback: function($$v) {
-                          _vm.$set(_vm.item, "motor", $$v)
-                        },
-                        expression: "item.motor"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("motor")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
-                  [
-                    _c("vs-input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      staticClass: "w-full",
-                      attrs: {
-                        "label-placeholder": "N° Patente",
-                        name: "patente",
-                        danger: _vm.errors.first("patente") ? true : false,
-                        "val-icon-danger": "clear"
-                      },
-                      model: {
-                        value: _vm.item.patente,
-                        callback: function($$v) {
-                          _vm.$set(_vm.item, "patente", $$v)
-                        },
-                        expression: "item.patente"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("patente")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
-                  [
-                    _c("vs-input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      staticClass: "w-full",
-                      attrs: {
-                        "label-placeholder": "Color",
-                        name: "color",
-                        danger: _vm.errors.first("color") ? true : false,
-                        "val-icon-danger": "clear"
-                      },
-                      model: {
-                        value: _vm.item.color,
-                        callback: function($$v) {
-                          _vm.$set(_vm.item, "color", $$v)
-                        },
-                        expression: "item.color"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("color")))
+                      _vm._v(_vm._s(_vm.errors.first("email")))
                     ])
                   ],
                   1
@@ -49189,78 +49732,289 @@ var render = function() {
                       ],
                       staticClass: "w-full",
                       attrs: {
-                        "label-placeholder": "N° Asientos",
-                        name: "asientos",
-                        danger: _vm.errors.first("asientos") ? true : false,
+                        type: "Telefono",
+                        "label-placeholder": "Telefono",
+                        name: "telefono",
+                        danger: _vm.errors.first("telefono") ? true : false,
                         "val-icon-danger": "clear"
                       },
                       model: {
-                        value: _vm.item.asientos,
+                        value: _vm.item.telefono,
                         callback: function($$v) {
-                          _vm.$set(_vm.item, "asientos", $$v)
+                          _vm.$set(_vm.item, "telefono", $$v)
                         },
-                        expression: "item.asientos"
+                        expression: "item.telefono"
                       }
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("asientos")))
+                      _vm._v(_vm._s(_vm.errors.first("telefono")))
                     ])
                   ],
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "vx-col md:w-1 w-full" }, [
-                  _c("div", { staticClass: "demo-alignment" }, [
-                    _c("span", [_vm._v("Habilitado:")]),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                  [
+                    _c("vs-input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|alpha_dash",
+                          expression: "'required|alpha_dash'"
+                        }
+                      ],
+                      staticClass: "w-full",
+                      attrs: {
+                        "label-placeholder": "Rut",
+                        name: "rut",
+                        danger: _vm.errors.first("rut") ? true : false,
+                        "val-icon-danger": "clear"
+                      },
+                      model: {
+                        value: _vm.item.rut,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "rut", $$v)
+                        },
+                        expression: "item.rut"
+                      }
+                    }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "flex" }, [
-                      _c("ul", { staticClass: "centerx" }, [
-                        _c(
-                          "li",
-                          [
-                            _c(
-                              "vs-radio",
-                              {
-                                attrs: { color: "success", "vs-value": "1" },
-                                model: {
-                                  value: _vm.item.habilitado,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.item, "habilitado", $$v)
-                                  },
-                                  expression: "item.habilitado"
-                                }
-                              },
-                              [_vm._v("Activo")]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          [
-                            _c(
-                              "vs-radio",
-                              {
-                                attrs: { color: "danger", "vs-value": "0" },
-                                model: {
-                                  value: _vm.item.habilitado,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.item, "habilitado", $$v)
-                                  },
-                                  expression: "item.habilitado"
-                                }
-                              },
-                              [_vm._v("Inactivo")]
-                            )
-                          ],
-                          1
-                        )
-                      ])
+                    _c("span", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.first("rut")))
                     ])
-                  ])
-                ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                  [
+                    _c("vs-input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      staticClass: "w-full",
+                      attrs: {
+                        "label-placeholder": "Ciudad",
+                        name: "ciudad",
+                        danger: _vm.errors.first("ciudad") ? true : false,
+                        "val-icon-danger": "clear"
+                      },
+                      model: {
+                        value: _vm.item.ciudad,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "ciudad", $$v)
+                        },
+                        expression: "item.ciudad"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.first("ciudad")))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                  [
+                    _c("vs-input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      staticClass: "w-full",
+                      attrs: {
+                        "label-placeholder": "Comuna",
+                        name: "comuna",
+                        danger: _vm.errors.first("comuna") ? true : false,
+                        "val-icon-danger": "clear"
+                      },
+                      model: {
+                        value: _vm.item.comuna,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "comuna", $$v)
+                        },
+                        expression: "item.comuna"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.first("comuna")))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                  [
+                    _c("vs-input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      staticClass: "w-full",
+                      attrs: {
+                        "label-placeholder": "Dirección",
+                        name: "direccion",
+                        danger: _vm.errors.first("direccion") ? true : false,
+                        "val-icon-danger": "clear"
+                      },
+                      model: {
+                        value: _vm.item.direccion,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "direccion", $$v)
+                        },
+                        expression: "item.direccion"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.first("direccion")))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                  [
+                    _c("vs-input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|numeric",
+                          expression: "'required|numeric'"
+                        }
+                      ],
+                      staticClass: "w-full",
+                      attrs: {
+                        "label-placeholder": "Numeración",
+                        name: "numeracion",
+                        danger: _vm.errors.first("numeracion") ? true : false,
+                        "val-icon-danger": "clear"
+                      },
+                      model: {
+                        value: _vm.item.numeracion,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "numeracion", $$v)
+                        },
+                        expression: "item.numeracion"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.first("numeracion")))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                  [
+                    _c("vs-input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      staticClass: "w-full",
+                      attrs: {
+                        "label-placeholder": "Licencias",
+                        name: "clase",
+                        danger: _vm.errors.first("clase") ? true : false,
+                        "val-icon-danger": "clear"
+                      },
+                      model: {
+                        value: _vm.item.clase,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "clase", $$v)
+                        },
+                        expression: "item.clase"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.first("clase")))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/6 w-full mt-5" },
+                  [
+                    _c(
+                      "vs-radio",
+                      {
+                        staticClass: "mt-5",
+                        attrs: { color: "success", "vs-value": "1" },
+                        model: {
+                          value: _vm.item.habilitado,
+                          callback: function($$v) {
+                            _vm.$set(_vm.item, "habilitado", $$v)
+                          },
+                          expression: "item.habilitado"
+                        }
+                      },
+                      [_vm._v("Activo")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "vx-col md:w-1/6 w-full mt-5" },
+                  [
+                    _c(
+                      "vs-radio",
+                      {
+                        staticClass: "mt-5",
+                        attrs: { color: "danger", "vs-value": "0" },
+                        model: {
+                          value: _vm.item.habilitado,
+                          callback: function($$v) {
+                            _vm.$set(_vm.item, "habilitado", $$v)
+                          },
+                          expression: "item.habilitado"
+                        }
+                      },
+                      [_vm._v("Inactivo")]
+                    )
+                  ],
+                  1
+                )
               ]),
               _vm._v(" "),
               _c(
@@ -49352,26 +50106,42 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
-                            _c("p", { staticClass: "items-movil" }, [
-                              _vm._v(_vm._s(tr.numero_movil))
+                            _c("p", { staticClass: "items-nombre" }, [
+                              _vm._v(_vm._s(tr.nombre))
                             ])
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
-                            _c("p", { staticClass: "items-patente" }, [
-                              _vm._v(_vm._s(tr.patente))
+                            _c("p", { staticClass: "items-apellido" }, [
+                              _vm._v(_vm._s(tr.apellido))
                             ])
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
-                            _c("p", { staticClass: "items-tipo" }, [
-                              _vm._v(_vm._s(tr.tipo))
+                            _c("p", { staticClass: "items-rut" }, [
+                              _vm._v(_vm._s(tr.rut))
                             ])
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
-                            _c("p", { staticClass: "items-asientos" }, [
-                              _vm._v(_vm._s(tr.asientos))
+                            _c("p", { staticClass: "items-email" }, [
+                              _vm._v(_vm._s(tr.email))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-telefono" }, [
+                              _vm._v(_vm._s(tr.telefono))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
+                            _c("p", { staticClass: "items-asociado" }, [
+                              _vm._v(
+                                _vm._s(tr.drivers[0].name) +
+                                  " " +
+                                  _vm._s(tr.drivers[0].apellido)
+                              )
                             ])
                           ]),
                           _vm._v(" "),
@@ -49715,20 +50485,28 @@ var render = function() {
                 _vm._v("ID")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-movil" } }, [
-                _vm._v("N° Movil")
+              _c("vs-th", { attrs: { "sort-key": "items-nombre" } }, [
+                _vm._v("Nombre")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-patente" } }, [
-                _vm._v("Patente")
+              _c("vs-th", { attrs: { "sort-key": "items-apellido" } }, [
+                _vm._v("Apellido")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-tipo" } }, [
-                _vm._v("Tipo")
+              _c("vs-th", { attrs: { "sort-key": "items-rut" } }, [
+                _vm._v("Rut")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-asientos" } }, [
-                _vm._v("N° Asientos")
+              _c("vs-th", { attrs: { "sort-key": "items-email" } }, [
+                _vm._v("Email")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-telefono" } }, [
+                _vm._v("Telefono")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-asociado" } }, [
+                _vm._v("Asociado")
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
@@ -49773,6 +50551,326 @@ var render = function() {
       attrs: { id: "data-list-list-view" }
     },
     [
+      _c(
+        "vs-popup",
+        {
+          staticClass: "holamundo",
+          attrs: { title: "Documentos Moviles", active: _vm.popupDocumento },
+          on: {
+            "update:active": function($event) {
+              _vm.popupDocumento = $event
+            },
+            close: function($event) {
+              return _vm.$close($event)
+            }
+          }
+        },
+        [
+          _c(
+            "vs-tabs",
+            { ref: "tabdocs", attrs: { color: "primary" } },
+            [
+              _c(
+                "vs-tab",
+                {
+                  attrs: {
+                    label: "Adjuntar",
+                    "icon-pack": "feather",
+                    icon: "icon-upload"
+                  }
+                },
+                [
+                  _c("div", { staticClass: "vx-row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-2" },
+                      [
+                        _c(
+                          "vs-select",
+                          {
+                            directives: [
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required",
+                                expression: "'required'"
+                              }
+                            ],
+                            staticClass: "w-full",
+                            attrs: {
+                              label: "Tipo de Documento",
+                              name: "tipo_documento"
+                            },
+                            model: {
+                              value: _vm.item.tipo_documento,
+                              callback: function($$v) {
+                                _vm.$set(_vm.item, "tipo_documento", $$v)
+                              },
+                              expression: "item.tipo_documento"
+                            }
+                          },
+                          _vm._l(_vm.tipodocumentos_choices, function(item) {
+                            return _c("vs-select-item", {
+                              key: item.id,
+                              attrs: {
+                                value: item.id + "|" + item.name,
+                                text: item.name
+                              }
+                            })
+                          }),
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.errors.has("tipo_documento"),
+                                expression: "errors.has('tipo_documento')"
+                              }
+                            ],
+                            staticClass: "text-danger text-sm"
+                          },
+                          [_vm._v(_vm._s(_vm.errors.first("tipo_documento")))]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-3" },
+                      [
+                        _c("flat-pickr", {
+                          directives: [
+                            {
+                              name: "validate",
+                              rawName: "v-validate",
+                              value: "required",
+                              expression: "'required'"
+                            }
+                          ],
+                          staticClass: "w-full select-large mt-5",
+                          attrs: {
+                            label: "Fecha de Vencimiento",
+                            placeholder: "Fecha de Vencimiento",
+                            name: "fecha_vencimiento"
+                          },
+                          model: {
+                            value: _vm.item.fecha_vencimiento,
+                            callback: function($$v) {
+                              _vm.$set(_vm.item, "fecha_vencimiento", $$v)
+                            },
+                            expression: "item.fecha_vencimiento"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-danger text-sm" }, [
+                          _vm._v(_vm._s(_vm.errors.first("fecha_vencimiento")))
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-5" }, [
+                      _c("input", {
+                        ref: "fileupload",
+                        staticClass: "w-full",
+                        attrs: {
+                          label: "Documento",
+                          type: "file",
+                          name: "file",
+                          id: "file",
+                          accept:
+                            "application/pdf,application/msword,application/image/png,image/jpeg"
+                        },
+                        on: { change: _vm.uploadData }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-sm" }, [
+                        _vm._v("Fomatos permitidos: JPG - PNG - DOC - PDF")
+                      ]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-sm" }, [
+                        _c("i", [_vm._v("Tamaño maximo 2 MB")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "vx-col md:w-1/2 w-full mt-5" },
+                      [
+                        _c(
+                          "vs-button",
+                          {
+                            attrs: { color: "primary", type: "filled" },
+                            on: {
+                              click: function($event) {
+                                return _vm.upload()
+                              }
+                            }
+                          },
+                          [_vm._v("Adjuntar")]
+                        )
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "vx-row" })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "vs-tab",
+                {
+                  attrs: {
+                    label: "Documentos",
+                    "icon-pack": "feather",
+                    icon: "icon-file-text"
+                  }
+                },
+                [
+                  _c(
+                    "vs-table",
+                    {
+                      ref: "tabladoc",
+                      attrs: {
+                        "max-items": "4",
+                        pagination: "",
+                        data: _vm.documentos_choices
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "default",
+                          fn: function(ref) {
+                            var data = ref.data
+                            return _vm._l(data, function(trdoc, indextrdoc) {
+                              return _c(
+                                "vs-tr",
+                                { key: indextrdoc },
+                                [
+                                  _c("vs-td", { attrs: { colspan: "2" } }, [
+                                    _vm._v(
+                                      "\n                      " +
+                                        _vm._s(
+                                          trdoc.documents[0].name.split(
+                                            /[.,\/-]/
+                                          )[1]
+                                        ) +
+                                        "\n                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    [
+                                      _c(
+                                        "vs-chip",
+                                        {
+                                          attrs: {
+                                            color: _vm.getStatusColor(
+                                              trdoc.documents[0]
+                                                .fecha_vencimiento
+                                            )
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(
+                                              trdoc.documents[0]
+                                                .fecha_vencimiento
+                                            )
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-td",
+                                    { attrs: { data: data[indextrdoc].url } },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticStyle: { cursor: "pointer" },
+                                          attrs: { rel: "nofollow" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.downloadDocument(
+                                                data[indextrdoc].documents[0]
+                                                  .id,
+                                                data[indextrdoc].documents[0]
+                                                  .name
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Descargar")]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            })
+                          }
+                        }
+                      ])
+                    },
+                    [
+                      _c("template", { slot: "header" }, [
+                        _c("h3", [
+                          _vm._v(
+                            "\n                    Documentos Subidos\n                  "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "template",
+                        { slot: "thead" },
+                        [
+                          _c("vs-th", { attrs: { colspan: "2" } }, [
+                            _vm._v(
+                              "\n                     Documento\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-th", [
+                            _vm._v(
+                              "\n                     Vencimiento\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-th", [
+                            _vm._v(
+                              "\n                    Descarga\n                  "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c(
         "vs-popup",
         {
@@ -50337,6 +51435,16 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
+                            _c("p", { staticClass: "items-asociado" }, [
+                              _vm._v(
+                                _vm._s(tr.drivers[0].name) +
+                                  " " +
+                                  _vm._s(tr.drivers[0].apellido)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("vs-td", [
                             _c(
                               "div",
                               {
@@ -50690,6 +51798,10 @@ var render = function() {
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-asientos" } }, [
                 _vm._v("N° Asientos")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-asociado" } }, [
+                _vm._v("Asociado")
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
