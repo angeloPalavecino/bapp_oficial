@@ -15,7 +15,6 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('empresa_id');
             $table->string('name');
             $table->string('lastname');
             $table->integer('rut');
@@ -31,10 +30,6 @@ class CreateDriversTable extends Migration
             $table->string('telefono');
             $table->boolean('habilitado');
             $table->timestamps();
-            
-            $table->foreign('empresa_id')
-            ->references('id')
-            ->on('empresas');
         });
     }
 

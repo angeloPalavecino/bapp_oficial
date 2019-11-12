@@ -23,7 +23,7 @@
       $name = $name == null ? true : $name;
       const thisIns = this;
       const url = thisIns.ruta + this.item.id;
-      
+
       this.$validator.validateAll($name).then(result =>{
         if (result) {
       
@@ -57,16 +57,14 @@
     },
     //Agrega Registros
     $submitAgregar($name = null) {
-
-      console.log(this.item);
-      
+     
       $name = $name == null ? true : $name;
       const thisIns = this;
       const url = thisIns.ruta + 'store';
+      console.log(url);
 
       this.$validator.validateAll($name).then(result =>{
         if (result) {
-        angelo
          this.$http.post(url, this.item) //this.item
             .then((res) =>{
 

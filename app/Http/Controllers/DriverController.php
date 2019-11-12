@@ -21,20 +21,6 @@ use Illuminate\Support\Facades\Storage;
 class DriverController extends Controller
 {
     
-    public function validatorUser(array $data){ 
-
-        return Validator::make($data, [
-             'empresa_id' => 'required',
-             'name' => 'required',
-             'lastname' => 'required',
-             'rut' => 'required',
-             'email' => 'required|email', 
-             'telefono' => 'required',
-             'password' => 'required|min:8',
-             'habilitado' => 'required',
-         ]);
-    }
-
     public function validatorDriver(array $data){ 
 
         return Validator::make($data, [
@@ -50,22 +36,6 @@ class DriverController extends Controller
             'numeracion' => 'required',
          ]);
     }
-
-    public function validatorCar(array $data){ 
-
-        return Validator::make($data, [
-            'tipo' => 'required',
-            'marca' => 'required',
-            'modelo' => 'required',
-            'ano' => 'required|numeric',
-            'motor' => 'required', 
-            'patente' => 'required',
-            'habilitado' => 'required',
-            'color' => 'required',
-            'asientos' => 'required|numeric',
-            'driver_id' => 'required',
-         ]);
-    }
     
     /**
      * Display a listing of the resource.
@@ -75,7 +45,7 @@ class DriverController extends Controller
     public function index()
     {
         //$driver = Driver::all();
-        $driver = Driver::with('cars')->get();
+        $driver = Driver::where('dueno', '=', 1)->get();
         return response()->json(
             [
                 'status' => 'success',
@@ -101,97 +71,29 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-               
-        //User
-        $dataUser = $request->all()['user'];
-        $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
-                
-        // $dataCar = $request->all()['car'];
-
-        //$dataUser['habilitado'] = 1;
-        //$dataUser['empresa_id'] = 1;
-        $rut = substr($dataUser['rut'], 0, -1);
-        $dataUser['password'] = ((strlen($rut) > 9) ? Hash::make($rut) : Hash::make('0'+$rut));
-
-        $existe_usuario_user = User::where('rut', $rut)->first();
-        $existe_usuario_driver = Driver::where('rut', $rut)->first();
-        $existe_email = User::where('email', $dataUser['email'])->first();
         
-        if($existe_usuario_user != null && $existe_usuario_driver != null)
-        {
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'El usuario se encuentra registrado',
-                ], 300);
-        }
-        
-        if($existe_email != null)
-        {
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'El correo se encuentra registrado',
-                ], 300);
-        }
-        $validation = $this->validatorUser($dataUser);
-
-        if ($validation->fails()) {
-
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => $validation->errors(),
-                ], 300);
-           
-        }
-        
-        $existe_usuario = User::where('rut', $dataUser['rut'])->first();
-        if($existe_usuario != null)
-        {            
-            $returnUser = $existe_usuario;            
-        }
-        else
-        {
-            $returnUser = User::create($dataUser);
-        }
-
-        $idUser = $returnUser->id;
-        if ($idUser < 1) {
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'Problemas al ingresar el usuario',
-                ], 300);
-        }
-
-        $returnUser->assignRole(1);
-
         //Driver
-        $dataDriver['habilitado'] = $dataUser['habilitado'];//1;
-        $validationDriver = $this->validatorDriver($dataDriver);
+        $validationDriver = $this->validatorDriver($request->all());
+        // if ($validationDriver->fails()) {
 
-        
-
-        if ($validationDriver->fails()) {
-
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => $validationDriver->errors(),
-                ], 300);
+        //     return response()->json(
+        //         [
+        //             'status' => 'error',
+        //             'message' => $validationDriver->errors(),
+        //         ], 300);
            
-        }
-        $existe_driver = Driver::where('rut', $dataDriver['rut'])->first();
-        if ($existe_driver != null) {
+        // }
+        // $existe_driver = Driver::where('rut', $dataDriver['rut'])->first();
+        // if ($existe_driver != null) {
 
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'Conductor ya existe',
-                ], 300);           
-        }
-        $returnDriver = Driver::create($dataDriver);
+        //     return response()->json(
+        //         [
+        //             'status' => 'error',
+        //             'message' => 'Conductor ya existe',
+        //         ], 300);           
+        // }
+
+        $returnDriver = Driver::create($request->all());
 
         $idDriver = $returnDriver->id;
 
@@ -201,38 +103,7 @@ class DriverController extends Controller
                     'status' => 'error',
                     'message' => 'Problemas al ingresar el Conductor',
                 ], 300);
-        }
-
-        // //Car 
-        // $dataCar['driver_id'] = $idDriver;
-        // //$dataCar['habilitado'] = 1;
-        // $dataCar['habilitado'] = $dataUser['habilitado'];
-
-        // $validationCar = $this->validatorCar($dataCar);
-
-        // if ($validationCar->fails()) {
-
-        //     return response()->json(
-        //         [
-        //             'status' => 'error',
-        //             'message' => $validationCar->errors(),
-        //         ], 300);
-           
-        // }
-
-        // $returnCar = Car::create($dataCar);
-
-        // $idCar = $returnCar->id;
-
-        // if ($idCar < 1) {
-        //     return response()->json(
-        //         [
-        //             'status' => 'error',
-        //             'message' => 'Problemas al ingresar el Movil',
-        //         ], 300);
-        // }
-        
-        
+        }        
     }
          
     /**
@@ -266,15 +137,9 @@ class DriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dataUser = $request->all()['user'];
-        $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
-        $dataCar = $request->all()['car'];
 
-        $getDriver = Driver::where('id', $dataUser['id'])->first();
-
-        $dataDriver['user_id'] = $getDriver->user_id;
-        $dataDriver['habilitado'] = $dataUser['habilitado'];
-        $validationDriver = $this->validatorDriver($dataDriver);
+        $getDriver = Driver::where('id', $id)->first();
+        $validationDriver = $this->validatorDriver($request->all());
         
         if ($validationDriver->fails()) {
 
@@ -285,23 +150,44 @@ class DriverController extends Controller
                 ], 300);
            
         }
-        Driver::where('id', $dataDriver['id'])->update($dataDriver);
+        Driver::where('id', $id)->update($request->all());
+
+        // $dataUser = $request->all()['user'];
+        // $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
+        // $dataCar = $request->all()['car'];
+
+        // $getDriver = Driver::where('id', $dataUser['id'])->first();
+
+        // $dataDriver['user_id'] = $getDriver->user_id;
+        // $dataDriver['habilitado'] = $dataUser['habilitado'];
+        // $validationDriver = $this->validatorDriver($dataDriver);
         
-        $dataCar['driver_id'] = $dataDriver['id'];
-        $dataCar['habilitado'] = $dataUser['habilitado'];
-        $validationCar = $this->validatorCar($dataCar);
+        // if ($validationDriver->fails()) {
 
-        if ($validationCar->fails()) {
-
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => $validationCar->errors(),
-                ], 300);
+        //     return response()->json(
+        //         [
+        //             'status' => 'error',
+        //             'message' => $validationDriver->errors(),
+        //         ], 300);
            
-        }
+        // }
+        // Driver::where('id', $dataDriver['id'])->update($dataDriver);
         
-        Car::where('id', $dataCar['id'])->update($dataCar);
+        // $dataCar['driver_id'] = $dataDriver['id'];
+        // $dataCar['habilitado'] = $dataUser['habilitado'];
+        // $validationCar = $this->validatorCar($dataCar);
+
+        // if ($validationCar->fails()) {
+
+        //     return response()->json(
+        //         [
+        //             'status' => 'error',
+        //             'message' => $validationCar->errors(),
+        //         ], 300);
+           
+        // }
+        
+        // Car::where('id', $dataCar['id'])->update($dataCar);
 
     }
 

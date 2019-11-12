@@ -56,7 +56,6 @@ Route::prefix('v1')->group(function () {
             Route::get('users/{id}/edit', 'UserController@edit');
             Route::get('perfil', 'UserController@perfil');
             Route::post('cambiarpass', 'UserController@cambiarpass');
-            Route::get('empresas', 'UserController@empresas');
             Route::get('cars/{id}', 'UserController@cars');
             
         });
@@ -133,8 +132,7 @@ Route::prefix('v1')->group(function () {
             Route::post('empresas/store', 'EmpresaController@store');
             Route::get('empresas/{id}/edit', 'EmpresaController@edit');
             Route::get('empresas/otros/{id}', 'EmpresaController@otros');
-
-
+            Route::get('empresas', 'UserController@empresas');
        });
     });
 

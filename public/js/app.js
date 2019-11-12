@@ -3750,14 +3750,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var _this2 = this;
 
       var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      console.log(this.item);
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + 'store';
+      console.log(url);
       this.$validator.validateAll($name).then(function (result) {
         if (result) {
-          angelo;
-
           _this2.$http.post(url, _this2.item) //this.item
           .then(function (res) {
             _this2.$vs.loading({
@@ -4862,7 +4860,7 @@ var dict = {
         required: 'El campo es requerido',
         decimal: 'Debe ingresar solo numeros'
     },
-      serviciokms_valor:{
+       serviciokms_valor:{
         required: 'El campo es requerido',
         decimal: 'Debe ingresar solo numeros'
     },
@@ -6280,7 +6278,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
   components: {},
   data: function data() {
     return {
-      ruta: "/driver/moviles/",
+      ruta: "/driver/driver/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -6292,7 +6290,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       popupDocumento: false,
       item: {
         habilitado: 1,
-        conductor: false
+        conductor: false,
+        dueno: true
       },
       modoEditar: false,
       exportData: []
@@ -6321,6 +6320,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     editar: function editar(item) {
       this.initValues();
       this.modoEditar = true;
+      this.item.id = item.id;
       this.item.email = item.email;
       this.item.name = item.name;
       this.item.lastname = item.lastname;
@@ -6333,13 +6333,15 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
       this.item.conductor = item.conductor;
+      this.item.dueno = item.dueno;
       this.popupActive = true;
     },
     initValues: function initValues() {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
         habilitado: 1,
-        conductor: false
+        conductor: false,
+        dueno: true
       };
       this.errors.clear(); //this.modoEditar = false;
     }
@@ -47937,13 +47939,13 @@ var render = function() {
                           _vm._v(" "),
                           _c("vs-td", [
                             _c("p", { staticClass: "items-nombre" }, [
-                              _vm._v(_vm._s(tr.nombre))
+                              _vm._v(_vm._s(tr.name))
                             ])
                           ]),
                           _vm._v(" "),
                           _c("vs-td", [
                             _c("p", { staticClass: "items-apellido" }, [
-                              _vm._v(_vm._s(tr.apellido))
+                              _vm._v(_vm._s(tr.lastname))
                             ])
                           ]),
                           _vm._v(" "),
@@ -47958,44 +47960,6 @@ var render = function() {
                               _vm._v(_vm._s(tr.telefono))
                             ])
                           ]),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _c(
-                                "vs-chip",
-                                {
-                                  staticClass: "items-moviles",
-                                  attrs: {
-                                    color: _vm.getStatusColorMoviles(
-                                      tr.cars[0].length
-                                    )
-                                  }
-                                },
-                                [_vm._v(_vm._s(tr.cars[0].length))]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "vs-td",
-                            [
-                              _c(
-                                "vs-chip",
-                                {
-                                  staticClass: "items-conductores",
-                                  attrs: {
-                                    color: _vm.getStatusColorConductores(
-                                      tr.drivers[0].length
-                                    )
-                                  }
-                                },
-                                [_vm._v(_vm._s(tr.drivers[0].length))]
-                              )
-                            ],
-                            1
-                          ),
                           _vm._v(" "),
                           _c("vs-td", [
                             _c(
@@ -48322,14 +48286,6 @@ var render = function() {
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-telefono" } }, [
                 _vm._v("Telefono")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-moviles" } }, [
-                _vm._v("Moviles")
-              ]),
-              _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-conductores" } }, [
-                _vm._v("Conductores")
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
@@ -91203,7 +91159,7 @@ vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_16__["default"]); //Axios
 
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("", "/api/v1");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:9090", "/api/v1");
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(_websanova_vue_auth__WEBPACK_IMPORTED_MODULE_2___default.a, _auth__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vuejs - Vue wrapper for hammerjs
 
 
@@ -93404,9 +93360,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })
