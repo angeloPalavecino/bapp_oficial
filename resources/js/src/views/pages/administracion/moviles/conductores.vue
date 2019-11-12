@@ -107,6 +107,8 @@
                      </vs-select>
                       <span class="text-danger">{{ errors.first('asociados') }}</span>
                     </div>
+                    <div class="vx-col md:w-1/2 w-full mt-1">
+                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
                         label-placeholder="Nombres"

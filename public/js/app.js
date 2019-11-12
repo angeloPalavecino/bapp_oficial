@@ -6774,6 +6774,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 // For custom error message
 
 var dict = {
@@ -48766,6 +48768,8 @@ var render = function() {
                   ],
                   1
                 ),
+                _vm._v(" "),
+                _c("div", { staticClass: "vx-col md:w-1/2 w-full mt-1" }),
                 _vm._v(" "),
                 _c(
                   "div",
