@@ -30,6 +30,8 @@ import Excepciones from './views/pages/administracion/excepciones/Excepciones'
 import Observaciones from './views/pages/administracion/observaciones/Observaciones'
 import ObsInternas from './views/pages/administracion/obsinternas/ObsInternas'
 import Moviles from './views/pages/administracion/moviles/Moviles'
+import Asociados from './views/pages/administracion/moviles/Asociados'
+import Conductores from './views/pages/administracion/moviles/Conductores'
 
 //Tarifas
 import Pasajeros from './views/pages/administracion/tarifas/pasajeros/Pasajeros'
@@ -183,6 +185,22 @@ const router = new Router({
           }
         },
         {
+          path: '/pages/administracion/moviles/asociados',
+          name: 'asociados',
+          component: Asociados,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Asociados'},
+              { title: 'Lista de asociados', active: true },
+              ],
+              pageTitle: 'Lista de asociados',
+
+          },
+          
+        },
+        {
           path: '/pages/administracion/moviles/moviles',
           name: 'moviles',
           component: Moviles,
@@ -195,7 +213,24 @@ const router = new Router({
               ],
               pageTitle: 'Lista de moviles',
 
-          }
+          },
+          
+        },
+        {
+          path: '/pages/administracion/moviles/conductores',
+          name: 'conductores',
+          component: Conductores,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Conductores'},
+              { title: 'Lista de conductores', active: true },
+              ],
+              pageTitle: 'Lista de conductores',
+
+          },
+          
         },
         {
           path: '/pages/administracion/tarifas/pasajeros/pasajeros',

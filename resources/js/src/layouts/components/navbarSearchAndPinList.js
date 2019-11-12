@@ -11,10 +11,12 @@ export default {
     {index: 6, label: 'Observaciones internas', url: '/pages/administracion/obsinternas/obsinternas', labelIcon: 'ListIcon', highlightAction: false},
     {index: 7, label: 'Fuera de zona', url: '/pages/administracion/fuerazona/fuerazona', labelIcon: 'MapIcon', highlightAction: false},
     {index: 8, label: 'Config. Baptner', url: '/pages/administracion/moviles/moviles', labelIcon: 'TruckIcon', highlightAction: false},
+    {index: 9, label: 'Config. Baptner', url: '/pages/administracion/moviles/asociados', labelIcon: 'TruckIcon', highlightAction: false},
+    {index: 10, label: 'Config. Baptner', url: '/pages/administracion/moviles/conductores', labelIcon: 'TruckIcon', highlightAction: false},
 
-    {index: 9, label: 'Tarifas Pasajeros', url: '/pages/administracion/tarifas/pasajeros/pasajeros', labelIcon: 'DollarSignIcon', highlightAction: false},
-    {index: 10, label: 'Tarifas Planas', url: '/pages/administracion/tarifas/planas/planas', labelIcon: 'DollarSignIcon', highlightAction: false},
-    {index: 11, label: 'Tarifas Kms', url: '/pages/administracion/tarifas/kms/kms', labelIcon: 'DollarSignIcon', highlightAction: false},
+    {index: 11, label: 'Tarifas Pasajeros', url: '/pages/administracion/tarifas/pasajeros/pasajeros', labelIcon: 'DollarSignIcon', highlightAction: false},
+    {index: 12, label: 'Tarifas Planas', url: '/pages/administracion/tarifas/planas/planas', labelIcon: 'DollarSignIcon', highlightAction: false},
+    {index: 13, label: 'Tarifas Kms', url: '/pages/administracion/tarifas/kms/kms', labelIcon: 'DollarSignIcon', highlightAction: false},
 
 
   ]
