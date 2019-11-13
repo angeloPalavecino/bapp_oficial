@@ -24,7 +24,7 @@
       const thisIns = this;
       const url = thisIns.ruta + this.item.id;
 
-      this.$validator.validateAll($name).then(result =>{
+      thisIns.$validator.validateAll($name).then(result =>{
         if (result) {
       
           this.$http.put(url, this.item) 
@@ -61,11 +61,8 @@
       $name = $name == null ? true : $name;
       const thisIns = this;
       const url = thisIns.ruta + 'store';
-      console.log(url);
-      console.log(this.item);
-      console.log($name);
-      this.$validator.validateAll($name).then(result =>{
-        console.log(result);
+      
+      thisIns.$validator.validateAll($name).then(result =>{
         if (result) {
          this.$http.post(url, this.item) //this.item
             .then((res) =>{
@@ -313,8 +310,8 @@
       
       const thisIns = this;
       const url = thisIns.ruta + 'upload';
-
-      if (this.item.file.size > 0) {
+      
+      if (this.itemDoc.file.size > 0) {
         this.$http.post(url, formData, {headers: {
           "Content-Type": "multipart/form-data",
           "Content-Type": "application/json"
@@ -324,7 +321,7 @@
           //this.$refrescaTabla();
           this.initValues();
           this.modoEditar = false; 
-          this.popupDocumento=false;
+          this.popupDocumento = false;
           setTimeout(() => { this.$vs.loading.close() }, 500);
 
           thisIns.$vs.notify({

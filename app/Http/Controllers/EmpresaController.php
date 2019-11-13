@@ -436,7 +436,7 @@ class EmpresaController extends Controller
             ], 200);
     }
 
-    public function empresas()
+    public function listemp()
     {
         $empresas = Empresa::all();
          

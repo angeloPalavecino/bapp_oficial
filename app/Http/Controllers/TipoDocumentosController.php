@@ -58,7 +58,12 @@ class TipoDocumentosController extends Controller
      */
     public function show($id)
     {
-        //
+        $typeDocument = TypeDocument::where('tipo', '=', $id)->get();
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $typeDocument->toArray(),
+            ], 200);  
     }
 
     /**

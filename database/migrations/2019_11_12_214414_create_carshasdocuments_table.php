@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsershascarsTable extends Migration
+class CreateCarshasdocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,29 +13,23 @@ class CreateUsershascarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_has_cars', function (Blueprint $table) {
+        Schema::create('cars_has_documents', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('car_id');
+            $table->unsignedBigInteger('document_id');
             $table->boolean('habilitado');
             $table->timestamps();
-
-            $table->foreign('user_id')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade');
 
             $table->foreign('car_id')
             ->references('id')
             ->on('cars')
             ->onDelete('cascade');
+
+            $table->foreign('document_id')
+            ->references('id')
+            ->on('documents')
+            ->onDelete('cascade');
         });
-       
-        
-        //Schema::create('usershascars', function (Blueprint $table) {
-        //    $table->bigIncrements('id');
-        //    $table->timestamps();
-        //});
     }
 
     /**
@@ -45,6 +39,6 @@ class CreateUsershascarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_has_cars');
+        Schema::dropIfExists('cars_has_documents');
     }
 }

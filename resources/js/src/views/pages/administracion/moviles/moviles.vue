@@ -13,14 +13,16 @@
 
               
               <div class="vx-col md:w-1/2 w-full mt-2">
-                <vs-select v-model="item.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="tipo_documento" class="w-full"  >
+                <vs-select v-model="itemDoc.tipo_documento" v-validate="'required'" label="Tipo de Documento" 
+                name="tipo_documento" class="w-full"  data-vv-scope="docs">
                   <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
                 </vs-select>
-                <span class="text-danger text-sm" v-show="errors.has('tipo_documento')">{{ errors.first('tipo_documento') }}</span> 
+                <span class="text-danger text-sm" v-show="errors.has('docs.tipo_documento')">{{ errors.first('docs.tipo_documento') }}</span> 
               </div>
               <div class="vx-col md:w-1/2 w-full mt-3">
-                <flat-pickr v-model="item.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  />
-                <span class="text-danger text-sm" >{{ errors.first('fecha_vencimiento') }}</span>                         
+                <flat-pickr v-model="itemDoc.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" 
+                placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  data-vv-scope="docs"/>
+                <span class="text-danger text-sm" >{{ errors.first('docs.fecha_vencimiento') }}</span>                         
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
                <input
@@ -39,7 +41,7 @@
               
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
-                <vs-button @click="upload()" color="primary" type="filled">Adjuntar</vs-button>
+                <vs-button @click="upload('docs')" color="primary" type="filled">Adjuntar</vs-button>
               </div>
             </div>  
             <div class="vx-row">
@@ -121,7 +123,7 @@
                         v-model="item.numero_movil"
                         class="w-full"
                         name="numero_movil"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         :danger="(errors.first('numero_movil') ? true : false)"
                         val-icon-danger="clear"
                       />
@@ -169,7 +171,7 @@
                         v-model="item.ano"
                         class="w-full"
                         name="ano"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         :danger="(errors.first('ano') ? true : false)"
                         val-icon-danger="clear"
                       />
@@ -181,7 +183,7 @@
                         v-model="item.motor"
                         class="w-full"
                         name="motor"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         :danger="(errors.first('motor') ? true : false)"
                         val-icon-danger="clear"
                       />
@@ -212,16 +214,11 @@
                       <span class="text-danger">{{ errors.first('color') }}</span>
                     </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
-                      <vs-input
-                        label-placeholder="N° Asientos"
-                        v-model="item.asientos"
-                        class="w-full"
-                        name="asientos"
-                        v-validate="'required|numeric'"
-                        :danger="(errors.first('asientos') ? true : false)"
-                        val-icon-danger="clear"
-                      />
-                      <span class="text-danger">{{ errors.first('asientos') }}</span>
+                      <span class=" text-sm" >N° Asientos</span>
+                      <vs-input-number v-model="item.asientos" 
+                        name="asientos" v-validate="'required'"  min="1" 
+                        icon-inc="expand_less" icon-dec="expand_more" />
+
                     </div>
                    <div class="vx-col md:w-1/6 w-full mt-5">
                     <vs-radio color="success" class="mt-5"  v-model="item.habilitado" vs-value="1" >Activo</vs-radio>
@@ -327,14 +324,14 @@
         <vs-th sort-key="items-id">ID</vs-th>
         <vs-th sort-key="items-movil">N° Movil</vs-th>
         <vs-th sort-key="items-patente">Patente</vs-th>
-        <vs-th sort-key="items-tipo">Tipo</vs-th>
         <vs-th sort-key="items-asientos">N° Asientos</vs-th>
+        <vs-th sort-key="items-asociado">Asociado</vs-th>
         <!-- <vs-th sort-key="items-asociado">Asociado</vs-th> -->
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
       <template slot-scope="{data}">
-        <tbody>
+       
           <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
             <vs-td>
               <p class="items-id font-medium">{{ tr.id }}</p>
@@ -347,14 +344,11 @@
               <p class="items-patente">{{ tr.patente }}</p>
             </vs-td>
             <vs-td>
-              <p class="items-tipo">{{ tr.tipo }}</p>
-            </vs-td>
-            <vs-td>
                 <p class="items-asientos">{{ tr.asientos }}</p>
             </vs-td>
-            <!-- <vs-td>
-                <p class="items-asociado">{{ tr.drivers[0].name  }} {{ tr.drivers[0].apellido }}</p>
-            </vs-td> -->
+             <vs-td>
+              <!--  <p class="items-asociado">{{ tr.drivers[0].name  }} {{ tr.drivers[0].apellido }}</p>-->
+            </vs-td> 
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
@@ -381,7 +375,7 @@
                     @click="$submitEliminar(tr, indextr)"
                   ></vs-button>
                 </vx-tooltip>
-                <!-- <vx-tooltip color="primary" text="Documentos">
+                <vx-tooltip color="primary" text="Documentos">
                   <vs-button
                     radius
                     color="primary"
@@ -392,11 +386,11 @@
                     class="ml-3"
                     @click="initUpload(tr)"
                   ></vs-button>
-                </vx-tooltip> -->
+                </vx-tooltip> 
               </div>
             </vs-td>
           </vs-tr>
-        </tbody>
+      
       </template>
     </vs-table>
   </div>
@@ -405,6 +399,7 @@
 <script>
 // For custom error message
 import { Validator } from "vee-validate";
+import flatPickr from 'vue-flatpickr-component';
 const dict = {
   custom: {
     tipo: {
@@ -413,35 +408,45 @@ const dict = {
     marca: {
       required: "La marca es requerida"
     },
-    // modelo: {
-    //   required: "El modelo es requerido"
-    // },
-    // ano: {
-    //   required: "El ano es requerido"
-    // },
-    // motor: {
-    //   required: "El motor es requerido"
-    // },
-    // patente: {
-    //   required: "La patente es requerida"
-    // },
-    // color: {
-    //   required: "El color es requerido"
-    // },
-    // asientos: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // numero_movil: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // asociados: {
-    //   required: "El asociado es requerido"
-    // },
-    // empresas: {
-    //   required: "La empresa es requerida"
-    // },
+     modelo: {
+       required: "El modelo es requerido"
+     },
+     ano: {
+       required: "El año es requerido",
+       numeric: "El año debe ser numerico"
+     },
+     motor: {
+       required: "El motor es requerido",
+       numeric: "El n° de motor debe ser numerico"
+     },
+     patente: {
+       required: "La patente es requerida"
+     },
+     color: {
+       required: "El color es requerido"
+     },
+     asientos: {
+       required: "Los asientos son requerido",
+     },
+     numero_movil: {
+       required: "Los asientos son requerido",
+       numeric: "El n° de movil debe ser numerico"
+     },
+     asociados: {
+       required: "El asociado es requerido"
+     },
+     empresas: {
+       required: "La empresa es requerida"
+     },
+      tipo_documento: {
+      required: "El tipo de documento es requerido",
+    }, 
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida",
+    },
+    documents: {
+      required: "El documento es requerido",
+    }
   }
 };
 
@@ -450,6 +455,7 @@ Validator.localize("en", dict);
 
 export default {
   components: {
+    flatPickr
   },
   data() {
     return {
@@ -465,6 +471,7 @@ export default {
       popupDocumento: false,  
       item: {
         habilitado: 1,
+        asientos: 1,
       },
       modoEditar: false,
       exportData: [],
@@ -474,6 +481,8 @@ export default {
       tipodocumentos_choices: [],      
       aux: 0,
       documentos_choices: [],
+      dataItem:{},
+      itemDoc: {}
     };
   },
   computed: {
@@ -506,7 +515,7 @@ export default {
         });
       //Carga Tipos de documentos
       this.$http
-        .get("tipodocumentos/tipodocumentos")
+        .get("tipodocumentos/tipodocumentos/0")
         .then(function(response) {
           thisIns.tipodocumentos_choices = response.data.items;
         })
@@ -548,6 +557,7 @@ export default {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
         habilitado: 1,
+        asientos: 1,
       };
       this.errors.clear();
       //this.modoEditar = false;
@@ -557,10 +567,10 @@ export default {
 
       this.documentos_choices = [];
       
-      this.item.tipo_documento = "";
-      this.item.fecha_vencimiento = ""; 
-      this.item.file = ""; 
-      this.item.filename = ""; 
+      this.itemDoc.tipo_documento = "";
+      this.itemDoc.fecha_vencimiento = ""; 
+      this.itemDoc.file = ""; 
+      this.itemDoc.filename = ""; 
       
       //const input = this.$refs.fileupload;
       //input.type = 'file';
@@ -574,7 +584,7 @@ export default {
 
       this.errors.clear(); 
       
-      this.$http.get('driver/driver/documents/' + item.id)
+      this.$http.get('car/car/documents/' + item.id)
           .then(function (response) {
             thisIns.documentos_choices = response.data.items;            
           })
@@ -590,7 +600,7 @@ export default {
        setTimeout(() => {
                 
                 this.popupDocumento = true;
-                this.dataItem = item;   
+                thisIns.dataItem = item;   
                 thisIns.$refs.fileupload.value = '';
 
                 }, 300);
@@ -604,12 +614,12 @@ export default {
         if (result) {       
           
           const formData = new FormData();     
-          formData.append('file', (this.item.file));
-          formData.append('tipo_documento_id', (this.item.tipo_documento.split("|")[0])); 
-          formData.append('tipo_documento', (this.item.tipo_documento.split("|")[1])); 
-          formData.append('fecha_vencimiento', (this.item.fecha_vencimiento));  
-          formData.append('driver_id', (this.dataItem.cars[0].driver_id));
-          formData.append('rut', (this.dataItem.rut));
+          formData.append('file', (this.itemDoc.file));
+          formData.append('tipo_documento_id', (this.itemDoc.tipo_documento.split("|")[0])); 
+          formData.append('tipo_documento', (this.itemDoc.tipo_documento.split("|")[1])); 
+          formData.append('fecha_vencimiento', (this.itemDoc.fecha_vencimiento));  
+          formData.append('car_id', (this.dataItem.id));
+          formData.append('numero_movil', (this.dataItem.numero_movil));
 
           this.$upload(formData);
                      
@@ -627,8 +637,8 @@ export default {
         //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if(size <= 2000000){ //2097152
             
-            this.item.file = e.target.files[0];
-            this.item.filename = e.target.files[0].name;
+            this.itemDoc.file = e.target.files[0];
+            this.itemDoc.filename = e.target.files[0].name;
             
             }else{
               this.$refs.fileupload.value = ''
@@ -665,7 +675,7 @@ export default {
     downloadDocument(id, name){
       //var download = await this.$http.get('driver/driver/document/' + id);
       //console.log(download);
-      this.$http.get('driver/driver/document/'+id, {responseType: 'blob'}).then(response => {
+      this.$http.get('car/car/document/'+id, {responseType: 'blob'}).then(response => {
             var a = document.createElement('a');
             var url = window.URL.createObjectURL(response.data);
             a.href = url;

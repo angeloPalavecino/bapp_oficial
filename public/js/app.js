@@ -3715,7 +3715,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + this.item.id;
-      this.$validator.validateAll($name).then(function (result) {
+      thisIns.$validator.validateAll($name).then(function (result) {
         if (result) {
           _this.$http.put(url, _this.item).then(function (res) {
             _this.$vs.loading({
@@ -3753,12 +3753,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + 'store';
-      console.log(url);
-      console.log(this.item);
-      console.log($name);
-      this.$validator.validateAll($name).then(function (result) {
-        console.log(result);
-
+      thisIns.$validator.validateAll($name).then(function (result) {
         if (result) {
           _this2.$http.post(url, _this2.item) //this.item
           .then(function (res) {
@@ -3982,7 +3977,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var thisIns = this;
       var url = thisIns.ruta + 'upload';
 
-      if (this.item.file.size > 0) {
+      if (this.itemDoc.file.size > 0) {
         this.$http.post(url, formData, {
           headers: _defineProperty({
             "Content-Type": "multipart/form-data"
@@ -4864,7 +4859,7 @@ var dict = {
         required: 'El campo es requerido',
         decimal: 'Debe ingresar solo numeros'
     },
-       serviciokms_valor:{
+      serviciokms_valor:{
         required: 'El campo es requerido',
         decimal: 'Debe ingresar solo numeros'
     },
@@ -6229,8 +6224,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 // For custom error message
 
 var dict = {
@@ -6369,7 +6362,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 //
 //
 //
@@ -6787,6 +6782,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 // For custom error message
 
+
 var dict = {
   custom: {
     name: {
@@ -6830,16 +6826,27 @@ var dict = {
     },
     asociados: {
       required: "El asociado es requerido"
+    },
+    tipo_documento: {
+      required: "El tipo de documento es requerido"
+    },
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida"
+    },
+    documents: {
+      required: "El documento es requerido"
     }
   }
 }; // register custom messages
 
-vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
+vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
+  components: {
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   data: function data() {
     return {
-      ruta: "/driver/moviles/",
+      ruta: "/driver/driver/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -6850,14 +6857,18 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       popupActive: false,
       popupDocumento: false,
       item: {
-        habilitado: 1
+        habilitado: 1,
+        conductor: true,
+        dueno: false
       },
       modoEditar: false,
       exportData: [],
       driver_choices: [],
       tipodocumentos_choices: [],
       aux: 0,
-      documentos_choices: []
+      documentos_choices: [],
+      dataItem: {},
+      itemDoc: {}
     };
   },
   computed: {
@@ -6886,7 +6897,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         thisIns.$msjError(error);
       }); //Carga Tipos de documentos
 
-      this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
+      this.$http.get("tipodocumentos/tipodocumentos/1").then(function (response) {
         thisIns.tipodocumentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$msjError(error);
@@ -6907,12 +6918,16 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
       this.item.driver_id = item.driver_id;
+      this.item.conductor = item.conductor;
+      this.item.dueno = item.dueno;
       this.popupActive = true;
     },
     initValues: function initValues() {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
-        habilitado: 1
+        habilitado: 1,
+        conductor: true,
+        dueno: false
       };
       this.errors.clear(); //this.modoEditar = false;
     },
@@ -6921,10 +6936,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 
       var thisIns = this;
       this.documentos_choices = [];
-      this.item.tipo_documento = "";
-      this.item.fecha_vencimiento = "";
-      this.item.file = "";
-      this.item.filename = ""; //const input = this.$refs.fileupload;
+      this.itemDoc.tipo_documento = "";
+      this.itemDoc.fecha_vencimiento = "";
+      this.itemDoc.file = "";
+      this.itemDoc.filename = ""; //const input = this.$refs.fileupload;
       //input.type = 'file';
       //input.type = 'text';
 
@@ -6947,7 +6962,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       });
       setTimeout(function () {
         _this.popupDocumento = true;
-        _this.dataItem = item;
+        thisIns.dataItem = item;
         thisIns.$refs.fileupload.value = '';
       }, 300);
     },
@@ -6959,11 +6974,11 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.$validator.validateAll($name).then(function (result) {
         if (result) {
           var formData = new FormData();
-          formData.append('file', _this2.item.file);
-          formData.append('tipo_documento_id', _this2.item.tipo_documento.split("|")[0]);
-          formData.append('tipo_documento', _this2.item.tipo_documento.split("|")[1]);
-          formData.append('fecha_vencimiento', _this2.item.fecha_vencimiento);
-          formData.append('driver_id', _this2.dataItem.cars[0].driver_id);
+          formData.append('file', _this2.itemDoc.file);
+          formData.append('tipo_documento_id', _this2.itemDoc.tipo_documento.split("|")[0]);
+          formData.append('tipo_documento', _this2.itemDoc.tipo_documento.split("|")[1]);
+          formData.append('fecha_vencimiento', _this2.itemDoc.fecha_vencimiento);
+          formData.append('driver_id', _this2.dataItem.id);
           formData.append('rut', _this2.dataItem.rut);
 
           _this2.$upload(formData);
@@ -6978,8 +6993,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if (size <= 2000000) {
           //2097152
-          this.item.file = e.target.files[0];
-          this.item.filename = e.target.files[0].name;
+          this.itemDoc.file = e.target.files[0];
+          this.itemDoc.filename = e.target.files[0].name;
         } else {
           this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
           //input.type = 'text';
@@ -7048,12 +7063,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-//
-//
-//
-//
-//
-//
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
+/* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -7454,6 +7465,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 // For custom error message
 
+
 var dict = {
   custom: {
     tipo: {
@@ -7461,42 +7473,54 @@ var dict = {
     },
     marca: {
       required: "La marca es requerida"
-    } // modelo: {
-    //   required: "El modelo es requerido"
-    // },
-    // ano: {
-    //   required: "El ano es requerido"
-    // },
-    // motor: {
-    //   required: "El motor es requerido"
-    // },
-    // patente: {
-    //   required: "La patente es requerida"
-    // },
-    // color: {
-    //   required: "El color es requerido"
-    // },
-    // asientos: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // numero_movil: {
-    //   required: "Los asientos son requerido",
-    //   numeric: "La cantidad de asientos debe ser numerico"
-    // },
-    // asociados: {
-    //   required: "El asociado es requerido"
-    // },
-    // empresas: {
-    //   required: "La empresa es requerida"
-    // },
-
+    },
+    modelo: {
+      required: "El modelo es requerido"
+    },
+    ano: {
+      required: "El año es requerido",
+      numeric: "El año debe ser numerico"
+    },
+    motor: {
+      required: "El motor es requerido",
+      numeric: "El n° de motor debe ser numerico"
+    },
+    patente: {
+      required: "La patente es requerida"
+    },
+    color: {
+      required: "El color es requerido"
+    },
+    asientos: {
+      required: "Los asientos son requerido"
+    },
+    numero_movil: {
+      required: "Los asientos son requerido",
+      numeric: "El n° de movil debe ser numerico"
+    },
+    asociados: {
+      required: "El asociado es requerido"
+    },
+    empresas: {
+      required: "La empresa es requerida"
+    },
+    tipo_documento: {
+      required: "El tipo de documento es requerido"
+    },
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida"
+    },
+    documents: {
+      required: "El documento es requerido"
+    }
   }
 }; // register custom messages
 
 vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
+  components: {
+    flatPickr: vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
   data: function data() {
     return {
       ruta: "/car/car/",
@@ -7510,7 +7534,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       popupActive: false,
       popupDocumento: false,
       item: {
-        habilitado: 1
+        habilitado: 1,
+        asientos: 1
       },
       modoEditar: false,
       exportData: [],
@@ -7518,7 +7543,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       empresa_choices: [],
       tipodocumentos_choices: [],
       aux: 0,
-      documentos_choices: []
+      documentos_choices: [],
+      dataItem: {},
+      itemDoc: {}
     };
   },
   computed: {
@@ -7547,7 +7574,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         thisIns.$msjError(error);
       }); //Carga Tipos de documentos
 
-      this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
+      this.$http.get("tipodocumentos/tipodocumentos/0").then(function (response) {
         thisIns.tipodocumentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$msjError(error);
@@ -7578,7 +7605,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     initValues: function initValues() {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
-        habilitado: 1
+        habilitado: 1,
+        asientos: 1
       };
       this.errors.clear(); //this.modoEditar = false;
     },
@@ -7587,10 +7615,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 
       var thisIns = this;
       this.documentos_choices = [];
-      this.item.tipo_documento = "";
-      this.item.fecha_vencimiento = "";
-      this.item.file = "";
-      this.item.filename = ""; //const input = this.$refs.fileupload;
+      this.itemDoc.tipo_documento = "";
+      this.itemDoc.fecha_vencimiento = "";
+      this.itemDoc.file = "";
+      this.itemDoc.filename = ""; //const input = this.$refs.fileupload;
       //input.type = 'file';
       //input.type = 'text';
 
@@ -7600,7 +7628,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.$refs.tabdocs.activeChild(0);
       this.$refs.tabdocs.changePositionLine(0);
       this.errors.clear();
-      this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
+      this.$http.get('car/car/documents/' + item.id).then(function (response) {
         thisIns.documentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$vs.notify({
@@ -7613,7 +7641,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       });
       setTimeout(function () {
         _this.popupDocumento = true;
-        _this.dataItem = item;
+        thisIns.dataItem = item;
         thisIns.$refs.fileupload.value = '';
       }, 300);
     },
@@ -7625,12 +7653,12 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.$validator.validateAll($name).then(function (result) {
         if (result) {
           var formData = new FormData();
-          formData.append('file', _this2.item.file);
-          formData.append('tipo_documento_id', _this2.item.tipo_documento.split("|")[0]);
-          formData.append('tipo_documento', _this2.item.tipo_documento.split("|")[1]);
-          formData.append('fecha_vencimiento', _this2.item.fecha_vencimiento);
-          formData.append('driver_id', _this2.dataItem.cars[0].driver_id);
-          formData.append('rut', _this2.dataItem.rut);
+          formData.append('file', _this2.itemDoc.file);
+          formData.append('tipo_documento_id', _this2.itemDoc.tipo_documento.split("|")[0]);
+          formData.append('tipo_documento', _this2.itemDoc.tipo_documento.split("|")[1]);
+          formData.append('fecha_vencimiento', _this2.itemDoc.fecha_vencimiento);
+          formData.append('car_id', _this2.dataItem.id);
+          formData.append('numero_movil', _this2.dataItem.numero_movil);
 
           _this2.$upload(formData);
         } else {}
@@ -7644,8 +7672,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if (size <= 2000000) {
           //2097152
-          this.item.file = e.target.files[0];
-          this.item.filename = e.target.files[0].name;
+          this.itemDoc.file = e.target.files[0];
+          this.itemDoc.filename = e.target.files[0].name;
         } else {
           this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
           //input.type = 'text';
@@ -7676,7 +7704,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     downloadDocument: function downloadDocument(id, name) {
       //var download = await this.$http.get('driver/driver/document/' + id);
       //console.log(download);
-      this.$http.get('driver/driver/document/' + id, {
+      this.$http.get('car/car/document/' + id, {
         responseType: 'blob'
       }).then(function (response) {
         var a = document.createElement('a');
@@ -10867,13 +10895,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
         thisIns.$msjError(error);
       }); //Carga Empresa
 
-      this.$http.get('empresas/empresas').then(function (response) {
+      this.$http.get('empresas/listemp').then(function (response) {
         thisIns.empresa_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$msjError(error);
       }); //Carga Moviles
 
-      this.$http.get('/driver/cars').then(function (response) {
+      this.$http.get('driver/cars').then(function (response) {
         thisIns.moviles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$msjError(error);
@@ -47928,120 +47956,104 @@ var render = function() {
               key: "default",
               fn: function(ref) {
                 var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr, attrs: { data: tr } },
-                        [
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-nombre" }, [
-                              _vm._v(_vm._s(tr.name))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-apellido" }, [
-                              _vm._v(_vm._s(tr.lastname))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-rut" }, [
-                              _vm._v(_vm._s(tr.rut))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-telefono" }, [
-                              _vm._v(_vm._s(tr.telefono))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
+                return _vm._l(data, function(tr, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: tr } },
+                    [
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-id font-medium" }, [
+                          _vm._v(_vm._s(tr.id))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-nombre" }, [
+                          _vm._v(_vm._s(tr.name))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-apellido" }, [
+                          _vm._v(_vm._s(tr.lastname))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-rut" }, [
+                          _vm._v(_vm._s(tr.rut))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-telefono" }, [
+                          _vm._v(_vm._s(tr.telefono))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                          },
+                          [
                             _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
-                              },
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: { color: "primary", text: "Editar" }
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-edit-2",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Eliminar"
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editar(tr)
                                     }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Eliminar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-trash",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$submitEliminar(tr, indextr)
+                                    }
+                                  }
+                                })
                               ],
                               1
                             )
-                          ])
-                        ],
-                        1
-                      )
-                    }),
+                          ],
+                          1
+                        )
+                      ])
+                    ],
                     1
                   )
-                ]
+                })
               }
             }
           ]),
@@ -48383,14 +48395,15 @@ var render = function() {
                             staticClass: "w-full",
                             attrs: {
                               label: "Tipo de Documento",
-                              name: "tipo_documento"
+                              name: "tipo_documento",
+                              "data-vv-scope": "docs"
                             },
                             model: {
-                              value: _vm.item.tipo_documento,
+                              value: _vm.itemDoc.tipo_documento,
                               callback: function($$v) {
-                                _vm.$set(_vm.item, "tipo_documento", $$v)
+                                _vm.$set(_vm.itemDoc, "tipo_documento", $$v)
                               },
-                              expression: "item.tipo_documento"
+                              expression: "itemDoc.tipo_documento"
                             }
                           },
                           _vm._l(_vm.tipodocumentos_choices, function(item) {
@@ -48412,13 +48425,17 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.errors.has("tipo_documento"),
-                                expression: "errors.has('tipo_documento')"
+                                value: _vm.errors.has("docs.tipo_documento"),
+                                expression: "errors.has('docs.tipo_documento')"
                               }
                             ],
                             staticClass: "text-danger text-sm"
                           },
-                          [_vm._v(_vm._s(_vm.errors.first("tipo_documento")))]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.errors.first("docs.tipo_documento"))
+                            )
+                          ]
                         )
                       ],
                       1
@@ -48441,19 +48458,22 @@ var render = function() {
                           attrs: {
                             label: "Fecha de Vencimiento",
                             placeholder: "Fecha de Vencimiento",
-                            name: "fecha_vencimiento"
+                            name: "fecha_vencimiento",
+                            "data-vv-scope": "docs"
                           },
                           model: {
-                            value: _vm.item.fecha_vencimiento,
+                            value: _vm.itemDoc.fecha_vencimiento,
                             callback: function($$v) {
-                              _vm.$set(_vm.item, "fecha_vencimiento", $$v)
+                              _vm.$set(_vm.itemDoc, "fecha_vencimiento", $$v)
                             },
-                            expression: "item.fecha_vencimiento"
+                            expression: "itemDoc.fecha_vencimiento"
                           }
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "text-danger text-sm" }, [
-                          _vm._v(_vm._s(_vm.errors.first("fecha_vencimiento")))
+                          _vm._v(
+                            _vm._s(_vm.errors.first("docs.fecha_vencimiento"))
+                          )
                         ])
                       ],
                       1
@@ -48495,7 +48515,7 @@ var render = function() {
                             attrs: { color: "primary", type: "filled" },
                             on: {
                               click: function($event) {
-                                return _vm.upload()
+                                return _vm.upload("docs")
                               }
                             }
                           },
@@ -49217,165 +49237,132 @@ var render = function() {
               key: "default",
               fn: function(ref) {
                 var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr, attrs: { data: tr } },
-                        [
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-nombre" }, [
-                              _vm._v(_vm._s(tr.nombre))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-apellido" }, [
-                              _vm._v(_vm._s(tr.apellido))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-rut" }, [
-                              _vm._v(_vm._s(tr.rut))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-email" }, [
-                              _vm._v(_vm._s(tr.email))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-telefono" }, [
-                              _vm._v(_vm._s(tr.telefono))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-asociado" }, [
-                              _vm._v(
-                                _vm._s(tr.drivers[0].name) +
-                                  " " +
-                                  _vm._s(tr.drivers[0].apellido)
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
+                return _vm._l(data, function(tr, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: tr } },
+                    [
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-id font-medium" }, [
+                          _vm._v(_vm._s(tr.id))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-nombre" }, [
+                          _vm._v(_vm._s(tr.name))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-apellido" }, [
+                          _vm._v(_vm._s(tr.lastname))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-rut" }, [
+                          _vm._v(_vm._s(tr.rut))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-telefono" }, [
+                          _vm._v(_vm._s(tr.telefono))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td"),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                          },
+                          [
                             _c(
-                              "div",
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Editar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-edit-2",
+                                    size: "small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editar(tr)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Eliminar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-trash",
+                                    size: "small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$submitEliminar(tr, indextr)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
                               {
-                                staticClass:
-                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                attrs: { color: "primary", text: "Documentos" }
                               },
                               [
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: { color: "primary", text: "Editar" }
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-file",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Eliminar"
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.initUpload(tr)
                                     }
-                                  },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Documentos"
-                                    }
-                                  },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-file",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.initUpload(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
+                                  }
+                                })
                               ],
                               1
                             )
-                          ])
-                        ],
-                        1
-                      )
-                    }),
+                          ],
+                          1
+                        )
+                      ])
+                    ],
                     1
                   )
-                ]
+                })
               }
             }
           ]),
@@ -49623,10 +49610,6 @@ var render = function() {
                 _vm._v("Rut")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-email" } }, [
-                _vm._v("Email")
-              ]),
-              _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-telefono" } }, [
                 _vm._v("Telefono")
               ]),
@@ -49725,14 +49708,15 @@ var render = function() {
                             staticClass: "w-full",
                             attrs: {
                               label: "Tipo de Documento",
-                              name: "tipo_documento"
+                              name: "tipo_documento",
+                              "data-vv-scope": "docs"
                             },
                             model: {
-                              value: _vm.item.tipo_documento,
+                              value: _vm.itemDoc.tipo_documento,
                               callback: function($$v) {
-                                _vm.$set(_vm.item, "tipo_documento", $$v)
+                                _vm.$set(_vm.itemDoc, "tipo_documento", $$v)
                               },
-                              expression: "item.tipo_documento"
+                              expression: "itemDoc.tipo_documento"
                             }
                           },
                           _vm._l(_vm.tipodocumentos_choices, function(item) {
@@ -49754,13 +49738,17 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.errors.has("tipo_documento"),
-                                expression: "errors.has('tipo_documento')"
+                                value: _vm.errors.has("docs.tipo_documento"),
+                                expression: "errors.has('docs.tipo_documento')"
                               }
                             ],
                             staticClass: "text-danger text-sm"
                           },
-                          [_vm._v(_vm._s(_vm.errors.first("tipo_documento")))]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.errors.first("docs.tipo_documento"))
+                            )
+                          ]
                         )
                       ],
                       1
@@ -49783,19 +49771,22 @@ var render = function() {
                           attrs: {
                             label: "Fecha de Vencimiento",
                             placeholder: "Fecha de Vencimiento",
-                            name: "fecha_vencimiento"
+                            name: "fecha_vencimiento",
+                            "data-vv-scope": "docs"
                           },
                           model: {
-                            value: _vm.item.fecha_vencimiento,
+                            value: _vm.itemDoc.fecha_vencimiento,
                             callback: function($$v) {
-                              _vm.$set(_vm.item, "fecha_vencimiento", $$v)
+                              _vm.$set(_vm.itemDoc, "fecha_vencimiento", $$v)
                             },
-                            expression: "item.fecha_vencimiento"
+                            expression: "itemDoc.fecha_vencimiento"
                           }
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "text-danger text-sm" }, [
-                          _vm._v(_vm._s(_vm.errors.first("fecha_vencimiento")))
+                          _vm._v(
+                            _vm._s(_vm.errors.first("docs.fecha_vencimiento"))
+                          )
                         ])
                       ],
                       1
@@ -49837,7 +49828,7 @@ var render = function() {
                             attrs: { color: "primary", type: "filled" },
                             on: {
                               click: function($event) {
-                                return _vm.upload()
+                                return _vm.upload("docs")
                               }
                             }
                           },
@@ -50133,8 +50124,8 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
+                          value: "required|numeric",
+                          expression: "'required|numeric'"
                         }
                       ],
                       staticClass: "w-full",
@@ -50277,8 +50268,8 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
+                          value: "required|numeric",
+                          expression: "'required|numeric'"
                         }
                       ],
                       staticClass: "w-full",
@@ -50313,8 +50304,8 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
+                          value: "required|numeric",
+                          expression: "'required|numeric'"
                         }
                       ],
                       staticClass: "w-full",
@@ -50416,21 +50407,24 @@ var render = function() {
                   "div",
                   { staticClass: "vx-col md:w-1/2 w-full mt-2" },
                   [
-                    _c("vs-input", {
+                    _c("span", { staticClass: " text-sm" }, [
+                      _vm._v("N° Asientos")
+                    ]),
+                    _vm._v(" "),
+                    _c("vs-input-number", {
                       directives: [
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required|numeric",
-                          expression: "'required|numeric'"
+                          value: "required",
+                          expression: "'required'"
                         }
                       ],
-                      staticClass: "w-full",
                       attrs: {
-                        "label-placeholder": "N° Asientos",
                         name: "asientos",
-                        danger: _vm.errors.first("asientos") ? true : false,
-                        "val-icon-danger": "clear"
+                        min: "1",
+                        "icon-inc": "expand_less",
+                        "icon-dec": "expand_more"
                       },
                       model: {
                         value: _vm.item.asientos,
@@ -50439,11 +50433,7 @@ var render = function() {
                         },
                         expression: "item.asientos"
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(_vm._s(_vm.errors.first("asientos")))
-                    ])
+                    })
                   ],
                   1
                 ),
@@ -50570,120 +50560,126 @@ var render = function() {
               key: "default",
               fn: function(ref) {
                 var data = ref.data
-                return [
-                  _c(
-                    "tbody",
-                    _vm._l(data, function(tr, indextr) {
-                      return _c(
-                        "vs-tr",
-                        { key: indextr, attrs: { data: tr } },
-                        [
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-id font-medium" }, [
-                              _vm._v(_vm._s(tr.id))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-movil" }, [
-                              _vm._v(_vm._s(tr.numero_movil))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-patente" }, [
-                              _vm._v(_vm._s(tr.patente))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-tipo" }, [
-                              _vm._v(_vm._s(tr.tipo))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
-                            _c("p", { staticClass: "items-asientos" }, [
-                              _vm._v(_vm._s(tr.asientos))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("vs-td", [
+                return _vm._l(data, function(tr, indextr) {
+                  return _c(
+                    "vs-tr",
+                    { key: indextr, attrs: { data: tr } },
+                    [
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-id font-medium" }, [
+                          _vm._v(_vm._s(tr.id))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-movil" }, [
+                          _vm._v(_vm._s(tr.numero_movil))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-patente" }, [
+                          _vm._v(_vm._s(tr.patente))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-asientos" }, [
+                          _vm._v(_vm._s(tr.asientos))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("vs-td"),
+                      _vm._v(" "),
+                      _c("vs-td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                          },
+                          [
                             _c(
-                              "div",
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Editar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-edit-2",
+                                    size: "small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editar(tr)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              { attrs: { color: "primary", text: "Eliminar" } },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-trash",
+                                    size: "small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$submitEliminar(tr, indextr)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
                               {
-                                staticClass:
-                                  "flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0"
+                                attrs: { color: "primary", text: "Documentos" }
                               },
                               [
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: { color: "primary", text: "Editar" }
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-file",
+                                    size: "small"
                                   },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "vx-tooltip",
-                                  {
-                                    attrs: {
-                                      color: "primary",
-                                      text: "Eliminar"
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.initUpload(tr)
                                     }
-                                  },
-                                  [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
+                                  }
+                                })
                               ],
                               1
                             )
-                          ])
-                        ],
-                        1
-                      )
-                    }),
+                          ],
+                          1
+                        )
+                      ])
+                    ],
                     1
                   )
-                ]
+                })
               }
             }
           ]),
@@ -50925,12 +50921,12 @@ var render = function() {
                 _vm._v("Patente")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-tipo" } }, [
-                _vm._v("Tipo")
-              ]),
-              _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-asientos" } }, [
                 _vm._v("N° Asientos")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-asociado" } }, [
+                _vm._v("Asociado")
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
@@ -91123,7 +91119,7 @@ vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_16__["default"]); //Axios
 
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:9090", "/api/v1");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("", "/api/v1");
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(_websanova_vue_auth__WEBPACK_IMPORTED_MODULE_2___default.a, _auth__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vuejs - Vue wrapper for hammerjs
 
 
@@ -93324,9 +93320,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })

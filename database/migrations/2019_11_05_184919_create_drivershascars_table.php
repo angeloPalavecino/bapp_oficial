@@ -22,11 +22,13 @@ class CreateDrivershascarsTable extends Migration
 
             $table->foreign('driver_id')
             ->references('id')
-            ->on('drivers');
+            ->on('drivers')
+            ->onDelete('cascade');
 
             $table->foreign('car_id')
             ->references('id')
-            ->on('cars');
+            ->on('cars')
+            ->onDelete('cascade');
         });
        
     }

@@ -22,11 +22,13 @@ class CreateDrivershasdocumentsTable extends Migration
 
             $table->foreign('driver_id')
             ->references('id')
-            ->on('drivers');
+            ->on('drivers')
+            ->onDelete('cascade');
 
             $table->foreign('document_id')
             ->references('id')
-            ->on('documents');
+            ->on('documents')
+            ->onDelete('cascade');
         });
     }
 
