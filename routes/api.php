@@ -272,9 +272,9 @@ Route::prefix('v1')->group(function () {
             Route::put('car/{id}', 'CarController@update');
             Route::post('car/store', 'CarController@store');
             Route::get('car/{id}/edit', 'CarController@edit');
-            // Route::post('car/upload', 'CarController@upload');
-            // Route::get('car/documents/{id}', 'CarController@documents');
-            // Route::get('car/document/{id}', 'CarController@document');
+            Route::post('car/upload', 'CarController@upload');
+            Route::get('car/documents/{id}', 'CarController@documents');
+            Route::get('car/document/{id}', 'CarController@document');
             // Route::get('cars', 'CarController@cars');
             // Route::get('moviles', 'DriverController@moviles');
         });

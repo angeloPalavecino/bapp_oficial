@@ -286,12 +286,12 @@ class DriverController extends Controller
         $fileNameSinExtencion = $request->rut."-".$request->tipo_documento;
         $fileName = $request->rut."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName();
         $exists = Document::where('name', $fileNameSinExtencion)->first();
-        $uploadFile = Storage::disk('local')->put($fileName, file_get_contents($file));
+        $uploadFile = Storage::disk('local')->put('drivers/'.$fileName, file_get_contents($file));
 
         if($uploadFile == true)
         {
 
-            $url = '/documents/'.$fileName;
+            $url = '/documents/drivers/'.$fileName;
             
             $dataDocument = array(
                 'type_document_id'  => $request->tipo_documento_id,

@@ -3715,7 +3715,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + this.item.id;
-      this.$validator.validateAll($name).then(function (result) {
+      thisIns.$validator.validateAll($name).then(function (result) {
         if (result) {
           _this.$http.put(url, _this.item).then(function (res) {
             _this.$vs.loading({
@@ -3753,7 +3753,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + 'store';
-      this.$validator.validateAll($name).then(function (result) {
+      thisIns.$validator.validateAll($name).then(function (result) {
         if (result) {
           _this2.$http.post(url, _this2.item) //this.item
           .then(function (res) {
@@ -3977,7 +3977,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var thisIns = this;
       var url = thisIns.ruta + 'upload';
 
-      if (this.item.file.size > 0) {
+      if (this.itemDoc.file.size > 0) {
         this.$http.post(url, formData, {
           headers: _defineProperty({
             "Content-Type": "multipart/form-data"
@@ -6779,6 +6779,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // For custom error message
 
 
@@ -6825,6 +6826,15 @@ var dict = {
     },
     asociados: {
       required: "El asociado es requerido"
+    },
+    tipo_documento: {
+      required: "El tipo de documento es requerido"
+    },
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida"
+    },
+    documents: {
+      required: "El documento es requerido"
     }
   }
 }; // register custom messages
@@ -6836,7 +6846,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
   },
   data: function data() {
     return {
-      ruta: "/driver/moviles/",
+      ruta: "/driver/driver/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -6847,14 +6857,18 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
       popupActive: false,
       popupDocumento: false,
       item: {
-        habilitado: 1
+        habilitado: 1,
+        conductor: true,
+        dueno: false
       },
       modoEditar: false,
       exportData: [],
       driver_choices: [],
       tipodocumentos_choices: [],
       aux: 0,
-      documentos_choices: []
+      documentos_choices: [],
+      dataItem: {},
+      itemDoc: {}
     };
   },
   computed: {
@@ -6883,7 +6897,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
         thisIns.$msjError(error);
       }); //Carga Tipos de documentos
 
-      this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
+      this.$http.get("tipodocumentos/tipodocumentos/1").then(function (response) {
         thisIns.tipodocumentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$msjError(error);
@@ -6904,12 +6918,16 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
       this.item.driver_id = item.driver_id;
+      this.item.conductor = item.conductor;
+      this.item.dueno = item.dueno;
       this.popupActive = true;
     },
     initValues: function initValues() {
       //this.$refs.wizard.navigateToTab(0);
       this.item = {
-        habilitado: 1
+        habilitado: 1,
+        conductor: true,
+        dueno: false
       };
       this.errors.clear(); //this.modoEditar = false;
     },
@@ -6918,10 +6936,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
 
       var thisIns = this;
       this.documentos_choices = [];
-      this.item.tipo_documento = "";
-      this.item.fecha_vencimiento = "";
-      this.item.file = "";
-      this.item.filename = ""; //const input = this.$refs.fileupload;
+      this.itemDoc.tipo_documento = "";
+      this.itemDoc.fecha_vencimiento = "";
+      this.itemDoc.file = "";
+      this.itemDoc.filename = ""; //const input = this.$refs.fileupload;
       //input.type = 'file';
       //input.type = 'text';
 
@@ -6944,7 +6962,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
       });
       setTimeout(function () {
         _this.popupDocumento = true;
-        _this.dataItem = item;
+        thisIns.dataItem = item;
         thisIns.$refs.fileupload.value = '';
       }, 300);
     },
@@ -6956,11 +6974,11 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
       this.$validator.validateAll($name).then(function (result) {
         if (result) {
           var formData = new FormData();
-          formData.append('file', _this2.item.file);
-          formData.append('tipo_documento_id', _this2.item.tipo_documento.split("|")[0]);
-          formData.append('tipo_documento', _this2.item.tipo_documento.split("|")[1]);
-          formData.append('fecha_vencimiento', _this2.item.fecha_vencimiento);
-          formData.append('driver_id', _this2.dataItem.cars[0].driver_id);
+          formData.append('file', _this2.itemDoc.file);
+          formData.append('tipo_documento_id', _this2.itemDoc.tipo_documento.split("|")[0]);
+          formData.append('tipo_documento', _this2.itemDoc.tipo_documento.split("|")[1]);
+          formData.append('fecha_vencimiento', _this2.itemDoc.fecha_vencimiento);
+          formData.append('driver_id', _this2.dataItem.id);
           formData.append('rut', _this2.dataItem.rut);
 
           _this2.$upload(formData);
@@ -6975,8 +6993,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
         //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if (size <= 2000000) {
           //2097152
-          this.item.file = e.target.files[0];
-          this.item.filename = e.target.files[0].name;
+          this.itemDoc.file = e.target.files[0];
+          this.itemDoc.filename = e.target.files[0].name;
         } else {
           this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
           //input.type = 'text';
@@ -7447,6 +7465,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // For custom error message
 
 
@@ -7487,6 +7506,15 @@ var dict = {
     },
     empresas: {
       required: "La empresa es requerida"
+    },
+    tipo_documento: {
+      required: "El tipo de documento es requerido"
+    },
+    fecha_vencimiento: {
+      required: "La fecha de vencimiento es requerida"
+    },
+    documents: {
+      required: "El documento es requerido"
     }
   }
 }; // register custom messages
@@ -7518,7 +7546,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       empresa_choices: [],
       tipodocumentos_choices: [],
       aux: 0,
-      documentos_choices: []
+      documentos_choices: [],
+      dataItem: {},
+      itemDoc: {}
     };
   },
   computed: {
@@ -7547,7 +7577,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         thisIns.$msjError(error);
       }); //Carga Tipos de documentos
 
-      this.$http.get("tipodocumentos/tipodocumentos").then(function (response) {
+      this.$http.get("tipodocumentos/tipodocumentos/0").then(function (response) {
         thisIns.tipodocumentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$msjError(error);
@@ -7588,10 +7618,10 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
 
       var thisIns = this;
       this.documentos_choices = [];
-      this.item.tipo_documento = "";
-      this.item.fecha_vencimiento = "";
-      this.item.file = "";
-      this.item.filename = ""; //const input = this.$refs.fileupload;
+      this.itemDoc.tipo_documento = "";
+      this.itemDoc.fecha_vencimiento = "";
+      this.itemDoc.file = "";
+      this.itemDoc.filename = ""; //const input = this.$refs.fileupload;
       //input.type = 'file';
       //input.type = 'text';
 
@@ -7601,7 +7631,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.$refs.tabdocs.activeChild(0);
       this.$refs.tabdocs.changePositionLine(0);
       this.errors.clear();
-      this.$http.get('driver/driver/documents/' + item.id).then(function (response) {
+      this.$http.get('car/car/documents/' + item.id).then(function (response) {
         thisIns.documentos_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$vs.notify({
@@ -7614,7 +7644,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       });
       setTimeout(function () {
         _this.popupDocumento = true;
-        _this.dataItem = item;
+        thisIns.dataItem = item;
         thisIns.$refs.fileupload.value = '';
       }, 300);
     },
@@ -7626,12 +7656,12 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.$validator.validateAll($name).then(function (result) {
         if (result) {
           var formData = new FormData();
-          formData.append('file', _this2.item.file);
-          formData.append('tipo_documento_id', _this2.item.tipo_documento.split("|")[0]);
-          formData.append('tipo_documento', _this2.item.tipo_documento.split("|")[1]);
-          formData.append('fecha_vencimiento', _this2.item.fecha_vencimiento);
-          formData.append('driver_id', _this2.dataItem.cars[0].driver_id);
-          formData.append('rut', _this2.dataItem.rut);
+          formData.append('file', _this2.itemDoc.file);
+          formData.append('tipo_documento_id', _this2.itemDoc.tipo_documento.split("|")[0]);
+          formData.append('tipo_documento', _this2.itemDoc.tipo_documento.split("|")[1]);
+          formData.append('fecha_vencimiento', _this2.itemDoc.fecha_vencimiento);
+          formData.append('car_id', _this2.dataItem.id);
+          formData.append('numero_movil', _this2.dataItem.numero_movil);
 
           _this2.$upload(formData);
         } else {}
@@ -7645,8 +7675,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         if (size <= 2000000) {
           //2097152
-          this.item.file = e.target.files[0];
-          this.item.filename = e.target.files[0].name;
+          this.itemDoc.file = e.target.files[0];
+          this.itemDoc.filename = e.target.files[0].name;
         } else {
           this.$refs.fileupload.value = ''; //const input = this.$refs.fileupload;
           //input.type = 'text';
@@ -7677,7 +7707,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     downloadDocument: function downloadDocument(id, name) {
       //var download = await this.$http.get('driver/driver/document/' + id);
       //console.log(download);
-      this.$http.get('driver/driver/document/' + id, {
+      this.$http.get('car/car/document/' + id, {
         responseType: 'blob'
       }).then(function (response) {
         var a = document.createElement('a');
@@ -48368,14 +48398,15 @@ var render = function() {
                             staticClass: "w-full",
                             attrs: {
                               label: "Tipo de Documento",
-                              name: "documentos.tipo_documento"
+                              name: "tipo_documento",
+                              "data-vv-scope": "docs"
                             },
                             model: {
-                              value: _vm.item.tipo_documento,
+                              value: _vm.itemDoc.tipo_documento,
                               callback: function($$v) {
-                                _vm.$set(_vm.item, "tipo_documento", $$v)
+                                _vm.$set(_vm.itemDoc, "tipo_documento", $$v)
                               },
-                              expression: "item.tipo_documento"
+                              expression: "itemDoc.tipo_documento"
                             }
                           },
                           _vm._l(_vm.tipodocumentos_choices, function(item) {
@@ -48397,20 +48428,15 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.errors.has(
-                                  "documentos.tipo_documento"
-                                ),
-                                expression:
-                                  "errors.has('documentos.tipo_documento')"
+                                value: _vm.errors.has("docs.tipo_documento"),
+                                expression: "errors.has('docs.tipo_documento')"
                               }
                             ],
                             staticClass: "text-danger text-sm"
                           },
                           [
                             _vm._v(
-                              _vm._s(
-                                _vm.errors.first("documentos.tipo_documento")
-                              )
+                              _vm._s(_vm.errors.first("docs.tipo_documento"))
                             )
                           ]
                         )
@@ -48435,22 +48461,21 @@ var render = function() {
                           attrs: {
                             label: "Fecha de Vencimiento",
                             placeholder: "Fecha de Vencimiento",
-                            name: "documentos.fecha_vencimiento"
+                            name: "fecha_vencimiento",
+                            "data-vv-scope": "docs"
                           },
                           model: {
-                            value: _vm.item.fecha_vencimiento,
+                            value: _vm.itemDoc.fecha_vencimiento,
                             callback: function($$v) {
-                              _vm.$set(_vm.item, "fecha_vencimiento", $$v)
+                              _vm.$set(_vm.itemDoc, "fecha_vencimiento", $$v)
                             },
-                            expression: "item.fecha_vencimiento"
+                            expression: "itemDoc.fecha_vencimiento"
                           }
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "text-danger text-sm" }, [
                           _vm._v(
-                            _vm._s(
-                              _vm.errors.first("documentos.fecha_vencimiento")
-                            )
+                            _vm._s(_vm.errors.first("docs.fecha_vencimiento"))
                           )
                         ])
                       ],
@@ -48493,7 +48518,7 @@ var render = function() {
                             attrs: { color: "primary", type: "filled" },
                             on: {
                               click: function($event) {
-                                return _vm.upload()
+                                return _vm.upload("docs")
                               }
                             }
                           },
@@ -49228,13 +49253,13 @@ var render = function() {
                       _vm._v(" "),
                       _c("vs-td", [
                         _c("p", { staticClass: "items-nombre" }, [
-                          _vm._v(_vm._s(tr.nombre))
+                          _vm._v(_vm._s(tr.name))
                         ])
                       ]),
                       _vm._v(" "),
                       _c("vs-td", [
                         _c("p", { staticClass: "items-apellido" }, [
-                          _vm._v(_vm._s(tr.apellido))
+                          _vm._v(_vm._s(tr.lastname))
                         ])
                       ]),
                       _vm._v(" "),
@@ -49245,26 +49270,12 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("vs-td", [
-                        _c("p", { staticClass: "items-email" }, [
-                          _vm._v(_vm._s(tr.email))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("vs-td", [
                         _c("p", { staticClass: "items-telefono" }, [
                           _vm._v(_vm._s(tr.telefono))
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("vs-td", [
-                        _c("p", { staticClass: "items-asociado" }, [
-                          _vm._v(
-                            _vm._s(tr.drivers[0].name) +
-                              " " +
-                              _vm._s(tr.drivers[0].apellido)
-                          )
-                        ])
-                      ]),
+                      _c("vs-td"),
                       _vm._v(" "),
                       _c("vs-td", [
                         _c(
@@ -49602,10 +49613,6 @@ var render = function() {
                 _vm._v("Rut")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-email" } }, [
-                _vm._v("Email")
-              ]),
-              _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-telefono" } }, [
                 _vm._v("Telefono")
               ]),
@@ -49704,14 +49711,15 @@ var render = function() {
                             staticClass: "w-full",
                             attrs: {
                               label: "Tipo de Documento",
-                              name: "documentos.tipo_documento"
+                              name: "tipo_documento",
+                              "data-vv-scope": "docs"
                             },
                             model: {
-                              value: _vm.item.tipo_documento,
+                              value: _vm.itemDoc.tipo_documento,
                               callback: function($$v) {
-                                _vm.$set(_vm.item, "tipo_documento", $$v)
+                                _vm.$set(_vm.itemDoc, "tipo_documento", $$v)
                               },
-                              expression: "item.tipo_documento"
+                              expression: "itemDoc.tipo_documento"
                             }
                           },
                           _vm._l(_vm.tipodocumentos_choices, function(item) {
@@ -49733,20 +49741,15 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.errors.has(
-                                  "documentos.tipo_documento"
-                                ),
-                                expression:
-                                  "errors.has('documentos.tipo_documento')"
+                                value: _vm.errors.has("docs.tipo_documento"),
+                                expression: "errors.has('docs.tipo_documento')"
                               }
                             ],
                             staticClass: "text-danger text-sm"
                           },
                           [
                             _vm._v(
-                              _vm._s(
-                                _vm.errors.first("documentos.tipo_documento")
-                              )
+                              _vm._s(_vm.errors.first("docs.tipo_documento"))
                             )
                           ]
                         )
@@ -49771,22 +49774,21 @@ var render = function() {
                           attrs: {
                             label: "Fecha de Vencimiento",
                             placeholder: "Fecha de Vencimiento",
-                            name: "documentos.fecha_vencimiento"
+                            name: "fecha_vencimiento",
+                            "data-vv-scope": "docs"
                           },
                           model: {
-                            value: _vm.item.fecha_vencimiento,
+                            value: _vm.itemDoc.fecha_vencimiento,
                             callback: function($$v) {
-                              _vm.$set(_vm.item, "fecha_vencimiento", $$v)
+                              _vm.$set(_vm.itemDoc, "fecha_vencimiento", $$v)
                             },
-                            expression: "item.fecha_vencimiento"
+                            expression: "itemDoc.fecha_vencimiento"
                           }
                         }),
                         _vm._v(" "),
                         _c("span", { staticClass: "text-danger text-sm" }, [
                           _vm._v(
-                            _vm._s(
-                              _vm.errors.first("documentos.fecha_vencimiento")
-                            )
+                            _vm._s(_vm.errors.first("docs.fecha_vencimiento"))
                           )
                         ])
                       ],
@@ -49829,7 +49831,7 @@ var render = function() {
                             attrs: { color: "primary", type: "filled" },
                             on: {
                               click: function($event) {
-                                return _vm.upload()
+                                return _vm.upload("docs")
                               }
                             }
                           },
@@ -50596,6 +50598,8 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
+                      _c("vs-td"),
+                      _vm._v(" "),
                       _c("vs-td", [
                         _c(
                           "div",
@@ -50645,6 +50649,32 @@ var render = function() {
                                   on: {
                                     click: function($event) {
                                       return _vm.$submitEliminar(tr, indextr)
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "vx-tooltip",
+                              {
+                                attrs: { color: "primary", text: "Documentos" }
+                              },
+                              [
+                                _c("vs-button", {
+                                  staticClass: "ml-3",
+                                  attrs: {
+                                    radius: "",
+                                    color: "primary",
+                                    type: "border",
+                                    "icon-pack": "feather",
+                                    icon: "icon-file",
+                                    size: "small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.initUpload(tr)
                                     }
                                   }
                                 })
@@ -50900,12 +50930,12 @@ var render = function() {
                 _vm._v("Patente")
               ]),
               _vm._v(" "),
-              _c("vs-th", { attrs: { "sort-key": "items-tipo" } }, [
-                _vm._v("Tipo")
-              ]),
-              _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-asientos" } }, [
                 _vm._v("N° Asientos")
+              ]),
+              _vm._v(" "),
+              _c("vs-th", { attrs: { "sort-key": "items-asociado" } }, [
+                _vm._v("Asociado")
               ]),
               _vm._v(" "),
               _c("vs-th", { attrs: { "sort-key": "items-accion" } }, [
