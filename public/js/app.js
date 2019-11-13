@@ -7463,9 +7463,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 // For custom error message
 
 
@@ -50583,12 +50580,6 @@ var render = function() {
                       _c("vs-td", [
                         _c("p", { staticClass: "items-patente" }, [
                           _vm._v(_vm._s(tr.patente))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("vs-td", [
-                        _c("p", { staticClass: "items-tipo" }, [
-                          _vm._v(_vm._s(tr.tipo))
                         ])
                       ]),
                       _vm._v(" "),

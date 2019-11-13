@@ -344,9 +344,6 @@
               <p class="items-patente">{{ tr.patente }}</p>
             </vs-td>
             <vs-td>
-              <p class="items-tipo">{{ tr.tipo }}</p>
-            </vs-td>
-            <vs-td>
                 <p class="items-asientos">{{ tr.asientos }}</p>
             </vs-td>
              <vs-td>
