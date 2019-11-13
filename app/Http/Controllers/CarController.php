@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use Validator;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\CarsHasDocument;
 use App\Models\Document;
+use App\Models\DriversHasCars;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -60,8 +62,43 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        dd(121212);
-        dd($request->all());
+
+        $validationCar = $this->validatorCar($request->all());
+        if ($validationCar->fails()) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validationDriver->errors(),
+                ], 300);
+           
+        }
+        $returnCar = Car::create($request->all());
+
+        $idCar = $returnCar->id;
+
+        if ($idCar < 1) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Problemas al ingresar el movil',
+                ], 300);
+        } 
+        
+        $dataDriversHasCars =  array(
+            'driver_id'  => $request["driver_id"],
+            'car_id'     => $idCar,
+            'habilitado' => true,
+        );
+        $returnDriverHasCars = DriversHasCars::create($dataDriversHasCars);       
+        $returnIdDriversHasCars = $returnDriverHasCars->id;
+        if ($returnIdDriversHasCars < 1) {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Problemas al datos de movil en la relación',
+                ], 300);
+        } 
     }
 
     /**
@@ -94,8 +131,20 @@ class CarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {        
+        $getCar = Car::where('id', $id)->first();
+        $validationCar = $this->validatorCar($request->all());
+        
+        if ($validationCar->fails()) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validationCar->errors(),
+                ], 300);
+           
+        }
+        Car::where('id', $id)->update($request->all());
     }
 
     /**

@@ -525,7 +525,7 @@ export default {
         
     //Carga Empresas
       this.$http
-        .get("empresas/empresas/")
+        .get("empresas/listemp/")
         .then(function(response) {
           thisIns.empresa_choices = response.data.items;
         })

@@ -7580,7 +7580,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
         thisIns.$msjError(error);
       }); //Carga Empresas
 
-      this.$http.get("empresas/empresas/").then(function (response) {
+      this.$http.get("empresas/listemp/").then(function (response) {
         thisIns.empresa_choices = response.data.items;
       })["catch"](function (error) {
         thisIns.$msjError(error);

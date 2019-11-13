@@ -74,15 +74,15 @@ class DriverController extends Controller
         
         //Driver
         $validationDriver = $this->validatorDriver($request->all());
-        // if ($validationDriver->fails()) {
+        if ($validationDriver->fails()) {
 
-        //     return response()->json(
-        //         [
-        //             'status' => 'error',
-        //             'message' => $validationDriver->errors(),
-        //         ], 300);
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => $validationDriver->errors(),
+                ], 300);
            
-        // }
+        }
         // $existe_driver = Driver::where('rut', $dataDriver['rut'])->first();
         // if ($existe_driver != null) {
 
