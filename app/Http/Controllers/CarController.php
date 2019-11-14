@@ -5,9 +5,10 @@ use Validator;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
-use App\Models\CarsHasDocument;
+use App\Models\CarsHasDocuments;
 use App\Models\Document;
 use App\Models\DriversHasCars;
+use App\Models\Documents;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -96,7 +97,7 @@ class CarController extends Controller
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'Problemas al datos de movil en la relación',
+                    'message' => 'Problemas con la relacion',
                 ], 300);
         } 
     }
@@ -155,7 +156,100 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        try{
+          
+           $car = Car::findOrFail($id);
+           $document = CarsHasDocuments::where('car_id', $id)->get();
+           $idsDocument = array_column($document->toArray(), 'document_id'); 
+
+           if(!is_null($car)){
+                
+                //$car->delete();
+
+                foreach ($idsDocument as $key => $doc) {
+                    $documento = Documents::findOrFail($doc);
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                }
+
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'El Movil ha sido eliminado!!'
+                    ], 200);
+            
+            }else{
+        
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'El Movil no existe!!'
+                    ], 300);
+            }
+
+
+        }catch(ModelNotFoundException $e){
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El Conductor no existe!!'
+                ], 300);
+  
+        }
+
+        
+    }
+
+    public function borrar(Request $request)
+    {
+      
+        
+        $ids = array_column($request->all(), 'id');
+        $document = CarsHasDocuments::whereIn('car_id', $ids)->get();
+
+        $idsDocument = array_column($document->toArray(), 'document_id'); 
+        
+        try{
+
+            if(count($ids) > 0 ){          
+                
+                Car::destroy($ids);
+
+                foreach ($idsDocument as $key => $doc) {
+                    $documento = Documents::findOrFail($doc);
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                }
+                
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'Los registros ha sido eliminados!'
+                    ], 200);
+
+            }else{
+        
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Error al intentar eliminar los registros!'
+                        ], 300);
+            }
+        
+
+        }catch(ModelNotFoundException $e){
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Error al intentar eliminar los registros!'
+                ], 300);
+  
+        }
+
+        
     }
 
     public function upload(Request $request)
@@ -191,7 +285,7 @@ class CarController extends Controller
                 $documentResult = Document::create($dataDocument);
                 if($documentResult->id > 0)
                 {   
-                    $dataHas = CarsHasDocument::create(
+                    $dataHas = CarsHasDocuments::create(
                         array(
                             'car_id'     => $request->car_id,
                             'document_id'   => $documentResult->id,
@@ -228,7 +322,7 @@ class CarController extends Controller
     {
         
         
-        $driver = CarsHasDocument::with('documents')->where('car_id', $id)->get();
+        $driver = CarsHasDocuments::with('documents')->where('car_id', $id)->get();
         
         return response()->json(
             [

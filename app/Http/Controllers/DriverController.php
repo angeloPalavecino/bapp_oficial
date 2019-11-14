@@ -7,7 +7,8 @@ use App\Models\Driver;
 use App\Models\User;
 use App\Models\Car;
 use App\Models\Document;
-use App\Models\DriversHasDocument;
+use App\Models\DriversHasDocuments;
+use App\Models\DriversHasDrivers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +46,8 @@ class DriverController extends Controller
     public function index()
     {
         //$driver = Driver::all();
-        $driver = Driver::where('dueno', '=', 1)->get();
+        $driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+
         return response()->json(
             [
                 'status' => 'success',
@@ -103,7 +105,32 @@ class DriverController extends Controller
                     'status' => 'error',
                     'message' => 'Problemas al ingresar el Conductor',
                 ], 300);
-        }        
+        } 
+
+        $idAsociado = $request->get('driver_id');
+
+        if($idAsociado){
+            
+            $dataDriversHasDrivers =  array(
+                  'driver_id'       => $idDriver,
+                  'asociado_id'     => $idAsociado,
+                  'habilitado'      => true,
+            );
+          
+            $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);       
+            $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
+            
+            if ($returnIdDriversHasDrivers < 1) {
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Problemas con la relacion',
+                        ], 300);
+            } 
+
+        }
+
+              
     }
          
     /**
@@ -114,7 +141,22 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        //
+        //0 -- Asociados
+        //1 -- Conductores
+        if($id == 0){
+           //$driver = Driver::all();
+           $driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+        }else{
+           $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
+        }
+
+        //dd($driver->toArray());
+       
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $driver->toArray(),
+            ], 200); 
     }
 
     /**
@@ -311,7 +353,7 @@ class DriverController extends Controller
                 $documentResult = Document::create($dataDocument);
                 if($documentResult->id > 0)
                 {   
-                    $dataHas = DriversHasDocument::create(
+                    $dataHas = DriversHasDocuments::create(
                         array(
                             'driver_id'     => $request->driver_id,
                             'document_id'   => $documentResult->id,
@@ -348,7 +390,7 @@ class DriverController extends Controller
     {
         
         
-        $driver = DriversHasDocument::with('documents')->where('driver_id', $id)->get();
+        $driver = DriversHasDocuments::with('documents')->where('driver_id', $id)->get();
         
         return response()->json(
             [

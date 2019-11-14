@@ -250,8 +250,8 @@
         <vs-th sort-key="items-apellido">Apellido</vs-th>
         <vs-th sort-key="items-rut">Rut</vs-th>
         <vs-th sort-key="items-telefono">Telefono</vs-th>
-        <!-- <vs-th sort-key="items-moviles">Moviles</vs-th>
-        <vs-th sort-key="items-conductores">Conductores</vs-th> -->
+        <vs-th sort-key="items-moviles">Moviles</vs-th>
+        <vs-th sort-key="items-conductores">Conductores</vs-th> 
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
@@ -272,12 +272,12 @@
              <vs-td>
                 <p class="items-telefono">{{ tr.telefono }}</p>
             </vs-td>
-            <!-- <vs-td>
-                <vs-chip :color="getStatusColorMoviles(tr.cars[0].length)" class="items-moviles">{{ tr.cars[0].length  }}</vs-chip>
+             <vs-td>
+                <vs-chip :color="getStatusColorMoviles(tr.cars_count)" class="items-moviles">{{ tr.cars_count  }}</vs-chip>
             </vs-td>
              <vs-td>
-                <vs-chip :color="getStatusColorConductores(tr.drivers[0].length)" class="items-conductores">{{ tr.drivers[0].length  }}</vs-chip>
-            </vs-td> -->
+                <vs-chip :color="getStatusColorConductores(tr.conductores_count)" class="items-conductores">{{ tr.conductores_count  }}</vs-chip>
+            </vs-td>
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
@@ -438,7 +438,7 @@ export default {
     },
   },
   created() {
-    this.$refrescaTabla();
+    this.$refrescaTabla('/driver/driver/0');
   },
   mounted() {
     this.isMounted = true;

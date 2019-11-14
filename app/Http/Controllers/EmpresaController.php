@@ -15,7 +15,7 @@ use App\Models\ServiciosKMS;
 
 use App\Models\EmpresasHasServKMS;
 use App\Models\EmpresasHasServPlanas;
-use App\Models\EmpresasHasServPsj;
+use App\Models\EmpresasHasServPsjs;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -318,7 +318,7 @@ class EmpresaController extends Controller
           
             $empresa = Empresa::findOrFail($id);
 
-            $servpsjs = EmpresasHasServPsj::where('empresa_id', $id)->get();
+            $servpsjs = EmpresasHasServPsjs::where('empresa_id', $id)->get();
             $servplanas = EmpresasHasServPlanas::where('empresa_id', $id)->get();
             $servkms = EmpresasHasServKMS::where('empresa_id', $id)->get();
 
@@ -370,7 +370,7 @@ class EmpresaController extends Controller
         
         $ids = array_column($request->all(), 'id');
 
-        $servpsjs = EmpresasHasServPsj::whereIn('empresa_id', $ids)->get();
+        $servpsjs = EmpresasHasServPsjs::whereIn('empresa_id', $ids)->get();
         $servplanas = EmpresasHasServPlanas::whereIn('empresa_id', $ids)->get();
         $servkms = EmpresasHasServKMS::whereIn('empresa_id', $ids)->get();
 

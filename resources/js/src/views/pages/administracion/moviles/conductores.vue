@@ -104,7 +104,7 @@
                 <div class="vx-row">
                    <div class="vx-col md:w-1/2 w-full mt-1">
                       <vs-select v-model="item.driver_id" label="Asociados" name="asociados" class="w-full" v-validate="'required'" 
-                      >
+                      :disabled="(modoEditar == true ? true : false)">
                         <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in driver_choices"  />
                      </vs-select>
                       <span class="text-danger">{{ errors.first('asociados') }}</span>
@@ -564,7 +564,7 @@ export default {
       this.item.direccion = item.direccion;
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
-      this.item.driver_id = item.driver_id;
+      this.item.driver_id = item.asociados[0].driver_id;
       this.item.conductor = item.conductor;
       this.item.dueno = item.dueno;
 
@@ -714,7 +714,7 @@ export default {
     }, 
   },
   created() {
-    this.$refrescaTabla();
+    this.$refrescaTabla('/driver/driver/1');
     this.refrescaOtrosDatos();
   },
   mounted() {

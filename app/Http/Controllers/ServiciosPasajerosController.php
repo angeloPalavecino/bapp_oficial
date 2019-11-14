@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\ServiciosPasajeros;
-use App\Models\EmpresasHasServPsj;
+use App\Models\EmpresasHasServPsjs;
 use App\Models\Empresa;
 
 use Illuminate\Http\Request;
@@ -39,7 +39,7 @@ class ServiciosPasajerosController extends Controller
 
         foreach ($empresas as $key => $item) {
           
-            $item['cantidad'] = EmpresasHasServPsj::where('empresa_id', '=', $item->id)->count();
+            $item['cantidad'] = EmpresasHasServPsjs::where('empresa_id', '=', $item->id)->count();
              
          }
 
@@ -84,7 +84,7 @@ class ServiciosPasajerosController extends Controller
 
         $servpsj = ServiciosPasajeros::create($inputs);
 
-        EmpresasHasServPsj::create(array(
+        EmpresasHasServPsjs::create(array(
             'empresa_id'     => $request->empresa_id,
             'serv_psj_id'   => $servpsj->id
         ));
@@ -116,7 +116,7 @@ class ServiciosPasajerosController extends Controller
     public function listado($idEmpresa)
     {
             
-        $servpsjs = EmpresasHasServPsj::with('serviciospasajeros')->where('empresa_id', $idEmpresa)->get();
+        $servpsjs = EmpresasHasServPsjs::with('serviciospasajeros')->where('empresa_id', $idEmpresa)->get();
 
         return response()->json(
             [

@@ -2,9 +2,11 @@
   export default {
     methods: {
       //Carga Tabla 
-      $refrescaTabla() {
+      $refrescaTabla($url = null) {
         const thisIns = this;
-        const url = thisIns.ruta
+        $url = $url == null ? thisIns.ruta : $url;
+
+        const url = $url; //thisIns.ruta        
         this.$http.get(url)
           .then(function (response) {
               thisIns.items = response.data.items 

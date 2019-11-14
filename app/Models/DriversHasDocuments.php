@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Document;
 
-class CarsHasDocument extends Model
+
+class DriversHasDocuments extends Model
 {
     protected $fillable = [
-        'car_id', 'document_id','habilitado'
+        'driver_id', 'document_id','habilitado'
     ];
 
     public function documents()
