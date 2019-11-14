@@ -21,7 +21,7 @@ class Driver extends Model
      
      public function conductores()
      {
-       return $this->hasMany(DriversHasDrivers::class, 'driver_id', 'id');
+       return $this->hasMany(DriversHasDrivers::class, 'asociado_id', 'id');
      }
 
      public function asociados()

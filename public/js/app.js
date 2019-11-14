@@ -3715,6 +3715,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var _this = this;
 
       var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var url_refresco = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var refresco_datos = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + this.item.id;
@@ -3726,7 +3728,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
               scale: 0.6
             });
 
-            _this.$refrescaTabla();
+            _this.$refrescaTabla(url_refresco);
 
             _this.initValues();
 
@@ -6907,6 +6909,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
       });
     },
     editar: function editar(item) {
+      this.refrescaOtrosDatos();
       this.initValues();
       this.modoEditar = true;
       this.item.id = item.id;
@@ -6921,7 +6924,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
       this.item.direccion = item.direccion;
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
-      this.item.driver_id = item.asociados[0].driver_id;
+      this.item.driver_id = item.asociados[0].asociado_id;
       this.item.conductor = item.conductor;
       this.item.dueno = item.dueno;
       this.popupActive = true;
@@ -7605,6 +7608,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.item.numero_movil = item.numero_movil;
       this.item.id = item.id;
       this.item.empresa_id = item.empresa_id;
+      this.item.driver_id = item.asociados[0].driver_id;
       this.popupActive = true;
     },
     initValues: function initValues() {
@@ -47904,7 +47908,10 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitActualizar()
+                              return _vm.$submitActualizar(
+                                null,
+                                "/driver/driver/0"
+                              )
                             }
                           }
                         },
@@ -47917,7 +47924,10 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitAgregar()
+                              return _vm.$submitAgregar(
+                                null,
+                                "/driver/driver/0"
+                              )
                             }
                           }
                         },
@@ -48779,7 +48789,8 @@ var render = function() {
                         attrs: {
                           label: "Asociados",
                           name: "asociados",
-                          disabled: _vm.modoEditar == true ? true : false
+                          disabled:
+                            _vm.item.driver_id == _vm.item.id ? true : false
                         },
                         model: {
                           value: _vm.item.driver_id,
@@ -49233,7 +49244,10 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitActualizar()
+                              return _vm.$submitActualizar(
+                                null,
+                                "/driver/driver/1"
+                              )
                             }
                           }
                         },
@@ -49246,7 +49260,10 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitAgregar()
+                              return _vm.$submitAgregar(
+                                null,
+                                "/driver/driver/1"
+                              )
                             }
                           }
                         },

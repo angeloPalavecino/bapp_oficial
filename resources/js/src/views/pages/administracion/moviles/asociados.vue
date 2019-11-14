@@ -155,8 +155,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR ASOCIADO</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR ASOCIADO</vs-button>
+              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar(null, '/driver/driver/0')" >ACTUALIZAR ASOCIADO</vs-button>
+              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar(null, '/driver/driver/0')">AGREGAR ASOCIADO</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>

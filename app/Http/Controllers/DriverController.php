@@ -116,6 +116,13 @@ class DriverController extends Controller
                   'asociado_id'     => $idAsociado,
                   'habilitado'      => true,
             );
+        } else {
+            $dataDriversHasDrivers =  array(
+                'driver_id'       => $idDriver,
+                'asociado_id'     => $idDriver,
+                'habilitado'      => true,
+          );
+        }
           
             $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);       
             $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
@@ -128,7 +135,7 @@ class DriverController extends Controller
                         ], 300);
             } 
 
-        }
+        
 
               
     }
@@ -146,8 +153,8 @@ class DriverController extends Controller
         
         if($id == 0){
            //$driver = Driver::all();
-           //$driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
-           $driver = Driver::withCount('cars')->where('dueno', '=', 1)->get();
+           $driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+           
         }else{
            $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
         }
@@ -182,7 +189,6 @@ class DriverController extends Controller
     {
 
        
-        $getDriver = Driver::where('id', $id)->first();
         $validationDriver = $this->validatorDriver($request->all());
         
         if ($validationDriver->fails()) {
@@ -194,7 +200,13 @@ class DriverController extends Controller
                 ], 300);
            
         }
-        Driver::where('id', $id)->update($request->all());
+        Driver::where('id', $id)->update($request->except(['driver_id']));
+
+        $dataDriversHasDrivers =  array(
+            'asociado_id'  => $request['driver_id'],
+        );
+    
+        DriversHasDrivers::where('driver_id', $id)->update($dataDriversHasDrivers);
 
         // $dataUser = $request->all()['user'];
         // $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);

@@ -20,7 +20,7 @@
 
       },
       //Actualiza Registros
-    $submitActualizar($name = null) {
+    $submitActualizar($name = null, url_refresco = null, refresco_datos=null) {
       
       $name = $name == null ? true : $name;
       const thisIns = this;
@@ -33,7 +33,7 @@
             .then((res) =>{             
               
               this.$vs.loading({ type: 'radius' , scale: 0.6 });
-              this.$refrescaTabla();
+              this.$refrescaTabla(url_refresco);
               this.initValues();   
               this.modoEditar  = false;            
               this.popupActive = false;
