@@ -66,7 +66,7 @@
                       Descarga
                     </vs-th>                                     
                   </template>
-
+ 
                   <template slot-scope="{data}">
                     <vs-tr :key="indextrdoc" v-for="(trdoc, indextrdoc) in data" >
                       <vs-td colspan="2">
