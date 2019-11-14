@@ -37,7 +37,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $car = Car::all();
+        $car = Car::with('asociados')->get();
        return response()->json(
         [
             'status' => 'success',

@@ -550,6 +550,8 @@ export default {
       this.item.numero_movil = item.numero_movil;
       this.item.id = item.id;
       this.item.empresa_id = item.empresa_id;
+      this.item.driver_id = item.asociados[0].driver_id;
+
 
       this.popupActive = true;
     },
