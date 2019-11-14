@@ -85,15 +85,15 @@ class DriverController extends Controller
                 ], 300);
            
         }
-        // $existe_driver = Driver::where('rut', $dataDriver['rut'])->first();
-        // if ($existe_driver != null) {
+        $existe_driver = Driver::where('rut', $request['rut'])->first();
+        if ($existe_driver != null) {
 
-        //     return response()->json(
-        //         [
-        //             'status' => 'error',
-        //             'message' => 'Conductor ya existe',
-        //         ], 300);           
-        // }
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El rut ya se encuentra registrado',
+                ], 300);           
+        }
 
         $returnDriver = Driver::create($request->all());
 
@@ -143,13 +143,14 @@ class DriverController extends Controller
     {
         //0 -- Asociados
         //1 -- Conductores
+        
         if($id == 0){
            //$driver = Driver::all();
-           $driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+           //$driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+           $driver = Driver::withCount('cars')->where('dueno', '=', 1)->get();
         }else{
            $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
         }
-
         //dd($driver->toArray());
        
         return response()->json(
