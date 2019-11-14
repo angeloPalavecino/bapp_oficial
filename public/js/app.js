@@ -6909,6 +6909,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
     editar: function editar(item) {
       this.initValues();
       this.modoEditar = true;
+      this.item.id = item.dueno;
       this.item.email = item.email;
       this.item.name = item.name;
       this.item.lastname = item.lastname;
@@ -6983,6 +6984,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
           formData.append('fecha_vencimiento', _this2.itemDoc.fecha_vencimiento);
           formData.append('driver_id', _this2.dataItem.id);
           formData.append('rut', _this2.dataItem.rut);
+          formData.append('id', _this2.dataItem.id);
 
           _this2.$upload(formData);
         } else {}
@@ -7662,6 +7664,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
           formData.append('fecha_vencimiento', _this2.itemDoc.fecha_vencimiento);
           formData.append('car_id', _this2.dataItem.id);
           formData.append('numero_movil', _this2.dataItem.numero_movil);
+          formData.append('id', _this2.dataItem.id);
 
           _this2.$upload(formData);
         } else {}

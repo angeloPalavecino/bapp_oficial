@@ -165,13 +165,13 @@ class CarController extends Controller
 
            if(!is_null($car)){
                 
-                //$car->delete();
-
                 foreach ($idsDocument as $key => $doc) {
                     $documento = Documents::findOrFail($doc);
                     Storage::disk('delete')->delete($documento->url);
                     $documento->delete();
                 }
+
+                $car->delete();
 
                 return response()->json(
                     [
@@ -215,13 +215,13 @@ class CarController extends Controller
 
             if(count($ids) > 0 ){          
                 
-                Car::destroy($ids);
-
                 foreach ($idsDocument as $key => $doc) {
                     $documento = Documents::findOrFail($doc);
                     Storage::disk('delete')->delete($documento->url);
                     $documento->delete();
                 }
+
+                Car::destroy($ids);
                 
                 return response()->json(
                     [
@@ -257,8 +257,8 @@ class CarController extends Controller
 
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();  
-        $fileNameSinExtencion = $request->numero_movil."-".$request->tipo_documento;
-        $fileName = $request->numero_movil."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName();
+        $fileNameSinExtencion = $request->id."-".$request->tipo_documento; //numero_movil
+        $fileName = $request->id."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName(); numero_movil
         $exists = Document::where('name', $fileNameSinExtencion)->first();
         $uploadFile = Storage::disk('local')->put('cars/'.$fileName, file_get_contents($file));
 

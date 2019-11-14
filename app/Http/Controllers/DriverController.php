@@ -180,6 +180,7 @@ class DriverController extends Controller
     public function update(Request $request, $id)
     {
 
+       
         $getDriver = Driver::where('id', $id)->first();
         $validationDriver = $this->validatorDriver($request->all());
         
@@ -325,8 +326,8 @@ class DriverController extends Controller
 
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();  
-        $fileNameSinExtencion = $request->rut."-".$request->tipo_documento;
-        $fileName = $request->rut."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName();
+        $fileNameSinExtencion = $request->id."-".$request->tipo_documento;//rut
+        $fileName = $request->id."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName(); rut
         $exists = Document::where('name', $fileNameSinExtencion)->first();
         $uploadFile = Storage::disk('local')->put('drivers/'.$fileName, file_get_contents($file));
 

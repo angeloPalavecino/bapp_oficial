@@ -10,7 +10,8 @@ use App\Models\DriversHasDrivers;
 class Driver extends Model
 {
     protected $fillable = [
-        'name', 'lastname' ,'rut', 'email', 'telefono', 'habilitado', 'pais','ciudad', 'comuna', 'dueno', 'conductor', 'direccion', 'numeracion', 'clase', 'carnet_fin', 'antecedentes_fin', 'licencia_fin','user_id', 'empresa_id'
+        'name', 'lastname' ,'rut', 'email', 'telefono', 'habilitado', 'pais','ciudad', 
+        'comuna', 'dueno', 'conductor', 'direccion', 'numeracion', 'clase', 'empresa_id'
     ];
 
      public function cars()

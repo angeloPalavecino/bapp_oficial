@@ -620,6 +620,7 @@ export default {
           formData.append('fecha_vencimiento', (this.itemDoc.fecha_vencimiento));  
           formData.append('car_id', (this.dataItem.id));
           formData.append('numero_movil', (this.dataItem.numero_movil));
+          formData.append('id', (this.dataItem.id));
 
           this.$upload(formData);
                      

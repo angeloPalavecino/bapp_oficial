@@ -553,6 +553,7 @@ export default {
       this.initValues();
       this.modoEditar = true;
 
+      this.item.id = item.id;
       this.item.email = item.email;
       this.item.name = item.name;
       this.item.lastname = item.lastname;
@@ -641,6 +642,7 @@ export default {
           formData.append('fecha_vencimiento', (this.itemDoc.fecha_vencimiento));  
           formData.append('driver_id', (this.dataItem.id));
           formData.append('rut', (this.dataItem.rut));
+          formData.append('id', (this.dataItem.id));
           
           this.$upload(formData);
                      
