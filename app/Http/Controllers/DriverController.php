@@ -146,7 +146,8 @@ class DriverController extends Controller
         
         if($id == 0){
            //$driver = Driver::all();
-           $driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+           //$driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+           $driver = Driver::withCount('cars')->where('dueno', '=', 1)->get();
         }else{
            $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
         }
