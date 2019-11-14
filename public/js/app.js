@@ -6909,7 +6909,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
     editar: function editar(item) {
       this.initValues();
       this.modoEditar = true;
-      this.item.id = item.dueno;
+      this.item.id = item.id;
       this.item.email = item.email;
       this.item.name = item.name;
       this.item.lastname = item.lastname;
