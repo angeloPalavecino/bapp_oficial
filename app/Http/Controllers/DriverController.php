@@ -398,7 +398,8 @@ class DriverController extends Controller
         return response()->json(
             [
                 'status' => 'success',
-            ], 200);     }
+            ], 200);     
+    }
 
     public function documents ($id)
     {
@@ -431,5 +432,4 @@ class DriverController extends Controller
                 'items' => $cars->toArray(),
             ], 200);    
     }
-
 }
