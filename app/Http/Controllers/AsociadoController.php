@@ -71,63 +71,40 @@ class AsociadoController extends Controller
     public function store(Request $request)
     {
         
-        //Driver
-        $validationDriver = $this->validatorAsociado($request->all());
-        if ($validationDriver->fails()) {
+        //Asociado
+        $validationAsociado = $this->validatorAsociado($request->all());
+
+        if ($validationAsociado->fails()) {
 
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => $validationDriver->errors(),
+                    'message' => $validationAsociado->errors(),
                 ], 300);
            
         }
-        $existe_driver = Driver::where('rut', $request['rut'])->first();
-        if ($existe_driver != null) {
+        $existe_asociado = Driver::where('rut', $request['rut'])->first();
+        if ($existe_asociado != null) {
 
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'El rut ya se encuentra registrado',
+                    'message' => 'El asociado ya se encuentra registrado',
                 ], 300);           
         }
 
-        $returnDriver = Driver::create($request->all());
+        $returnAsociado = Driver::create($request->all());
 
-        $idDriver = $returnDriver->id;
+        $idDriver = $returnAsociado->id;
 
         if ($idDriver < 1) {
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'Problemas al ingresar el Conductor',
+                    'message' => 'Problemas al ingresar el Asociado',
                 ], 300);
         } 
 
-        $idAsociado = $request->get('driver_id');
-
-        if($idAsociado){
-            //Vista conductor
-            $dataDriversHasDrivers =  array(
-                  'driver_id'       => $idDriver,
-                  'asociado_id'     => $idAsociado,
-                  'habilitado'      => true,
-            );
-
-             $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);  
-
-             $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
-            
-             if ($returnIdDriversHasDrivers < 1) {
-                     return response()->json(
-                         [
-                             'status' => 'error',
-                             'message' => 'Problemas con la relacion',
-                         ], 300);
-             } 
-
-        } else {
-            //Vista Asociado
             if($request->get('conductor') == 1) {
 
                 $dataDriversHasDrivers =  array(
@@ -148,7 +125,7 @@ class AsociadoController extends Controller
                            ], 300);
                } 
             }
-        }
+        
               
     }
          
@@ -160,23 +137,7 @@ class AsociadoController extends Controller
      */
     public function show($id)
     {
-        //0 -- Asociados
-        //1 -- Conductores
-        
-        if($id == 0){
-           //$driver = Driver::all();
-           $driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
-           
-        }else{
-           $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
-        }
-        //dd($driver->toArray());
-       
-        return response()->json(
-            [
-                'status' => 'success',
-                'items' => $driver->toArray(),
-            ], 200); 
+      
     }
 
     /**
@@ -201,32 +162,23 @@ class AsociadoController extends Controller
     {
 
        
-        $validationDriver = $this->validatorAsociado($request->all());
+        $validationAsociado = $this->validatorAsociado($request->all());
         
-        if ($validationDriver->fails()) {
+        if ($validationAsociado->fails()) {
 
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => $validationDriver->errors(),
+                    'message' => $validationAsociado->errors(),
                 ], 300);
            
         }
-        Driver::where('id', $id)->update($request->except(['driver_id']));
 
-        if($request['driver_id'] != null )  {
-            //Vista conductor
-            $dataDriversHasDrivers =  array(
-                'asociado_id'  => $request['driver_id'],
-            );
+        Driver::where('id', $id)->update($request->all());
         
-            DriversHasDrivers::where('driver_id', $id)->update($dataDriversHasDrivers);
-        
-        }else{
-            //Vista Asociado
-            $conductor = $request->get('conductor');
+        $conductor = $request->get('conductor');
 
-            if($conductor == 1){
+        if($conductor == 1){
 
                 $dataDriversHasDrivers =  array(
                         'driver_id'       => $id,
@@ -261,7 +213,7 @@ class AsociadoController extends Controller
           
             }
 
-        }
+        
         // $dataUser = $request->all()['user'];
         // $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
         // $dataCar = $request->all()['car'];
@@ -311,7 +263,7 @@ class AsociadoController extends Controller
     {
         
         try{
-          dd(1);
+          
            $driver = Driver::findOrFail($id);
             
            if(!is_null($driver)){
@@ -321,7 +273,7 @@ class AsociadoController extends Controller
                 return response()->json(
                     [
                         'status' => 'success',
-                        'message' => 'El Conductor ha sido eliminado!!'
+                        'message' => 'El Asociado ha sido eliminado!!'
                     ], 200);
             
             }else{
@@ -329,7 +281,7 @@ class AsociadoController extends Controller
                 return response()->json(
                     [
                         'status' => 'error',
-                        'message' => 'El Conductor no existe!!'
+                        'message' => 'El Asociado no existe!!'
                     ], 300);
             }
 
@@ -339,7 +291,7 @@ class AsociadoController extends Controller
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'El Conductor no existe!!'
+                    'message' => 'El Asociado no existe!!'
                 ], 300);
   
         }
@@ -387,172 +339,5 @@ class AsociadoController extends Controller
 
         
     }
-
-    public function destroyasociado($id)
-    {
-        
-        try{
-          dd(2);
-           $driver = Driver::findOrFail($id);
-            
-           if(!is_null($driver)){
-                
-                $driver->delete();
-
-                return response()->json(
-                    [
-                        'status' => 'success',
-                        'message' => 'El Conductor ha sido eliminado!!'
-                    ], 200);
-            
-            }else{
-        
-                return response()->json(
-                    [
-                        'status' => 'error',
-                        'message' => 'El Conductor no existe!!'
-                    ], 300);
-            }
-
-
-        }catch(ModelNotFoundException $e){
-            
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'El Conductor no existe!!'
-                ], 300);
-  
-        }
-
-        
-    }
-
-    public function borrarasociado(Request $request)
-    {
-      
-        
-        $ids = array_column($request->all(), 'id');
-        
-        try{
-
-            if(count($ids) > 0 ){          
-                
-                Driver::destroy($ids);
-                
-                return response()->json(
-                    [
-                        'status' => 'success',
-                        'message' => 'Los registros ha sido eliminados!'
-                    ], 200);
-
-            }else{
-        
-                    return response()->json(
-                        [
-                            'status' => 'error',
-                            'message' => 'Error al intentar eliminar los registros!'
-                        ], 300);
-            }
-        
-
-        }catch(ModelNotFoundException $e){
-            
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'message' => 'Error al intentar eliminar los registros!'
-                ], 300);
-  
-        }
-
-        
-    }
-
-    public function upload(Request $request)
-    {
-
-        $file = $request->file('file');
-        $extension = $file->getClientOriginalExtension();  
-        $fileNameSinExtencion = $request->id."-".$request->tipo_documento;//rut
-        $fileName = $request->id."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName(); rut
-        $exists = Document::where('name', $fileNameSinExtencion)->first();
-        $uploadFile = Storage::disk('local')->put('drivers/'.$fileName, file_get_contents($file));
-
-        if($uploadFile == true)
-        {
-
-            $url = '/documents/drivers/'.$fileName;
-            
-            $dataDocument = array(
-                'type_document_id'  => $request->tipo_documento_id,
-                'name'              => $fileNameSinExtencion,
-                'url'               => $url,
-                'fecha_vencimiento' => date($request->fecha_vencimiento),
-                'informacion'       => "",
-                'habilitado'        => 1
-            );
-            if($exists != null)
-            {
-                Storage::disk('delete')->delete($exists->url);
-                Document::where('name', $fileNameSinExtencion)->update($dataDocument);
-            }
-            else
-            {
-                $documentResult = Document::create($dataDocument);
-                if($documentResult->id > 0)
-                {   
-                    $dataHas = DriversHasDocuments::create(
-                        array(
-                            'driver_id'     => $request->driver_id,
-                            'document_id'   => $documentResult->id,
-                            'habilitado'    => 1
-                        )
-                    );
-    
-                    if($dataHas->id > 0)
-                    {
-                        dd($dataHas);
-                    }
-                    else
-                    {
-                        dd("Fallo");
-                    }
-                }
-                else
-                {
-                    dd("Error");
-                } 
-            }       
-        }
-        else
-        {
-            dd("Fallo");
-        }
-              
-        return response()->json(
-            [
-                'status' => 'success',
-            ], 200);     }
-
-    public function documents ($id)
-    {
-        
-        
-        $driver = DriversHasDocuments::with('documents')->where('driver_id', $id)->get();
-        
-        return response()->json(
-            [
-                'status' => 'success',
-                'items' => $driver->toArray(),
-            ], 200); 
-    }
-
-    public function document ($id)
-    {
-        $document = Document::where('id', $id)->first();
-        return response()->download(storage_path($document->url), $document->name);
-    }
-
   
 }
