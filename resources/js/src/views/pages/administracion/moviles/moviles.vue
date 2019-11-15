@@ -505,7 +505,7 @@ export default {
       //Carga Asociados
       const thisIns  = this;
       this.$http
-        .get("driver/driver")
+        .get("asociado/asociado")
         .then(function(response) {
           thisIns.driver_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })

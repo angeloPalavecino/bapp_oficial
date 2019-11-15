@@ -7571,7 +7571,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     refrescaOtrosDatos: function refrescaOtrosDatos() {
       //Carga Asociados
       var thisIns = this;
-      this.$http.get("driver/driver").then(function (response) {
+      this.$http.get("asociado/asociado").then(function (response) {
         thisIns.driver_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$msjError(error);
