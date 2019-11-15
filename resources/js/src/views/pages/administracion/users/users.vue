@@ -491,7 +491,7 @@ export default {
           });
 
           //Carga Moviles
-          this.$http.get('driver/cars')
+          this.$http.get('car/cars')
           .then(function (response) {
             thisIns.moviles_choices = response.data.items //thisIns.formatData(response.data.users) formatear data
             

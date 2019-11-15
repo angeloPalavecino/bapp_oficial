@@ -8,7 +8,6 @@ use App\Models\Car;
 use App\Models\CarsHasDocuments;
 use App\Models\Document;
 use App\Models\DriversHasCars;
-use App\Models\Documents;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -133,7 +132,7 @@ class CarController extends Controller
      */
     public function update(Request $request, $id)
     {        
-        $getCar = Car::where('id', $id)->first();
+        
         $validationCar = $this->validatorCar($request->all());
         
         if ($validationCar->fails()) {
@@ -145,7 +144,14 @@ class CarController extends Controller
                 ], 300);
            
         }
-        Car::where('id', $id)->update($request->all());
+        Car::where('id', $id)->update($request->except(['driver_id']));
+
+        $dataDriversHasCars =  array(
+            'driver_id'  => $request["driver_id"],
+        );
+        
+        DriversHasCars::where('car_id', $id)->update($dataDriversHasCars);       
+  
     }
 
     /**
@@ -166,7 +172,7 @@ class CarController extends Controller
            if(!is_null($car)){
                 
                 foreach ($idsDocument as $key => $doc) {
-                    $documento = Documents::findOrFail($doc);
+                    $documento = Document::findOrFail($doc);
                     Storage::disk('delete')->delete($documento->url);
                     $documento->delete();
                 }
@@ -216,7 +222,7 @@ class CarController extends Controller
             if(count($ids) > 0 ){          
                 
                 foreach ($idsDocument as $key => $doc) {
-                    $documento = Documents::findOrFail($doc);
+                    $documento = Document::findOrFail($doc);
                     Storage::disk('delete')->delete($documento->url);
                     $documento->delete();
                 }
@@ -336,5 +342,18 @@ class CarController extends Controller
         $document = Document::where('id', $id)->first();
         return response()->download(storage_path($document->url), $document->name);
     }
+
+      //Moviles para usuarios
+      public function cars()
+      {
+         
+          $cars = Car::select('id', 'numero_movil','patente')->get();
+  
+          return response()->json(
+              [
+                  'status' => 'success',
+                  'items' => $cars->toArray(),
+              ], 200);    
+      }
 
 }

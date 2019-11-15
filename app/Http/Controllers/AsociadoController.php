@@ -17,12 +17,9 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Storage;
 
-
-
-class DriverController extends Controller
+class AsociadoController extends Controller
 {
-    
-    public function validatorDriver(array $data){ 
+    public function validatorAsociado(array $data){ 
 
         return Validator::make($data, [
             'name' => 'required',
@@ -45,14 +42,14 @@ class DriverController extends Controller
      */
     public function index()
     {
-    
-        $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
         
-         return response()->json(
-             [
-                 'status' => 'success',
-                 'items' => $driver->toArray(),
-             ], 200);  
+        $asociado = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $asociado->toArray(),
+            ], 200);    
     }
 
     /**
@@ -75,7 +72,7 @@ class DriverController extends Controller
     {
         
         //Driver
-        $validationDriver = $this->validatorDriver($request->all());
+        $validationDriver = $this->validatorAsociado($request->all());
         if ($validationDriver->fails()) {
 
             return response()->json(
@@ -163,7 +160,23 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-    
+        //0 -- Asociados
+        //1 -- Conductores
+        
+        if($id == 0){
+           //$driver = Driver::all();
+           $driver = Driver::withCount(['cars','conductores'])->where('dueno', '=', 1)->get();
+           
+        }else{
+           $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
+        }
+        //dd($driver->toArray());
+       
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $driver->toArray(),
+            ], 200); 
     }
 
     /**
@@ -188,7 +201,7 @@ class DriverController extends Controller
     {
 
        
-        $validationDriver = $this->validatorDriver($request->all());
+        $validationDriver = $this->validatorAsociado($request->all());
         
         if ($validationDriver->fails()) {
 
@@ -257,7 +270,7 @@ class DriverController extends Controller
 
         // $dataDriver['user_id'] = $getDriver->user_id;
         // $dataDriver['habilitado'] = $dataUser['habilitado'];
-        // $validationDriver = $this->validatorDriver($dataDriver);
+        // $validationDriver = $this->validatorAsociado($dataDriver);
         
         // if ($validationDriver->fails()) {
 
@@ -335,6 +348,87 @@ class DriverController extends Controller
     }
 
     public function borrar(Request $request)
+    {
+      
+        
+        $ids = array_column($request->all(), 'id');
+        
+        try{
+
+            if(count($ids) > 0 ){          
+                
+                Driver::destroy($ids);
+                
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'Los registros ha sido eliminados!'
+                    ], 200);
+
+            }else{
+        
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Error al intentar eliminar los registros!'
+                        ], 300);
+            }
+        
+
+        }catch(ModelNotFoundException $e){
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Error al intentar eliminar los registros!'
+                ], 300);
+  
+        }
+
+        
+    }
+
+    public function destroyasociado($id)
+    {
+        
+        try{
+          dd(2);
+           $driver = Driver::findOrFail($id);
+            
+           if(!is_null($driver)){
+                
+                $driver->delete();
+
+                return response()->json(
+                    [
+                        'status' => 'success',
+                        'message' => 'El Conductor ha sido eliminado!!'
+                    ], 200);
+            
+            }else{
+        
+                return response()->json(
+                    [
+                        'status' => 'error',
+                        'message' => 'El Conductor no existe!!'
+                    ], 300);
+            }
+
+
+        }catch(ModelNotFoundException $e){
+            
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El Conductor no existe!!'
+                ], 300);
+  
+        }
+
+        
+    }
+
+    public function borrarasociado(Request $request)
     {
       
         
@@ -461,5 +555,4 @@ class DriverController extends Controller
     }
 
   
-
 }
