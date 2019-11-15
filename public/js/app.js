@@ -3698,11 +3698,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   methods: {
     //Carga Tabla 
     $refrescaTabla: function $refrescaTabla() {
-      var $url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var thisIns = this;
-      $url = $url == null ? thisIns.ruta : $url;
-      var url = $url; //thisIns.ruta        
-
+      var url = thisIns.ruta;
       this.$http.get(url).then(function (response) {
         thisIns.items = response.data.items;
         thisIns.itemsOriginal = response.data.items;
@@ -3715,8 +3712,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var _this = this;
 
       var $name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      var url_refresco = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      var refresco_datos = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
       $name = $name == null ? true : $name;
       var thisIns = this;
       var url = thisIns.ruta + this.item.id;
@@ -3728,7 +3723,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
               scale: 0.6
             });
 
-            _this.$refrescaTabla(url_refresco);
+            _this.$refrescaTabla();
 
             _this.initValues();
 
@@ -4864,7 +4859,7 @@ var dict = {
         required: 'El campo es requerido',
         decimal: 'Debe ingresar solo numeros'
     },
-      serviciokms_valor:{
+       serviciokms_valor:{
         required: 'El campo es requerido',
         decimal: 'Debe ingresar solo numeros'
     },
@@ -6280,7 +6275,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
   components: {},
   data: function data() {
     return {
-      ruta: "/driver/driver/",
+      ruta: "/asociado/asociado/",
       selected: [],
       items: [],
       itemsOriginal: [],
@@ -6349,7 +6344,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
     }
   },
   created: function created() {
-    this.$refrescaTabla('/driver/driver/0');
+    this.$refrescaTabla();
   },
   mounted: function mounted() {
     this.isMounted = true;
@@ -6896,7 +6891,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
     refrescaOtrosDatos: function refrescaOtrosDatos() {
       //Carga Asociados
       var thisIns = this;
-      this.$http.get("driver/driver").then(function (response) {
+      this.$http.get("asociado/asociado").then(function (response) {
         thisIns.driver_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$msjError(error);
@@ -7051,7 +7046,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
     }
   },
   created: function created() {
-    this.$refrescaTabla('/driver/driver/1');
+    this.$refrescaTabla();
     this.refrescaOtrosDatos();
   },
   mounted: function mounted() {
@@ -10911,7 +10906,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].localize('en', dict);
         thisIns.$msjError(error);
       }); //Carga Moviles
 
-      this.$http.get('driver/cars').then(function (response) {
+      this.$http.get('car/cars').then(function (response) {
         thisIns.moviles_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
       })["catch"](function (error) {
         thisIns.$msjError(error);
@@ -47908,10 +47903,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitActualizar(
-                                null,
-                                "/driver/driver/0"
-                              )
+                              return _vm.$submitActualizar()
                             }
                           }
                         },
@@ -47924,10 +47916,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitAgregar(
-                                null,
-                                "/driver/driver/0"
-                              )
+                              return _vm.$submitAgregar()
                             }
                           }
                         },
@@ -48790,7 +48779,10 @@ var render = function() {
                           label: "Asociados",
                           name: "asociados",
                           disabled:
-                            _vm.item.driver_id == _vm.item.id ? true : false
+                            _vm.item.driver_id == _vm.item.id &&
+                            _vm.modoEditar == true
+                              ? true
+                              : false
                         },
                         model: {
                           value: _vm.item.driver_id,
@@ -49244,10 +49236,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitActualizar(
-                                null,
-                                "/driver/driver/1"
-                              )
+                              return _vm.$submitActualizar()
                             }
                           }
                         },
@@ -49260,10 +49249,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.$submitAgregar(
-                                null,
-                                "/driver/driver/1"
-                              )
+                              return _vm.$submitAgregar()
                             }
                           }
                         },
@@ -91190,7 +91176,7 @@ vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vee_validate__WEBPACK_IMPORTED_MODULE_16__["default"]); //Axios
 
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_1___default.a);
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("", "/api/v1");
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = "".concat("http://127.0.0.1:9090", "/api/v1");
 vue__WEBPACK_IMPORTED_MODULE_6___default.a.use(_websanova_vue_auth__WEBPACK_IMPORTED_MODULE_2___default.a, _auth__WEBPACK_IMPORTED_MODULE_5__["default"]); // Vuejs - Vue wrapper for hammerjs
 
 
@@ -93391,9 +93377,9 @@ var themeConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vuesax\resources\assets\css\main.css */"./resources/assets/css/main.css");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\desarrollos\bapp_oficial\resources\assets\css\main.css */"./resources/assets/css/main.css");
 
 
 /***/ })

@@ -2,11 +2,10 @@
   export default {
     methods: {
       //Carga Tabla 
-      $refrescaTabla($url = null) {
+      $refrescaTabla() {
         const thisIns = this;
-        $url = $url == null ? thisIns.ruta : $url;
+        const url = thisIns.ruta;
 
-        const url = $url; //thisIns.ruta        
         this.$http.get(url)
           .then(function (response) {
               thisIns.items = response.data.items 
@@ -20,7 +19,7 @@
 
       },
       //Actualiza Registros
-    $submitActualizar($name = null, url_refresco = null, refresco_datos=null) {
+    $submitActualizar($name = null) {
       
       $name = $name == null ? true : $name;
       const thisIns = this;
@@ -33,7 +32,7 @@
             .then((res) =>{             
               
               this.$vs.loading({ type: 'radius' , scale: 0.6 });
-              this.$refrescaTabla(url_refresco);
+              this.$refrescaTabla();
               this.initValues();   
               this.modoEditar  = false;            
               this.popupActive = false;
@@ -113,10 +112,10 @@
       },
     //Acepta Borrado
     $aceptaBorrado() {
-       const thisIns = this;
-       const url = thisIns.ruta + this.ite.id;
-
-        this.$http.delete(url)
+      const thisIns = this;
+      const url = thisIns.ruta + this.ite.id;
+      
+       this.$http.delete(url)
           .then(()=>{
             this.$vs.loading({ type: 'radius' , scale: 0.6 });
               this.$refrescaTabla();

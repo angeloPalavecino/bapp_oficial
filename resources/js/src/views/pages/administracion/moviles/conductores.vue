@@ -104,7 +104,7 @@
                 <div class="vx-row">
                    <div class="vx-col md:w-1/2 w-full mt-1">
                       <vs-select v-model="item.driver_id" label="Asociados" name="asociados" class="w-full" v-validate="'required'"
-                      :disabled="(item.driver_id == item.id ? true : false)">
+                      :disabled="((item.driver_id == item.id) && (modoEditar == true) ? true : false)">
                         <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in driver_choices"  />
                      </vs-select>
                       <span class="text-danger">{{ errors.first('asociados') }}</span>
@@ -244,8 +244,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar(null, '/driver/driver/1')" >ACTUALIZAR CONDUCTOR</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar(null, '/driver/driver/1')">AGREGAR CONDUCTOR</vs-button>
+              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR CONDUCTOR</vs-button>
+              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR CONDUCTOR</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -528,7 +528,7 @@ export default {
       //Carga Asociados
       const thisIns  = this;
       this.$http
-        .get("driver/driver")
+        .get("asociado/asociado")
         .then(function(response) {
           thisIns.driver_choices = response.data.items; //thisIns.formatData(response.data.users) formatear data
         })
@@ -717,7 +717,7 @@ export default {
     }, 
   },
   created() {
-    this.$refrescaTabla('/driver/driver/1');
+    this.$refrescaTabla();
     this.refrescaOtrosDatos();
   },
   mounted() {

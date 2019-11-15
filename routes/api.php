@@ -240,10 +240,10 @@ Route::prefix('v1')->group(function () {
        });
     });
 
-    //MOVILES
+    //CONDUCTORES
     Route::prefix('driver')->group(function () {
         Route::middleware('auth:api')->group(function () {
-        // MOVILES
+        // CONDUCTORES
             Route::get('driver', 'DriverController@index');
             Route::get('driver/create', 'DriverController@create');
             Route::get('driver/{id}', 'DriverController@show');
@@ -255,9 +255,23 @@ Route::prefix('v1')->group(function () {
             Route::post('driver/upload', 'DriverController@upload');
             Route::get('driver/documents/{id}', 'DriverController@documents');
             Route::get('driver/document/{id}', 'DriverController@document');
-            Route::get('cars', 'DriverController@cars');
-            Route::get('moviles', 'DriverController@moviles');
+            //Route::get('moviles', 'DriverController@moviles');
         });
+    });
+
+    //ASOCIADOS
+    Route::prefix('asociado')->group(function () {
+        Route::middleware('auth:api')->group(function () {
+        // ASOCIADOS
+            Route::get('asociado', 'AsociadoController@index');
+            Route::get('asociado/create', 'AsociadoController@create');
+            Route::get('asociado/{id}', 'AsociadoController@show');
+            Route::delete('asociado/{id}', 'AsociadoController@destroy');
+            Route::post('asociado/borrar', 'AsociadoController@borrar');
+            Route::put('asociado/{id}', 'AsociadoController@update');
+            Route::post('asociado/store', 'AsociadoController@store');
+            Route::get('asociado/{id}/edit', 'AsociadoController@edit');
+         });
     });
 
     //CAR
@@ -275,6 +289,7 @@ Route::prefix('v1')->group(function () {
             Route::post('car/upload', 'CarController@upload');
             Route::get('car/documents/{id}', 'CarController@documents');
             Route::get('car/document/{id}', 'CarController@document');
+            Route::get('cars', 'CarController@cars');
             // Route::get('cars', 'CarController@cars');
             // Route::get('moviles', 'DriverController@moviles');
         });
