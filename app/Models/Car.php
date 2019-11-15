@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\DriversHasCars;
 use App\Models\Driver;
 
-
+ 
 
 class Car extends Model
 {
