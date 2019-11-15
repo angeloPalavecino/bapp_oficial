@@ -91,7 +91,7 @@ class DriverController extends Controller
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'El rut ya se encuentra registrado',
+                    'message' => 'El conductor ya se encuentra registrado',
                 ], 300);           
         }
 
@@ -107,51 +107,25 @@ class DriverController extends Controller
                 ], 300);
         } 
 
-        $idAsociado = $request->get('driver_id');
+            $idAsociado = $request->get('driver_id');
 
-        if($idAsociado){
-            //Vista conductor
             $dataDriversHasDrivers =  array(
-                  'driver_id'       => $idDriver,
-                  'asociado_id'     => $idAsociado,
-                  'habilitado'      => true,
+                    'driver_id'       => $idDriver,
+                    'asociado_id'     => $idAsociado,
+                    'habilitado'      => true,
             );
 
-             $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);  
+            $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);  
 
-             $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
+            $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
             
-             if ($returnIdDriversHasDrivers < 1) {
-                     return response()->json(
-                         [
-                             'status' => 'error',
-                             'message' => 'Problemas con la relacion',
-                         ], 300);
-             } 
-
-        } else {
-            //Vista Asociado
-            if($request->get('conductor') == 1) {
-
-                $dataDriversHasDrivers =  array(
-                    'driver_id'       => $idDriver,
-                    'asociado_id'     => $idDriver,
-                    'habilitado'      => true,
-                );
-
-               $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers); 
-               
-               $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
-            
-               if ($returnIdDriversHasDrivers < 1) {
-                       return response()->json(
-                           [
-                               'status' => 'error',
-                               'message' => 'Problemas con la relacion',
-                           ], 300);
-               } 
-            }
-        }
+            if ($returnIdDriversHasDrivers < 1) {
+                    return response()->json(
+                        [
+                            'status' => 'error',
+                            'message' => 'Problemas con la relacion',
+                        ], 300);
+            } 
               
     }
          
@@ -201,54 +175,12 @@ class DriverController extends Controller
         }
         Driver::where('id', $id)->update($request->except(['driver_id']));
 
-        if($request['driver_id'] != null )  {
-            //Vista conductor
-            $dataDriversHasDrivers =  array(
-                'asociado_id'  => $request['driver_id'],
-            );
-        
-            DriversHasDrivers::where('driver_id', $id)->update($dataDriversHasDrivers);
-        
-        }else{
-            //Vista Asociado
-            $conductor = $request->get('conductor');
+        $dataDriversHasDrivers =  array(
+            'asociado_id'  => $request['driver_id'],
+        );
+    
+        DriversHasDrivers::where('driver_id', $id)->update($dataDriversHasDrivers);
 
-            if($conductor == 1){
-
-                $dataDriversHasDrivers =  array(
-                        'driver_id'       => $id,
-                        'asociado_id'     => $id,
-                        'habilitado'      => true,
-                );
-
-                $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);       
-                $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
-                
-                if ($returnIdDriversHasDrivers < 1) {
-                        return response()->json(
-                            [
-                                'status' => 'error',
-                                'message' => 'Problemas con la relacion',
-                            ], 300);
-                } 
-
-            }else{
-
-                DriversHasDrivers::where('driver_id', $id)->delete();
-                
-                //Al dejar de ser conductor, eliminar documentos?
-                $document = DriversHasDocuments::where('driver_id', $id)->get();
-                $idsDocument = array_column($document->toArray(), 'document_id'); 
-
-                foreach ($idsDocument as $key => $doc) {
-                    $documento = Document::findOrFail($doc);
-                    Storage::disk('delete')->delete($documento->url);
-                    $documento->delete();
-                }
-          
-            }
-
-        }
         // $dataUser = $request->all()['user'];
         // $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
         // $dataCar = $request->all()['car'];
@@ -298,7 +230,7 @@ class DriverController extends Controller
     {
         
         try{
-          dd(1);
+          
            $driver = Driver::findOrFail($id);
             
            if(!is_null($driver)){
