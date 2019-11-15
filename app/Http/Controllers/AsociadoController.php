@@ -8,7 +8,9 @@ use App\Models\User;
 use App\Models\Car;
 use App\Models\Document;
 use App\Models\DriversHasDocuments;
+use App\Models\CarsHasDocuments;
 use App\Models\DriversHasDrivers;
+use App\Models\DriversHasCars;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -265,8 +267,47 @@ class AsociadoController extends Controller
         try{
           
            $driver = Driver::findOrFail($id);
-            
+         
+           $driverHasDrivers =  DriversHasDrivers::where('asociado_id', $id)->get();
+           $driverHasCars =  DriversHasCars::where('driver_id', $id)->get();
+                    
            if(!is_null($driver)){
+
+                foreach ($driverHasDrivers as $x => $dri) {
+                        $idDriver = $dri['driver_id'];
+                        $conductor = Driver::findOrFail($idDriver);
+
+                        $document = DriversHasDocuments::where('driver_id', $idDriver)->get();
+                        
+                        foreach ($document as $y => $doc) {
+                            $idDocument = $doc['document_id'];
+                        
+                            $documento = Document::findOrFail($idDocument);
+                            Storage::disk('delete')->delete($documento->url);
+                            $documento->delete();
+                        }    
+                        
+                        $conductor->delete();
+                        
+                }
+
+                foreach ($driverHasCars as $z => $car) {
+                    $idCar = $car['car_id'];
+                    $car = Car::findOrFail($idCar);
+
+                    $document = CarsHasDocuments::where('car_id', $idCar)->get();
+
+                    foreach ($document as $k => $doc) {
+                        $idDocument = $doc['document_id'];
+                    
+                        $documento = Document::findOrFail($idDocument);
+                        Storage::disk('delete')->delete($documento->url);
+                        $documento->delete();
+                    }    
+                    
+                        $car->delete();
+                    
+                }
                 
                 $driver->delete();
 

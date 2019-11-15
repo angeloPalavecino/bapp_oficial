@@ -232,11 +232,36 @@ class DriverController extends Controller
         try{
           
            $driver = Driver::findOrFail($id);
-            
+           
+           $document = DriversHasDocuments::where('driver_id', $id)->get();
+           $idsDocument = array_column($document->toArray(), 'document_id'); 
+    
            if(!is_null($driver)){
                 
-                $driver->delete();
+                foreach ($idsDocument as $key => $doc) {
+                    $documento = Document::findOrFail($doc);
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                }
+                
+                if($driver['dueno'] == 1){
 
+                    $datadrivers =  array(
+                        'conductor'  => 0,
+                    );
+
+                    Driver::where('id', $id)->update($datadrivers);
+
+                    $driverhasdriver = DriversHasDrivers::where('driver_id', $id);
+                    $driverhasdriver->delete();
+            
+                }else{
+
+                    $driver->delete();
+
+                }
+
+                
                 return response()->json(
                     [
                         'status' => 'success',
@@ -269,14 +294,45 @@ class DriverController extends Controller
     public function borrar(Request $request)
     {
       
-        
         $ids = array_column($request->all(), 'id');
+        $document = DriversHasDocuments::whereIn('driver_id', $ids)->get();
         
         try{
 
-            if(count($ids) > 0 ){          
+            if(count($ids) > 0 ){     
                 
-                Driver::destroy($ids);
+                foreach ($document as $key => $doc) {
+                    
+                    $idDriver = $doc['driver_id'];
+                    $idDocument = $doc['document_id'];
+
+                    $conductor = Driver::findOrFail($idDriver);
+                    $documento = Document::findOrFail($idDocument);
+                    
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                    
+                    if($conductor['dueno'] == 1){
+
+                        $datadrivers =  array(
+                            'conductor'  => 0,
+                        );
+    
+                        Driver::where('id', $idDriver)->update($datadrivers);
+    
+                        $driverhasdriver = DriversHasDrivers::where('driver_id', $idDriver);
+                        $driverhasdriver->delete();
+                
+                    }else{
+    
+                        $conductor->delete();
+    
+                    }
+                    
+                    
+                }
+                
+                //Driver::destroy($ids);
                 
                 return response()->json(
                     [
