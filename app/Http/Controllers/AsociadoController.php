@@ -267,49 +267,48 @@ class AsociadoController extends Controller
         try{
           
            $driver = Driver::findOrFail($id);
-         
-           $driverHasDrivers =  DriversHasDrivers::where('asociado_id', $id)->get();
-           $driverHasCars =  DriversHasCars::where('driver_id', $id)->get();
                     
            if(!is_null($driver)){
 
-                foreach ($driverHasDrivers as $x => $dri) {
-                        $idDriver = $dri['driver_id'];
-                        $conductor = Driver::findOrFail($idDriver);
-
-                        $document = DriversHasDocuments::where('driver_id', $idDriver)->get();
-                        
-                        foreach ($document as $y => $doc) {
-                            $idDocument = $doc['document_id'];
-                        
-                            $documento = Document::findOrFail($idDocument);
-                            Storage::disk('delete')->delete($documento->url);
-                            $documento->delete();
-                        }    
-                        
-                        $conductor->delete();
-                        
-                }
-
-                foreach ($driverHasCars as $z => $car) {
-                    $idCar = $car['car_id'];
-                    $car = Car::findOrFail($idCar);
-
-                    $document = CarsHasDocuments::where('car_id', $idCar)->get();
-
-                    foreach ($document as $k => $doc) {
-                        $idDocument = $doc['document_id'];
+                //Trae los ids de los conductores
+                $driverHasDrivers =  DriversHasDrivers::where('asociado_id', $id)->get();
+                $idsDriver = array_column($driverHasDrivers->toArray(), 'driver_id');
+                //Trae los ids de los documentos de los conductores
+                $driverHasDriversDocument = DriversHasDocuments::whereIn('driver_id', $idsDriver)->get();
+                $idsDocumentDrivers =  array_column($driverHasDriversDocument->toArray(), 'document_id');
                     
-                        $documento = Document::findOrFail($idDocument);
-                        Storage::disk('delete')->delete($documento->url);
-                        $documento->delete();
-                    }    
-                    
-                        $car->delete();
-                    
-                }
-                
+                //Elimina los documento de los conductores
+                foreach ($idsDocumentDrivers as $x => $doc) {
+                    $idDocument = $doc;
+                    $documento = Document::findOrFail($idDocument);
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                } 
+
+                //Trae los ids de los moviles
+                $driverHasCars =  DriversHasCars::where('driver_id', $id)->get();
+                $idsCars = array_column($driverHasCars->toArray(), 'car_id');
+                //Trae los ids de los documentos de los moviles
+                $driverHasCarsDocument = CarsHasDocuments::whereIn('car_id', $idsCars)->get();
+                $idsDocumentCars =  array_column($driverHasCarsDocument->toArray(), 'document_id');
+
+                //Elimina los documento de los moviles
+                foreach ($idsDocumentCars as $y => $doc) {
+                    $idDocument = $doc;
+                    $documento = Document::findOrFail($idDocument);
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                }   
+
+                //Elimina los moviles
+                Car::destroy($idsCars);
+
+                //Elimina los conductores
+                Driver::destroy($idsDriver);
+
+                //Elimina el asociado
                 $driver->delete();
+
 
                 return response()->json(
                     [
@@ -348,9 +347,47 @@ class AsociadoController extends Controller
         
         try{
 
-            if(count($ids) > 0 ){          
+            if(count($ids) > 0 ){      
                 
-                Driver::destroy($ids);
+                //Trae los ids de los conductores
+                $driverHasDrivers =  DriversHasDrivers::whereIn('asociado_id', $ids)->get();
+                $idsDriver = array_column($driverHasDrivers->toArray(), 'driver_id');
+                //Trae los ids de los documentos de los conductores
+                $driverHasDriversDocument = DriversHasDocuments::whereIn('driver_id', $idsDriver)->get();
+                $idsDocumentDrivers =  array_column($driverHasDriversDocument->toArray(), 'document_id');
+                    
+                //Elimina los documento de los conductores
+                foreach ($idsDocumentDrivers as $x => $doc) {
+                    $idDocument = $doc;
+                    $documento = Document::findOrFail($idDocument);
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                } 
+
+                //Trae los ids de los moviles
+                $driverHasCars =  DriversHasCars::whereIn('driver_id', $ids)->get();
+                $idsCars = array_column($driverHasCars->toArray(), 'car_id');
+                //Trae los ids de los documentos de los moviles
+                $driverHasCarsDocument = CarsHasDocuments::whereIn('car_id', $idsCars)->get();
+                $idsDocumentCars =  array_column($driverHasCarsDocument->toArray(), 'document_id');
+
+                //Elimina los documento de los moviles
+                foreach ($idsDocumentCars as $y => $doc) {
+                    $idDocument = $doc;
+                    $documento = Document::findOrFail($idDocument);
+                    Storage::disk('delete')->delete($documento->url);
+                    $documento->delete();
+                }   
+
+                //Elimina los moviles
+                Car::destroy($idsCars);
+
+                //Elimina los conductores
+                Driver::destroy($idsDriver);
+
+                //Elimina el asociado
+                Driver::destroy($ids);                
+                
                 
                 return response()->json(
                     [
