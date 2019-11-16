@@ -50646,7 +50646,11 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("vs-td"),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-asociado" }, [
+                          _vm._v(_vm._s(tr.name) + " " + _vm._s(tr.lastname))
+                        ])
+                      ]),
                       _vm._v(" "),
                       _c("vs-td", [
                         _c(

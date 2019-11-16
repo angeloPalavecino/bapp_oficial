@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Validator;
+use DB;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
@@ -36,8 +37,32 @@ class CarController extends Controller
      */
     public function index()
     {
-        $car = Car::with('asociados')->get();
-       return response()->json(
+        //$car = Car::with('asociados')->get();
+       $car = DB::table('cars')
+              ->join('drivers_has_cars', 'drivers_has_cars.car_id', '=', 'cars.id')
+              ->join('drivers', 'drivers.id', '=', 'drivers_has_cars.driver_id')
+              ->select(
+                  'cars.id', 
+                  'cars.tipo', 
+                  'cars.marca',
+                  'cars.modelo', 
+                  'cars.ano', 
+                  'cars.motor', 
+                  'cars.patente', 
+                  'cars.color',
+                  'cars.asientos', 
+                  'cars.habilitado',
+                  'cars.empresa_id', 
+                  'cars.numero_movil',
+                  'drivers_has_cars.driver_id',
+                  'drivers_has_cars.car_id',
+                  'drivers.name',
+                  'drivers.lastname'
+
+                  )
+              ->get();
+       //dd($car);
+        return response()->json(
         [
             'status' => 'success',
             'items' => $car->toArray(),

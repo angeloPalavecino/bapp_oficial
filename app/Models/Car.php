@@ -13,9 +13,4 @@ class Car extends Model
     protected $fillable = [
         'tipo', 'marca' ,'modelo', 'ano', 'motor', 'patente', 'color','asientos', 'habilitado','empresa_id', 'numero_movil'
     ];
-
-    public function asociados()
-    {
-      return $this->hasMany(DriversHasCars::class, 'car_id', 'id');
-    }
 }
