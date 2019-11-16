@@ -17,7 +17,7 @@ class CreateDriversTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('lastname');
-            $table->integer('rut');
+            $table->string('rut');
             $table->string('direccion');
             $table->string('ciudad');
             $table->string('comuna');
