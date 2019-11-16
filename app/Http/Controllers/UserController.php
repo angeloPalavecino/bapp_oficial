@@ -70,6 +70,27 @@ class UserController extends Controller
            
         }
 
+        
+        $existe_usuario = User::where('rut', $input['rut'])->first();
+        if ($existe_usuario != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El rut ya se encuentra registrado',
+                ], 300);           
+        }
+
+        $existe_usuario = User::where('email', $input['email'])->first();
+        if ($existe_usuario != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El email ya se encuentra registrado',
+                ], 300);           
+        }
+
         $input = $request->all();
         $empresa_id = $input['empresa_id'];
         $name = $input['name'];

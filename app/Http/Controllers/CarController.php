@@ -98,6 +98,27 @@ class CarController extends Controller
                 ], 300);
            
         }
+
+        $existe_car = Car::where('patente', $request['patente'])->first();
+        if ($existe_car != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El movil ya se encuentra registrado',
+                ], 300);           
+        }
+
+        $existe_car = Car::where('numero_movil', $request['numero_movil'])->first();
+        if ($existe_car != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El n° de movil ya se encuentra registrado',
+                ], 300);           
+        }
+
         $returnCar = Car::create($request->all());
 
         $idCar = $returnCar->id;

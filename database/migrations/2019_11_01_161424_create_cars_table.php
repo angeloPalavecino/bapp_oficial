@@ -21,7 +21,7 @@ class CreateCarsTable extends Migration
             $table->string('modelo');
             $table->integer('ano');
             $table->string('motor');
-            $table->string('patente');
+            $table->string('patente')->unique();
             $table->string('color');
             $table->string('asientos');
             $table->string('numero_movil');
