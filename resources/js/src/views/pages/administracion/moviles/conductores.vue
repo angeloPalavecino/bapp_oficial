@@ -549,6 +549,7 @@ export default {
 
     },
     editar(item) {
+      
       this.refrescaOtrosDatos();
       this.initValues();
       this.modoEditar = true;

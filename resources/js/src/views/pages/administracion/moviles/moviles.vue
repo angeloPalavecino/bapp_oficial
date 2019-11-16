@@ -347,7 +347,7 @@
                 <p class="items-asientos">{{ tr.asientos }}</p>
             </vs-td>
              <vs-td>
-              <!--  <p class="items-asociado">{{ tr.drivers[0].name  }} {{ tr.drivers[0].apellido }}</p>-->
+               <p class="items-asociado">{{ tr.name  }} {{ tr.lastname }}</p>
             </vs-td> 
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
