@@ -71,6 +71,7 @@ class DriverController extends Controller
                     'drivers_second.name as second_name',
                     'drivers_second.lastname as second_lastname'
                     )
+                ->where('drivers_original.conductor', '=', 1)
                 ->get(); 
          return response()->json(
              [
