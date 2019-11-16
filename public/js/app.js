@@ -6919,7 +6919,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_1__["Validator"].localize("en", dict);
       this.item.direccion = item.direccion;
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
-      this.item.driver_id = item.asociados[0].asociado_id;
+      this.item.driver_id = item.asociado_id;
       this.item.conductor = item.conductor;
       this.item.dueno = item.dueno;
       this.popupActive = true;
@@ -7603,7 +7603,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize("en", dict);
       this.item.numero_movil = item.numero_movil;
       this.item.id = item.id;
       this.item.empresa_id = item.empresa_id;
-      this.item.driver_id = item.asociados[0].driver_id;
+      this.item.driver_id = item.driver_id;
       this.popupActive = true;
     },
     initValues: function initValues() {
@@ -49329,7 +49329,15 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("vs-td"),
+                      _c("vs-td", [
+                        _c("p", { staticClass: "items-asociado" }, [
+                          _vm._v(
+                            _vm._s(tr.second_name) +
+                              " " +
+                              _vm._s(tr.second_lastname)
+                          )
+                        ])
+                      ]),
                       _vm._v(" "),
                       _c("vs-td", [
                         _c(

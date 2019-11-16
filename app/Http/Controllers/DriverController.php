@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use DB;
 use App\Models\Driver;
 use App\Models\User;
 use App\Models\Car;
@@ -46,8 +47,31 @@ class DriverController extends Controller
     public function index()
     {
     
-        $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
-        
+       // $driver = Driver::with('asociados')->where('conductor', '=', 1)->get();
+       $driver = DB::table('drivers as drivers_original')
+                ->join('drivers_has_drivers', 'drivers_has_drivers.driver_id', '=', 'drivers_original.id')
+                ->join('drivers as drivers_second', 'drivers_second.id', '=', 'drivers_has_drivers.asociado_id')
+                ->select(
+                    'drivers_original.id',
+                    'drivers_original.name', 
+                    'drivers_original.lastname',
+                    'drivers_original.rut',
+                    'drivers_original.email',
+                    'drivers_original.telefono',
+                    'drivers_original.habilitado', 
+                    'drivers_original.ciudad', 
+                    'drivers_original.comuna',
+                    'drivers_original.dueno', 
+                    'drivers_original.conductor', 
+                    'drivers_original.direccion',
+                    'drivers_original.numeracion',
+                    'drivers_original.clase',
+                    'drivers_has_drivers.driver_id',
+                    'drivers_has_drivers.asociado_id',
+                    'drivers_second.name as second_name',
+                    'drivers_second.lastname as second_lastname'
+                    )
+                ->get(); 
          return response()->json(
              [
                  'status' => 'success',
@@ -114,7 +138,7 @@ class DriverController extends Controller
                     'asociado_id'     => $idAsociado,
                     'habilitado'      => true,
             );
-
+            
             $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);  
 
             $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
@@ -161,7 +185,7 @@ class DriverController extends Controller
     public function update(Request $request, $id)
     {
 
-       
+
         $validationDriver = $this->validatorDriver($request->all());
         
         if ($validationDriver->fails()) {

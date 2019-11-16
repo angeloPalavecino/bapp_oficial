@@ -365,7 +365,7 @@
                 <p class="items-telefono">{{ tr.telefono }}</p>
             </vs-td>
             <vs-td>
-                <!-- <p class="items-asociado">{{ tr.drivers[0].name  }} {{ tr.drivers[0].apellido  }}</p>-->
+                <p class="items-asociado">{{ tr.second_name  }} {{ tr.second_lastname  }}</p>
             </vs-td>
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
@@ -566,7 +566,7 @@ export default {
       this.item.direccion = item.direccion;
       this.item.numeracion = item.numeracion;
       this.item.clase = item.clase;
-      this.item.driver_id = item.asociados[0].asociado_id;
+      this.item.driver_id = item.asociado_id;
       this.item.conductor = item.conductor;
       this.item.dueno = item.dueno;
 
