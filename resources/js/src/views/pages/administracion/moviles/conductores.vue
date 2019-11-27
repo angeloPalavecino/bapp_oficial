@@ -71,13 +71,13 @@
                   <template slot-scope="{data}">
                     <vs-tr :key="indextrdoc" v-for="(trdoc, indextrdoc) in data" >
                       <vs-td colspan="2">
-                        {{ trdoc.documents[0].name.split(/[.,\/-]/)[1] }}
+                        {{ trdoc.name.split(/[.,\/-]/)[1] }}
                       </vs-td>
                       <vs-td>
-                        <vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
+                        <vs-chip :color="getStatusColor(trdoc.fecha_vencimiento)">{{ trdoc.fecha_vencimiento }}</vs-chip>
                       </vs-td>                  
                       <vs-td :data="data[indextrdoc].url">
-                        <a style="cursor: pointer;" rel="nofollow" @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)">Descargar</a>                        
+                        <a style="cursor: pointer;" rel="nofollow" @click="downloadDocument(data[indextrdoc].id, data[indextrdoc].name)">Descargar</a>                        
                       </vs-td>
 
                     </vs-tr>
@@ -102,14 +102,22 @@
                 <vs-divider color="primary"><h5>Conductores</h5></vs-divider>
               </div>  
                 <div class="vx-row">
-                   <div class="vx-col md:w-1/2 w-full mt-1">
+                   <div class="vx-col md:w-1/3 w-full mt-1">
                       <vs-select v-model="item.driver_id" label="Asociados" name="asociados" class="w-full" v-validate="'required'"
                       :disabled="((item.driver_id == item.id) && (modoEditar == true) ? true : false)">
                         <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in driver_choices"  />
                      </vs-select>
                       <span class="text-danger">{{ errors.first('asociados') }}</span>
                     </div>
-                    <div class="vx-col md:w-1/2 w-full mt-1">
+                    <div class="vx-col md:w-1/3 w-full mt-1">
+                      <vs-select v-model="item.car_id" label="Moviles" name="cars" class="w-full"  v-validate="'required'"> 
+                          <vs-select-item :key="itemcars.id" :value="itemcars.id" :text="itemcars.numero_movil" v-for="itemcars in cars_choices"  />
+                      </vs-select>
+                       <span class="text-danger">{{ errors.first('cars') }}</span>
+                     </div>
+                       <div class="vx-col md:w-auto w-full mt-5">
+                          <vs-checkbox name="driver_default" class="mt-4" icon-pack="feather" 
+                          icon="icon-check" v-model="item.driver_default">Conductor por defecto?</vs-checkbox>
                      </div>
                     <div class="vx-col md:w-1/2 w-full mt-2">
                       <vs-input
@@ -340,7 +348,7 @@
         <vs-th sort-key="items-rut">Rut</vs-th>
          <!--<vs-th sort-key="items-email">Email</vs-th>-->
         <vs-th sort-key="items-telefono">Telefono</vs-th>
-        <vs-th sort-key="items-asociado">Asociado</vs-th>
+        <vs-th sort-key="items-movil">N° Movil</vs-th>
         <vs-th sort-key="items-accion">Accion</vs-th>
       </template>
 
@@ -365,7 +373,7 @@
                 <p class="items-telefono">{{ tr.telefono }}</p>
             </vs-td>
             <vs-td>
-                <p class="items-asociado">{{ tr.second_name  }} {{ tr.second_lastname  }}</p>
+                <p class="items-movil">{{ tr.numero_movil  }}</p>
             </vs-td>
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
@@ -462,6 +470,9 @@ const dict = {
     asociados: {
       required: "El asociado es requerido"
     },
+    cars: {
+      required: "El movil es requerido"
+    },
     tipo_documento: {
       required: "El tipo de documento es requerido",
     }, 
@@ -496,11 +507,13 @@ export default {
       item: {
         habilitado: 1,
         conductor: true,
-        dueno: false
+        dueno: false,
+        driver_default:false
       },
       modoEditar: false,
       exportData: [],
       driver_choices: [],
+      cars_choices: [],
       tipodocumentos_choices: [],      
       aux: 0,
       documentos_choices: [],
@@ -545,7 +558,17 @@ export default {
         })
         .catch(function(error) {
           thisIns.$msjError(error);    
-        });   
+        }); 
+        
+      //Carga Moviles 
+         this.$http
+        .get("car/carsall")
+        .then(function(response) {
+          thisIns.cars_choices = response.data.items;
+        })
+        .catch(function(error) {
+          thisIns.$msjError(error);    
+        }); 
 
     },
     editar(item) {
@@ -569,6 +592,8 @@ export default {
       this.item.driver_id = item.asociado_id;
       this.item.conductor = item.conductor;
       this.item.dueno = item.dueno;
+      this.item.driver_default = item.driver_default;
+      this.item.car_id = item.car_id;
 
       this.popupActive = true;
     },
@@ -577,7 +602,8 @@ export default {
       this.item = {
         habilitado: 1,
         conductor: true,
-        dueno: false
+        dueno: false,
+        driver_default:false
       };
       this.errors.clear();
       //this.modoEditar = false;

@@ -25,8 +25,7 @@ class CreateCarsTable extends Migration
             $table->string('color');
             $table->string('asientos');
             $table->string('numero_movil');
-
-
+            
             $table->boolean('habilitado');
             $table->timestamps();
 

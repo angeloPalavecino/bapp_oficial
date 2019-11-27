@@ -117,7 +117,7 @@
       </template>
 
         <template slot-scope="{data}">
-          <tbody>
+          
             <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
               <vs-td>
@@ -144,7 +144,7 @@
                  </div>
             </vs-td>
             </vs-tr>
-          </tbody>
+          
         </template>
     </vs-table>
   </div>

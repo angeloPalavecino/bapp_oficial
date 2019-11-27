@@ -15,7 +15,7 @@ class CreateExcepcionesTable extends Migration
     {
         Schema::create('excepciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('rut');
+            $table->string('rut')->unique();
             $table->string('direccion');
             $table->decimal('lat', 10 , 5);
             $table->decimal('lng', 10 , 5);

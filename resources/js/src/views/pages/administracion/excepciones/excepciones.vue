@@ -89,12 +89,7 @@
                    </div>
                    <div class="vx-col md:w-3/4 w-full mt-1">
                 <div class="mt-5">
-                  <gmap-map :center="center" :zoom="zoom" style="width: 100%; height: 350px">
-                      <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
-                          {{infoContent}}
-                      </gmap-info-window>
-                      <gmap-marker :position="marker.position"  :clickable="true" @click="toggleInfoWindow(marker,0)"></gmap-marker>
-                  </gmap-map>
+                  <div id="map"></div>
                 </div>
                 </div>
                 </div>
@@ -196,16 +191,8 @@ export default {
 
       center: { lat: -33.4533624, lng: -70.6642131 },
       zoom: 11,
-      infoContent: '',
-      infoWindowPos: null,
-      infoWinOpen: false,
-      currentMidx: null,
-      //optional: offset infowindow so it visually sits nicely on top of our marker
-      infoOptions: {
-      pixelOffset: { width: 0, height: -35 }
-      },
-      marker: {},
-     
+      marker: null,
+      map: null,     
 
     }
   },
@@ -218,33 +205,63 @@ export default {
     },
   },
   methods: {
-     toggleInfoWindow: function(marker, idx) {
-            this.infoWindowPos = marker.position;
-            this.infoContent = marker.infoText;
-            //check if its the same marker that was selected if yes toggle
-            if (this.currentMidx == idx) {
-                this.infoWinOpen = !this.infoWinOpen;
-            }
-            //if different marker set infowindow to open and reset current marker index
-            else {
-                this.infoWinOpen = true;
-                this.currentMidx = idx;
-            }
-        },
          agregarMarker: function() {
+           const thisIns = this;
+          
+          if(this.item.direccion){
 
            const lat = this.autocomplete.getPlace().geometry.location.lat();
            const lng = this.autocomplete.getPlace().geometry.location.lng();
            const direccion = this.autocomplete.getPlace().formatted_address;
            
-           this.marker = {
-                 position: { lat: lat, lng: lng }, 
-                 infoText: direccion,
-            };
-            this.center = { lat: lat, lng: lng }; 
-            this.zoom = 15;
-          
-        },
+           var map =  this.map;
+           
+           if(this.marker != null){
+                var mark = this.marker;
+                mark.setMap(null);
+                this.marker = null;
+              }
+
+              var marker = new google.maps.Marker({
+                    position: { lat: lat, lng: lng }, 
+                    infoText: direccion,
+                    title: direccion,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                
+                });
+
+                marker.setMap(map);
+
+                google.maps.event.addListener(marker, 'dragend', function() {
+                thisIns.geocodePosition(marker.getPosition());
+                });
+                
+                var latlng = new google.maps.LatLng(lat, lng);
+                map.setCenter(latlng);
+                map.setZoom(15);
+              
+                this.marker = marker;
+            }
+
+        }, 
+         geocodePosition(pos){
+              const thisIns = this;
+               var geocoder = new google.maps.Geocoder();
+               geocoder.geocode({
+                    latLng: pos
+                }, 
+                    function(results, status) 
+                    {
+                        if (status == google.maps.GeocoderStatus.OK){
+                            thisIns.item.direccion = results[0].formatted_address;   
+                            thisIns.map.setCenter(pos);                         
+                        }else{
+                            thisIns.$msjError('No se puede determinar la direccion. ' + status);                           
+                        }
+                    }
+                );
+         },
    asignaDireccion() {
      //console.log(this.autocomplete.getPlace().formatted_address);
      this.item.direccion = this.autocomplete.getPlace().formatted_address;
@@ -267,15 +284,32 @@ export default {
 
       this.center = { lat: -33.4533624, lng: -70.6642131 };
       this.zoom =  11;
-      this.marker = {}
+
+      var latlng = new google.maps.LatLng(this.center);
+      this.map.setCenter(latlng);
+      this.map.setZoom(this.zoom);
+
+      if(this.marker != null){
+             var mark = this.marker;
+             mark.setMap(null);
+             this.marker = null;
+           }
 
     },
+     initMap:function() {
+      var center = this.center;
+      var zoom = this.zoom;
+      var map = new google.maps.Map(document.getElementById('map'), {zoom: zoom, center: center});
+      this.map = map;
+    }
   },
   created() {
       this.$refrescaTabla();
+      
   },
   mounted() {
     this.isMounted = true;
+    this.initMap();
     this.autocomplete = new google.maps.places.Autocomplete((this.$refs.autocomplete),{
       types: ['geocode']
       
@@ -372,5 +406,10 @@ export default {
     position: fixed;
     display: inline-block;
     float: left;
+}
+
+#map {
+    height: 400px;  /* The height is 400 pixels */
+    width: 100%;  /* The width is the width of the web page */
 }
 </style>

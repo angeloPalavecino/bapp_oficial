@@ -10,6 +10,7 @@ use App\Models\Car;
 use App\Models\Document;
 use App\Models\DriversHasDocuments;
 use App\Models\DriversHasDrivers;
+use App\Models\ConductoresHasCars;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -51,6 +52,8 @@ class DriverController extends Controller
        $driver = DB::table('drivers as drivers_original')
                 ->join('drivers_has_drivers', 'drivers_has_drivers.driver_id', '=', 'drivers_original.id')
                 ->join('drivers as drivers_second', 'drivers_second.id', '=', 'drivers_has_drivers.asociado_id')
+                ->leftjoin('conductores_has_cars', 'conductores_has_cars.driver_id', '=', 'drivers_original.id')
+                ->leftjoin('cars', 'cars.id', '=', 'conductores_has_cars.car_id')
                 ->select(
                     'drivers_original.id',
                     'drivers_original.name', 
@@ -66,13 +69,17 @@ class DriverController extends Controller
                     'drivers_original.direccion',
                     'drivers_original.numeracion',
                     'drivers_original.clase',
+                    'drivers_original.driver_default',
                     'drivers_has_drivers.driver_id',
                     'drivers_has_drivers.asociado_id',
                     'drivers_second.name as second_name',
-                    'drivers_second.lastname as second_lastname'
+                    'drivers_second.lastname as second_lastname',
+                    'conductores_has_cars.car_id',
+                    'cars.numero_movil'
                     )
                 ->where('drivers_original.conductor', '=', 1)
                 ->get(); 
+               
          return response()->json(
              [
                  'status' => 'success',
@@ -120,6 +127,10 @@ class DriverController extends Controller
                 ], 300);           
         }
 
+        if($request['car_id'] == 1 ){
+            $request['driver_default'] = 0;
+        }
+
         $returnDriver = Driver::create($request->all());
 
         $idDriver = $returnDriver->id;
@@ -131,6 +142,8 @@ class DriverController extends Controller
                     'message' => 'Problemas al ingresar el Conductor',
                 ], 300);
         } 
+
+            //Agrega asociado a conductor
 
             $idAsociado = $request->get('driver_id');
 
@@ -151,6 +164,29 @@ class DriverController extends Controller
                             'message' => 'Problemas con la relacion',
                         ], 300);
             } 
+            
+            //Agrega moviles a conductor
+
+            $idCar = $request->get('car_id');
+            
+            $dataConductoresHasCars =  array(
+                'driver_id'       => $idDriver,
+                'car_id'         => $idCar,
+                'habilitado'      => true,
+                );
+                
+                $returnConductoresHasCars = ConductoresHasCars::create($dataConductoresHasCars);  
+
+                $returnIdConductoresHasCars = $returnConductoresHasCars->id;
+                
+                if ($returnIdConductoresHasCars < 1) {
+                        return response()->json(
+                            [
+                                'status' => 'error',
+                                'message' => 'Problemas con la relacion',
+                            ], 300);
+                } 
+            
               
     }
          
@@ -198,14 +234,61 @@ class DriverController extends Controller
                 ], 300);
            
         }
-        Driver::where('id', $id)->update($request->except(['driver_id']));
 
+        //Valida si ya existe un chofer por defecto para el movil
+        $count = DB::table('drivers as drivers_original')
+        ->join('conductores_has_cars', 'conductores_has_cars.driver_id', '=', 'drivers_original.id')
+        ->where('conductores_has_cars.car_id', '=', $request['car_id'])
+        ->where('drivers_original.driver_default', '=', 1)
+        ->count(); 
+
+        //Deja el driver_default en 0 si ya existe un conductor por defecto con el numero de movil seleccionado
+        //o si el movil seleccionado es el "sin movil"
+        if($count > 0 || $request['car_id'] == 1 ){
+            $request['driver_default'] = 0;
+        }
+
+        //Actualiza conductor
+        Driver::where('id', $id)->update($request->except(['driver_id','car_id']));
+
+
+        //Actualiza Asociado del conductor
         $dataDriversHasDrivers =  array(
             'asociado_id'  => $request['driver_id'],
         );
     
         DriversHasDrivers::where('driver_id', $id)->update($dataDriversHasDrivers);
 
+        $conductorhasCars = ConductoresHasCars::where('driver_id', $id)->get();
+
+
+        //Busca id en tabla intermedia para determinar si hace un update o insert
+        //En teoria, siempre debiera ser siempre un update porque nunca debiera quedar vacia la tabla intermedia
+        $conductoreshascars = ConductoresHasCars::where('driver_id',$id)->count(); 
+
+        if($conductoreshascars <= 0){      
+
+            //Inserta movil del conductor
+            $dataConductoresHasCars =  array(
+                'driver_id'       => $id,
+                'car_id'         => $request['car_id'],
+                'habilitado'      => true,
+            );
+                
+            ConductoresHasCars::create($dataConductoresHasCars);  
+              
+
+        }else{
+
+            //Actualiza Movil del conductor
+            $dataConductoresHasCars =  array(
+                'car_id'  => $request['car_id'],
+            );
+            
+            ConductoresHasCars::where('driver_id', $id)->update($dataConductoresHasCars);
+
+        }
+        
         // $dataUser = $request->all()['user'];
         // $dataDriver = $resultado = array_merge($dataUser, $request->all()['driver']);
         // $dataCar = $request->all()['car'];
@@ -321,6 +404,7 @@ class DriverController extends Controller
       
         $ids = array_column($request->all(), 'id');
         $document = DriversHasDocuments::whereIn('driver_id', $ids)->get();
+        $idsDocument = array_column($document->toArray(), 'document_id');
         
         try{
 
@@ -402,12 +486,14 @@ class DriverController extends Controller
         {
 
             $url = '/documents/drivers/'.$fileName;
+
+            $fecha = ($request->fecha_vencimiento) ? date($request->fecha_vencimiento):null;
             
             $dataDocument = array(
                 'type_document_id'  => $request->tipo_documento_id,
                 'name'              => $fileNameSinExtencion,
                 'url'               => $url,
-                'fecha_vencimiento' => date($request->fecha_vencimiento),
+                'fecha_vencimiento' => $fecha,
                 'informacion'       => "",
                 'habilitado'        => 1
             );
@@ -458,9 +544,36 @@ class DriverController extends Controller
     public function documents ($id)
     {
         
+        //Documentos del conductor
+        //Id    Descripcion
+        //1     Cedula Identidad
+        //2     Certificado Antecedentes Penales
+        //3     Licencia de Conducir
+        //9     Seguro Vida Conductor
         
-        $driver = DriversHasDocuments::with('documents')->where('driver_id', $id)->get();
+        //$driver = DriversHasDocuments::with('documents')->where('driver_id', $id)->whereIn('documents.type_document_id', [1,2,3,9])->get();
+
+        $driver = DB::table('drivers_has_documents')
+                ->join('documents', 'documents.id', '=', 'drivers_has_documents.document_id')
+                ->join('type_documents', 'type_documents.id', '=', 'documents.type_document_id')
+                ->select(
+                    'documents.id',
+                    'documents.type_document_id', 
+                    'documents.name',
+                    'documents.url',
+                    'documents.informacion',
+                    'documents.fecha_vencimiento',
+                    'documents.habilitado', 
+                    'drivers_has_documents.driver_id',
+                    'drivers_has_documents.document_id',
+                    'drivers_has_documents.habilitado as hashabilitado'
+                    )
+                ->where('drivers_has_documents.driver_id', '=', $id)
+                ->where('type_documents.tipo', '=', 1)
+                ->get(); 
         
+        //dd($driver->toArray());
+
         return response()->json(
             [
                 'status' => 'success',

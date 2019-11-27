@@ -14,14 +14,14 @@
               
               <div class="vx-col md:w-1/2 w-full mt-2">
                 <vs-select v-model="itemDoc.tipo_documento" v-validate="'required'" label="Tipo de Documento" 
-                name="tipo_documento" class="w-full"  data-vv-scope="docs">
+                name="tipo_documento" class="w-full"  data-vv-scope="docs" @input="setSelected">
                   <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
                 </vs-select>
                 <span class="text-danger text-sm" v-show="errors.has('docs.tipo_documento')">{{ errors.first('docs.tipo_documento') }}</span> 
               </div>
               <div class="vx-col md:w-1/2 w-full mt-3">
                 <flat-pickr v-model="itemDoc.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" 
-                placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  data-vv-scope="docs"/>
+                placeholder="Fecha de Vencimiento" :disabled="disableddoc" name="fecha_vencimiento"  data-vv-scope="docs"/>
                 <span class="text-danger text-sm" >{{ errors.first('docs.fecha_vencimiento') }}</span>                         
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
@@ -73,7 +73,8 @@
                         {{ trdoc.documents[0].name.split(/[.,\/-]/)[1] }}
                       </vs-td>
                       <vs-td>
-                        <vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
+                        <div v-if="trdoc.documents[0].fecha_vencimiento == null">No Aplica</div>
+                        <div v-else><vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip></div>
                       </vs-td>                  
                       <vs-td :data="data[indextrdoc].url">
                         <a style="cursor: pointer;" rel="nofollow" @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)">Descargar</a>                        
@@ -482,7 +483,8 @@ export default {
       aux: 0,
       documentos_choices: [],
       dataItem:{},
-      itemDoc: {}
+      itemDoc: {},
+      disableddoc: false,
     };
   },
   computed: {
@@ -494,6 +496,13 @@ export default {
     }
   },
   methods: {
+     setSelected(value) {
+            if(value == "4|Padron"){
+              this.disableddoc = true;
+            }else{
+              this.disableddoc = false;
+            }
+    },
     getStatusColor(fecha) {
       var factual = new Date();
       var fvencimiento = new Date(fecha);  
@@ -562,13 +571,15 @@ export default {
         asientos: 1,
       };
       this.errors.clear();
+      this.disableddoc = false;
       //this.modoEditar = false;
     },
     initUpload(item) {   
       const thisIns = this; 
 
       this.documentos_choices = [];
-      
+      this.disableddoc = false;
+
       this.itemDoc.tipo_documento = "";
       this.itemDoc.fecha_vencimiento = ""; 
       this.itemDoc.file = ""; 

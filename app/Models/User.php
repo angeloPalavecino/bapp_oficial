@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Permission;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\UsersHasCars;
+use App\Models\Empresa;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -71,5 +72,10 @@ class User extends Authenticatable implements JWTSubject
     public function cars()
     {
       return $this->hasMany(UsersHasCars::class, 'user_id', 'id');
+    }
+
+    public function empresas()
+    {
+      return $this->hasMany(Empresa::class, 'id', 'empresa_id');
     }
 }

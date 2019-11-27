@@ -15,8 +15,7 @@
             <vs-th >N° Movil</vs-th>
             <vs-th >Patente</vs-th>
           </template>
-          <template slot-scope="{data}">
-            <tbody>
+          <template slot-scope="{data}"> 
                 <vs-tr :data="trmov" :key="indextrmov" v-for="(trmov, indextrmov) in data">
                   <vs-td>
                     <p>{{ trmov.id }}</p>
@@ -28,7 +27,6 @@
                     <p>{{ trmov.patente }}</p>
                   </vs-td>             
                 </vs-tr>  
-            </tbody> 
             </template>
         </vs-table>
     
@@ -263,6 +261,7 @@
         <vs-th sort-key="items-email">Email</vs-th>
         <vs-th sort-key="items-rol">Rol</vs-th>
 		    <vs-th sort-key="items-status">Estado</vs-th>
+        <vs-th sort-key="items-empresa">Empresa</vs-th>
        <!--  <vs-th sort-key="users-created_at">Creado</vs-th>
         <vs-th sort-key="users-updated_at">Actualizado</vs-th>-->
         <vs-th sort-key="items-accion">Accion</vs-th>
@@ -293,11 +292,11 @@
 				      <vs-td>
                 <vs-chip :color="getStatusColor(tr.habilitado)" class="items-status">{{ tr.habilitado == 1 ? 'Activo' : 'Inactivo'  }}</vs-chip>
               </vs-td>
-             <!--  <vs-td>
-                <p class="users-created_at">{{ tr.created_at }}</p>
+               <vs-td>
+                <p class="items-empresa">{{ tr.empresas[0].razon_social }}</p>
               </vs-td>
 
-              <vs-td>
+             <!-- <vs-td>
                 <p class="users-updated_at">{{ tr.updated_at }}</p>
               </vs-td>-->
               <vs-td>

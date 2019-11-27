@@ -34,8 +34,8 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::with('roles')->get(); 
-      
+        $users = User::with('roles','empresas')->get(); 
+        
         //$user = User::findOrFail('1');
         //$user->syncRoles('1');
 

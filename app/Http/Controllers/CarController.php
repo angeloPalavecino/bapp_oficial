@@ -9,7 +9,9 @@ use App\Models\Car;
 use App\Models\CarsHasDocuments;
 use App\Models\Document;
 use App\Models\DriversHasCars;
+use App\Models\ConductoresHasCars;
 use Illuminate\Support\Facades\Storage;
+
 
 
 class CarController extends Controller
@@ -60,6 +62,7 @@ class CarController extends Controller
                   'drivers.lastname'
 
                   )
+              ->where('cars.id', '>', 1)
               ->get();
        //dd($car);
         return response()->json(
@@ -215,6 +218,9 @@ class CarController extends Controller
            $document = CarsHasDocuments::where('car_id', $id)->get();
            $idsDocument = array_column($document->toArray(), 'document_id'); 
 
+           //Busca id de conductores con el movil que se eliminara
+           $conductorhasCars = ConductoresHasCars::select('driver_id')->where('car_id', $id)->get();
+
            if(!is_null($car)){
                 
                 foreach ($idsDocument as $key => $doc) {
@@ -223,6 +229,13 @@ class CarController extends Controller
                     $documento->delete();
                 }
 
+
+                //Actualiza a "sin movil" a los conductores que se les elimino el movil
+                $dataConductoresHasCars =  array(
+                    'car_id'  => 1,
+                );
+                ConductoresHasCars::whereIN('driver_id', $conductorhasCars->toArray())->update($dataConductoresHasCars);
+                
                 $car->delete();
 
                 return response()->json(
@@ -262,6 +275,9 @@ class CarController extends Controller
         $document = CarsHasDocuments::whereIn('car_id', $ids)->get();
 
         $idsDocument = array_column($document->toArray(), 'document_id'); 
+
+        //Busca id de conductores con el movil que se eliminara
+        $conductorhasCars = ConductoresHasCars::select('driver_id')->whereIn('car_id', $ids)->get();
         
         try{
 
@@ -272,6 +288,13 @@ class CarController extends Controller
                     Storage::disk('delete')->delete($documento->url);
                     $documento->delete();
                 }
+
+                //Actualiza a "sin movil" a los conductores que se les elimino el movil
+                 $dataConductoresHasCars =  array(
+                    'car_id'  => 1,
+                );
+                ConductoresHasCars::whereIN('driver_id', $conductorhasCars->toArray())->update($dataConductoresHasCars);
+                   
 
                 Car::destroy($ids);
                 
@@ -318,12 +341,14 @@ class CarController extends Controller
         {
 
             $url = '/documents/cars/'.$fileName;
+
+            $fecha = ($request->fecha_vencimiento) ? date($request->fecha_vencimiento):null;
             
             $dataDocument = array(
                 'type_document_id'  => $request->tipo_documento_id,
                 'name'              => $fileNameSinExtencion,
                 'url'               => $url,
-                'fecha_vencimiento' => date($request->fecha_vencimiento),
+                'fecha_vencimiento' => $fecha,
                 'informacion'       => "",
                 'habilitado'        => 1
             );
@@ -391,6 +416,20 @@ class CarController extends Controller
 
       //Moviles para usuarios
       public function cars()
+      {
+         
+          $cars = Car::select('id', 'numero_movil','patente')->where('id', '>', 1)->get();
+  
+          return response()->json(
+              [
+                  'status' => 'success',
+                  'items' => $cars->toArray(),
+              ], 200);    
+      }
+
+
+      //Moviles para usuarios
+      public function carsall()
       {
          
           $cars = Car::select('id', 'numero_movil','patente')->get();

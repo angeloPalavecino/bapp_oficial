@@ -26,6 +26,7 @@ class CreateDriversTable extends Migration
             $table->string('clase');
             $table->boolean('dueno');
             $table->boolean('conductor');
+            $table->boolean('driver_default');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('telefono');
             $table->boolean('habilitado');
