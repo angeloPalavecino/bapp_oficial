@@ -479,6 +479,7 @@ export default {
         habilitado: 1,
         conductor: false,
         dueno: true,
+        driver_default:false
       },
       modoEditar: false,
       exportData: [],
@@ -525,6 +526,7 @@ export default {
       this.item.clase = item.clase;
       this.item.conductor = item.conductor;
       this.item.dueno = item.dueno;
+      this.item.driver_default = item.driver_default;
 
       this.popupActive = true;
     },
@@ -533,7 +535,8 @@ export default {
       this.item = {
         habilitado: 1,
         conductor: false,
-        dueno: true
+        dueno: true,
+        driver_default:false
       };
       this.errors.clear();
       //this.modoEditar = false;
