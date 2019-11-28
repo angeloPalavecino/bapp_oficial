@@ -479,7 +479,7 @@ export default {
         habilitado: 1,
         conductor: false,
         dueno: true,
-        driver_default:false
+        driver_default: false
       },
       modoEditar: false,
       exportData: [],

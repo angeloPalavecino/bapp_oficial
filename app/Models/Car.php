@@ -11,6 +11,7 @@ use App\Models\Driver;
 class Car extends Model
 {
     protected $fillable = [
-        'tipo', 'marca' ,'modelo', 'ano', 'motor', 'patente', 'color','asientos', 'habilitado','empresa_id', 'numero_movil','movil_default'
+        'tipo', 'marca' ,'modelo', 'ano', 'motor', 'patente', 'color','asientos', 'habilitado',
+        'empresa_id', 'numero_movil'
     ];
 }
