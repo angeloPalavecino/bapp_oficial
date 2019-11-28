@@ -71,7 +71,7 @@ class UserController extends Controller
         }
 
         
-        $existe_usuario = User::where('rut', $input['rut'])->first();
+        $existe_usuario = User::where('rut', $request['rut'])->first();
         if ($existe_usuario != null) {
 
             return response()->json(
@@ -81,7 +81,7 @@ class UserController extends Controller
                 ], 300);           
         }
 
-        $existe_usuario = User::where('email', $input['email'])->first();
+        $existe_usuario = User::where('email', $request['email'])->first();
         if ($existe_usuario != null) {
 
             return response()->json(
