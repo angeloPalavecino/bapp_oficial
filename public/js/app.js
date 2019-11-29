@@ -4045,7 +4045,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     $can: function $can(permissionName) {
       //console.log(Permissions);
-      return Permissions.indexOf(permissionName) !== -1;
+      return atob(localStorage.getItem("userRole")).indexOf(permissionName) !== -1;
     }
   }
 });
@@ -4193,10 +4193,13 @@ __webpack_require__.r(__webpack_exports__);
           email: app.email,
           password: app.password
         },
-        success: function success() {
+        success: function success(res) {
           // handle redirection
           app.success = true;
-          var redirectTo = 'home';
+          var redirectTo = 'home'; //Permisos
+          //window.Permissions = 
+
+          localStorage.setItem("userRole", res.data.roles);
           this.$router.push({
             name: redirectTo
           });
@@ -4209,6 +4212,9 @@ __webpack_require__.r(__webpack_exports__);
         fetchUser: true
       });
     }
+  },
+  created: function created() {
+    localStorage.removeItem('userRole');
   }
 });
 
@@ -4230,6 +4236,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6345,6 +6365,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 // For custom error message
 
 
@@ -6624,6 +6647,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
 //
 //
 //
@@ -7349,6 +7375,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-flatpickr-component */ "./node_modules/vue-flatpickr-component/dist/vue-flatpickr.min.js");
 /* harmony import */ var vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_flatpickr_component__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
 //
 //
 //
@@ -10710,6 +10739,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-form-wizard/dist/vue-form-wizard.min.css */ "./node_modules/vue-form-wizard/dist/vue-form-wizard.min.css");
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -44199,7 +44243,7 @@ var render = function() {
                               : _c(
                                   "span",
                                   { staticClass: "text-danger text-sm" },
-                                  [_vm._v("  ")]
+                                  [_vm._v("   ")]
                                 ),
                             _vm._v(" "),
                             _c("vs-input", {
@@ -44238,7 +44282,7 @@ var render = function() {
                               : _c(
                                   "span",
                                   { staticClass: "text-danger text-sm" },
-                                  [_vm._v("  ")]
+                                  [_vm._v("    ")]
                                 ),
                             _vm._v(" "),
                             _c(
@@ -44389,22 +44433,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("empresas.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -44413,22 +44459,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("empresas.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -44496,18 +44547,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("empresas.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -44528,38 +44581,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("empresas.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar empresa" }
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Empresa")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar empresa"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Empresa")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -44607,7 +44665,111 @@ var render = function() {
                                 : "Modifique los campos que desee actualizar",
                             finishButtonText:
                               _vm.modoEditar == false ? "Agregar" : "Actualizar"
-                          }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "footer",
+                              fn: function(props) {
+                                return [
+                                  _c(
+                                    "div",
+                                    { staticClass: "wizard-footer-left" },
+                                    [
+                                      props.activeTabIndex > 0
+                                        ? _c(
+                                            "vs-button",
+                                            {
+                                              style: props.fillButtonStyle,
+                                              nativeOn: {
+                                                click: function($event) {
+                                                  return props.prevTab()
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Anterior")]
+                                          )
+                                        : _vm._e()
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "wizard-footer-right" },
+                                    [
+                                      !props.isLastStep
+                                        ? _c(
+                                            "vs-button",
+                                            {
+                                              staticClass:
+                                                "wizard-footer-right",
+                                              style: props.fillButtonStyle,
+                                              nativeOn: {
+                                                click: function($event) {
+                                                  return props.nextTab()
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Siguiente")]
+                                          )
+                                        : _vm.modoEditar == false &&
+                                          _vm.$can("empresas.store")
+                                        ? _c(
+                                            "vs-button",
+                                            {
+                                              staticClass:
+                                                "wizard-footer-right finish-button",
+                                              style: props.fillButtonStyle,
+                                              nativeOn: {
+                                                click: function($event) {
+                                                  return props.nextTab()
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n          " +
+                                                  _vm._s(
+                                                    props.isLastStep
+                                                      ? "Agregar"
+                                                      : "Siguiente"
+                                                  )
+                                              )
+                                            ]
+                                          )
+                                        : _vm.modoEditar == true &&
+                                          _vm.$can("empresas.update")
+                                        ? _c(
+                                            "vs-button",
+                                            {
+                                              staticClass:
+                                                "wizard-footer-right finish-button",
+                                              style: props.fillButtonStyle,
+                                              nativeOn: {
+                                                click: function($event) {
+                                                  return props.nextTab()
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n          " +
+                                                  _vm._s(
+                                                    props.isLastStep
+                                                      ? "Actualizar"
+                                                      : "Siguiente"
+                                                  )
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ],
+                                    1
+                                  )
+                                ]
+                              }
+                            }
+                          ])
                         },
                         [
                           _c(
@@ -46300,22 +46462,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("excepciones.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -46324,22 +46488,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("excepciones.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -46407,18 +46576,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("excepciones.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -46439,38 +46610,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("excepciones.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar excepcion" }
+                          staticClass:
+                            "p-3 mb-4 mr-4  rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Excepcion")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar excepcion"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Excepcion")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -46734,7 +46910,8 @@ var render = function() {
                           slot: "footer"
                         },
                         [
-                          _vm.modoEditar == true
+                          _vm.modoEditar == true &&
+                          _vm.$can("excepciones.update")
                             ? _c(
                                 "vs-button",
                                 {
@@ -46748,7 +46925,8 @@ var render = function() {
                                 },
                                 [_vm._v("ACTUALIZAR EXCEPCION")]
                               )
-                            : _c(
+                            : _vm.$can("excepciones.store")
+                            ? _c(
                                 "vs-button",
                                 {
                                   staticClass: "mr-3",
@@ -46760,7 +46938,8 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("AGREGAR EXCEPCION")]
-                              ),
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-button",
@@ -47003,22 +47182,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("fuerazona.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -47027,22 +47208,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("fuerazona.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -47110,18 +47296,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("fuerazona.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -47142,41 +47330,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("fuerazona.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: {
-                            color: "primary",
-                            text: "Agregar fuera de zona"
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
                           }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Fuera de zona")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar fuera de zona"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Fuera de zona")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -47400,7 +47590,7 @@ var render = function() {
                           slot: "footer"
                         },
                         [
-                          _vm.modoEditar == true
+                          _vm.modoEditar == true && _vm.$can("fuerazona.update")
                             ? _c(
                                 "vs-button",
                                 {
@@ -47414,7 +47604,8 @@ var render = function() {
                                 },
                                 [_vm._v("ACTUALIZAR FUERA DE ZONA")]
                               )
-                            : _c(
+                            : _vm.$can("fuerazona.store")
+                            ? _c(
                                 "vs-button",
                                 {
                                   staticClass: "mr-3",
@@ -47426,7 +47617,8 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("AGREGAR FUERA DE ZONA")]
-                              ),
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-button",
@@ -47778,18 +47970,20 @@ var render = function() {
                       "div",
                       { staticClass: "vx-col md:w-1/2 w-full mt-5" },
                       [
-                        _c(
-                          "vs-button",
-                          {
-                            attrs: { color: "primary", type: "filled" },
-                            on: {
-                              click: function($event) {
-                                return _vm.upload("docs")
-                              }
-                            }
-                          },
-                          [_vm._v("Adjuntar")]
-                        )
+                        _vm.$can("moviles.store")
+                          ? _c(
+                              "vs-button",
+                              {
+                                attrs: { color: "primary", type: "filled" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.upload("docs")
+                                  }
+                                }
+                              },
+                              [_vm._v("Adjuntar")]
+                            )
+                          : _vm._e()
                       ],
                       1
                     )
@@ -48415,7 +48609,7 @@ var render = function() {
                   slot: "footer"
                 },
                 [
-                  _vm.modoEditar == true
+                  _vm.modoEditar == true && _vm.$can("moviles.update")
                     ? _c(
                         "vs-button",
                         {
@@ -48429,7 +48623,8 @@ var render = function() {
                         },
                         [_vm._v("ACTUALIZAR ASOCIADO")]
                       )
-                    : _c(
+                    : _vm.$can("moviles.store")
+                    ? _c(
                         "vs-button",
                         {
                           staticClass: "mr-3",
@@ -48441,7 +48636,8 @@ var render = function() {
                           }
                         },
                         [_vm._v("AGREGAR ASOCIADO")]
-                      ),
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "vs-button",
@@ -48564,22 +48760,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -48588,22 +48786,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -48614,22 +48817,24 @@ var render = function() {
                                 attrs: { color: "primary", text: "Documentos" }
                               },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-file",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.initUpload(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.index")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-file",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initUpload(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -48697,18 +48902,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("moviles.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -48729,38 +48936,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("moviles.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar asociado" }
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Asociado")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar asociado"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Asociado")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -49104,18 +49316,20 @@ var render = function() {
                       "div",
                       { staticClass: "vx-col md:w-1/2 w-full mt-5" },
                       [
-                        _c(
-                          "vs-button",
-                          {
-                            attrs: { color: "primary", type: "filled" },
-                            on: {
-                              click: function($event) {
-                                return _vm.upload("docs")
-                              }
-                            }
-                          },
-                          [_vm._v("Adjuntar")]
-                        )
+                        _vm.$can("moviles.store")
+                          ? _c(
+                              "vs-button",
+                              {
+                                attrs: { color: "primary", type: "filled" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.upload("docs")
+                                  }
+                                }
+                              },
+                              [_vm._v("Adjuntar")]
+                            )
+                          : _vm._e()
                       ],
                       1
                     )
@@ -49833,7 +50047,7 @@ var render = function() {
                   slot: "footer"
                 },
                 [
-                  _vm.modoEditar == true
+                  _vm.modoEditar == true && _vm.$can("moviles.update")
                     ? _c(
                         "vs-button",
                         {
@@ -49847,7 +50061,8 @@ var render = function() {
                         },
                         [_vm._v("ACTUALIZAR CONDUCTOR")]
                       )
-                    : _c(
+                    : _vm.$can("moviles.store")
+                    ? _c(
                         "vs-button",
                         {
                           staticClass: "mr-3",
@@ -49859,7 +50074,8 @@ var render = function() {
                           }
                         },
                         [_vm._v("AGREGAR CONDUCTOR")]
-                      ),
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "vs-button",
@@ -49952,22 +50168,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -49976,22 +50194,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -50002,22 +50225,24 @@ var render = function() {
                                 attrs: { color: "primary", text: "Documentos" }
                               },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-file",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.initUpload(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.index")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-file",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initUpload(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -50085,18 +50310,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("moviles.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -50117,38 +50344,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("moviles.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar conductor" }
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Conductor")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar conductor"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Conductor")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -50490,18 +50722,20 @@ var render = function() {
                       "div",
                       { staticClass: "vx-col md:w-1/2 w-full mt-5" },
                       [
-                        _c(
-                          "vs-button",
-                          {
-                            attrs: { color: "primary", type: "filled" },
-                            on: {
-                              click: function($event) {
-                                return _vm.upload("docs")
-                              }
-                            }
-                          },
-                          [_vm._v("Adjuntar")]
-                        )
+                        _vm.$can("moviles.store")
+                          ? _c(
+                              "vs-button",
+                              {
+                                attrs: { color: "primary", type: "filled" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.upload("docs")
+                                  }
+                                }
+                              },
+                              [_vm._v("Adjuntar")]
+                            )
+                          : _vm._e()
                       ],
                       1
                     )
@@ -51166,7 +51400,7 @@ var render = function() {
                   slot: "footer"
                 },
                 [
-                  _vm.modoEditar == true
+                  _vm.modoEditar == true && _vm.$can("moviles.update")
                     ? _c(
                         "vs-button",
                         {
@@ -51180,7 +51414,8 @@ var render = function() {
                         },
                         [_vm._v("ACTUALIZAR MOVIL")]
                       )
-                    : _c(
+                    : _vm.$can("moviles.store")
+                    ? _c(
                         "vs-button",
                         {
                           staticClass: "mr-3",
@@ -51192,7 +51427,8 @@ var render = function() {
                           }
                         },
                         [_vm._v("AGREGAR MOVIL")]
-                      ),
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "vs-button",
@@ -51279,22 +51515,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -51303,22 +51541,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -51329,22 +51572,24 @@ var render = function() {
                                 attrs: { color: "primary", text: "Documentos" }
                               },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-file",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.initUpload(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("moviles.index")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-file",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.initUpload(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -51412,18 +51657,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("moviles.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -51444,36 +51691,40 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
-                        { attrs: { color: "primary", text: "Agregar Movil" } },
+                  _vm.$can("moviles.create")
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
+                        },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Movil")]
+                            "vx-tooltip",
+                            {
+                              attrs: { color: "primary", text: "Agregar Movil" }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Movil")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -51692,22 +51943,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("observaciones.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -51716,22 +51969,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("observaciones.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -51799,18 +52057,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("observaciones.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -51831,41 +52091,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("observaciones.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: {
-                            color: "primary",
-                            text: "Agregar observacion"
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
                           }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Observacion")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar observacion"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Observacion")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -51958,7 +52220,8 @@ var render = function() {
                           slot: "footer"
                         },
                         [
-                          _vm.modoEditar == true
+                          _vm.modoEditar == true &&
+                          _vm.$can("observaciones.update")
                             ? _c(
                                 "vs-button",
                                 {
@@ -51972,7 +52235,8 @@ var render = function() {
                                 },
                                 [_vm._v("ACTUALIZAR OBSERVACION")]
                               )
-                            : _c(
+                            : _vm.$can("observaciones.store")
+                            ? _c(
                                 "vs-button",
                                 {
                                   staticClass: "mr-3",
@@ -51984,7 +52248,8 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("AGREGAR OBSERVACION")]
-                              ),
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-button",
@@ -52211,22 +52476,24 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Editar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-edit-2",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editar(tr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("obsinternas.edit")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-edit-2",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editar(tr)
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             ),
@@ -52235,22 +52502,27 @@ var render = function() {
                               "vx-tooltip",
                               { attrs: { color: "primary", text: "Eliminar" } },
                               [
-                                _c("vs-button", {
-                                  staticClass: "ml-3",
-                                  attrs: {
-                                    radius: "",
-                                    color: "primary",
-                                    type: "border",
-                                    "icon-pack": "feather",
-                                    icon: "icon-trash",
-                                    size: "small"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$submitEliminar(tr, indextr)
-                                    }
-                                  }
-                                })
+                                _vm.$can("obsinternas.destroy")
+                                  ? _c("vs-button", {
+                                      staticClass: "ml-3",
+                                      attrs: {
+                                        radius: "",
+                                        color: "primary",
+                                        type: "border",
+                                        "icon-pack": "feather",
+                                        icon: "icon-trash",
+                                        size: "small"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$submitEliminar(
+                                            tr,
+                                            indextr
+                                          )
+                                        }
+                                      }
+                                    })
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -52318,18 +52590,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("obsinternas.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -52350,41 +52624,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("obsinternas.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: {
-                            color: "primary",
-                            text: "Agregar Obs. Interna"
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
                           }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Obs. Interna")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar Obs. Interna"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Obs. Interna")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -52477,7 +52753,8 @@ var render = function() {
                           slot: "footer"
                         },
                         [
-                          _vm.modoEditar == true
+                          _vm.modoEditar == true &&
+                          _vm.$can("obsinternas.update")
                             ? _c(
                                 "vs-button",
                                 {
@@ -52491,7 +52768,8 @@ var render = function() {
                                 },
                                 [_vm._v("ACTUALIZAR OBS. INTERNA")]
                               )
-                            : _c(
+                            : _vm.$can("obsinternas.store")
+                            ? _c(
                                 "vs-button",
                                 {
                                   staticClass: "mr-3",
@@ -52503,7 +52781,8 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("AGREGAR OBS. INTERNA")]
-                              ),
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-button",
@@ -52735,22 +53014,24 @@ var render = function() {
                                     attrs: { color: "primary", text: "Editar" }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("roles.edit")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -52764,25 +53045,27 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("roles.destroy")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.$submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -52853,18 +53136,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("roles.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -52885,36 +53170,40 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n          text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
-                        { attrs: { color: "primary", text: "Agregar rol" } },
+                  _vm.$can("roles.create")
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n          text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
+                        },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Rol")]
+                            "vx-tooltip",
+                            {
+                              attrs: { color: "primary", text: "Agregar rol" }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Rol")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -53144,7 +53433,7 @@ var render = function() {
                           slot: "footer"
                         },
                         [
-                          _vm.modoEditar == true
+                          _vm.modoEditar == true && _vm.$can("roles.update")
                             ? _c(
                                 "vs-button",
                                 {
@@ -53158,7 +53447,8 @@ var render = function() {
                                 },
                                 [_vm._v("ACTUALIZAR ROL")]
                               )
-                            : _c(
+                            : _vm.$can("roles.store")
+                            ? _c(
                                 "vs-button",
                                 {
                                   staticClass: "mr-3",
@@ -53170,7 +53460,8 @@ var render = function() {
                                   }
                                 },
                                 [_vm._v("AGREGAR ROL")]
-                              ),
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-button",
@@ -53427,22 +53718,24 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-search",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.listadoParametros(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servkms.index")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-search",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.listadoParametros(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -53475,38 +53768,43 @@ var render = function() {
                 "div",
                 { staticClass: "flex flex-wrap-reverse items-center" },
                 [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("servkms.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar empresa" }
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Tarifa")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar empresa"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Tarifa")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ]
               ),
               _vm._v(" "),
@@ -54097,7 +54395,7 @@ var render = function() {
                 slot: "footer"
               },
               [
-                _vm.modoEditar == true
+                _vm.modoEditar == true && _vm.$can("servkms.update")
                   ? _c(
                       "vs-button",
                       {
@@ -54111,7 +54409,8 @@ var render = function() {
                       },
                       [_vm._v("ACTUALIZAR TARIFA")]
                     )
-                  : _c(
+                  : _vm.$can("servkms.store")
+                  ? _c(
                       "vs-button",
                       {
                         staticClass: "mr-3",
@@ -54123,7 +54422,8 @@ var render = function() {
                         }
                       },
                       [_vm._v("AGREGAR TARIFA")]
-                    ),
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "vs-button",
@@ -54229,22 +54529,24 @@ var render = function() {
                                     attrs: { color: "primary", text: "Editar" }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servkms.edit")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -54258,22 +54560,27 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.submitEliminar(tr, indextr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servkms.destroy")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -54337,18 +54644,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("servkms.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -54527,22 +54836,24 @@ var render = function() {
                                     attrs: { color: "primary", text: "Editar" }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servpasajeros.edit")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -54556,22 +54867,27 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.submitEliminar(tr, indextr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servpasajeros.destroy")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -54630,18 +54946,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("servpasajeros.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -55238,7 +55556,7 @@ var render = function() {
                 slot: "footer"
               },
               [
-                _vm.modoEditar == true
+                _vm.modoEditar == true && _vm.$can("servpasajeros.update")
                   ? _c(
                       "vs-button",
                       {
@@ -55252,7 +55570,8 @@ var render = function() {
                       },
                       [_vm._v("ACTUALIZAR TARIFA")]
                     )
-                  : _c(
+                  : _vm.$can("servpasajeros.store")
+                  ? _c(
                       "vs-button",
                       {
                         staticClass: "mr-3",
@@ -55264,7 +55583,8 @@ var render = function() {
                         }
                       },
                       [_vm._v("AGREGAR TARIFA")]
-                    ),
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "vs-button",
@@ -55362,22 +55682,24 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-search",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.listadoParametros(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servpasajeros.index")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-search",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.listadoParametros(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -55410,38 +55732,43 @@ var render = function() {
                 "div",
                 { staticClass: "flex flex-wrap-reverse items-center" },
                 [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("servpasajeros.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar empresa" }
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Tarifa")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar empresa"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Tarifa")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ]
               ),
               _vm._v(" "),
@@ -55685,22 +56012,24 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-search",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.listadoParametros(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servplanas.index")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-search",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.listadoParametros(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -55733,38 +56062,43 @@ var render = function() {
                 "div",
                 { staticClass: "flex flex-wrap-reverse items-center" },
                 [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("servplanas.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar empresa" }
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n        text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Tarifa")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar empresa"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Tarifa")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ]
               ),
               _vm._v(" "),
@@ -56306,7 +56640,7 @@ var render = function() {
                 slot: "footer"
               },
               [
-                _vm.modoEditar == true
+                _vm.modoEditar == true && _vm.$can("servplanas.update")
                   ? _c(
                       "vs-button",
                       {
@@ -56320,7 +56654,8 @@ var render = function() {
                       },
                       [_vm._v("ACTUALIZAR TARIFA")]
                     )
-                  : _c(
+                  : _vm.$can("servplanas.store")
+                  ? _c(
                       "vs-button",
                       {
                         staticClass: "mr-3",
@@ -56332,7 +56667,8 @@ var render = function() {
                         }
                       },
                       [_vm._v("AGREGAR TARIFA")]
-                    ),
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _c(
                   "vs-button",
@@ -56436,22 +56772,24 @@ var render = function() {
                                     attrs: { color: "primary", text: "Editar" }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servplanas.edit")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -56465,22 +56803,27 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.submitEliminar(tr, indextr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("servplanas.destroy")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -56544,18 +56887,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("servplanas.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -57316,7 +57661,110 @@ var render = function() {
                         : "Modifique los campos que desee actualizar",
                     finishButtonText:
                       _vm.modoEditar == false ? "Agregar" : "Actualizar"
-                  }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "footer",
+                      fn: function(props) {
+                        return [
+                          _c(
+                            "div",
+                            { staticClass: "wizard-footer-left" },
+                            [
+                              props.activeTabIndex > 0
+                                ? _c(
+                                    "vs-button",
+                                    {
+                                      style: props.fillButtonStyle,
+                                      nativeOn: {
+                                        click: function($event) {
+                                          return props.prevTab()
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Anterior")]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "wizard-footer-right" },
+                            [
+                              !props.isLastStep
+                                ? _c(
+                                    "vs-button",
+                                    {
+                                      staticClass: "wizard-footer-right",
+                                      style: props.fillButtonStyle,
+                                      nativeOn: {
+                                        click: function($event) {
+                                          return props.nextTab()
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Siguiente")]
+                                  )
+                                : _vm.modoEditar == false &&
+                                  _vm.$can("users.store")
+                                ? _c(
+                                    "vs-button",
+                                    {
+                                      staticClass:
+                                        "wizard-footer-right finish-button",
+                                      style: props.fillButtonStyle,
+                                      nativeOn: {
+                                        click: function($event) {
+                                          return props.nextTab()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n            " +
+                                          _vm._s(
+                                            props.isLastStep
+                                              ? "Agregar"
+                                              : "Siguiente"
+                                          )
+                                      )
+                                    ]
+                                  )
+                                : _vm.modoEditar == true &&
+                                  _vm.$can("users.update")
+                                ? _c(
+                                    "vs-button",
+                                    {
+                                      staticClass:
+                                        "wizard-footer-right finish-button",
+                                      style: props.fillButtonStyle,
+                                      nativeOn: {
+                                        click: function($event) {
+                                          return props.nextTab()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n            " +
+                                          _vm._s(
+                                            props.isLastStep
+                                              ? "Actualizar"
+                                              : "Siguiente"
+                                          )
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ])
                 },
                 [
                   _c(
@@ -58149,22 +58597,24 @@ var render = function() {
                                     attrs: { color: "primary", text: "Editar" }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-edit-2",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editar(tr)
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("users.edit")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-edit-2",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.editar(tr)
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -58178,25 +58628,27 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c("vs-button", {
-                                      staticClass: "ml-3",
-                                      attrs: {
-                                        radius: "",
-                                        color: "primary",
-                                        type: "border",
-                                        "icon-pack": "feather",
-                                        icon: "icon-trash",
-                                        size: "small"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$submitEliminar(
-                                            tr,
-                                            indextr
-                                          )
-                                        }
-                                      }
-                                    })
+                                    _vm.$can("users.destroy")
+                                      ? _c("vs-button", {
+                                          staticClass: "ml-3",
+                                          attrs: {
+                                            radius: "",
+                                            color: "primary",
+                                            type: "border",
+                                            "icon-pack": "feather",
+                                            icon: "icon-trash",
+                                            size: "small"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.$submitEliminar(
+                                                tr,
+                                                indextr
+                                              )
+                                            }
+                                          }
+                                        })
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -58267,18 +58719,20 @@ var render = function() {
                       _c(
                         "vs-dropdown-menu",
                         [
-                          _c(
-                            "vs-dropdown-item",
-                            {
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.$accion(1)
-                                }
-                              }
-                            },
-                            [_c("span", [_vm._v("Borrar")])]
-                          ),
+                          _vm.$can("users.destroy")
+                            ? _c(
+                                "vs-dropdown-item",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.$accion(1)
+                                    }
+                                  }
+                                },
+                                [_c("span", [_vm._v("Borrar")])]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "vs-dropdown-item",
@@ -58299,38 +58753,43 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n          text-primary border border-solid border-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$agregarPopUp()
-                        }
-                      }
-                    },
-                    [
-                      _c("feather-icon", {
-                        attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "vx-tooltip",
+                  _vm.$can("users.create")
+                    ? _c(
+                        "div",
                         {
-                          attrs: { color: "primary", text: "Agregar usuario" }
+                          staticClass:
+                            "p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base \n          text-primary border border-solid border-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.$agregarPopUp()
+                            }
+                          }
                         },
                         [
+                          _c("feather-icon", {
+                            attrs: { icon: "PlusIcon", svgClasses: "h-4 w-4" }
+                          }),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "ml-2 text-base text-primary" },
-                            [_vm._v("Agregar Usuario")]
+                            "vx-tooltip",
+                            {
+                              attrs: {
+                                color: "primary",
+                                text: "Agregar usuario"
+                              }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "ml-2 text-base text-primary" },
+                                [_vm._v("Agregar Usuario")]
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -90855,7 +91314,7 @@ var config = {
   router: _websanova_vue_auth_drivers_router_vue_router_2_x__WEBPACK_IMPORTED_MODULE_2___default.a,
   tokenDefaultName: 'laravel-jwt-auth',
   tokenStore: ['localStorage'],
-  rolesVar: 'role',
+  rolesVar: 'roles',
   //User model field which contains the user role details.
   authRedirect: {
     path: '/login'

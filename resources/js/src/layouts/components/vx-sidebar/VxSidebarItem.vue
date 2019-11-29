@@ -10,13 +10,13 @@
 
 <template>
     <div :class="[{'vs-sidebar-item-active':activeLink}, {'disabled-item pointer-events-none': isDisabled}]" class="vs-sidebar--item">
-        <router-link v-if="to" :to="to" :class="[{'router-link-active': activeLink}]" :target="target" exact>
+        <router-link v-if="to && $can(permiso)" :permiso="permiso" :to="to" :class="[{'router-link-active': activeLink}]" :target="target" exact>
             <vs-icon v-if="!featherIcon" :icon-pack="iconPack" :icon="icon">
             </vs-icon>
             <feather-icon :icon="icon" :class="{'w-3 h-3': iconSmall}" v-else></feather-icon>
             <slot></slot>
         </router-link>
-        <a v-else :target="target" :href="href">
+        <a v-else-if="$can(permiso)"  :permiso="permiso" :target="target" :href="href">
             <vs-icon v-if="!featherIcon" :icon-pack="iconPack" :icon="icon">
             </vs-icon>
             <feather-icon :icon="icon" :class="{'w-3 h-3': iconSmall}" v-else></feather-icon>
@@ -64,6 +64,10 @@ export default {
         isDisabled: {
             default: false,
             type: Boolean
+        },
+        permiso: {
+            default: null,
+            type: String
         }
     },
     data() {

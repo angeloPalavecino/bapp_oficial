@@ -3,7 +3,7 @@
     methods: {
       $can(permissionName) {
         //console.log(Permissions);
-        return Permissions.indexOf(permissionName) !== -1;
+        return atob(localStorage.getItem("userRole")).indexOf(permissionName) !== -1;
       },    
     },
   };

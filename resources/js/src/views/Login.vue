@@ -43,7 +43,7 @@
                                     v-model="email"
                                     class="w-full no-icon-border"/>
                                 <span class="text-danger text-sm" v-if="errors.first('email')">{{ errors.first('email') }}</span>
-                                 <span class="text-danger text-sm" v-else>&nbsp </span>
+                                 <span class="text-danger text-sm" v-else> &nbsp; </span>
                                
                                 <vs-input
                                     data-vv-validate-on="blur"
@@ -56,7 +56,7 @@
                                     v-model="password"
                                     class="w-full mt-6 no-icon-border" />
                                 <span class="text-danger text-sm" v-if="errors.first('password')">{{ errors.first('password') }}</span>
-                                <span class="text-danger text-sm" v-else>&nbsp </span>
+                                <span class="text-danger text-sm" v-else> &nbsp;  </span>
 
                                 <div class="flex flex-wrap justify-between my-5">
                                     <vs-checkbox v-model="checkbox_remember_me" class="mb-3" icon-pack="feather" icon="icon-check" >Recordarme</vs-checkbox>
@@ -132,10 +132,13 @@ export default {
             email: app.email,
             password: app.password
           },
-          success: function() {
+          success: function(res) {
             // handle redirection
             app.success = true
             const redirectTo = 'home'
+            //Permisos
+            //window.Permissions = 
+            localStorage.setItem("userRole", res.data.roles);
             this.$router.push({name: redirectTo})
           },
           error: function() {
@@ -146,7 +149,11 @@ export default {
           fetchUser: true
         })
       }
-    }
+    },
+    created() {
+      localStorage.removeItem('userRole');      
+    },
+    
 }
 </script>
 

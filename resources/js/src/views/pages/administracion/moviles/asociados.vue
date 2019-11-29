@@ -38,7 +38,7 @@
               
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
-                <vs-button @click="upload('docs')" color="primary" type="filled">Adjuntar</vs-button>
+                <vs-button v-if="$can('moviles.store')"  @click="upload('docs')" color="primary" type="filled">Adjuntar</vs-button>
               </div>
             </div>  
             <div class="vx-row">
@@ -239,8 +239,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR ASOCIADO</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR ASOCIADO</vs-button>
+              <vs-button v-if="modoEditar == true && $can('moviles.update')"  class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR ASOCIADO</vs-button>
+              <vs-button v-else-if="$can('moviles.store')"  class="mr-3" @click.prevent="$submitAgregar()">AGREGAR ASOCIADO</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -271,7 +271,7 @@
             </div>
 
             <vs-dropdown-menu>
-              <vs-dropdown-item @click.prevent="$accion(1)">
+              <vs-dropdown-item  v-if="$can('moviles.destroy')"  @click.prevent="$accion(1)">
                 <span>Borrar</span>
               </vs-dropdown-item>
               <vs-dropdown-item @click.prevent="$accion(2)">
@@ -287,7 +287,7 @@
           </vs-dropdown>
 
           <!-- ADD NEW -->
-          <div
+          <div v-if="$can('moviles.create')" 
             class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
             @click="$agregarPopUp()"
           >
@@ -366,6 +366,7 @@
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
                   <vs-button
+                    v-if="$can('moviles.edit')" 
                     radius
                     color="primary"
                     type="border"
@@ -378,6 +379,7 @@
                 </vx-tooltip>
                 <vx-tooltip color="primary" text="Eliminar">
                   <vs-button
+                    v-if="$can('moviles.destroy')" 
                     radius
                     color="primary"
                     type="border"
@@ -390,6 +392,7 @@
                 </vx-tooltip>
                  <vx-tooltip color="primary" text="Documentos">
                   <vs-button
+                    v-if="$can('moviles.index')" 
                     radius
                     color="primary"
                     type="border"
