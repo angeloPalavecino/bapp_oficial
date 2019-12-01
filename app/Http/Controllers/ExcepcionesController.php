@@ -63,6 +63,16 @@ class ExcepcionesController extends Controller
            
         }
 
+        $existe_excepcion = Excepciones::where('rut', $request['rut'])->first();
+        if ($existe_excepcion != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El rut ya se encuentra registrado',
+                ], 300);           
+        }
+
         $input = $request->all();
         $rut = $input['rut'];
         $direccion = $input['direccion'];

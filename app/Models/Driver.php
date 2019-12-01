@@ -12,6 +12,7 @@ class Driver extends Model
     protected $fillable = [
         'name', 'lastname' ,'rut', 'email', 'telefono', 'habilitado', 'pais','ciudad', 
         'comuna', 'dueno', 'conductor', 'direccion', 'numeracion', 'clase', 'empresa_id'
+        , 'driver_default'
     ];
 
      public function cars()

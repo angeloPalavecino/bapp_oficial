@@ -34,8 +34,8 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::with('roles')->get(); 
-      
+        $users = User::with('roles','empresas')->get(); 
+        
         //$user = User::findOrFail('1');
         //$user->syncRoles('1');
 
@@ -68,6 +68,27 @@ class UserController extends Controller
                     'message' => $validation->errors(),
                 ], 300);
            
+        }
+
+        
+        $existe_usuario = User::where('rut', $request['rut'])->first();
+        if ($existe_usuario != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El rut ya se encuentra registrado',
+                ], 300);           
+        }
+
+        $existe_usuario = User::where('email', $request['email'])->first();
+        if ($existe_usuario != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El email ya se encuentra registrado',
+                ], 300);           
         }
 
         $input = $request->all();

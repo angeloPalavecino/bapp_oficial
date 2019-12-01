@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TypeDocument extends Model
+class ConductoresHasCars extends Model
 {
     protected $fillable = [
-        'name', 'habilitado','tipo'
+         'driver_id', 'car_id', 'habilitado'
     ];
 }

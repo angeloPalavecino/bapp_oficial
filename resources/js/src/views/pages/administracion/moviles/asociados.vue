@@ -1,6 +1,90 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
-   
+  
+     <!-- DOCUMENTOS -->
+          <vs-popup class="holamundo"  title="Documentos Asociados" :active.sync="popupDocumento"
+          @close="$close($event)">   
+         
+          <vs-tabs color="primary" ref="tabdocs" >
+          <vs-tab label="Adjuntar"  icon-pack="feather" icon="icon-upload">
+         
+          <div class="vx-row">
+              <div class="vx-col md:w-1/2 w-full mt-2"> 
+                <vs-select v-model="itemDoc.tipo_documento" v-validate="'required'" label="Tipo de Documento" name="tipo_documento"
+                class="w-full"  data-vv-scope="docs">
+                  <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
+                </vs-select>
+                <span class="text-danger text-sm" v-show="errors.has('docs.tipo_documento')">{{ errors.first('docs.tipo_documento') }}</span> 
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-3">
+                 <flat-pickr v-model="itemDoc.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" 
+                class="w-full select-large mt-5" placeholder="Fecha de Vencimiento" name="fecha_vencimiento"   data-vv-scope="docs"/>
+                <span class="text-danger text-sm">{{ errors.first('docs.fecha_vencimiento') }}</span>                           
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+               <input
+                  label="Documento"
+                  type="file"
+                  class="w-full"
+                  name="file"
+                  id="file"
+                  @change = "uploadData"  
+                  ref="fileupload"
+                  accept="application/pdf,application/msword,application/image/png,image/jpeg"           
+                />
+                <span class="text-sm" >Fomatos permitidos: JPG - PNG - DOC - PDF</span>
+                <br/>
+                <span class="text-sm" ><i>Tamaño maximo 2 MB</i></span>
+              
+              </div>
+              <div class="vx-col md:w-1/2 w-full mt-5">
+                <vs-button v-if="$can('moviles.store')"  @click="upload('docs')" color="primary" type="filled">Adjuntar</vs-button>
+              </div>
+            </div>  
+            <div class="vx-row">
+            </div>
+          </vs-tab>
+          <vs-tab label="Documentos" icon-pack="feather" icon="icon-file-text">
+
+            <vs-table max-items="4" pagination  :data="documentos_choices" ref="tabladoc">
+                  <template slot="header">
+                    <h3>
+                      Documentos Subidos
+                    </h3>
+                  </template>
+                  <template slot="thead">
+                    <vs-th colspan="2">
+                       Documento
+                    </vs-th>
+                    <vs-th>
+                       Vencimiento
+                    </vs-th>
+                    <vs-th>
+                      Descarga
+                    </vs-th>                                     
+                  </template>
+
+                  <template slot-scope="{data}">
+                    <vs-tr :key="indextrdoc" v-for="(trdoc, indextrdoc) in data" >
+                      <vs-td colspan="2">
+                        {{ trdoc.name.split(/[.,\/-]/)[1] }}
+                      </vs-td>
+                      <vs-td>
+                        <vs-chip :color="getStatusColor(trdoc.fecha_vencimiento)">{{ trdoc.fecha_vencimiento }}</vs-chip>
+                      </vs-td>                  
+                      <vs-td :data="data[indextrdoc].url">
+                        <a style="cursor: pointer;" rel="nofollow" @click="downloadDocument(data[indextrdoc].id, data[indextrdoc].name)">Descargar</a>                        
+                      </vs-td>
+
+                    </vs-tr>
+                  </template>
+                </vs-table>
+
+          </vs-tab>
+        </vs-tabs>
+          </vs-popup>
+          <!-- FIN DOCUMENTOS -->
+          
     <!-- POP UP -->
     <vs-popup
       class="holamundo"
@@ -155,8 +239,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR ASOCIADO</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR ASOCIADO</vs-button>
+              <vs-button v-if="modoEditar == true && $can('moviles.update')"  class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR ASOCIADO</vs-button>
+              <vs-button v-else-if="$can('moviles.store')"  class="mr-3" @click.prevent="$submitAgregar()">AGREGAR ASOCIADO</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -187,7 +271,7 @@
             </div>
 
             <vs-dropdown-menu>
-              <vs-dropdown-item @click.prevent="$accion(1)">
+              <vs-dropdown-item  v-if="$can('moviles.destroy')"  @click.prevent="$accion(1)">
                 <span>Borrar</span>
               </vs-dropdown-item>
               <vs-dropdown-item @click.prevent="$accion(2)">
@@ -203,7 +287,7 @@
           </vs-dropdown>
 
           <!-- ADD NEW -->
-          <div
+          <div v-if="$can('moviles.create')" 
             class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
             @click="$agregarPopUp()"
           >
@@ -282,6 +366,7 @@
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
                   <vs-button
+                    v-if="$can('moviles.edit')" 
                     radius
                     color="primary"
                     type="border"
@@ -294,6 +379,7 @@
                 </vx-tooltip>
                 <vx-tooltip color="primary" text="Eliminar">
                   <vs-button
+                    v-if="$can('moviles.destroy')" 
                     radius
                     color="primary"
                     type="border"
@@ -302,6 +388,19 @@
                     size="small"
                     class="ml-3"
                     @click="$submitEliminar(tr, indextr)"
+                  ></vs-button>
+                </vx-tooltip>
+                 <vx-tooltip color="primary" text="Documentos">
+                  <vs-button
+                    v-if="$can('moviles.index')" 
+                    radius
+                    color="primary"
+                    type="border"
+                    icon-pack="feather"
+                    icon="icon-file" 
+                    size="small"
+                    class="ml-3"
+                    @click="initUpload(tr)"
                   ></vs-button>
                 </vx-tooltip>
               </div>
@@ -315,6 +414,7 @@
 <script>
 // For custom error message
 import { Validator } from "vee-validate";
+import flatPickr from 'vue-flatpickr-component';
 const dict = {
   custom: {
     name: {
@@ -364,6 +464,7 @@ Validator.localize("en", dict);
 
 export default {
   components: {
+    flatPickr
   },
   data() {
     return {
@@ -381,9 +482,14 @@ export default {
         habilitado: 1,
         conductor: false,
         dueno: true,
+        driver_default: false
       },
       modoEditar: false,
       exportData: [],
+      tipodocumentos_choices: [],      
+      documentos_choices: [],
+      dataItem:{},
+      itemDoc: {}
     };
   },
   computed: {
@@ -423,6 +529,7 @@ export default {
       this.item.clase = item.clase;
       this.item.conductor = item.conductor;
       this.item.dueno = item.dueno;
+      this.item.driver_default = item.driver_default;
 
       this.popupActive = true;
     },
@@ -431,14 +538,169 @@ export default {
       this.item = {
         habilitado: 1,
         conductor: false,
-        dueno: true
+        dueno: true,
+        driver_default:false
       };
       this.errors.clear();
       //this.modoEditar = false;
     },
+    initUpload(item) {   
+      const thisIns = this; 
+
+      this.documentos_choices = [];
+      
+      this.itemDoc.tipo_documento = "";
+      this.itemDoc.fecha_vencimiento = ""; 
+      this.itemDoc.file = ""; 
+      this.itemDoc.filename = ""; 
+      
+      //const input = this.$refs.fileupload;
+      //input.type = 'file';
+      //input.type = 'text';
+      let myElement = document.querySelector(".line-vs-tabs");
+      myElement.style.width = "95px";
+      myElement.style.left = "0px";
+
+      this.$refs.tabdocs.activeChild(0);
+      this.$refs.tabdocs.changePositionLine(0);
+
+      this.errors.clear(); 
+      
+      this.$http.get('asociado/asociado/documents/' + item.id)
+          .then(function (response) {
+            thisIns.documentos_choices = response.data.items;            
+          })
+          .catch(function (error) {
+            thisIns.$vs.notify({
+              title:'Error',
+              text: "Error al traer los documentos",
+              color:'danger',
+              iconPack: 'feather',
+              icon:'icon-alert-circle'})
+      });      
+
+       setTimeout(() => {
+                
+                this.popupDocumento = true;
+                thisIns.dataItem = item;   
+                thisIns.$refs.fileupload.value = '';
+
+                }, 300);
+
+
+      
+    },
+
+    upload($name = null){
+      $name = $name == null ? true : $name;
+      
+       this.$validator.validateAll($name).then(result =>{
+         
+        if (result) { 
+               
+          const formData = new FormData();     
+          formData.append('file', (this.itemDoc.file));
+          formData.append('tipo_documento_id', (this.itemDoc.tipo_documento.split("|")[0])); 
+          formData.append('tipo_documento', (this.itemDoc.tipo_documento.split("|")[1])); 
+          formData.append('fecha_vencimiento', (this.itemDoc.fecha_vencimiento));  
+          formData.append('driver_id', (this.dataItem.id));
+          formData.append('rut', (this.dataItem.rut));
+          formData.append('id', (this.dataItem.id));
+          
+          this.$upload(formData);
+                     
+        } else {
+        }
+      })
+      
+    },
+   uploadData(e) {
+      
+      const tipo = e.target.files[0].type;
+      const size = e.target.files[0].size;
+     if(tipo == "image/png" || tipo == "image/jpeg" || tipo == "application/msword" || 
+      tipo == "application/pdf" ){
+        //|| tipo == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        if(size <= 2000000){ //2097152
+            
+            this.itemDoc.file = e.target.files[0];
+            this.itemDoc.filename = e.target.files[0].name;
+            
+            }else{
+              this.$refs.fileupload.value = ''
+              //const input = this.$refs.fileupload;
+              //input.type = 'text';
+              //input.type = 'file';
+
+            this.$vs.notify({
+                title: "Error",
+                text: "El archivo no tiene el tamañano adecuado (Max. 2 MB)",
+                color: "danger",
+                iconPack: "feather",
+                icon: "icon-alert-circle"
+            });
+
+
+          }
+      }else{
+          this.$refs.fileupload.value = '';
+          //const input = this.$refs.fileupload;
+          //input.type = 'text';
+          //input.type = 'file';
+
+          this.$vs.notify({
+            title: "Error",
+            text: "El archivo no tiene el formato correcto",
+            color: "danger",
+            iconPack: "feather",
+            icon: "icon-alert-circle"
+          });
+
+      }
+    },
+    downloadDocument(id, name){
+      //var download = await this.$http.get('driver/driver/document/' + id);
+      //console.log(download);
+      this.$http.get('asociado/asociado/document/'+id, {responseType: 'blob'}).then(response => {
+            var a = document.createElement('a');
+            var url = window.URL.createObjectURL(response.data);
+            a.href = url;
+            a.download = name;
+            document.body.append(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+      }, response => {
+        console.warn('error from download_contract');
+        console.log(response);
+        // Manage errors
+        }
+      );
+    },
+     getStatusColor(fecha) {
+      var factual = new Date();
+      var fvencimiento = new Date(fecha);  
+      if (fvencimiento.getTime() >= factual.getTime()) return "success";
+      if (fvencimiento.getTime() <= factual.getTime()) return "danger";
+      return "danger";
+    }, 
+     refrescaOtrosDatos() {
+      //Carga Tipos de documentos
+      const thisIns  = this;
+      this.$http
+        .get("tipodocumentos/tipodocumentos/2")
+        .then(function(response) {
+          thisIns.tipodocumentos_choices = response.data.items;
+        })
+        .catch(function(error) {
+          thisIns.$msjError(error);    
+        });   
+
+    }
   },
   created() {
     this.$refrescaTabla();
+    this.refrescaOtrosDatos();
   },
   mounted() {
     this.isMounted = true;

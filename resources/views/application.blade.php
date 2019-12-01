@@ -26,13 +26,13 @@
     <script src="{{ asset(mix('js/app.js')) }}"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk6Qet4uRb2EaiEoBgw-eOXedRMUuoudA&libraries=places,drawing&region=cl"></script>
           
-    <script>
+    <!--<script>
       @auth
         window.Permissions = {!! json_encode(Auth::user()->allPermissions, true) !!};
       @else
         window.Permissions = [];
       @endauth
-    </script>
+    </script>-->
 
   </body>
  

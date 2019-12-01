@@ -271,6 +271,9 @@ Route::prefix('v1')->group(function () {
             Route::put('asociado/{id}', 'AsociadoController@update');
             Route::post('asociado/store', 'AsociadoController@store');
             Route::get('asociado/{id}/edit', 'AsociadoController@edit');
+            Route::post('asociado/upload', 'AsociadoController@upload');
+            Route::get('asociado/documents/{id}', 'AsociadoController@documents');
+            Route::get('asociado/document/{id}', 'AsociadoController@document');
          });
     });
 
@@ -290,6 +293,7 @@ Route::prefix('v1')->group(function () {
             Route::get('car/documents/{id}', 'CarController@documents');
             Route::get('car/document/{id}', 'CarController@document');
             Route::get('cars', 'CarController@cars');
+            Route::get('carsall', 'CarController@carsall');
             // Route::get('cars', 'CarController@cars');
             // Route::get('moviles', 'DriverController@moviles');
         });

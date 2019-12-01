@@ -15,8 +15,7 @@
             <vs-th >N° Movil</vs-th>
             <vs-th >Patente</vs-th>
           </template>
-          <template slot-scope="{data}">
-            <tbody>
+          <template slot-scope="{data}"> 
                 <vs-tr :data="trmov" :key="indextrmov" v-for="(trmov, indextrmov) in data">
                   <vs-td>
                     <p>{{ trmov.id }}</p>
@@ -28,7 +27,6 @@
                     <p>{{ trmov.patente }}</p>
                   </vs-td>             
                 </vs-tr>  
-            </tbody> 
             </template>
         </vs-table>
     
@@ -36,7 +34,7 @@
           <!-- FIN MOVILES -->
 
               <!-- POP UP -->
-        <vs-popup class="holamundo"  ref="modal" :title="(modoEditar == false ? 'AGREGAR USUARIO' : 'ACTUALIZAR USUARIO')" 
+        <vs-popup class="holamundo"   ref="modal" :title="(modoEditar == false ? 'AGREGAR USUARIO' : 'ACTUALIZAR USUARIO')" 
          :active.sync="popupActive"   @close="$close($event)">
         <div class="mt-5">
       <form-wizard color="rgba(var(--vs-primary), 1)" errorColor="rgba(var(--vs-danger), 1)" 
@@ -158,6 +156,21 @@
           </div>
           </form>
         </tab-content>
+        <template slot="footer" slot-scope="props">
+       <div class="wizard-footer-left">
+           <vs-button v-if="props.activeTabIndex > 0" @click.native="props.prevTab()" :style="props.fillButtonStyle">Anterior</vs-button>
+        </div>
+        <div class="wizard-footer-right">
+          <vs-button v-if="!props.isLastStep" @click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Siguiente</vs-button>
+
+          <vs-button v-else-if="modoEditar == false && $can('users.store')"  @click.native="props.nextTab()" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">
+            {{props.isLastStep ? 'Agregar' : 'Siguiente'}}</vs-button>
+          
+          <vs-button v-else-if="modoEditar == true && $can('users.update')"  @click.native="props.nextTab()" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">
+            {{props.isLastStep ? 'Actualizar' : 'Siguiente'}}</vs-button>
+        </div>
+      </template>
+     
       </form-wizard>
     </div>
                 
@@ -180,7 +193,7 @@
             </div>
 
             <vs-dropdown-menu >
-              <vs-dropdown-item @click.prevent="$accion(1)">
+              <vs-dropdown-item v-if="$can('users.destroy')" @click.prevent="$accion(1)">
                 <span>Borrar</span>
               </vs-dropdown-item>
               <vs-dropdown-item @click.prevent="$accion(2)">
@@ -197,7 +210,7 @@
 
 
           <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
+          <div v-if="$can('users.create')" class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
           text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
               <vx-tooltip color="primary" text="Agregar usuario">
@@ -263,6 +276,7 @@
         <vs-th sort-key="items-email">Email</vs-th>
         <vs-th sort-key="items-rol">Rol</vs-th>
 		    <vs-th sort-key="items-status">Estado</vs-th>
+        <vs-th sort-key="items-empresa">Empresa</vs-th>
        <!--  <vs-th sort-key="users-created_at">Creado</vs-th>
         <vs-th sort-key="users-updated_at">Actualizado</vs-th>-->
         <vs-th sort-key="items-accion">Accion</vs-th>
@@ -293,21 +307,21 @@
 				      <vs-td>
                 <vs-chip :color="getStatusColor(tr.habilitado)" class="items-status">{{ tr.habilitado == 1 ? 'Activo' : 'Inactivo'  }}</vs-chip>
               </vs-td>
-             <!--  <vs-td>
-                <p class="users-created_at">{{ tr.created_at }}</p>
+               <vs-td>
+                <p class="items-empresa">{{ tr.empresas[0].razon_social }}</p>
               </vs-td>
 
-              <vs-td>
+             <!-- <vs-td>
                 <p class="users-updated_at">{{ tr.updated_at }}</p>
               </vs-td>-->
               <vs-td>
              
                 <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                       <vx-tooltip color="primary" text="Editar">
-                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
+                      <vs-button v-if="$can('users.edit')" radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
                        </vx-tooltip>
                       <vx-tooltip color="primary" text="Eliminar">
-                       <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="$submitEliminar(tr, indextr)"></vs-button>
+                       <vs-button v-if="$can('users.destroy')" radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="$submitEliminar(tr, indextr)"></vs-button>
                        </vx-tooltip>
                  </div>
 
@@ -432,7 +446,7 @@ export default {
                 })
             })
         },
-        validateStep2() {
+    validateStep2() {
             return new Promise((resolve, reject) => {
                 this.$validator.validateAll("step-2").then(result => {
                     if (result) {

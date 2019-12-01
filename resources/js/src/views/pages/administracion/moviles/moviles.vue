@@ -14,14 +14,14 @@
               
               <div class="vx-col md:w-1/2 w-full mt-2">
                 <vs-select v-model="itemDoc.tipo_documento" v-validate="'required'" label="Tipo de Documento" 
-                name="tipo_documento" class="w-full"  data-vv-scope="docs">
+                name="tipo_documento" class="w-full"  data-vv-scope="docs" @input="setSelected">
                   <vs-select-item :key="item.id" :value="item.id+'|'+item.name" :text="item.name" v-for="item in tipodocumentos_choices"  />
                 </vs-select>
                 <span class="text-danger text-sm" v-show="errors.has('docs.tipo_documento')">{{ errors.first('docs.tipo_documento') }}</span> 
               </div>
               <div class="vx-col md:w-1/2 w-full mt-3">
                 <flat-pickr v-model="itemDoc.fecha_vencimiento" v-validate="'required'" label="Fecha de Vencimiento" class="w-full select-large mt-5" 
-                placeholder="Fecha de Vencimiento" name="fecha_vencimiento"  data-vv-scope="docs"/>
+                placeholder="Fecha de Vencimiento" :disabled="disableddoc" name="fecha_vencimiento"  data-vv-scope="docs"/>
                 <span class="text-danger text-sm" >{{ errors.first('docs.fecha_vencimiento') }}</span>                         
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
@@ -41,7 +41,7 @@
               
               </div>
               <div class="vx-col md:w-1/2 w-full mt-5">
-                <vs-button @click="upload('docs')" color="primary" type="filled">Adjuntar</vs-button>
+                <vs-button v-if="$can('moviles.store')"  @click="upload('docs')" color="primary" type="filled">Adjuntar</vs-button>
               </div>
             </div>  
             <div class="vx-row">
@@ -73,7 +73,8 @@
                         {{ trdoc.documents[0].name.split(/[.,\/-]/)[1] }}
                       </vs-td>
                       <vs-td>
-                        <vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip>
+                        <div v-if="trdoc.documents[0].fecha_vencimiento == null">No Aplica</div>
+                        <div v-else><vs-chip :color="getStatusColor(trdoc.documents[0].fecha_vencimiento)">{{ trdoc.documents[0].fecha_vencimiento }}</vs-chip></div>
                       </vs-td>                  
                       <vs-td :data="data[indextrdoc].url">
                         <a style="cursor: pointer;" rel="nofollow" @click="downloadDocument(data[indextrdoc].documents[0].id, data[indextrdoc].documents[0].name)">Descargar</a>                        
@@ -231,8 +232,8 @@
 
      
             <div class="flex flex-wrap items-center justify-center p-6 mt-2" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR MOVIL</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR MOVIL</vs-button>
+              <vs-button v-if="modoEditar == true && $can('moviles.update')"  class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR MOVIL</vs-button>
+              <vs-button v-else-if="$can('moviles.store')"  class="mr-3" @click.prevent="$submitAgregar()">AGREGAR MOVIL</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -263,7 +264,7 @@
             </div>
 
             <vs-dropdown-menu>
-              <vs-dropdown-item @click.prevent="$accion(1)">
+              <vs-dropdown-item v-if="$can('moviles.destroy')"  @click.prevent="$accion(1)">
                 <span>Borrar</span>
               </vs-dropdown-item>
               <vs-dropdown-item @click.prevent="$accion(2)">
@@ -279,7 +280,7 @@
           </vs-dropdown>
 
           <!-- ADD NEW -->
-          <div
+          <div v-if="$can('moviles.create')" 
             class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base text-primary border border-solid border-primary"
             @click="$agregarPopUp()"
           >
@@ -352,7 +353,8 @@
             <vs-td>
               <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                 <vx-tooltip color="primary" text="Editar">
-                  <vs-button
+                  <vs-button  
+                  v-if="$can('moviles.edit')" 
                     radius
                     color="primary"
                     type="border"
@@ -365,6 +367,7 @@
                 </vx-tooltip>
                 <vx-tooltip color="primary" text="Eliminar">
                   <vs-button
+                  v-if="$can('moviles.destroy')" 
                     radius
                     color="primary"
                     type="border"
@@ -377,6 +380,7 @@
                 </vx-tooltip>
                 <vx-tooltip color="primary" text="Documentos">
                   <vs-button
+                    v-if="$can('moviles.index')" 
                     radius
                     color="primary"
                     type="border"
@@ -482,7 +486,8 @@ export default {
       aux: 0,
       documentos_choices: [],
       dataItem:{},
-      itemDoc: {}
+      itemDoc: {},
+      disableddoc: false,
     };
   },
   computed: {
@@ -494,6 +499,13 @@ export default {
     }
   },
   methods: {
+     setSelected(value) {
+            if(value == "4|Padron"){
+              this.disableddoc = true;
+            }else{
+              this.disableddoc = false;
+            }
+    },
     getStatusColor(fecha) {
       var factual = new Date();
       var fvencimiento = new Date(fecha);  
@@ -562,13 +574,15 @@ export default {
         asientos: 1,
       };
       this.errors.clear();
+      this.disableddoc = false;
       //this.modoEditar = false;
     },
     initUpload(item) {   
       const thisIns = this; 
 
       this.documentos_choices = [];
-      
+      this.disableddoc = false;
+
       this.itemDoc.tipo_documento = "";
       this.itemDoc.fecha_vencimiento = ""; 
       this.itemDoc.file = ""; 

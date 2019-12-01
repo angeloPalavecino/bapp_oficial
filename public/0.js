@@ -1121,6 +1121,10 @@ __webpack_require__.r(__webpack_exports__);
     isDisabled: {
       "default": false,
       type: Boolean
+    },
+    permiso: {
+      "default": null,
+      type: String
     }
   },
   data: function data() {
@@ -2358,6 +2362,7 @@ var render = function() {
                                     ref: "sidebarLink",
                                     refInFor: true,
                                     attrs: {
+                                      permiso: sidebarItem.permiso,
                                       index: index,
                                       to:
                                         sidebarItem.slug != "external"
@@ -2577,6 +2582,7 @@ var render = function() {
                     "vx-sidebar-item",
                     {
                       attrs: {
+                        permiso: groupItem.permiso,
                         index: _vm.groupIndex + "." + index,
                         to: groupItem.url,
                         icon: _vm.itemIcon(_vm.groupIndex + "." + index),
@@ -2643,12 +2649,17 @@ var render = function() {
       ]
     },
     [
-      _vm.to
+      _vm.to && _vm.$can(_vm.permiso)
         ? _c(
             "router-link",
             {
               class: [{ "router-link-active": _vm.activeLink }],
-              attrs: { to: _vm.to, target: _vm.target, exact: "" }
+              attrs: {
+                permiso: _vm.permiso,
+                to: _vm.to,
+                target: _vm.target,
+                exact: ""
+              }
             },
             [
               !_vm.featherIcon
@@ -2664,9 +2675,16 @@ var render = function() {
             ],
             2
           )
-        : _c(
+        : _vm.$can(_vm.permiso)
+        ? _c(
             "a",
-            { attrs: { target: _vm.target, href: _vm.href } },
+            {
+              attrs: {
+                permiso: _vm.permiso,
+                target: _vm.target,
+                href: _vm.href
+              }
+            },
             [
               !_vm.featherIcon
                 ? _c("vs-icon", {
@@ -2681,6 +2699,7 @@ var render = function() {
             ],
             2
           )
+        : _vm._e()
     ],
     1
   )
@@ -3388,13 +3407,15 @@ __webpack_require__.r(__webpack_exports__);
   name: "Usuarios",
   slug: "users",
   icon: "UsersIcon",
-  i18n: "UsersIcon"
+  i18n: "UsersIcon",
+  permiso: "users.index"
 }, {
   url: "/pages/administracion/roles/roles",
   name: "Roles",
   slug: "roles",
   icon: "UserCheckIcon",
-  i18n: "UserCheckIcon"
+  i18n: "UserCheckIcon",
+  permiso: "roles.index"
 }, {
   url: null,
   name: "Config. Planificacion",
@@ -3405,25 +3426,29 @@ __webpack_require__.r(__webpack_exports__);
     name: "Excepciones",
     slug: "excepciones",
     icon: "AlertCircleIcon",
-    i18n: "AlertCircleIcon"
+    i18n: "AlertCircleIcon",
+    permiso: "excepciones.index"
   }, {
     url: "/pages/administracion/observaciones/observaciones",
     name: "Observaciones",
     slug: "observaciones",
     icon: "ListIcon",
-    i18n: "ListIcon"
+    i18n: "ListIcon",
+    permiso: "observaciones.index"
   }, {
     url: "/pages/administracion/obsinternas/obsinternas",
     name: "Obs. Internas",
     slug: "obsinternas",
     icon: "ListIcon",
-    i18n: "ListIcon"
+    i18n: "ListIcon",
+    permiso: "obsinternas.index"
   }, {
     url: "/pages/administracion/fuerazona/fuerazona",
     name: "Fuera de zona",
     slug: "fuerazona",
     icon: "MapIcon",
-    i18n: "MapIcon"
+    i18n: "MapIcon",
+    permiso: "fuerazona.index"
   }]
 }, {
   url: null,
@@ -3435,26 +3460,30 @@ __webpack_require__.r(__webpack_exports__);
     name: "Asociados",
     slug: "moviles",
     icon: "TruckIcon",
-    i18n: "TruckIcon"
+    i18n: "TruckIcon",
+    permiso: "moviles.index"
   }, {
     url: "/pages/administracion/moviles/moviles",
     name: "Moviles",
     slug: "moviles",
     icon: "TruckIcon",
-    i18n: "TruckIcon"
+    i18n: "TruckIcon",
+    permiso: "moviles.index"
   }, {
     url: "/pages/administracion/moviles/conductores",
     name: "Conductores",
     slug: "conductores",
     icon: "TruckIcon",
-    i18n: "TruckIcon"
+    i18n: "TruckIcon",
+    permiso: "moviles.index"
   }]
 }, {
   url: "/pages/administracion/empresas/empresas",
   name: "Config. Cuenta",
   slug: "empresas",
   icon: "GlobeIcon",
-  i18n: "GlobeIcon"
+  i18n: "GlobeIcon",
+  permiso: "empresas.index"
 }, {
   url: null,
   name: "Tarifario",
@@ -3465,19 +3494,22 @@ __webpack_require__.r(__webpack_exports__);
     name: "Tarifa Pasajero",
     slug: "tarifapasajero",
     icon: "DollarSignIcon",
-    i18n: "DollarSignIcon"
+    i18n: "DollarSignIcon",
+    permiso: "servpasajeros.index"
   }, {
     url: "/pages/administracion/tarifas/planas/planas",
     name: "Tarifa Plana",
     slug: "tarifaplana",
     icon: "DollarSignIcon",
-    i18n: "DollarSignIcon"
+    i18n: "DollarSignIcon",
+    permiso: "servplanas.index"
   }, {
     url: "/pages/administracion/tarifas/kms/kms",
     name: "Tarifa Kms",
     slug: "tarifakms",
     icon: "DollarSignIcon",
-    i18n: "DollarSignIcon"
+    i18n: "DollarSignIcon",
+    permiso: "servkms.index"
   }]
 }]);
 

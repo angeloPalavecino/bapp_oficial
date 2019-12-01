@@ -30,6 +30,7 @@ export default [
     slug: "users",
     icon: "UsersIcon",
     i18n: "UsersIcon",
+    permiso: "users.index"
 
   },
   {
@@ -38,6 +39,7 @@ export default [
     slug: "roles",
     icon: "UserCheckIcon",
     i18n: "UserCheckIcon",
+    permiso: "roles.index"
   
   },
   {
@@ -52,6 +54,7 @@ export default [
         slug: "excepciones",
         icon: "AlertCircleIcon",
         i18n: "AlertCircleIcon",
+        permiso: "excepciones.index"
       },
       {
         url: "/pages/administracion/observaciones/observaciones",
@@ -59,6 +62,7 @@ export default [
         slug: "observaciones",
         icon: "ListIcon",
         i18n: "ListIcon",
+        permiso: "observaciones.index"
       },
       {
         url: "/pages/administracion/obsinternas/obsinternas",
@@ -66,6 +70,7 @@ export default [
         slug: "obsinternas",
         icon: "ListIcon",
         i18n: "ListIcon",
+        permiso: "obsinternas.index"
       },
       {
         url: "/pages/administracion/fuerazona/fuerazona",
@@ -73,6 +78,7 @@ export default [
         slug: "fuerazona",
         icon: "MapIcon",
         i18n: "MapIcon",
+        permiso: "fuerazona.index"
       },
     ]
   },
@@ -88,6 +94,7 @@ export default [
         slug: "moviles",
         icon: "TruckIcon",
         i18n: "TruckIcon",
+        permiso: "moviles.index"
     
       },
       {
@@ -96,6 +103,7 @@ export default [
         slug: "moviles",
         icon: "TruckIcon",
         i18n: "TruckIcon",
+        permiso: "moviles.index"
     
       },
       {
@@ -104,6 +112,7 @@ export default [
         slug: "conductores",
         icon: "TruckIcon",
         i18n: "TruckIcon",
+        permiso: "moviles.index"
     
       },
     ]
@@ -114,7 +123,7 @@ export default [
     slug: "empresas",
     icon: "GlobeIcon",
     i18n: "GlobeIcon",
-  
+    permiso: "empresas.index"
   },
   {
     url: null,
@@ -128,6 +137,7 @@ export default [
         slug: "tarifapasajero",
         icon: "DollarSignIcon",
         i18n: "DollarSignIcon",
+        permiso: "servpasajeros.index"
       },
       {
         url: "/pages/administracion/tarifas/planas/planas",
@@ -135,6 +145,7 @@ export default [
         slug: "tarifaplana",
         icon: "DollarSignIcon",
         i18n: "DollarSignIcon",
+        permiso: "servplanas.index"
       },
       {
         url: "/pages/administracion/tarifas/kms/kms",
@@ -142,6 +153,7 @@ export default [
         slug: "tarifakms",
         icon: "DollarSignIcon",
         i18n: "DollarSignIcon",
+        permiso: "servkms.index"
       },
     ]
   },

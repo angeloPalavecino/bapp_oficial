@@ -89,6 +89,16 @@ class EmpresaController extends Controller
            
         }
 
+        $existe_empresa = Empresa::where('rut', $empresa['rut'])->first();
+        if ($existe_empresa != null) {
+
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'El rut ya se encuentra registrado',
+                ], 300);           
+        }
+
         //Agrega Empresa
         $rut = $empresa['rut'];
         $dv = $empresa['dv'];

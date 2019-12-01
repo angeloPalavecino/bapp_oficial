@@ -18,7 +18,7 @@
             </div>
 
             <vs-dropdown-menu >
-              <vs-dropdown-item @click.prevent="$accion(1)">
+              <vs-dropdown-item v-if="$can('observaciones.destroy')" @click.prevent="$accion(1)">
                 <span>Borrar</span>
               </vs-dropdown-item>
               <vs-dropdown-item @click.prevent="$accion(2)">
@@ -35,7 +35,7 @@
 
 
           <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
+          <div v-if="$can('observaciones.create')" class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
           text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
               <vx-tooltip color="primary" text="Agregar observacion">
@@ -57,8 +57,8 @@
               <span class="text-danger text-sm" v-show="errors.has('descripcion')">{{ errors.first('descripcion') }}</span>
      
             <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR OBSERVACION</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR OBSERVACION</vs-button>
+              <vs-button v-if="modoEditar == true && $can('observaciones.update')" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR OBSERVACION</vs-button>
+              <vs-button v-else-if="$can('observaciones.store')" class="mr-3" @click.prevent="$submitAgregar()">AGREGAR OBSERVACION</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -99,7 +99,7 @@
       </template>
 
         <template slot-scope="{data}">
-          <tbody>
+          
             <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
               <vs-td>
@@ -112,15 +112,15 @@
               <vs-td>
                    <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                       <vx-tooltip color="primary" text="Editar">
-                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
+                      <vs-button v-if="$can('observaciones.edit')" radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
                        </vx-tooltip>
                       <vx-tooltip color="primary" text="Eliminar">
-                       <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="$submitEliminar(tr, indextr)"></vs-button>
+                       <vs-button v-if="$can('observaciones.destroy')" radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="$submitEliminar(tr, indextr)"></vs-button>
                        </vx-tooltip>
                  </div>
             </vs-td>
             </vs-tr>
-          </tbody>
+         
         </template>
     </vs-table>
   </div>

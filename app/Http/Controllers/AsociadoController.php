@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use DB;
 use App\Models\Driver;
 use App\Models\User;
 use App\Models\Car;
@@ -11,6 +12,7 @@ use App\Models\DriversHasDocuments;
 use App\Models\CarsHasDocuments;
 use App\Models\DriversHasDrivers;
 use App\Models\DriversHasCars;
+use App\Models\ConductoresHasCars;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -126,6 +128,25 @@ class AsociadoController extends Controller
                                'message' => 'Problemas con la relacion',
                            ], 300);
                } 
+
+
+               $dataConductoresHasCars =  array(
+                   'driver_id'       => $idDriver,
+                   'car_id'         => 1,
+                   'habilitado'      => true,
+                   );
+                   
+                   $returnConductoresHasCars = ConductoresHasCars::create($dataConductoresHasCars);  
+   
+                   $returnIdConductoresHasCars = $returnConductoresHasCars->id;
+                   
+                   if ($returnIdConductoresHasCars < 1) {
+                           return response()->json(
+                               [
+                                   'status' => 'error',
+                                   'message' => 'Problemas con la relacion',
+                               ], 300);
+                   } 
             }
         
               
@@ -182,26 +203,57 @@ class AsociadoController extends Controller
 
         if($conductor == 1){
 
-                $dataDriversHasDrivers =  array(
-                        'driver_id'       => $id,
-                        'asociado_id'     => $id,
-                        'habilitado'      => true,
-                );
+                $drivershasdrivers = DriversHasDrivers::where('driver_id',$id)->count(); 
+              
+                if($drivershasdrivers <= 0){
 
-                $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);       
-                $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
+                        $dataDriversHasDrivers =  array(
+                                'driver_id'       => $id,
+                                'asociado_id'     => $id,
+                                'habilitado'      => true,
+                        );
+
+                        $returnDriverHasDrivers = DriversHasDrivers::create($dataDriversHasDrivers);       
+                        $returnIdDriversHasDrivers = $returnDriverHasDrivers->id;
+                        
+                        if ($returnIdDriversHasDrivers < 1) {
+                                return response()->json(
+                                    [
+                                        'status' => 'error',
+                                        'message' => 'Problemas con la relacion',
+                                    ], 300);
+                        } 
+                }
                 
-                if ($returnIdDriversHasDrivers < 1) {
-                        return response()->json(
-                            [
-                                'status' => 'error',
-                                'message' => 'Problemas con la relacion',
-                            ], 300);
-                } 
+                $conductoreshascars = ConductoresHasCars::where('driver_id',$id)->count(); 
+
+                if($conductoreshascars <= 0){               
+
+                    $dataConductoresHasCars =  array(
+                        'driver_id'       => $id,
+                        'car_id'         => 1,
+                        'habilitado'      => true,
+                        );
+                        
+                        $returnConductoresHasCars = ConductoresHasCars::create($dataConductoresHasCars);  
+        
+                        $returnIdConductoresHasCars = $returnConductoresHasCars->id;
+                        
+                        if ($returnIdConductoresHasCars < 1) {
+                                return response()->json(
+                                    [
+                                        'status' => 'error',
+                                        'message' => 'Problemas con la relacion',
+                                    ], 300);
+                        } 
+
+                }
+
 
             }else{
 
                 DriversHasDrivers::where('driver_id', $id)->delete();
+                ConductoresHasCars::where('driver_id', $id)->delete();
                 
                 //Al dejar de ser conductor, eliminar documentos?
                 $document = DriversHasDocuments::where('driver_id', $id)->get();
@@ -264,9 +316,10 @@ class AsociadoController extends Controller
     public function destroy($id)
     {
         
-        try{
+      //  try{
           
            $driver = Driver::findOrFail($id);
+           
                     
            if(!is_null($driver)){
 
@@ -300,6 +353,19 @@ class AsociadoController extends Controller
                     $documento->delete();
                 }   
 
+                //Busca documentos del asociado
+                $document = DriversHasDocuments::where('driver_id', $id)->get();
+                $idsDocument = array_column($document->toArray(), 'document_id');
+
+                //Elimina documentos del asociado
+                foreach ($idsDocument as $key => $doc) {
+                    $documento = Document::findOrFail($doc);
+                    if($documento){
+                        Storage::disk('delete')->delete($documento->url);
+                        $documento->delete();
+                    }
+                }
+
                 //Elimina los moviles
                 Car::destroy($idsCars);
 
@@ -326,15 +392,15 @@ class AsociadoController extends Controller
             }
 
 
-        }catch(ModelNotFoundException $e){
+       /* }catch(ModelNotFoundException $e){
             
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'El Asociado no existe!!'
+                    'message' => 'El Asociado no existe!!!'
                 ], 300);
   
-        }
+        }*/
 
         
     }
@@ -344,7 +410,7 @@ class AsociadoController extends Controller
       
         
         $ids = array_column($request->all(), 'id');
-        
+             
         try{
 
             if(count($ids) > 0 ){      
@@ -378,6 +444,19 @@ class AsociadoController extends Controller
                     Storage::disk('delete')->delete($documento->url);
                     $documento->delete();
                 }   
+                
+                //Busca documentos del asociado
+                $document = DriversHasDocuments::whereIn('driver_id', $ids)->get();
+                $idsDocument = array_column($document->toArray(), 'document_id');
+
+                //Elimina documentos del asociado
+                 foreach ($idsDocument as $key => $doc) {
+                    $documento = Document::findOrFail($doc);
+                    if($documento){
+                        Storage::disk('delete')->delete($documento->url);
+                        $documento->delete();
+                    }
+                }
 
                 //Elimina los moviles
                 Car::destroy($idsCars);
@@ -416,6 +495,116 @@ class AsociadoController extends Controller
         }
 
         
+    }
+
+    public function upload(Request $request)
+    {
+
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();  
+        $fileNameSinExtencion = $request->id."-".$request->tipo_documento;//rut
+        $fileName = $request->id."-".$request->tipo_documento.'.'.$extension;//$file->getClientOriginalName(); rut
+        $exists = Document::where('name', $fileNameSinExtencion)->first();
+        $uploadFile = Storage::disk('local')->put('asociados/'.$fileName, file_get_contents($file));
+
+        if($uploadFile == true)
+        {
+
+            $url = '/documents/asociados/'.$fileName;
+
+            $fecha = ($request->fecha_vencimiento) ? date($request->fecha_vencimiento):null;
+            
+            $dataDocument = array(
+                'type_document_id'  => $request->tipo_documento_id,
+                'name'              => $fileNameSinExtencion,
+                'url'               => $url,
+                'fecha_vencimiento' => $fecha,
+                'informacion'       => "",
+                'habilitado'        => 1
+            );
+            if($exists != null)
+            {
+                Storage::disk('delete')->delete($exists->url);
+                Document::where('name', $fileNameSinExtencion)->update($dataDocument);
+            }
+            else
+            {
+                $documentResult = Document::create($dataDocument);
+                if($documentResult->id > 0)
+                {   
+                    $dataHas = DriversHasDocuments::create(
+                        array(
+                            'driver_id'     => $request->driver_id,
+                            'document_id'   => $documentResult->id,
+                            'habilitado'    => 1
+                        )
+                    );
+    
+                    if($dataHas->id > 0)
+                    {
+                        dd($dataHas);
+                    }
+                    else
+                    {
+                        dd("Fallo");
+                    }
+                }
+                else
+                {
+                    dd("Error");
+                } 
+            }       
+        }
+        else
+        {
+            dd("Fallo");
+        }
+              
+        return response()->json(
+            [
+                'status' => 'success',
+            ], 200);     
+    }
+
+    public function documents ($id)
+    {
+        //Documentos del asociado
+        //Id    Descripcion
+        //11    Cedula Identidad
+        //12    Contrato
+        
+        //$driver = DriversHasDocuments::with('documents')->where('driver_id', $id)->get();
+
+        $driver = DB::table('drivers_has_documents')
+        ->join('documents', 'documents.id', '=', 'drivers_has_documents.document_id')
+        ->join('type_documents', 'type_documents.id', '=', 'documents.type_document_id')
+        ->select(
+            'documents.id',
+            'documents.type_document_id', 
+            'documents.name',
+            'documents.url',
+            'documents.informacion',
+            'documents.fecha_vencimiento',
+            'documents.habilitado', 
+            'drivers_has_documents.driver_id',
+            'drivers_has_documents.document_id',
+            'drivers_has_documents.habilitado as hashabilitado'
+            )
+        ->where('drivers_has_documents.driver_id', '=', $id)
+        ->where('type_documents.tipo', '=', 2)
+        ->get(); 
+        
+        return response()->json(
+            [
+                'status' => 'success',
+                'items' => $driver->toArray(),
+            ], 200); 
+    }
+
+    public function document ($id)
+    {
+        $document = Document::where('id', $id)->first();
+        return response()->download(storage_path($document->url), $document->name);
     }
   
 }

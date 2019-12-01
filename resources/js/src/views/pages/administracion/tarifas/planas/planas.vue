@@ -10,7 +10,7 @@
         <div class="flex flex-wrap-reverse items-center">
 
           <!-- ADD NEW -->
-          <div class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
+          <div v-if="$can('servplanas.create')" class="p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-between text-lg font-medium text-base 
           text-primary border border-solid border-primary" @click="$agregarPopUp()" > <!-- @click="addNewDataSidebar = true" -->
               <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
               <vx-tooltip color="primary" text="Agregar empresa">
@@ -77,7 +77,7 @@
              
                 <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0">
                       <vx-tooltip color="primary" text="Parametros">
-                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-search" size="small" class="ml-3" @click="listadoParametros(tr)"></vs-button>
+                      <vs-button v-if="$can('servplanas.index')" radius color="primary" type="border" icon-pack="feather" icon="icon-search" size="small" class="ml-3" @click="listadoParametros(tr)"></vs-button>
                        </vx-tooltip>
                    </div>
 
@@ -163,8 +163,8 @@
             </div>        
              
              <div class="flex flex-wrap items-center justify-center p-6" slot="footer">
-              <vs-button v-if="modoEditar == true" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR TARIFA</vs-button>
-              <vs-button v-else class="mr-3" @click.prevent="$submitAgregar()">AGREGAR TARIFA</vs-button>
+              <vs-button v-if="modoEditar == true && $can('servplanas.update')" class="mr-3" @click.prevent="$submitActualizar()" >ACTUALIZAR TARIFA</vs-button>
+              <vs-button v-else-if="$can('servplanas.store')" class="mr-3" @click.prevent="$submitAgregar()">AGREGAR TARIFA</vs-button>
               
            
               <vs-button type="border" color="danger" ref="btncancelar" @click.prevent="$cancelarPopUp()">CANCELAR</vs-button>
@@ -190,7 +190,7 @@
             </div>
 
             <vs-dropdown-menu>
-              <vs-dropdown-item @click.prevent="accion(1)">
+              <vs-dropdown-item v-if="$can('servplanas.destroy')" @click.prevent="accion(1)">
                 <span>Borrar</span>
               </vs-dropdown-item>
               <vs-dropdown-item @click.prevent="accion(2)">
@@ -242,10 +242,10 @@
               <vs-td>
                    <div class="flex vx-col w-full sm:w-auto ml-auto mt-2 sm:mt-0" style="justify-content: center;">
                       <vx-tooltip color="primary" text="Editar">
-                      <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
+                      <vs-button v-if="$can('servplanas.edit')" radius color="primary" type="border" icon-pack="feather" icon="icon-edit-2" size="small" class="ml-3" @click="editar(tr)"></vs-button>
                        </vx-tooltip>
                       <vx-tooltip color="primary" text="Eliminar">
-                       <vs-button radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="submitEliminar(tr, indextr)"></vs-button>
+                       <vs-button v-if="$can('servplanas.destroy')" radius color="primary" type="border" icon-pack="feather" icon="icon-trash" size="small" class="ml-3" @click="submitEliminar(tr, indextr)"></vs-button>
                        </vx-tooltip>
                  </div>
             </vs-td>
