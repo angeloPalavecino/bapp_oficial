@@ -1,6 +1,6 @@
 <template>
   <div id="data-list-list-view" class="data-list-container">
-  
+   
     <!-- POP UP -->
     <vs-popup
       class="holamundo"
