@@ -100,6 +100,22 @@ class PermisosSeeder extends Seeder
             ['id' => 76,'name' => 'servplanas.destroy', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
             ['id' => 77,'name' => 'servplanas.edit', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
     
+            ['id' => 78,'name' => 'patrones.store', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 79,'name' => 'patrones.create', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 80,'name' => 'patrones.index', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 81,'name' => 'patrones.update', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 82,'name' => 'patrones.show', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 83,'name' => 'patrones.destroy', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 84,'name' => 'patrones.edit', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+    
+            ['id' => 85,'name' => 'grupopatrones.store', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 86,'name' => 'grupopatrones.create', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 87,'name' => 'grupopatrones.index', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 88,'name' => 'grupopatrones.update', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 89,'name' => 'grupopatrones.show', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 90,'name' => 'grupopatrones.destroy', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+            ['id' => 91,'name' => 'grupopatrones.edit', 'guard_name' => 'api', 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")],
+    
 
         ];
 

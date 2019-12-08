@@ -38,6 +38,9 @@ import Pasajeros from './views/pages/administracion/tarifas/pasajeros/Pasajeros'
 import Kms from './views/pages/administracion/tarifas/kms/Kms'
 import Planas from './views/pages/administracion/tarifas/planas/Planas'
 
+//Patrones
+import Patrones from './views/pages/planificacion/patrones/Patrones'
+import GrupoPatrones from './views/pages/planificacion/patrones/Grupos'
 
 
 Vue.use(Router)
@@ -278,7 +281,41 @@ const router = new Router({
               pageTitle: 'Lista de Tarifas Kms',
 
           }
+        },
+
+        {
+          path: '/pages/planificacion/patrones/patrones',
+          name: 'patrones',
+          component: Patrones,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Patrones'},
+              { title: 'Lista de Patrones', active: true },
+              ],
+              pageTitle: 'Lista de Patrones',
+
+          }
+        },
+
+        {
+          path: '/pages/planificacion/patrones/grupos',
+          name: 'grupopatrones',
+          component: GrupoPatrones,
+          meta: {
+            auth: true,
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Grupo de Patrones'},
+              { title: 'Lista de Grupo de patrones', active: true },
+              ],
+              pageTitle: 'Lista de Grupo de patrones',
+
+          }
         }
+        
+        
       ],
     },
   // =============================================================================

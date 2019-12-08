@@ -103,6 +103,9 @@ class PermisosController extends Controller
             case "servplanas":
                 return "Tarifa Plana";
                 break;
+            case "grupopatrones":
+                return "Grupo de Patrones";
+                break;                    
             default:
                 return ucwords($nombre);
                 break;

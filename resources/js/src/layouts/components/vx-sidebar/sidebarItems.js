@@ -157,6 +157,35 @@ export default [
       },
     ]
   },
+  {
+    header: "Planificacion",
+    i18n: "Others",
+  },
+  {
+    url: null,
+    name: "Planificacion", 
+    icon: "ClipboardIcon",
+    i18n: "ClipboardIcon",
+    submenu: [
+      {
+        url: "/pages/planificacion/patrones/patrones",
+        name: "Patrones",
+        slug: "patrones",
+        icon: "MapSignIcon",
+        i18n: "MapSignIcon",
+        permiso: "patrones.index"
+      },
+      {
+        url: "/pages/planificacion/patrones/grupos",
+        name: "Grupo de Patrones",
+        slug: "grupopatrones",
+        icon: "LayersSignIcon",
+        i18n: "LayersSignIcon",
+        permiso: "grupopatrones.index"
+      },
+      
+    ]
+  },
 
   
   

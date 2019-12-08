@@ -355,4 +355,36 @@ Route::prefix('v1')->group(function () {
          });
   }); 
 
+
+      //PATRONES
+      Route::prefix('patrones')->group(function () {
+          
+        Route::middleware('auth:api')->group(function () {
+        // PATRONES
+            Route::get('patrones', 'PatronesController@index');
+            Route::get('patrones/create', 'PatronesController@create');
+            Route::get('patrones/{id}', 'PatronesController@show');
+            Route::delete('patrones/{id}', 'PatronesController@destroy');
+            Route::post('patrones/borrar', 'PatronesController@borrar');
+            Route::put('patrones/{id}', 'PatronesController@update');
+            Route::post('patrones/store', 'PatronesController@store');
+            Route::get('patrones/{id}/edit', 'PatronesController@edit');
+        });
+
+        Route::middleware('auth:api')->group(function () {
+        // GRUPO PATRONES
+            Route::get('grupo', 'GruposPatronesController@index');
+            Route::get('grupo/create', 'GruposPatronesController@create');
+            Route::get('grupo/{id}', 'GruposPatronesController@show');
+            Route::delete('grupo/{id}', 'GruposPatronesController@destroy');
+            Route::post('grupo/borrar', 'GruposPatronesController@borrar');
+            Route::put('grupo/{id}', 'GruposPatronesController@update');
+            Route::post('grupo/store', 'GruposPatronesController@store');
+            Route::get('grupo/{id}/edit', 'GruposPatronesController@edit');
+
+        });
+    });
+
+        
+
 });
