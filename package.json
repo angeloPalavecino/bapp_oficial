@@ -17,7 +17,7 @@
         "ag-grid-vue": "^20.2.0",
         "algoliasearch": "^3.33.0",
         "apexcharts": "^3.6.12",
-        "auth0-js": "^9.10.4",
+        "auth0-js": "^9.13.2",
         "axios": "^0.18.1",
         "bootstrap": "^4.0.0",
         "chart.js": "^2.8.0",
