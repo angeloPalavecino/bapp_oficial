@@ -20,7 +20,7 @@
         "auth0-js": "^9.10.4",
         "axios": "^0.18.1",
         "bootstrap": "^4.0.0",
-        "chart.js": "^2.8.0",
+        "chart.js": "^2.9.4",
         "cross-env": "^5.1",
         "firebase": "^6.0.4",
         "instantsearch.css": "^7.3.1",
